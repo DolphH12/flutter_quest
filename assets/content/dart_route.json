@@ -1,0 +1,844 @@
+{
+  "routeId": "dart_route",
+  "title": "Dart",
+  "description": "Fundamentos del lenguaje Dart con una progresión práctica, clara y gamificada.",
+  "icon": "route_dart",
+  "themeColor": "#005E9E",
+  "version": 1,
+  "estimatedMinutes": 180,
+  "examNodeId": "dart_final_exam",
+  "nodes": [
+    {
+      "id": "dart_intro",
+      "title": "Introducción a Dart",
+      "shortDescription": "Qué es Dart, cómo luce un programa simple y dónde empieza todo.",
+      "icon": "rocket_launch",
+      "nodeType": "lesson",
+      "xpReward": 30,
+      "steps": [
+        {
+          "id": "intro_1",
+          "type": "intro",
+          "title": "Bienvenido a Dart",
+          "body": "Dart es un lenguaje moderno, claro y expresivo. Se usa mucho junto con Flutter, pero también sirve para lógica, backend y herramientas. En esta ruta vas a aprender escribiendo y corrigiendo código paso a paso.",
+          "example": "void main() {\n  print('Hola, Dart');\n}"
+        },
+        {
+          "id": "intro_2",
+          "type": "intro",
+          "title": "Todo arranca en main",
+          "body": "En programas simples de Dart, la función main() es el punto de entrada. Piensa en ella como la puerta principal: si no entras por ahí, la fiesta del código no empieza.",
+          "example": "void main() {\n  print('Empieza el programa');\n}"
+        },
+        {
+          "id": "intro_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué función suele usarse como punto de entrada en un programa Dart?",
+          "options": [
+            "start()",
+            "run()",
+            "main()",
+            "boot()"
+          ],
+          "correctAnswer": "main()",
+          "correctExplanation": "main() es la función de entrada más común en un programa Dart.",
+          "incorrectExplanation": "En Dart, la ejecución suele comenzar en main(). Las otras opciones no son el punto de entrada estándar.",
+          "xpReward": 10
+        },
+        {
+          "id": "intro_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa la función de entrada correcta.",
+          "initialCode": "void _____() {\n  print('Hola, Dart');\n}",
+          "expectedAnswer": "main",
+          "correctExplanation": "La función main es el punto de entrada estándar de un programa Dart.",
+          "incorrectExplanation": "La respuesta esperada es main, porque allí comienza la ejecución del programa.",
+          "hint": "Piensa en la función que abre la puerta del programa.",
+          "xpReward": 20
+        }
+      ]
+    },
+    {
+      "id": "dart_variables_types",
+      "title": "Variables y tipos",
+      "shortDescription": "Guardar datos, inferir tipos y declarar información con claridad.",
+      "icon": "data_object",
+      "nodeType": "lesson",
+      "xpReward": 35,
+      "steps": [
+        {
+          "id": "vars_intro_1",
+          "type": "intro",
+          "title": "Una variable guarda información",
+          "body": "Las variables permiten guardar valores para usarlos después. En Dart puedes declarar tipos explícitos como String o int, o dejar que Dart los infiera con var cuando el valor inicial es claro.",
+          "example": "String name = 'Ana';\nint age = 20;\nvar city = 'Medellín';"
+        },
+        {
+          "id": "vars_intro_2",
+          "type": "intro",
+          "title": "Tipado claro = menos caos",
+          "body": "Cuando nombras bien y usas tipos adecuados, tu código se vuelve más legible. Es como ponerle etiqueta al tupper: evitas abrirlo esperando arroz y encontrar misterio.",
+          "example": "double price = 19.99;\nbool isActive = true;"
+        },
+        {
+          "id": "vars_q1",
+          "type": "multipleChoice",
+          "question": "¿Cuál de estas declaraciones crea una variable de tipo String correctamente?",
+          "options": [
+            "String name = 'Dart';",
+            "int name = 'Dart';",
+            "bool name = 'Dart';",
+            "double name = false;"
+          ],
+          "correctAnswer": "String name = 'Dart';",
+          "correctExplanation": "String representa texto, así que es el tipo adecuado para el valor 'Dart'.",
+          "incorrectExplanation": "El valor 'Dart' es texto, por lo que debe almacenarse en una variable String.",
+          "xpReward": 10
+        },
+        {
+          "id": "vars_code_1",
+          "type": "fillInTheCode",
+          "prompt": "Completa la palabra faltante para declarar una variable entera.",
+          "initialCode": "_____ age = 28;",
+          "expectedAnswer": "int",
+          "correctExplanation": "int representa números enteros sin decimales.",
+          "incorrectExplanation": "Para almacenar 28 como entero, debes usar int.",
+          "hint": "Es el tipo numérico para valores como 1, 2, 3...",
+          "xpReward": 12
+        },
+        {
+          "id": "vars_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige el tipo de dato para que coincida con el valor.",
+          "initialCode": "int username = 'dolph';",
+          "expectedAnswer": "String username = 'dolph';",
+          "correctExplanation": "El valor 'dolph' es texto, así que necesita una variable String.",
+          "incorrectExplanation": "El error está en el tipo. El valor es texto, no un número entero.",
+          "hint": "Mira el valor entre comillas.",
+          "xpReward": 13
+        }
+      ]
+    },
+    {
+      "id": "dart_operators",
+      "title": "Operadores",
+      "shortDescription": "Opera valores, compara datos y construye expresiones útiles.",
+      "icon": "calculate",
+      "nodeType": "lesson",
+      "xpReward": 35,
+      "steps": [
+        {
+          "id": "ops_intro_1",
+          "type": "intro",
+          "title": "Los operadores hacen el trabajo sucio",
+          "body": "Los operadores te permiten sumar, restar, comparar e incluso combinar condiciones. Son el músculo de las expresiones.",
+          "example": "int total = 4 + 3;\nbool isAdult = age >= 18;"
+        },
+        {
+          "id": "ops_intro_2",
+          "type": "intro",
+          "title": "Comparar también es programar",
+          "body": "Con operadores como ==, !=, > y < puedes tomar decisiones. Sin comparación, el programa se queda mirando al vacío existencial.",
+          "example": "bool same = name == 'Ana';"
+        },
+        {
+          "id": "ops_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué operador se usa para comparar si dos valores son iguales?",
+          "options": [
+            "=",
+            "==",
+            "!=",
+            ">="
+          ],
+          "correctAnswer": "==",
+          "correctExplanation": "== compara si dos valores son iguales.",
+          "incorrectExplanation": "= asigna un valor; == compara igualdad.",
+          "xpReward": 10
+        },
+        {
+          "id": "ops_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa el operador para verificar si score es mayor o igual a 10.",
+          "initialCode": "if (score _____ 10) {\n  print('Ganaste');\n}",
+          "expectedAnswer": ">=",
+          "correctExplanation": ">= comprueba si score es mayor o igual que 10.",
+          "incorrectExplanation": "La condición pide 'mayor o igual que 10', así que el operador correcto es >=.",
+          "hint": "No quieres excluir el 10.",
+          "xpReward": 12
+        },
+        {
+          "id": "ops_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige la línea para comparar igualdad en vez de asignar.",
+          "initialCode": "if (level = 5) {\n  print('Nivel exacto');\n}",
+          "expectedAnswer": "if (level == 5) {\n  print('Nivel exacto');\n}",
+          "correctExplanation": "Dentro de la condición necesitas comparar, no asignar.",
+          "incorrectExplanation": "Usar = intenta asignar un valor. Para comparar igualdad debes usar ==.",
+          "hint": "Uno asigna, el otro compara.",
+          "xpReward": 13
+        }
+      ]
+    },
+    {
+      "id": "dart_conditionals",
+      "title": "Condicionales",
+      "shortDescription": "Tomar decisiones con if, else y switch.",
+      "icon": "alt_route",
+      "nodeType": "lesson",
+      "xpReward": 40,
+      "steps": [
+        {
+          "id": "cond_intro_1",
+          "type": "intro",
+          "title": "Tu programa puede decidir",
+          "body": "Las estructuras condicionales permiten ejecutar distintos caminos según una condición. Si el dato cambia, la decisión también.",
+          "example": "if (age >= 18) {\n  print('Adulto');\n} else {\n  print('Menor');\n}"
+        },
+        {
+          "id": "cond_intro_2",
+          "type": "intro",
+          "title": "switch para varios casos",
+          "body": "Cuando tienes varios casos fijos para comparar, switch puede ser más claro que una cadena larga de if y else if.",
+          "example": "switch (role) {\n  case 'admin':\n    print('Acceso total');\n    break;\n  default:\n    print('Acceso básico');\n}"
+        },
+        {
+          "id": "cond_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué estructura es útil para elegir entre varios casos concretos?",
+          "options": [
+            "for",
+            "while",
+            "switch",
+            "try"
+          ],
+          "correctAnswer": "switch",
+          "correctExplanation": "switch es ideal cuando comparas una expresión contra varios casos definidos.",
+          "incorrectExplanation": "for y while repiten; try maneja errores. switch se usa para varios casos concretos.",
+          "xpReward": 10
+        },
+        {
+          "id": "cond_code_1",
+          "type": "fillInTheCode",
+          "prompt": "Completa la condición para imprimir 'win' si score es mayor que 50.",
+          "initialCode": "if (score > _____) {\n  print('win');\n}",
+          "expectedAnswer": "50",
+          "correctExplanation": "La condición debe comparar score con 50 para que el mensaje aparezca cuando lo supere.",
+          "incorrectExplanation": "La condición pedida es 'mayor que 50', por eso el valor faltante es 50.",
+          "hint": "El número está en la instrucción.",
+          "xpReward": 15
+        },
+        {
+          "id": "cond_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige el else mal escrito.",
+          "initialCode": "if (isMember) {\n  print('Descuento');\n} els {\n  print('Precio completo');\n}",
+          "expectedAnswer": "if (isMember) {\n  print('Descuento');\n} else {\n  print('Precio completo');\n}",
+          "correctExplanation": "La palabra clave correcta es else.",
+          "incorrectExplanation": "El error es de sintaxis: debe escribirse else.",
+          "hint": "Falta una letra en la palabra clave.",
+          "xpReward": 15
+        }
+      ]
+    },
+    {
+      "id": "dart_loops",
+      "title": "Loops",
+      "shortDescription": "Repetir acciones con for y while sin perder el control.",
+      "icon": "loop",
+      "nodeType": "lesson",
+      "xpReward": 40,
+      "steps": [
+        {
+          "id": "loops_intro_1",
+          "type": "intro",
+          "title": "Repetir sin copiar y pegar",
+          "body": "Los loops permiten repetir instrucciones varias veces. Úsalos cuando el patrón se repite; tu teclado también merece respeto.",
+          "example": "for (int i = 0; i < 3; i++) {\n  print(i);\n}"
+        },
+        {
+          "id": "loops_intro_2",
+          "type": "intro",
+          "title": "for y while tienen personalidades distintas",
+          "body": "for es útil cuando sabes cuántas repeticiones necesitas. while sirve cuando repites hasta que una condición deje de cumplirse.",
+          "example": "while (energy > 0) {\n  energy--;\n}"
+        },
+        {
+          "id": "loops_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué loop usarías si sabes que debes repetir una acción exactamente 5 veces?",
+          "options": [
+            "try",
+            "if",
+            "for",
+            "switch"
+          ],
+          "correctAnswer": "for",
+          "correctExplanation": "for es ideal cuando controlas el número exacto de repeticiones.",
+          "incorrectExplanation": "Cuando conoces la cantidad de repeticiones, for suele ser la opción más clara.",
+          "xpReward": 10
+        },
+        {
+          "id": "loops_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa el límite del for para imprimir del 0 al 4.",
+          "initialCode": "for (int i = 0; i < _____; i++) {\n  print(i);\n}",
+          "expectedAnswer": "5",
+          "correctExplanation": "Con i < 5, el loop imprime 0, 1, 2, 3 y 4.",
+          "incorrectExplanation": "Para llegar hasta 4 empezando en 0, el límite debe ser 5.",
+          "hint": "Piensa en el primer número que ya no debe entrar.",
+          "xpReward": 15
+        },
+        {
+          "id": "loops_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige el incremento faltante para evitar un loop roto.",
+          "initialCode": "for (int i = 0; i < 3; ) {\n  print(i);\n}",
+          "expectedAnswer": "for (int i = 0; i < 3; i++) {\n  print(i);\n}",
+          "correctExplanation": "El loop necesita avanzar con i++ para cambiar en cada iteración.",
+          "incorrectExplanation": "Sin incremento, i nunca cambia y el loop queda incompleto.",
+          "hint": "Mira la tercera parte del for.",
+          "xpReward": 15
+        }
+      ]
+    },
+    {
+      "id": "dart_functions",
+      "title": "Funciones",
+      "shortDescription": "Agrupar lógica reutilizable con parámetros y retorno.",
+      "icon": "functions",
+      "nodeType": "lesson",
+      "xpReward": 45,
+      "steps": [
+        {
+          "id": "fun_intro_1",
+          "type": "intro",
+          "title": "Una función hace una tarea concreta",
+          "body": "Las funciones te ayudan a reutilizar lógica, organizar código y evitar repetir bloques. Menos caos, más intención.",
+          "example": "int add(int a, int b) {\n  return a + b;\n}"
+        },
+        {
+          "id": "fun_intro_2",
+          "type": "intro",
+          "title": "Parámetros entran, retorno sale",
+          "body": "Los parámetros son los datos que una función recibe. El return es el valor que te devuelve. Como una arepa: ingredientes entran, sabor sale.",
+          "example": "String greet(String name) {\n  return 'Hola $name';\n}"
+        },
+        {
+          "id": "fun_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué palabra clave devuelve un valor desde una función?",
+          "options": [
+            "print",
+            "yield",
+            "return",
+            "send"
+          ],
+          "correctAnswer": "return",
+          "correctExplanation": "return finaliza la función y devuelve un valor.",
+          "incorrectExplanation": "Para regresar un valor desde una función se usa return.",
+          "xpReward": 10
+        },
+        {
+          "id": "fun_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa el parámetro faltante para sumar dos números.",
+          "initialCode": "int addNumbers(int a, _____) {\n  return a + b;\n}",
+          "expectedAnswer": "int b",
+          "correctExplanation": "La función necesita recibir el segundo número como parámetro int b.",
+          "incorrectExplanation": "Como se usa b en el return, debes declararlo como parámetro: int b.",
+          "hint": "Te falta declarar el segundo parámetro.",
+          "xpReward": 15
+        },
+        {
+          "id": "fun_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige la función para que devuelva un String.",
+          "initialCode": "String welcome(String name) {\n  print('Hola $name');\n}",
+          "expectedAnswer": "String welcome(String name) {\n  return 'Hola $name';\n}",
+          "correctExplanation": "Si la función promete devolver String, debe usar return con un valor String.",
+          "incorrectExplanation": "La función tiene tipo String, así que no basta con print; debe retornar un texto.",
+          "hint": "Imprimir no es lo mismo que devolver.",
+          "xpReward": 20
+        }
+      ]
+    },
+    {
+      "id": "dart_collections",
+      "title": "Colecciones",
+      "shortDescription": "Trabajar con List, Set y Map para agrupar datos.",
+      "icon": "view_list",
+      "nodeType": "lesson",
+      "xpReward": 45,
+      "steps": [
+        {
+          "id": "col_intro_1",
+          "type": "intro",
+          "title": "Una colección agrupa datos",
+          "body": "Cuando necesitas guardar varios valores relacionados, usas colecciones. List mantiene orden, Set evita duplicados y Map guarda pares clave-valor.",
+          "example": "List<String> names = ['Ana', 'Luis'];\nSet<int> ids = {1, 2};\nMap<String, int> score = {'Ana': 10};"
+        },
+        {
+          "id": "col_intro_2",
+          "type": "intro",
+          "title": "Elige la colección adecuada",
+          "body": "Usar la colección correcta te ahorra problemas. Meter todo en cualquier lado es como guardar cucharas en la caja de herramientas: eventualmente alguien llora.",
+          "example": "Map<String, String> capitals = {'Colombia': 'Bogotá'};"
+        },
+        {
+          "id": "col_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué colección evita valores duplicados automáticamente?",
+          "options": [
+            "List",
+            "Map",
+            "Set",
+            "String"
+          ],
+          "correctAnswer": "Set",
+          "correctExplanation": "Set no permite elementos duplicados.",
+          "incorrectExplanation": "List puede repetir valores. Set es la colección que evita duplicados.",
+          "xpReward": 10
+        },
+        {
+          "id": "col_code_1",
+          "type": "fillInTheCode",
+          "prompt": "Completa el tipo de colección para guardar países y capitales.",
+          "initialCode": "_____ <String, String> capitals = {'Colombia': 'Bogotá'};",
+          "expectedAnswer": "Map",
+          "correctExplanation": "Map guarda pares clave-valor, ideal para país -> capital.",
+          "incorrectExplanation": "Como quieres asociar un país con su capital, necesitas un Map.",
+          "hint": "Piensa en clave y valor.",
+          "xpReward": 15
+        },
+        {
+          "id": "col_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige la colección para que sea una lista válida.",
+          "initialCode": "List<int> numbers = {1, 2, 3};",
+          "expectedAnswer": "List<int> numbers = [1, 2, 3];",
+          "correctExplanation": "Las listas usan corchetes [ ] en Dart.",
+          "incorrectExplanation": "Las llaves { } representan Set o Map; para List debes usar [ ].",
+          "hint": "Observa los delimitadores correctos.",
+          "xpReward": 20
+        }
+      ]
+    },
+    {
+      "id": "dart_null_safety",
+      "title": "Null Safety",
+      "shortDescription": "Evitar errores usando tipos anulables y no anulables.",
+      "icon": "verified_user",
+      "nodeType": "lesson",
+      "xpReward": 50,
+      "steps": [
+        {
+          "id": "null_intro_1",
+          "type": "intro",
+          "title": "null no es un villano, pero sí necesita reglas",
+          "body": "Null safety ayuda a prevenir errores comunes al obligarte a declarar cuándo una variable puede ser null y cuándo no. Menos sorpresas, menos pantallas llorando.",
+          "example": "String name = 'Dart';\nString? nickname;"
+        },
+        {
+          "id": "null_intro_2",
+          "type": "intro",
+          "title": "El signo ? importa",
+          "body": "Un tipo con ? puede contener null. Sin ?, la variable debe tener siempre un valor válido.",
+          "example": "int? optionalAge;\nint age = 20;"
+        },
+        {
+          "id": "null_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué declaración indica que una variable String puede ser null?",
+          "options": [
+            "String name;",
+            "String! name;",
+            "String? name;",
+            "nullable String name;"
+          ],
+          "correctAnswer": "String? name;",
+          "correctExplanation": "El signo ? indica que el tipo es anulable.",
+          "incorrectExplanation": "En Dart, los tipos anulables se escriben con ? al final del tipo, por ejemplo String?.",
+          "xpReward": 10
+        },
+        {
+          "id": "null_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa el símbolo faltante para que email pueda ser null.",
+          "initialCode": "String_____ email;",
+          "expectedAnswer": "?",
+          "correctExplanation": "String? indica que la variable puede contener null.",
+          "incorrectExplanation": "Para permitir null debes agregar ? al tipo.",
+          "hint": "Es un solo símbolo.",
+          "xpReward": 20
+        },
+        {
+          "id": "null_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige la declaración para permitir null.",
+          "initialCode": "String nickname = null;",
+          "expectedAnswer": "String? nickname = null;",
+          "correctExplanation": "Si una variable puede contener null, su tipo debe ser anulable.",
+          "incorrectExplanation": "nickname recibe null, así que el tipo debe declararse como String?.",
+          "hint": "El tipo actual no acepta null.",
+          "xpReward": 20
+        }
+      ]
+    },
+    {
+      "id": "dart_classes_objects",
+      "title": "Clases y objetos",
+      "shortDescription": "Modelar entidades con propiedades y comportamiento.",
+      "icon": "category",
+      "nodeType": "lesson",
+      "xpReward": 50,
+      "steps": [
+        {
+          "id": "class_intro_1",
+          "type": "intro",
+          "title": "Una clase es un molde",
+          "body": "Las clases te permiten modelar cosas del mundo real o del sistema. Un objeto es una instancia creada a partir de ese molde.",
+          "example": "class User {\n  String name;\n  User(this.name);\n}"
+        },
+        {
+          "id": "class_intro_2",
+          "type": "intro",
+          "title": "Objeto = ejemplo concreto",
+          "body": "Si la clase es el plano, el objeto es la casa construida. Uno define la estructura; el otro la vive.",
+          "example": "final user = User('Mafe');"
+        },
+        {
+          "id": "class_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué crea una instancia de la clase User?",
+          "options": [
+            "class User();",
+            "User = 'Ana';",
+            "User('Ana')",
+            "new class User"
+          ],
+          "correctAnswer": "User('Ana')",
+          "correctExplanation": "User('Ana') crea una instancia usando el constructor.",
+          "incorrectExplanation": "Para crear un objeto usas el constructor de la clase, por ejemplo User('Ana').",
+          "xpReward": 10
+        },
+        {
+          "id": "class_code_1",
+          "type": "fillInTheCode",
+          "prompt": "Completa el nombre de la clase para crear un objeto Product.",
+          "initialCode": "final item = _____('Mouse');",
+          "expectedAnswer": "Product",
+          "correctExplanation": "Para crear el objeto necesitas llamar al constructor Product(...).",
+          "incorrectExplanation": "La instancia debe construirse con el nombre de la clase: Product.",
+          "hint": "Es el nombre del molde.",
+          "xpReward": 20
+        },
+        {
+          "id": "class_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige la clase para que la propiedad tenga tipo.",
+          "initialCode": "class Product {\n  name;\n  Product(this.name);\n}",
+          "expectedAnswer": "class Product {\n  String name;\n  Product(this.name);\n}",
+          "correctExplanation": "Agregar el tipo mejora claridad y mantiene el modelo bien definido.",
+          "incorrectExplanation": "La propiedad name necesita un tipo explícito para mantener la clase clara y consistente.",
+          "hint": "name guarda texto.",
+          "xpReward": 20
+        }
+      ]
+    },
+    {
+      "id": "dart_async_basics",
+      "title": "Async básico",
+      "shortDescription": "Entender Future y async/await sin drama temporal.",
+      "icon": "bolt",
+      "nodeType": "lesson",
+      "xpReward": 55,
+      "steps": [
+        {
+          "id": "async_intro_1",
+          "type": "intro",
+          "title": "No todo pasa al instante",
+          "body": "Algunas tareas tardan: pedir datos, leer archivos, esperar respuestas. Future representa un valor que llegará después.",
+          "example": "Future<String> fetchName() async {\n  return 'Dart';\n}"
+        },
+        {
+          "id": "async_intro_2",
+          "type": "intro",
+          "title": "await espera con elegancia",
+          "body": "Con await puedes pausar dentro de una función async hasta que un Future termine. Es como decir: 'espera un momento, pero con estilo'.",
+          "example": "final name = await fetchName();"
+        },
+        {
+          "id": "async_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué palabra clave se usa para esperar el resultado de un Future dentro de una función async?",
+          "options": [
+            "yield",
+            "await",
+            "return",
+            "sync"
+          ],
+          "correctAnswer": "await",
+          "correctExplanation": "await espera el resultado de un Future dentro de una función async.",
+          "incorrectExplanation": "Dentro de una función async, la palabra clave para esperar un Future es await.",
+          "xpReward": 10
+        },
+        {
+          "id": "async_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa la palabra clave faltante para declarar una función asíncrona.",
+          "initialCode": "Future<String> fetchUser() _____ {\n  return 'Lina';\n}",
+          "expectedAnswer": "async",
+          "correctExplanation": "async convierte la función en asíncrona y permite usar await dentro de ella.",
+          "incorrectExplanation": "Para trabajar con Future usando await, la función debe declararse con async.",
+          "hint": "Es la palabra clave que habilita await.",
+          "xpReward": 20
+        },
+        {
+          "id": "async_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige el código para esperar el Future correctamente.",
+          "initialCode": "final user = fetchUser();\nprint(user.length);",
+          "expectedAnswer": "final user = await fetchUser();\nprint(user.length);",
+          "correctExplanation": "Si fetchUser devuelve un Future, primero debes esperar su resultado con await.",
+          "incorrectExplanation": "El valor aún no está disponible inmediatamente; necesitas await para obtener el resultado real.",
+          "hint": "fetchUser no devuelve el String de inmediato.",
+          "xpReward": 25
+        }
+      ]
+    },
+    {
+      "id": "dart_error_handling",
+      "title": "Manejo de errores",
+      "shortDescription": "Usar try, catch y finally para tratar fallos con control.",
+      "icon": "bug_report",
+      "nodeType": "lesson",
+      "xpReward": 55,
+      "steps": [
+        {
+          "id": "err_intro_1",
+          "type": "intro",
+          "title": "Los errores pasan. El drama es opcional.",
+          "body": "Con try y catch puedes capturar errores y responder de forma controlada. Esto evita que toda la app se estrelle por un problema puntual.",
+          "example": "try {\n  final value = int.parse('x');\n} catch (e) {\n  print('No se pudo convertir');\n}"
+        },
+        {
+          "id": "err_intro_2",
+          "type": "intro",
+          "title": "finally corre pase lo que pase",
+          "body": "finally es útil para limpiar recursos o ejecutar lógica final sin importar si hubo error o no.",
+          "example": "finally {\n  print('Proceso finalizado');\n}"
+        },
+        {
+          "id": "err_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué bloque se usa para capturar un error lanzado dentro de try?",
+          "options": [
+            "throw",
+            "catch",
+            "finally",
+            "assert"
+          ],
+          "correctAnswer": "catch",
+          "correctExplanation": "catch captura el error lanzado dentro del bloque try.",
+          "incorrectExplanation": "try intenta; catch captura el error; finally corre al final.",
+          "xpReward": 10
+        },
+        {
+          "id": "err_code_1",
+          "type": "fillInTheCode",
+          "prompt": "Completa la palabra clave para atrapar el error.",
+          "initialCode": "try {\n  int.parse('abc');\n} _____ (e) {\n  print('Error');\n}",
+          "expectedAnswer": "catch",
+          "correctExplanation": "catch es el bloque que recibe el error lanzado en try.",
+          "incorrectExplanation": "Para capturar el error después de try debes usar catch.",
+          "hint": "Va justo después de try.",
+          "xpReward": 20
+        },
+        {
+          "id": "err_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige el bloque final para que use la palabra clave correcta.",
+          "initialCode": "try {\n  print('Intentando');\n} finaly {\n  print('Terminado');\n}",
+          "expectedAnswer": "try {\n  print('Intentando');\n} finally {\n  print('Terminado');\n}",
+          "correctExplanation": "La palabra clave correcta es finally.",
+          "incorrectExplanation": "El bloque final de manejo de errores se escribe finally.",
+          "hint": "La palabra está mal escrita.",
+          "xpReward": 25
+        }
+      ]
+    },
+    {
+      "id": "dart_final_exam",
+      "title": "Examen Final Dart",
+      "shortDescription": "Pon a prueba todo lo aprendido en la ruta completa.",
+      "icon": "military_tech",
+      "nodeType": "exam",
+      "xpReward": 120,
+      "steps": [
+        {
+          "id": "exam_intro_1",
+          "type": "intro",
+          "title": "Hora de validar la ruta",
+          "body": "Este examen integra varios conceptos de la ruta Dart: variables, condicionales, funciones, colecciones, null safety, async y errores. Respira, lee con calma y dale con poder.",
+          "example": "No es velocidad, es claridad. Bueno... claridad con flow."
+        },
+        {
+          "id": "exam_q1",
+          "type": "multipleChoice",
+          "question": "¿Qué palabra clave devuelve un valor desde una función?",
+          "options": [
+            "return",
+            "yield",
+            "break",
+            "await"
+          ],
+          "correctAnswer": "return",
+          "correctExplanation": "return entrega un valor desde una función al punto donde fue llamada.",
+          "incorrectExplanation": "Para que una función entregue un valor debes usar return.",
+          "xpReward": 15
+        },
+        {
+          "id": "exam_q2",
+          "type": "multipleChoice",
+          "question": "¿Cuál declaración permite que nickname sea null?",
+          "options": [
+            "String nickname = null;",
+            "String! nickname;",
+            "String? nickname;",
+            "nullable nickname;"
+          ],
+          "correctAnswer": "String? nickname;",
+          "correctExplanation": "El ? indica que el tipo es anulable.",
+          "incorrectExplanation": "Solo String? nickname; permite null correctamente.",
+          "xpReward": 15
+        },
+        {
+          "id": "exam_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": "Ordena los bloques para crear una función que salude.",
+          "blocks": [
+            "}",
+            "print('Hola, $name');",
+            "void greet(String name) {"
+          ],
+          "correctOrder": [2, 1, 0],
+          "correctExplanation": "Primero declaras la función, luego el print y al final cierras el bloque.",
+          "incorrectExplanation": "El orden importa: firma de función, instrucciones internas y cierre.",
+          "xpReward": 18
+        },
+        {
+          "id": "exam_wrong_line_1",
+          "type": "findTheWrongLine",
+          "prompt": "Encuentra la línea con error lógico en el snippet.",
+          "codeLines": [
+            "int score = 8;",
+            "if (score = 10) {",
+            "  print('Perfecto');",
+            "}"
+          ],
+          "wrongLineIndex": 1,
+          "correctExplanation": "En esa línea se usa = (asignación) cuando debía usarse == (comparación).",
+          "incorrectExplanation": "La trampa está en la condición: usar = en un if no compara valores.",
+          "xpReward": 18
+        },
+        {
+          "id": "exam_match_1",
+          "type": "matchConcept",
+          "prompt": "Relaciona cada concepto con su descripción correcta.",
+          "matchLeft": [
+            "Future",
+            "nullable",
+            "loop for"
+          ],
+          "matchRight": [
+            "Permite repetir instrucciones varias veces",
+            "Valor que llegará de forma asíncrona",
+            "Tipo que puede aceptar null"
+          ],
+          "correctMatches": {
+            "Future": "Valor que llegará de forma asíncrona",
+            "nullable": "Tipo que puede aceptar null",
+            "loop for": "Permite repetir instrucciones varias veces"
+          },
+          "correctExplanation": "Excelente conexión de conceptos: async, null safety y loops en su lugar.",
+          "incorrectExplanation": "Revisa cada definición: el objetivo es unir concepto y uso real.",
+          "xpReward": 16
+        },
+        {
+          "id": "exam_predict_1",
+          "type": "predictOutput",
+          "question": "¿Qué imprime este código?",
+          "codeSnippet": "void main() {\n  int x = 2;\n  print(x * 3);\n}",
+          "options": [
+            "5",
+            "6",
+            "23",
+            "Error"
+          ],
+          "expectedOutput": "6",
+          "correctExplanation": "2 * 3 da 6, así que la salida correcta es 6.",
+          "incorrectExplanation": "Evalúa primero la multiplicación: no hay concatenación ni error.",
+          "xpReward": 14
+        },
+        {
+          "id": "exam_code_1",
+          "type": "completeSnippet",
+          "prompt": "Completa el loop para imprimir del 0 al 2.",
+          "initialCode": "for (int i = 0; i < _____; i++) {\n  print(i);\n}",
+          "expectedAnswer": "3",
+          "correctExplanation": "Con i < 3, el loop imprime 0, 1 y 2.",
+          "incorrectExplanation": "Para imprimir hasta 2 empezando en 0, el límite debe ser 3.",
+          "hint": "Piensa en el primer número que ya no entra.",
+          "xpReward": 20
+        },
+        {
+          "id": "exam_bug_1",
+          "type": "fixTheBug",
+          "prompt": "Corrige el código para esperar un Future antes de imprimir la longitud.",
+          "initialCode": "final name = fetchName();\nprint(name.length);",
+          "expectedAnswer": "final name = await fetchName();\nprint(name.length);",
+          "correctExplanation": "fetchName devuelve un Future, así que primero debes esperar el resultado con await.",
+          "incorrectExplanation": "Sin await, name no es todavía el valor resuelto sino un Future.",
+          "hint": "La respuesta real aún no ha llegado.",
+          "xpReward": 30
+        },
+        {
+          "id": "exam_code_2",
+          "type": "fixTheBug",
+          "prompt": "Corrige la colección para que represente una lista válida de enteros.",
+          "initialCode": "List<int> scores = {10, 20, 30};",
+          "expectedAnswer": "List<int> scores = [10, 20, 30];",
+          "correctExplanation": "Las listas usan corchetes [ ] en Dart.",
+          "incorrectExplanation": "Las llaves { } no representan una List. Para una lista necesitas [ ].",
+          "hint": "Observa el delimitador de la colección.",
+          "xpReward": 25
+        },
+        {
+          "id": "exam_guided_1",
+          "type": "guidedWriting",
+          "prompt": "Escribe una mini función que reciba un número y devuelva su doble.",
+          "instructions": "Crea una función llamada doubleValue que reciba un int y retorne int. Luego imprime el resultado para 4.",
+          "starterCode": "int doubleValue(int n) {\n  // tu codigo\n}\n\nvoid main() {\n  // imprime el resultado\n}",
+          "expectedFragments": [
+            "int doubleValue(int n)",
+            "return",
+            "n * 2",
+            "print"
+          ],
+          "correctExplanation": "Construiste una función válida y la usaste correctamente. Esto ya parece código de producción.",
+          "incorrectExplanation": "Faltan piezas clave: define la función, retorna el doble y muestra el resultado.",
+          "hint": "Piensa en: entrada -> transformación -> salida.",
+          "xpReward": 24
+        },
+        {
+          "id": "exam_summary",
+          "type": "intro",
+          "title": "Cierre del examen",
+          "body": "Si llegaste hasta aquí, ya armaste una base muy seria en Dart. Completar esta ruta significa que ya no estás improvisando: ya estás construyendo criterio.",
+          "example": "Siguiente fase: usar todo esto para crear cosas brutales."
+        }
+      ]
+    }
+  ]
+}
