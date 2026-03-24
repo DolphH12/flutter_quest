@@ -38,9 +38,9 @@ class LocalProgressStore {
 
   Future<LearningProgressState> setUserName({
     required String userName,
-    required DartRouteContent route,
+    required List<DartRouteContent> routes,
   }) async {
-    final current = await ensureRouteInitialized(route);
+    final current = await ensureRoutesInitialized(routes);
     final cleaned = userName.trim();
     final next = current.copyWith(userName: cleaned.isEmpty ? null : cleaned);
     await save(next);
@@ -48,7 +48,7 @@ class LocalProgressStore {
   }
 
   Future<LearningProgressState> resetAll({
-    required DartRouteContent route,
+    required List<DartRouteContent> routes,
   }) async {
     _memoryFallback = null;
     try {
@@ -59,7 +59,7 @@ class LocalProgressStore {
     }
     final initial = LearningProgressState.initial();
     await save(initial);
-    return ensureRouteInitialized(route);
+    return ensureRoutesInitialized(routes);
   }
 
   Future<LearningProgressState> applyLessonResult({
@@ -158,26 +158,70 @@ class LocalProgressStore {
   Future<LearningProgressState> ensureRouteInitialized(
     DartRouteContent route,
   ) async {
+    final list = await ensureRoutesInitialized([route]);
+    return list;
+  }
+
+  Future<LearningProgressState> ensureRoutesInitialized(
+    List<DartRouteContent> routes,
+  ) async {
     final current = await load();
-    final nextActive =
-        current.activeNodeId ??
-        RouteProgressMapper.nextActiveNodeId(
+    final nextRouteProgress = <String, double>{
+      ...current.routeProgressPercentById,
+    };
+    final nextUnlockedExams = <String>{...current.unlockedExamIds};
+    final nextCompletedRoutes = <String>{...current.completedRouteIds};
+
+    String? nextActiveNodeId = current.activeNodeId;
+
+    for (final route in routes) {
+      final progress = RouteProgressMapper.routeCompletion(
+        route: route,
+        completedNodeIds: current.completedNodeIds,
+      );
+      nextRouteProgress[route.routeId] = progress;
+
+      final examIndex = route.nodes.indexWhere(
+        (node) => node.id == route.examNodeId,
+      );
+      final previous = examIndex <= 0
+          ? <LearningNodeContent>[]
+          : route.nodes.take(examIndex).toList();
+      final examUnlocked = previous.every(
+        (node) => current.completedNodeIds.contains(node.id),
+      );
+      if (examUnlocked) {
+        nextUnlockedExams.add(route.examNodeId);
+      }
+      if (current.completedNodeIds.contains(route.examNodeId)) {
+        nextCompletedRoutes.add(route.routeId);
+      }
+    }
+
+    final activeBelongsToKnownRoute =
+        nextActiveNodeId != null &&
+        routes.any(
+          (route) => route.nodes.any((node) => node.id == nextActiveNodeId),
+        );
+
+    if (!activeBelongsToKnownRoute) {
+      for (final route in routes) {
+        final candidate = RouteProgressMapper.nextActiveNodeId(
           route: route,
           completedNodeIds: current.completedNodeIds,
-        ) ??
-        (route.nodes.isEmpty ? null : route.nodes.first.id);
-
-    final progress = RouteProgressMapper.routeCompletion(
-      route: route,
-      completedNodeIds: current.completedNodeIds,
-    );
+        );
+        if (candidate != null) {
+          nextActiveNodeId = candidate;
+          break;
+        }
+      }
+    }
 
     final updated = current.copyWith(
-      activeNodeId: nextActive,
-      routeProgressPercentById: {
-        ...current.routeProgressPercentById,
-        route.routeId: progress,
-      },
+      activeNodeId: nextActiveNodeId,
+      routeProgressPercentById: nextRouteProgress,
+      unlockedExamIds: nextUnlockedExams,
+      completedRouteIds: nextCompletedRoutes,
     );
 
     await save(updated);

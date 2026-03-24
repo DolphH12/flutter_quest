@@ -10,6 +10,12 @@ class ProgressRepository {
     return _store.ensureRouteInitialized(route);
   }
 
+  Future<LearningProgressState> loadAndInitializeAll(
+    List<DartRouteContent> routes,
+  ) {
+    return _store.ensureRoutesInitialized(routes);
+  }
+
   Future<LearningProgressState> applyLessonResult({
     required LessonAttemptResult result,
     required DartRouteContent route,
@@ -19,12 +25,14 @@ class ProgressRepository {
 
   Future<LearningProgressState> setUserName({
     required String userName,
-    required DartRouteContent route,
+    required List<DartRouteContent> routes,
   }) {
-    return _store.setUserName(userName: userName, route: route);
+    return _store.setUserName(userName: userName, routes: routes);
   }
 
-  Future<LearningProgressState> resetAll({required DartRouteContent route}) {
-    return _store.resetAll(route: route);
+  Future<LearningProgressState> resetAll({
+    required List<DartRouteContent> routes,
+  }) {
+    return _store.resetAll(routes: routes);
   }
 }

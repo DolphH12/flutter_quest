@@ -1,29 +1,72 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/dart_route_asset_source.dart';
 import '../data/local_progress_store.dart';
 import '../data/progress_repository.dart';
+import '../data/route_asset_source.dart';
 import '../data/route_content_repository.dart';
+import '../data/route_progress_mapper.dart';
 import '../models/learning_models.dart';
 import '../models/progress_view_models.dart';
 
-final dartRouteAssetSourceProvider = Provider<DartRouteAssetSource>((ref) {
-  return const DartRouteAssetSource();
+final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
+  return const [
+    RouteAssetManifest(
+      routeId: 'dart_route',
+      assetPath: 'assets/content/dart_route.json',
+    ),
+    RouteAssetManifest(
+      routeId: 'flutter_foundations_route',
+      assetPath: 'assets/content/flutter_foundations_route.json',
+      requiredCompletedRouteId: 'dart_route',
+    ),
+  ];
+});
+
+final routeUnlockRequirementsProvider = Provider<Map<String, String?>>((ref) {
+  final manifests = ref.watch(routeManifestsProvider);
+  return {
+    for (final manifest in manifests)
+      manifest.routeId: manifest.requiredCompletedRouteId,
+  };
+});
+
+final routeAssetSourceProvider = Provider<RouteAssetSource>((ref) {
+  return const RouteAssetSource();
 });
 
 final routeContentRepositoryProvider = Provider<RouteContentRepository>((ref) {
-  return RouteContentRepository(ref.watch(dartRouteAssetSourceProvider));
+  return RouteContentRepository(ref.watch(routeAssetSourceProvider));
 });
 
 final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   return ProgressRepository(LocalProgressStore());
 });
 
-final activeRouteIdProvider = Provider<String>((ref) => 'dart_route');
-
-final routeContentProvider = FutureProvider<DartRouteContent>((ref) async {
+final allRoutesProvider = FutureProvider<List<DartRouteContent>>((ref) async {
   final repository = ref.watch(routeContentRepositoryProvider);
-  return repository.loadDartRoute();
+  final manifests = ref.watch(routeManifestsProvider);
+  return repository.loadRoutes(manifests: manifests);
+});
+
+// Backward compatibility for screens/components still expecting the Dart route.
+final routeContentProvider = FutureProvider<DartRouteContent>((ref) async {
+  final routes = await ref.watch(allRoutesProvider.future);
+  for (final route in routes) {
+    if (route.routeId == 'dart_route') return route;
+  }
+  return routes.first;
+});
+
+final routeByIdProvider = Provider.family<DartRouteContent?, String>((
+  ref,
+  routeId,
+) {
+  final routes = ref.watch(allRoutesProvider).valueOrNull;
+  if (routes == null) return null;
+  for (final route in routes) {
+    if (route.routeId == routeId) return route;
+  }
+  return null;
 });
 
 final appProgressNotifierProvider =
@@ -43,13 +86,21 @@ final routeProgressProvider = Provider.family<double, String>((ref, routeId) {
   );
 });
 
+final routeUnlockedProvider = Provider.family<bool, String>((ref, routeId) {
+  final requirement = ref.watch(routeUnlockRequirementsProvider)[routeId];
+  if (requirement == null) return true;
+  final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
+  if (progress == null) return false;
+  return progress.completedRouteIds.contains(requirement);
+});
+
 final currentNodeProvider = Provider.family<CurrentNodeInfo, String>((
   ref,
   routeId,
 ) {
-  final content = ref.watch(routeContentProvider).valueOrNull;
+  final route = ref.watch(routeByIdProvider(routeId));
   final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
-  if (content == null || progress == null) {
+  if (route == null || progress == null) {
     return const CurrentNodeInfo(
       nodeId: null,
       nodeTitle: 'Aun no has comenzado',
@@ -57,8 +108,11 @@ final currentNodeProvider = Provider.family<CurrentNodeInfo, String>((
     );
   }
 
-  final nodeId = progress.activeNodeId;
-  if (nodeId == null) {
+  final activeInRoute = RouteProgressMapper.nextActiveNodeId(
+    route: route,
+    completedNodeIds: progress.completedNodeIds,
+  );
+  if (activeInRoute == null) {
     return const CurrentNodeInfo(
       nodeId: null,
       nodeTitle: 'Aun no has comenzado',
@@ -66,8 +120,8 @@ final currentNodeProvider = Provider.family<CurrentNodeInfo, String>((
     );
   }
 
-  for (final node in content.nodes) {
-    if (node.id == nodeId) {
+  for (final node in route.nodes) {
+    if (node.id == activeInRoute) {
       return CurrentNodeInfo(
         nodeId: node.id,
         nodeTitle: node.title,
@@ -106,10 +160,30 @@ final routeCardStateProvider = Provider.family<RouteCardState, String>((
 });
 
 final profileSummaryProvider = Provider<ProfileSummary?>((ref) {
-  final route = ref.watch(routeContentProvider).valueOrNull;
+  final routes = ref.watch(allRoutesProvider).valueOrNull;
   final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
-  if (route == null || progress == null) return null;
-  final currentNode = ref.watch(currentNodeProvider(route.routeId));
+  if (routes == null || routes.isEmpty || progress == null) return null;
+
+  DartRouteContent primaryRoute = routes.first;
+  if (progress.lastLessonResult != null) {
+    final lastRouteId = progress.lastLessonResult!.routeId;
+    for (final route in routes) {
+      if (route.routeId == lastRouteId) {
+        primaryRoute = route;
+        break;
+      }
+    }
+  } else {
+    for (final route in routes) {
+      if (progress.routeProgress(route.routeId) > 0) {
+        primaryRoute = route;
+        break;
+      }
+    }
+  }
+
+  final currentNode = ref.watch(currentNodeProvider(primaryRoute.routeId));
+
   return ProfileSummary(
     userName: (progress.userName == null || progress.userName!.trim().isEmpty)
         ? 'Quest Learner'
@@ -122,8 +196,8 @@ final profileSummaryProvider = Provider<ProfileSummary?>((ref) {
     unlockedBadgesCount: progress.unlockedBadgeIds.length,
     currentNodeTitle: currentNode.nodeTitle,
     currentNodeId: currentNode.nodeId,
-    routeProgress: progress.routeProgress(route.routeId),
-    examCompleted: progress.completedNodeIds.contains(route.examNodeId),
+    routeProgress: progress.routeProgress(primaryRoute.routeId),
+    examCompleted: progress.completedNodeIds.contains(primaryRoute.examNodeId),
   );
 });
 
@@ -133,15 +207,15 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
 
   @override
   Future<LearningProgressState> build() async {
-    final route = await ref.watch(routeContentProvider.future);
-    return _progressRepository.loadAndInitialize(route);
+    final routes = await ref.watch(allRoutesProvider.future);
+    return _progressRepository.loadAndInitializeAll(routes);
   }
 
   Future<void> loadProgress() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final route = await ref.read(routeContentProvider.future);
-      return _progressRepository.loadAndInitialize(route);
+      final routes = await ref.read(allRoutesProvider.future);
+      return _progressRepository.loadAndInitializeAll(routes);
     });
   }
 
@@ -152,7 +226,15 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     if (previous == null) return null;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final route = await ref.read(routeContentProvider.future);
+      final routes = await ref.read(allRoutesProvider.future);
+      DartRouteContent? route;
+      for (final item in routes) {
+        if (item.routeId == result.routeId) {
+          route = item;
+          break;
+        }
+      }
+      route ??= routes.first;
       return _progressRepository.applyLessonResult(
         result: result,
         route: route,
@@ -168,16 +250,16 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     if (cleaned.isEmpty) return;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final route = await ref.read(routeContentProvider.future);
-      return _progressRepository.setUserName(userName: cleaned, route: route);
+      final routes = await ref.read(allRoutesProvider.future);
+      return _progressRepository.setUserName(userName: cleaned, routes: routes);
     });
   }
 
   Future<void> resetAllProgress() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final route = await ref.read(routeContentProvider.future);
-      return _progressRepository.resetAll(route: route);
+      final routes = await ref.read(allRoutesProvider.future);
+      return _progressRepository.resetAll(routes: routes);
     });
   }
 }

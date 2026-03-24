@@ -26,6 +26,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _inRouteDetail = false;
   LessonContent? _activeLesson;
   String? _focusedNodeId;
+  String? _selectedRouteId;
 
   @override
   void initState() {
@@ -35,28 +36,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final routeAsync = ref.watch(routeContentProvider);
+    final routesAsync = ref.watch(allRoutesProvider);
     final progressAsync = ref.watch(appProgressNotifierProvider);
+    final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
 
-    if (routeAsync.isLoading || progressAsync.isLoading) {
+    if (routesAsync.isLoading || progressAsync.isLoading) {
       return const FQPageContainer(
         child: Center(child: CircularProgressIndicator()),
       );
     }
 
-    if (routeAsync.hasError || progressAsync.hasError) {
+    if (routesAsync.hasError || progressAsync.hasError) {
       return FQPageContainer(
         child: Center(
           child: Text(
-            'No se pudo cargar el contenido de Dart.',
+            'No se pudo cargar el contenido de las rutas.',
             textAlign: TextAlign.center,
           ),
         ),
       );
     }
-    final route = routeAsync.value;
+    final routes = routesAsync.value;
     final progress = progressAsync.value;
-    if (route == null || progress == null) {
+    if (routes == null || routes.isEmpty || progress == null) {
       return const FQPageContainer(
         child: Center(child: CircularProgressIndicator()),
       );
@@ -77,14 +79,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     if (!_inRouteDetail) {
       return _RouteOverview(
-        route: route,
+        routes: routes,
         progress: progress,
-        onOpen: _openRouteDetail,
+        unlockRequirements: unlockRequirements,
+        onOpenRoute: (route) => _openRouteDetail(route.routeId),
+      );
+    }
+
+    final selectedRoute = _findSelectedRoute(routes);
+    if (selectedRoute == null ||
+        !_isRouteUnlocked(selectedRoute, progress, unlockRequirements)) {
+      return _RouteOverview(
+        routes: routes,
+        progress: progress,
+        unlockRequirements: unlockRequirements,
+        onOpenRoute: (route) => _openRouteDetail(route.routeId),
       );
     }
 
     final nodeStates = RouteProgressMapper.toNodeUiStates(
-      route: route,
+      route: selectedRoute,
       progress: progress,
     );
     final focused =
@@ -98,17 +112,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             .id;
 
     return _RouteDetail(
-      route: route,
+      route: selectedRoute,
       progress: progress,
       nodeStates: nodeStates,
       focusedNodeId: focused,
       onBack: _closeRouteDetail,
-      onNodeTap: (uiNode) => _openNodeLesson(route, uiNode),
+      onNodeTap: (uiNode) => _openNodeLesson(selectedRoute, uiNode),
     );
   }
 
-  void _openRouteDetail() {
+  DartRouteContent? _findSelectedRoute(List<DartRouteContent> routes) {
+    if (_selectedRouteId != null) {
+      for (final route in routes) {
+        if (route.routeId == _selectedRouteId) return route;
+      }
+    }
+    for (final route in routes) {
+      if (route.routeId == 'dart_route') return route;
+    }
+    return routes.first;
+  }
+
+  bool _isRouteUnlocked(
+    DartRouteContent route,
+    LearningProgressState progress,
+    Map<String, String?> unlockRequirements,
+  ) {
+    final requirement = unlockRequirements[route.routeId];
+    if (requirement == null) return true;
+    return progress.completedRouteIds.contains(requirement);
+  }
+
+  void _openRouteDetail(String routeId) {
     setState(() {
+      _selectedRouteId = routeId;
       _inRouteDetail = true;
     });
     widget.onRouteViewChanged?.call(true);
@@ -165,14 +202,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
 class _RouteOverview extends StatelessWidget {
   const _RouteOverview({
-    required this.route,
+    required this.routes,
     required this.progress,
-    required this.onOpen,
+    required this.unlockRequirements,
+    required this.onOpenRoute,
   });
 
-  final DartRouteContent route;
+  final List<DartRouteContent> routes;
   final LearningProgressState progress;
-  final VoidCallback onOpen;
+  final Map<String, String?> unlockRequirements;
+  final ValueChanged<DartRouteContent> onOpenRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -182,97 +221,176 @@ class _RouteOverview extends StatelessWidget {
           _OverviewHeader(progress: progress),
           const SizedBox(height: 14),
           Text(
-            'Ruta disponible',
+            'Rutas disponibles',
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(color: FQColors.deepNavy),
           ),
           const SizedBox(height: 10),
-          InkWell(
-            borderRadius: FQRadius.large,
-            onTap: onOpen,
-            child: FQSurfaceCard(
-              radius: FQRadius.large,
-              gradient: FQGradients.subtlePanel,
-              border: Border.all(
-                color: _routeBorderColor(
-                  progress: progress,
-                  routeId: route.routeId,
-                ),
-                width: _routeBorderWidth(
-                  progress: progress,
-                  routeId: route.routeId,
-                ),
+          for (final route in routes)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: _RouteCardTile(
+                route: route,
+                progress: progress,
+                isUnlocked: _isUnlocked(route),
+                lockReason: _lockReason(route, routes),
+                onTap: () => onOpenRoute(route),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      borderRadius: FQRadius.medium,
-                      gradient: FQGradients.heroBlue,
+            ),
+        ],
+      ),
+    );
+  }
+
+  bool _isUnlocked(DartRouteContent route) {
+    final requirement = unlockRequirements[route.routeId];
+    if (requirement == null) return true;
+    return progress.completedRouteIds.contains(requirement);
+  }
+
+  String? _lockReason(DartRouteContent route, List<DartRouteContent> routes) {
+    final requirement = unlockRequirements[route.routeId];
+    if (requirement == null) return null;
+    if (progress.completedRouteIds.contains(requirement)) return null;
+    for (final item in routes) {
+      if (item.routeId == requirement) {
+        return 'Completa ${item.title} para desbloquear';
+      }
+    }
+    return 'Completa la ruta requerida para desbloquear';
+  }
+}
+
+class _RouteCardTile extends StatelessWidget {
+  const _RouteCardTile({
+    required this.route,
+    required this.progress,
+    required this.isUnlocked,
+    required this.lockReason,
+    required this.onTap,
+  });
+
+  final DartRouteContent route;
+  final LearningProgressState progress;
+  final bool isUnlocked;
+  final String? lockReason;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final progressValue = progress.routeProgress(route.routeId);
+    final cardBody = FQSurfaceCard(
+      radius: FQRadius.large,
+      gradient: isUnlocked ? FQGradients.subtlePanel : null,
+      color: isUnlocked ? null : FQColors.surfaceHigh.withValues(alpha: 0.56),
+      border: Border.all(
+        color: _routeBorderColor(
+          progress: progress,
+          routeId: route.routeId,
+          isUnlocked: isUnlocked,
+        ),
+        width: _routeBorderWidth(
+          progress: progress,
+          routeId: route.routeId,
+          isUnlocked: isUnlocked,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: FQRadius.medium,
+              gradient: isUnlocked
+                  ? FQGradients.heroBlue
+                  : const LinearGradient(
+                      colors: [Color(0xFFC8D2EB), Color(0xFFB8C5E6)],
                     ),
-                    child: const Icon(Icons.route_rounded, color: Colors.white),
+            ),
+            child: Icon(
+              _iconFromName(route.icon),
+              color: isUnlocked ? Colors.white : FQColors.outlineVariant,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        route.title,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: isUnlocked
+                              ? FQColors.deepNavy
+                              : FQColors.onSurface.withValues(alpha: 0.66),
+                        ),
+                      ),
+                    ),
+                    if (!isUnlocked)
+                      const Icon(
+                        Icons.lock_rounded,
+                        size: 18,
+                        color: FQColors.outlineVariant,
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  route.description,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: FQColors.onSurface.withValues(alpha: 0.72),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          route.title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          route.description,
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: FQColors.onSurface.withValues(
-                                  alpha: 0.72,
-                                ),
-                              ),
-                        ),
-                        if (progress.routeProgress(route.routeId) > 0) ...[
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Text(
-                                'Progress',
-                                style: Theme.of(context).textTheme.labelMedium
-                                    ?.copyWith(
-                                      color: FQColors.primary,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                '${(progress.routeProgress(route.routeId) * 100).toInt()}%',
-                                style: Theme.of(context).textTheme.labelLarge
-                                    ?.copyWith(
-                                      color: FQColors.primary,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          FQProgressBar(
-                            value: progress.routeProgress(route.routeId),
-                          ),
-                        ],
-                      ],
+                ),
+                if (lockReason != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    lockReason!,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: FQColors.tertiaryDark,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
-              ),
+                if (progressValue > 0) ...[
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(
+                        'Progress',
+                        style: Theme.of(context).textTheme.labelMedium
+                            ?.copyWith(
+                              color: FQColors.primary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        '${(progressValue * 100).toInt()}%',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: FQColors.primary,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  FQProgressBar(value: progressValue),
+                ],
+              ],
             ),
           ),
         ],
       ),
     );
+
+    if (!isUnlocked) return cardBody;
+    return InkWell(borderRadius: FQRadius.large, onTap: onTap, child: cardBody);
   }
 }
 
@@ -299,7 +417,7 @@ class _OverviewHeader extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          'Ruta Dart activa',
+          'Elige una ruta y sigue avanzando',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: FQColors.onSurface.withValues(alpha: 0.7),
           ),
@@ -330,7 +448,9 @@ class _OverviewHeader extends StatelessWidget {
 Color _routeBorderColor({
   required LearningProgressState progress,
   required String routeId,
+  required bool isUnlocked,
 }) {
+  if (!isUnlocked) return Colors.transparent;
   if (progress.completedRouteIds.contains(routeId)) {
     return const Color(0xFF34A853);
   }
@@ -343,7 +463,9 @@ Color _routeBorderColor({
 double _routeBorderWidth({
   required LearningProgressState progress,
   required String routeId,
+  required bool isUnlocked,
 }) {
+  if (!isUnlocked) return 0;
   if (progress.completedRouteIds.contains(routeId)) return 2.2;
   if (progress.routeProgress(routeId) > 0) return 2.2;
   return 0;
@@ -380,6 +502,8 @@ class _RouteDetail extends StatelessWidget {
               Expanded(
                 child: Text(
                   route.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontSize: 36,
                     color: FQColors.deepNavy,
@@ -408,7 +532,7 @@ class _RouteDetail extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          _CurrentPathCard(progress: progress.routeCompletion),
+          _CurrentPathCard(progress: progress.routeProgress(route.routeId)),
           const SizedBox(height: 12),
           Expanded(
             child: _PathBoard(
@@ -466,7 +590,7 @@ class _CurrentPathCard extends StatelessWidget {
   }
 }
 
-class _PathBoard extends StatelessWidget {
+class _PathBoard extends StatefulWidget {
   const _PathBoard({
     required this.nodeStates,
     required this.examNodeId,
@@ -480,6 +604,56 @@ class _PathBoard extends StatelessWidget {
   final ValueChanged<NodeUiState> onNodeTap;
 
   @override
+  State<_PathBoard> createState() => _PathBoardState();
+}
+
+class _PathBoardState extends State<_PathBoard> {
+  final ScrollController _scrollController = ScrollController();
+  double _viewportHeight = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToFocused());
+  }
+
+  @override
+  void didUpdateWidget(covariant _PathBoard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.focusedNodeId != widget.focusedNodeId ||
+        oldWidget.nodeStates.length != widget.nodeStates.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToFocused());
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToFocused() {
+    if (!_scrollController.hasClients) return;
+    final focusedIndex = widget.nodeStates.indexWhere(
+      (state) => state.node.id == widget.focusedNodeId,
+    );
+    if (focusedIndex < 0) return;
+
+    const estimatedItemHeight = 178.0;
+    final estimatedCenter = focusedIndex * estimatedItemHeight;
+    final target = estimatedCenter - (_viewportHeight / 2) + 70;
+    final clamped = target.clamp(
+      _scrollController.position.minScrollExtent,
+      _scrollController.position.maxScrollExtent,
+    );
+    _scrollController.animateTo(
+      clamped,
+      duration: const Duration(milliseconds: 360),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FQSurfaceCard(
       radius: FQRadius.xLarge,
@@ -489,35 +663,44 @@ class _PathBoard extends StatelessWidget {
         colors: [Color(0xFFF0F4FF), Color(0xFFE8EEFF)],
       ),
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 22),
-      child: SingleChildScrollView(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 270),
-            child: Column(
-              children: [
-                for (int i = 0; i < nodeStates.length; i++)
-                  _PathStep(
-                    nodeState: nodeStates[i],
-                    visualOffset: nodeStates[i].node.xOffset == 0
-                        ? ((i % 4 == 0)
-                              ? -34
-                              : (i % 4 == 1)
-                              ? 30
-                              : (i % 4 == 2)
-                              ? -20
-                              : 24)
-                        : nodeStates[i].node.xOffset,
-                    isExam: nodeStates[i].node.id == examNodeId,
-                    isExamPassed: nodeStates[i].isExamPassed,
-                    isFocused: nodeStates[i].node.id == focusedNodeId,
-                    hasConnector: i != nodeStates.length - 1,
-                    onTap: () => onNodeTap(nodeStates[i]),
-                  ),
-              ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          _viewportHeight = constraints.maxHeight;
+          return SingleChildScrollView(
+            controller: _scrollController,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 270),
+                child: Column(
+                  children: [
+                    for (int i = 0; i < widget.nodeStates.length; i++)
+                      _PathStep(
+                        nodeState: widget.nodeStates[i],
+                        visualOffset: widget.nodeStates[i].node.xOffset == 0
+                            ? ((i % 4 == 0)
+                                  ? -34
+                                  : (i % 4 == 1)
+                                  ? 30
+                                  : (i % 4 == 2)
+                                  ? -20
+                                  : 24)
+                            : widget.nodeStates[i].node.xOffset,
+                        isExam:
+                            widget.nodeStates[i].node.id == widget.examNodeId,
+                        isExamPassed: widget.nodeStates[i].isExamPassed,
+                        isFocused:
+                            widget.nodeStates[i].node.id ==
+                            widget.focusedNodeId,
+                        hasConnector: i != widget.nodeStates.length - 1,
+                        onTap: () => widget.onNodeTap(widget.nodeStates[i]),
+                      ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -709,6 +892,18 @@ IconData _iconFromName(String value) {
     'bug_report' => Icons.bug_report_rounded,
     'military_tech' => Icons.military_tech_rounded,
     'route_dart' => Icons.route_rounded,
+    'flutter_dash' => Icons.flutter_dash_rounded,
+    'folder_copy' => Icons.folder_copy_rounded,
+    'play_circle' => Icons.play_circle_fill_rounded,
+    'web_asset' => Icons.web_asset_rounded,
+    'view_column' => Icons.view_column_rounded,
+    'crop_square' => Icons.crop_square_rounded,
+    'smart_button' => Icons.smart_button_rounded,
+    'format_list_bulleted' => Icons.format_list_bulleted_rounded,
+    'navigation' => Icons.navigation_rounded,
+    'dashboard_customize' => Icons.dashboard_customize_rounded,
+    'workspace_premium' => Icons.workspace_premium_rounded,
+    'flutter' => Icons.flutter_dash_rounded,
     _ => Icons.circle_rounded,
   };
 }

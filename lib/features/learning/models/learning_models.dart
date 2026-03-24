@@ -29,14 +29,27 @@ int _asInt(dynamic value, {int fallback = 0}) {
   return fallback;
 }
 
-List<String>? _asStringList(dynamic value) {
-  if (value is! List) return null;
-  return value.map((item) => _asString(item)).toList();
-}
-
-List<int>? _asIntList(dynamic value) {
-  if (value is! List) return null;
-  return value.map((item) => _asInt(item)).toList();
+List<String> _requiredStringList(
+  Map<String, dynamic> json,
+  String key,
+  String error,
+) {
+  final value = json[key];
+  if (value is! List) {
+    throw FormatException(error);
+  }
+  final result = <String>[];
+  for (final item in value) {
+    final mapped = _asString(item).trim();
+    if (mapped.isEmpty) {
+      throw FormatException(error);
+    }
+    result.add(mapped);
+  }
+  if (result.isEmpty) {
+    throw FormatException(error);
+  }
+  return result;
 }
 
 Set<String> _asStringSet(dynamic value) {
@@ -60,6 +73,51 @@ Map<String, String> _asStringMap(dynamic value) {
     map[_asString(entry.key)] = _asString(entry.value);
   }
   return map;
+}
+
+String _requiredString(Map<String, dynamic> json, String key, String error) {
+  final raw = json[key];
+  final value = _asString(raw).trim();
+  if (value.isEmpty) throw FormatException(error);
+  return value;
+}
+
+int _requiredInt(Map<String, dynamic> json, String key, String error) {
+  final raw = json[key];
+  if (raw is! num) throw FormatException(error);
+  return raw.toInt();
+}
+
+bool _optionalBool(Map<String, dynamic> json, String key, {required bool fallback}) {
+  final value = json[key];
+  if (value is bool) return value;
+  return fallback;
+}
+
+class MatchConceptPair {
+  const MatchConceptPair({required this.left, required this.right});
+
+  final String left;
+  final String right;
+
+  factory MatchConceptPair.fromJson(dynamic raw) {
+    if (raw is! Map<String, dynamic>) {
+      throw const FormatException('matchConcept requires pairs');
+    }
+    final left = _requiredString(
+      raw,
+      'left',
+      'matchConcept requires pairs',
+    );
+    final right = _requiredString(
+      raw,
+      'right',
+      'matchConcept requires pairs',
+    );
+    return MatchConceptPair(left: left, right: right);
+  }
+
+  Map<String, dynamic> toJson() => {'left': left, 'right': right};
 }
 
 class DartRouteContent {
@@ -86,20 +144,45 @@ class DartRouteContent {
   final List<LearningNodeContent> nodes;
 
   factory DartRouteContent.fromJson(Map<String, dynamic> json) {
+    final routeId = _requiredString(json, 'routeId', 'route requires routeId');
+    final title = _requiredString(json, 'title', 'route requires title');
+    final description = _requiredString(
+      json,
+      'description',
+      'route requires description',
+    );
+    final icon = _requiredString(json, 'icon', 'route requires icon');
+    final themeColor = _requiredString(
+      json,
+      'themeColor',
+      'route requires themeColor',
+    );
+    final examNodeId = _requiredString(
+      json,
+      'examNodeId',
+      'route requires examNodeId',
+    );
+    final version = _requiredInt(json, 'version', 'route requires version');
+    final estimatedMinutes = _requiredInt(
+      json,
+      'estimatedMinutes',
+      'route requires estimatedMinutes',
+    );
+    final rawNodes = json['nodes'];
+    if (rawNodes is! List) {
+      throw const FormatException('route requires nodes');
+    }
     return DartRouteContent(
-      routeId: _asString(json['routeId']),
-      title: _asString(json['title']),
-      description: _asString(json['description']),
-      icon: _asString(json['icon']),
-      themeColorHex: _asString(json['themeColor']),
-      version: _asInt(json['version'], fallback: 1),
-      estimatedMinutes: _asInt(json['estimatedMinutes']),
-      examNodeId: _asString(json['examNodeId']),
-      nodes: (json['nodes'] as List<dynamic>? ?? const [])
-          .map(
-            (item) =>
-                LearningNodeContent.fromJson(item as Map<String, dynamic>),
-          )
+      routeId: routeId,
+      title: title,
+      description: description,
+      icon: icon,
+      themeColorHex: themeColor,
+      version: version,
+      estimatedMinutes: estimatedMinutes,
+      examNodeId: examNodeId,
+      nodes: rawNodes
+          .map((item) => LearningNodeContent.fromJson(item as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -143,14 +226,31 @@ class LearningNodeContent {
   bool get isExam => nodeType == 'exam';
 
   factory LearningNodeContent.fromJson(Map<String, dynamic> json) {
+    final id = _requiredString(json, 'id', 'node requires id');
+    final title = _requiredString(json, 'title', 'node requires title');
+    final shortDescription = _requiredString(
+      json,
+      'shortDescription',
+      'node requires shortDescription',
+    );
+    final icon = _requiredString(json, 'icon', 'node requires icon');
+    final nodeType = _requiredString(json, 'nodeType', 'node requires nodeType');
+    if (nodeType != 'lesson' && nodeType != 'exam') {
+      throw const FormatException('nodeType must be lesson or exam');
+    }
+    final xpReward = _requiredInt(json, 'xpReward', 'node requires xpReward');
+    final rawSteps = json['steps'];
+    if (rawSteps is! List) {
+      throw const FormatException('node requires steps');
+    }
     return LearningNodeContent(
-      id: _asString(json['id']),
-      title: _asString(json['title']),
-      shortDescription: _asString(json['shortDescription']),
-      icon: _asString(json['icon'], fallback: 'circle'),
-      nodeType: _asString(json['nodeType'], fallback: 'lesson'),
-      xpReward: _asInt(json['xpReward']),
-      steps: (json['steps'] as List<dynamic>? ?? const [])
+      id: id,
+      title: title,
+      shortDescription: shortDescription,
+      icon: icon,
+      nodeType: nodeType,
+      xpReward: xpReward,
+      steps: rawSteps
           .map((item) => LessonStep.fromJson(item as Map<String, dynamic>))
           .toList(),
       xOffset: (json['xOffset'] as num?)?.toDouble() ?? 0,
@@ -175,6 +275,7 @@ class LessonStep {
   const LessonStep({
     required this.id,
     required this.type,
+    required this.shuffle,
     this.title,
     this.body,
     this.example,
@@ -192,11 +293,8 @@ class LessonStep {
     this.correctOrder,
     this.codeLines,
     this.wrongLineIndex,
-    this.matchLeft,
-    this.matchRight,
-    this.correctMatches,
+    this.pairs,
     this.codeSnippet,
-    this.expectedOutput,
     this.expectedFragments,
     this.instructions,
     this.starterCode,
@@ -204,6 +302,7 @@ class LessonStep {
 
   final String id;
   final LessonStepType type;
+  final bool shuffle;
 
   final String? title;
   final String? body;
@@ -220,14 +319,11 @@ class LessonStep {
   final String? expectedAnswer;
   final String? hint;
   final List<String>? blocks;
-  final List<int>? correctOrder;
+  final List<String>? correctOrder;
   final List<String>? codeLines;
   final int? wrongLineIndex;
-  final List<String>? matchLeft;
-  final List<String>? matchRight;
-  final Map<String, String>? correctMatches;
+  final List<MatchConceptPair>? pairs;
   final String? codeSnippet;
-  final String? expectedOutput;
   final List<String>? expectedFragments;
   final String? instructions;
   final String? starterCode;
@@ -249,57 +345,47 @@ class LessonStep {
   }
 
   factory LessonStep.fromJson(Map<String, dynamic> json) {
-    return LessonStep(
-      id: _asString(json['id']),
-      type: _stepTypeFromString(_asString(json['type'])),
-      title: json['title'] == null ? null : _asString(json['title']),
-      body: json['body'] == null ? null : _asString(json['body']),
-      example: json['example'] == null ? null : _asString(json['example']),
-      question: json['question'] == null ? null : _asString(json['question']),
-      options: _asStringList(json['options']),
-      correctAnswer: json['correctAnswer'] == null
-          ? null
-          : _asString(json['correctAnswer']),
-      correctExplanation: json['correctExplanation'] == null
-          ? null
-          : _asString(json['correctExplanation']),
-      incorrectExplanation: json['incorrectExplanation'] == null
-          ? null
-          : _asString(json['incorrectExplanation']),
-      prompt: json['prompt'] == null ? null : _asString(json['prompt']),
-      initialCode: json['initialCode'] == null
-          ? null
-          : _asString(json['initialCode']),
-      expectedAnswer: json['expectedAnswer'] == null
-          ? null
-          : _asString(json['expectedAnswer']),
-      hint: json['hint'] == null ? null : _asString(json['hint']),
-      xpReward: _asInt(json['xpReward']),
-      blocks: _asStringList(json['blocks']),
-      correctOrder: _asIntList(json['correctOrder']),
-      codeLines: _asStringList(json['codeLines']),
-      wrongLineIndex: json['wrongLineIndex'] == null
-          ? null
-          : _asInt(json['wrongLineIndex']),
-      matchLeft: _asStringList(json['matchLeft']),
-      matchRight: _asStringList(json['matchRight']),
-      correctMatches: json['correctMatches'] is Map
-          ? _asStringMap(json['correctMatches'])
-          : null,
-      codeSnippet: json['codeSnippet'] == null
-          ? null
-          : _asString(json['codeSnippet']),
-      expectedOutput: json['expectedOutput'] == null
-          ? null
-          : _asString(json['expectedOutput']),
-      expectedFragments: _asStringList(json['expectedFragments']),
-      instructions: json['instructions'] == null
-          ? null
-          : _asString(json['instructions']),
-      starterCode: json['starterCode'] == null
-          ? null
-          : _asString(json['starterCode']),
-    );
+    final id = _requiredString(json, 'id', 'activity requires id');
+    final typeRaw = _requiredString(json, 'type', 'activity $id requires type');
+    final type = _stepTypeFromString(typeRaw);
+    if (type == LessonStepType.unknown) {
+      throw FormatException('unknown activity type: $typeRaw');
+    }
+    return switch (type) {
+      LessonStepType.intro => LessonStep(
+        id: id,
+        type: type,
+        shuffle: false,
+        title: _requiredString(json, 'title', 'intro requires title'),
+        body: _requiredString(json, 'body', 'intro requires body'),
+        example: json['example'] == null ? null : _asString(json['example']),
+      ),
+      LessonStepType.multipleChoice => _buildMultipleChoice(json, id, type),
+      LessonStepType.fillInTheCode => _buildCodeCompletion(
+        json: json,
+        id: id,
+        type: type,
+        errorPrefix: 'fillInTheCode',
+      ),
+      LessonStepType.completeSnippet => _buildCodeCompletion(
+        json: json,
+        id: id,
+        type: type,
+        errorPrefix: 'completeSnippet',
+      ),
+      LessonStepType.fixTheBug => _buildCodeCompletion(
+        json: json,
+        id: id,
+        type: type,
+        errorPrefix: 'fixTheBug',
+      ),
+      LessonStepType.orderCodeBlocks => _buildOrderCodeBlocks(json, id, type),
+      LessonStepType.findTheWrongLine => _buildFindWrongLine(json, id, type),
+      LessonStepType.matchConcept => _buildMatchConcept(json, id, type),
+      LessonStepType.predictOutput => _buildPredictOutput(json, id, type),
+      LessonStepType.guidedWriting => _buildGuidedWriting(json, id, type),
+      LessonStepType.unknown => throw const FormatException('unknown activity type'),
+    };
   }
 
   Map<String, dynamic> toJson() {
@@ -319,19 +405,302 @@ class LessonStep {
       'expectedAnswer': expectedAnswer,
       'hint': hint,
       'xpReward': xpReward,
+      'shuffle': shuffle,
       'blocks': blocks,
       'correctOrder': correctOrder,
       'codeLines': codeLines,
       'wrongLineIndex': wrongLineIndex,
-      'matchLeft': matchLeft,
-      'matchRight': matchRight,
-      'correctMatches': correctMatches,
+      'pairs': pairs?.map((item) => item.toJson()).toList(),
       'codeSnippet': codeSnippet,
-      'expectedOutput': expectedOutput,
       'expectedFragments': expectedFragments,
       'instructions': instructions,
       'starterCode': starterCode,
     };
+  }
+
+  static LessonStep _buildMultipleChoice(
+    Map<String, dynamic> json,
+    String id,
+    LessonStepType type,
+  ) {
+    final options = _requiredStringList(
+      json,
+      'options',
+      'multipleChoice requires options and correctAnswer',
+    );
+    final correct = _requiredString(
+      json,
+      'correctAnswer',
+      'multipleChoice requires options and correctAnswer',
+    );
+    if (!options.contains(correct)) {
+      throw const FormatException(
+        'multipleChoice requires options and correctAnswer',
+      );
+    }
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: _optionalBool(json, 'shuffle', fallback: true),
+      question: _requiredString(json, 'question', 'multipleChoice requires question'),
+      options: options,
+      correctAnswer: correct,
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        'multipleChoice requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        'multipleChoice requires incorrectExplanation',
+      ),
+      xpReward: _requiredInt(json, 'xpReward', 'multipleChoice requires xpReward'),
+    );
+  }
+
+  static LessonStep _buildCodeCompletion({
+    required Map<String, dynamic> json,
+    required String id,
+    required LessonStepType type,
+    required String errorPrefix,
+  }) {
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: false,
+      prompt: _requiredString(json, 'prompt', '$errorPrefix requires prompt'),
+      initialCode: _requiredString(
+        json,
+        'initialCode',
+        '$errorPrefix requires initialCode and expectedAnswer',
+      ),
+      expectedAnswer: _requiredString(
+        json,
+        'expectedAnswer',
+        '$errorPrefix requires initialCode and expectedAnswer',
+      ),
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        '$errorPrefix requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        '$errorPrefix requires incorrectExplanation',
+      ),
+      hint: json['hint'] == null ? null : _asString(json['hint']),
+      xpReward: _requiredInt(json, 'xpReward', '$errorPrefix requires xpReward'),
+    );
+  }
+
+  static LessonStep _buildOrderCodeBlocks(
+    Map<String, dynamic> json,
+    String id,
+    LessonStepType type,
+  ) {
+    final blocks = _requiredStringList(
+      json,
+      'blocks',
+      'orderCodeBlocks requires blocks and correctOrder',
+    );
+    final correctOrder = _requiredStringList(
+      json,
+      'correctOrder',
+      'orderCodeBlocks requires blocks and correctOrder',
+    );
+    if (blocks.length != correctOrder.length) {
+      throw const FormatException(
+        'orderCodeBlocks requires blocks and correctOrder',
+      );
+    }
+    for (final block in blocks) {
+      if (!correctOrder.contains(block)) {
+        throw const FormatException(
+          'orderCodeBlocks requires blocks and correctOrder',
+        );
+      }
+    }
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: _optionalBool(json, 'shuffle', fallback: true),
+      prompt: _requiredString(json, 'prompt', 'orderCodeBlocks requires prompt'),
+      blocks: blocks,
+      correctOrder: correctOrder,
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        'orderCodeBlocks requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        'orderCodeBlocks requires incorrectExplanation',
+      ),
+      xpReward: _requiredInt(json, 'xpReward', 'orderCodeBlocks requires xpReward'),
+    );
+  }
+
+  static LessonStep _buildFindWrongLine(
+    Map<String, dynamic> json,
+    String id,
+    LessonStepType type,
+  ) {
+    final codeLines = _requiredStringList(
+      json,
+      'codeLines',
+      'findTheWrongLine requires codeLines and wrongLineIndex',
+    );
+    final wrongLineIndex = _requiredInt(
+      json,
+      'wrongLineIndex',
+      'findTheWrongLine requires codeLines and wrongLineIndex',
+    );
+    if (wrongLineIndex < 0 || wrongLineIndex >= codeLines.length) {
+      throw const FormatException(
+        'findTheWrongLine requires codeLines and wrongLineIndex',
+      );
+    }
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: false,
+      prompt: _requiredString(json, 'prompt', 'findTheWrongLine requires prompt'),
+      codeLines: codeLines,
+      wrongLineIndex: wrongLineIndex,
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        'findTheWrongLine requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        'findTheWrongLine requires incorrectExplanation',
+      ),
+      xpReward: _requiredInt(json, 'xpReward', 'findTheWrongLine requires xpReward'),
+    );
+  }
+
+  static LessonStep _buildMatchConcept(
+    Map<String, dynamic> json,
+    String id,
+    LessonStepType type,
+  ) {
+    final rawPairs = json['pairs'];
+    if (rawPairs is! List) {
+      throw const FormatException('matchConcept requires pairs');
+    }
+    final pairs = rawPairs
+        .map((item) => MatchConceptPair.fromJson(item))
+        .toList();
+    if (pairs.isEmpty) {
+      throw const FormatException('matchConcept requires pairs');
+    }
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: _optionalBool(json, 'shuffle', fallback: true),
+      prompt: _requiredString(json, 'prompt', 'matchConcept requires prompt'),
+      pairs: pairs,
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        'matchConcept requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        'matchConcept requires incorrectExplanation',
+      ),
+      xpReward: _requiredInt(json, 'xpReward', 'matchConcept requires xpReward'),
+    );
+  }
+
+  static LessonStep _buildPredictOutput(
+    Map<String, dynamic> json,
+    String id,
+    LessonStepType type,
+  ) {
+    final options = _requiredStringList(
+      json,
+      'options',
+      'predictOutput requires options and correctAnswer',
+    );
+    final correct = _requiredString(
+      json,
+      'correctAnswer',
+      'predictOutput requires options and correctAnswer',
+    );
+    if (!options.contains(correct)) {
+      throw const FormatException('predictOutput requires options and correctAnswer');
+    }
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: _optionalBool(json, 'shuffle', fallback: true),
+      question: _requiredString(json, 'question', 'predictOutput requires question'),
+      codeSnippet: _requiredString(
+        json,
+        'codeSnippet',
+        'predictOutput requires codeSnippet',
+      ),
+      options: options,
+      correctAnswer: correct,
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        'predictOutput requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        'predictOutput requires incorrectExplanation',
+      ),
+      xpReward: _requiredInt(json, 'xpReward', 'predictOutput requires xpReward'),
+    );
+  }
+
+  static LessonStep _buildGuidedWriting(
+    Map<String, dynamic> json,
+    String id,
+    LessonStepType type,
+  ) {
+    final expectedFragments = _requiredStringList(
+      json,
+      'expectedFragments',
+      'guidedWriting requires starterCode and expectedFragments',
+    );
+    return LessonStep(
+      id: id,
+      type: type,
+      shuffle: false,
+      instructions: _requiredString(
+        json,
+        'instructions',
+        'guidedWriting requires instructions',
+      ),
+      starterCode: _requiredString(
+        json,
+        'starterCode',
+        'guidedWriting requires starterCode and expectedFragments',
+      ),
+      expectedFragments: expectedFragments,
+      correctExplanation: _requiredString(
+        json,
+        'correctExplanation',
+        'guidedWriting requires correctExplanation',
+      ),
+      incorrectExplanation: _requiredString(
+        json,
+        'incorrectExplanation',
+        'guidedWriting requires incorrectExplanation',
+      ),
+      hint: json['hint'] == null ? null : _asString(json['hint']),
+      xpReward: _requiredInt(json, 'xpReward', 'guidedWriting requires xpReward'),
+    );
   }
 }
 

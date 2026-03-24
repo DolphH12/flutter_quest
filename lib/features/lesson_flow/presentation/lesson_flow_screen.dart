@@ -166,11 +166,11 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
       return;
     }
     if (action.openResult) {
-      await _showResultModal(context);
+      await _showResultModal();
     }
   }
 
-  Future<void> _showResultModal(BuildContext context) async {
+  Future<void> _showResultModal() async {
     final result = ref
         .read(lessonSessionProvider(widget.lesson).notifier)
         .buildResult();
@@ -200,7 +200,11 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
             ref.read(lessonSessionProvider(widget.lesson).notifier).reset();
           },
           onContinue: () async {
-            final navigator = Navigator.of(bottomSheetContext);
+            if (bottomSheetContext.mounted) {
+              Navigator.of(bottomSheetContext).pop();
+            }
+            if (!mounted) return;
+
             final updated = await ref
                 .read(appProgressNotifierProvider.notifier)
                 .completeLesson(result);
@@ -209,23 +213,28 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                 result.passed &&
                 (updated?.completedRouteIds.contains(result.routeId) ?? false);
 
-            if (navigator.canPop()) {
-              navigator.pop();
-            }
-
-            if (!context.mounted) return;
-
+            if (!mounted) return;
             if (showRouteCelebration) {
+              final routes = ref.read(allRoutesProvider).valueOrNull;
+              String routeTitle = 'Ruta';
+              if (routes != null) {
+                for (final route in routes) {
+                  if (route.routeId == result.routeId) {
+                    routeTitle = route.title;
+                    break;
+                  }
+                }
+              }
               await showDialog<void>(
                 context: context,
                 barrierDismissible: false,
                 builder: (context) {
-                  return const _RouteCompletionDialog();
+                  return _RouteCompletionDialog(routeTitle: routeTitle);
                 },
               );
             }
 
-            if (!context.mounted) return;
+            if (!mounted) return;
             widget.onBack();
           },
         );
@@ -380,6 +389,7 @@ class _ActivityStep extends StatelessWidget {
       ActivityType.guidedWriting => activity.prompt ?? 'Escritura guiada',
       _ => activity.prompt ?? 'Completa el codigo',
     };
+    final inlineCodeQuestion = _resolveInlineCodeQuestion(activity, title);
 
     return FQSurfaceCard(
       radius: FQRadius.large,
@@ -393,6 +403,15 @@ class _ActivityStep extends StatelessWidget {
               fontSize: 24,
             ),
           ),
+          if (inlineCodeQuestion != null) ...[
+            const SizedBox(height: 10),
+            QuestCodePreview(
+              content: inlineCodeQuestion,
+              fileName: 'question.dart',
+              minLines: 5,
+              maxHeight: 240,
+            ),
+          ],
           const SizedBox(height: 12),
           LessonActivityRenderer(
             activity: activity,
@@ -413,6 +432,31 @@ class _ActivityStep extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String? _resolveInlineCodeQuestion(LessonActivity activity, String title) {
+    final codeSnippet = activity.codeSnippet?.trim();
+    if (codeSnippet != null && codeSnippet.isNotEmpty) {
+      return codeSnippet;
+    }
+
+    final candidate = (activity.question ?? activity.prompt ?? '').trim();
+    if (!_looksLikeCode(candidate)) return null;
+    if (_normalize(candidate) == _normalize(title)) return candidate;
+    return candidate;
+  }
+
+  bool _looksLikeCode(String value) {
+    if (!value.contains('\n')) return false;
+    final markers = ['{', '}', ';', '=>', 'if (', 'for (', 'class ', 'void '];
+    for (final marker in markers) {
+      if (value.contains(marker)) return true;
+    }
+    return false;
+  }
+
+  String _normalize(String value) {
+    return value.replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 }
 
@@ -564,7 +608,9 @@ class _LessonResultModal extends StatelessWidget {
 }
 
 class _RouteCompletionDialog extends StatelessWidget {
-  const _RouteCompletionDialog();
+  const _RouteCompletionDialog({required this.routeTitle});
+
+  final String routeTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -605,7 +651,7 @@ class _RouteCompletionDialog extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              'Completaste Dart de principio a fin. Ya no improvisas: ahora construyes con criterio.',
+              'Completaste $routeTitle de principio a fin. Ya no improvisas: ahora construyes con criterio.',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Colors.white.withValues(alpha: 0.92),
                 height: 1.4,
@@ -615,7 +661,7 @@ class _RouteCompletionDialog extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: const [
+              children: [
                 FQPill(
                   label: 'Badge desbloqueado',
                   icon: Icons.emoji_events_rounded,
@@ -623,7 +669,7 @@ class _RouteCompletionDialog extends StatelessWidget {
                   textColor: Colors.white,
                 ),
                 FQPill(
-                  label: 'Dart Route Complete',
+                  label: '$routeTitle complete',
                   icon: Icons.check_circle_rounded,
                   color: Color(0x33FFFFFF),
                   textColor: Colors.white,

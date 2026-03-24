@@ -20,9 +20,13 @@ abstract final class RouteProgressMapper {
     required LearningProgressState progress,
   }) {
     final completed = progress.completedNodeIds;
-    final activeNodeId =
-        progress.activeNodeId ??
-        nextActiveNodeId(route: route, completedNodeIds: completed);
+    final rawActiveNodeId = progress.activeNodeId;
+    final activeBelongsToRoute =
+        rawActiveNodeId != null &&
+        route.nodes.any((node) => node.id == rawActiveNodeId);
+    final activeNodeId = activeBelongsToRoute
+        ? rawActiveNodeId
+        : nextActiveNodeId(route: route, completedNodeIds: completed);
 
     return route.nodes.asMap().entries.map((entry) {
       final index = entry.key;

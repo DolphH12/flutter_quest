@@ -119,11 +119,15 @@ class LessonFeedbackCard extends StatelessWidget {
                     : const Color(0xFFC23737),
               ),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+              Expanded(
+                child: Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+                ),
               ),
             ],
           ),
@@ -153,7 +157,7 @@ class _MultipleChoiceActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final options = activity.options ?? const <String>[];
+    final options = _displayOptions();
     final correct = activity.correctAnswer;
 
     return Column(
@@ -218,6 +222,14 @@ class _MultipleChoiceActivity extends StatelessWidget {
           ),
       ],
     );
+  }
+
+  List<String> _displayOptions() {
+    final options = activity.options ?? const <String>[];
+    if (options.isEmpty) return const <String>[];
+    final order = session.optionOrder;
+    if (order.length != options.length) return options;
+    return order.map((index) => options[index]).toList();
   }
 
   Color _optionBackground({
@@ -470,47 +482,55 @@ class _MatchConceptActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final leftItems = activity.matchLeft ?? const <String>[];
-    final rightItems = activity.matchRight ?? const <String>[];
+    final pairs = activity.pairs ?? const <MatchConceptPair>[];
+    final leftItems = pairs.map((item) => item.left).toList();
+    final rightItems = session.matchRightOptions.isNotEmpty
+        ? session.matchRightOptions
+        : pairs.map((item) => item.right).toList();
 
     return Column(
       children: [
         for (final left in leftItems)
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text(
-                    left,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                Text(
+                  left,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: DropdownButtonFormField<String>(
-                    initialValue: session.conceptMatches[left],
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                    ),
-                    items: rightItems
-                        .map(
-                          (value) => DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: session.submitted
-                        ? null
-                        : (value) {
-                            if (value == null) return;
-                            onSetConceptMatch(left, value);
-                          },
+                const SizedBox(height: 8),
+                DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  menuMaxHeight: 280,
+                  initialValue: session.conceptMatches[left],
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    isDense: true,
                   ),
+                  items: rightItems
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: session.submitted
+                      ? null
+                      : (value) {
+                          if (value == null) return;
+                          onSetConceptMatch(left, value);
+                        },
                 ),
               ],
             ),
@@ -542,12 +562,6 @@ class _PredictOutputActivity extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if ((activity.codeSnippet ?? '').isNotEmpty)
-          _ReadOnlyCodeSnippet(
-            content: activity.codeSnippet!,
-            fileName: 'preview.dart',
-          ),
-        if ((activity.codeSnippet ?? '').isNotEmpty) const SizedBox(height: 10),
         if (options.isNotEmpty)
           _MultipleChoiceActivity(
             activity: activity,
@@ -618,43 +632,6 @@ class _GuidedWritingActivity extends StatelessWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-class _ReadOnlyCodeSnippet extends StatelessWidget {
-  const _ReadOnlyCodeSnippet({required this.content, required this.fileName});
-
-  final String content;
-  final String fileName;
-
-  @override
-  Widget build(BuildContext context) {
-    return FQSurfaceCard(
-      radius: FQRadius.large,
-      color: FQColors.deepNavy,
-      useHighlightOverlay: false,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            fileName,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: Colors.white.withValues(alpha: 0.7),
-              fontFamily: 'monospace',
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            content,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Colors.white.withValues(alpha: 0.92),
-              fontFamily: 'monospace',
-              height: 1.35,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

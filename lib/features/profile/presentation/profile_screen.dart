@@ -22,17 +22,17 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final routeAsync = ref.watch(routeContentProvider);
+    final routesAsync = ref.watch(allRoutesProvider);
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final summary = ref.watch(profileSummaryProvider);
 
-    if (routeAsync.isLoading || progressAsync.isLoading || summary == null) {
+    if (routesAsync.isLoading || progressAsync.isLoading || summary == null) {
       return const FQPageContainer(
         child: Center(child: CircularProgressIndicator()),
       );
     }
 
-    if (routeAsync.hasError || progressAsync.hasError) {
+    if (routesAsync.hasError || progressAsync.hasError) {
       return FQPageContainer(
         child: Center(
           child: Text(
@@ -43,13 +43,14 @@ class ProfileScreen extends ConsumerWidget {
       );
     }
 
-    final route = routeAsync.value;
+    final routes = routesAsync.value;
     final progress = progressAsync.value;
-    if (route == null || progress == null) {
+    if (routes == null || routes.isEmpty || progress == null) {
       return const FQPageContainer(
         child: Center(child: CircularProgressIndicator()),
       );
     }
+    final activeRoute = _pickPrimaryRoute(routes, progress);
 
     final badges = progress.unlockedBadgeIds
         .map(BadgeCatalog.byId)
@@ -69,17 +70,33 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: FQSpacing.lg),
           _StatsGrid(summary: summary),
           const SizedBox(height: FQSpacing.lg),
-          _RouteProgressCard(route: route, progress: progress),
+          _RouteProgressCard(route: activeRoute, progress: progress),
           const SizedBox(height: FQSpacing.lg),
           _BadgesSection(badges: badges),
           const SizedBox(height: FQSpacing.lg),
-          _RecentActivity(progress: progress, route: route),
+          _RecentActivity(progress: progress, routes: routes),
           const SizedBox(height: FQSpacing.lg),
           _DevResetSection(onReset: () => _confirmReset(context, ref)),
           const SizedBox(height: FQSpacing.xl),
         ],
       ),
     );
+  }
+
+  DartRouteContent _pickPrimaryRoute(
+    List<DartRouteContent> routes,
+    LearningProgressState progress,
+  ) {
+    if (progress.lastLessonResult != null) {
+      final lastRouteId = progress.lastLessonResult!.routeId;
+      for (final route in routes) {
+        if (route.routeId == lastRouteId) return route;
+      }
+    }
+    for (final route in routes) {
+      if (progress.routeProgress(route.routeId) > 0) return route;
+    }
+    return routes.first;
   }
 
   Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
@@ -279,7 +296,7 @@ class _RouteProgressCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Dart Route', style: Theme.of(context).textTheme.titleLarge),
+              Text(route.title, style: Theme.of(context).textTheme.titleLarge),
               const Spacer(),
               Text(
                 '${(routeProgress * 100).toInt()}%',
@@ -357,19 +374,24 @@ class _BadgesSection extends StatelessWidget {
 }
 
 class _RecentActivity extends StatelessWidget {
-  const _RecentActivity({required this.progress, required this.route});
+  const _RecentActivity({required this.progress, required this.routes});
 
   final LearningProgressState progress;
-  final DartRouteContent route;
+  final List<DartRouteContent> routes;
 
   @override
   Widget build(BuildContext context) {
     final result = progress.lastLessonResult;
     String? nodeTitle;
-    for (final node in route.nodes) {
-      if (node.id == result?.nodeId) {
-        nodeTitle = node.title;
-        break;
+    if (result != null) {
+      for (final route in routes) {
+        if (route.routeId != result.routeId) continue;
+        for (final node in route.nodes) {
+          if (node.id == result.nodeId) {
+            nodeTitle = node.title;
+            break;
+          }
+        }
       }
     }
     return FQSurfaceCard(

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/learning_models.dart';
@@ -15,6 +16,8 @@ class LessonSessionState {
     required this.selectedWrongLineIndex,
     required this.codeInput,
     required this.blockOrder,
+    required this.optionOrder,
+    required this.matchRightOptions,
     required this.conceptMatches,
     required this.submitted,
     required this.lastValidationCorrect,
@@ -33,6 +36,8 @@ class LessonSessionState {
   final int? selectedWrongLineIndex;
   final String codeInput;
   final List<int> blockOrder;
+  final List<int> optionOrder;
+  final List<String> matchRightOptions;
   final Map<String, String> conceptMatches;
 
   final bool submitted;
@@ -74,6 +79,8 @@ class LessonSessionState {
     bool clearSelectedWrongLine = false,
     String? codeInput,
     List<int>? blockOrder,
+    List<int>? optionOrder,
+    List<String>? matchRightOptions,
     Map<String, String>? conceptMatches,
     bool clearConceptMatches = false,
     bool? submitted,
@@ -99,6 +106,8 @@ class LessonSessionState {
           : (selectedWrongLineIndex ?? this.selectedWrongLineIndex),
       codeInput: codeInput ?? this.codeInput,
       blockOrder: blockOrder ?? this.blockOrder,
+      optionOrder: optionOrder ?? this.optionOrder,
+      matchRightOptions: matchRightOptions ?? this.matchRightOptions,
       conceptMatches: clearConceptMatches
           ? <String, String>{}
           : (conceptMatches ?? this.conceptMatches),
@@ -127,6 +136,8 @@ class LessonSessionState {
       selectedWrongLineIndex: null,
       codeInput: '',
       blockOrder: const <int>[],
+      optionOrder: const <int>[],
+      matchRightOptions: const <String>[],
       conceptMatches: const <String, String>{},
       submitted: false,
       lastValidationCorrect: null,
@@ -277,6 +288,8 @@ class LessonSessionNotifier
         ? state.lesson.activities[index]
         : null;
     final blockOrder = _seedBlockOrder(activity);
+    final optionOrder = _seedOptionOrder(activity);
+    final matchRightOptions = _seedMatchRightOptions(activity);
     final codeInput = _seedCodeForActivity(activity);
 
     state = state.copyWith(
@@ -285,6 +298,8 @@ class LessonSessionNotifier
       clearSelectedWrongLine: true,
       codeInput: codeInput,
       blockOrder: blockOrder,
+      optionOrder: optionOrder,
+      matchRightOptions: matchRightOptions,
       clearConceptMatches: true,
     );
   }
@@ -295,10 +310,39 @@ class LessonSessionNotifier
     }
     final blocks = activity.blocks ?? const <String>[];
     if (blocks.isEmpty) return const <int>[];
-    return List<int>.generate(
-      blocks.length,
-      (index) => blocks.length - 1 - index,
-    );
+    final seeded = List<int>.generate(blocks.length, (index) => index);
+    if (activity.shuffle) {
+      seeded.shuffle(Random());
+    }
+    return seeded;
+  }
+
+  List<int> _seedOptionOrder(LessonActivity? activity) {
+    if (activity == null) return const <int>[];
+    if (activity.type != ActivityType.multipleChoice &&
+        activity.type != ActivityType.predictOutput) {
+      return const <int>[];
+    }
+    final options = activity.options ?? const <String>[];
+    if (options.isEmpty) return const <int>[];
+    final seeded = List<int>.generate(options.length, (index) => index);
+    if (activity.shuffle) {
+      seeded.shuffle(Random());
+    }
+    return seeded;
+  }
+
+  List<String> _seedMatchRightOptions(LessonActivity? activity) {
+    if (activity == null || activity.type != ActivityType.matchConcept) {
+      return const <String>[];
+    }
+    final pairs = activity.pairs ?? const <MatchConceptPair>[];
+    if (pairs.isEmpty) return const <String>[];
+    final right = pairs.map((item) => item.right).toList();
+    if (activity.shuffle) {
+      right.shuffle(Random());
+    }
+    return right;
   }
 
   String _seedCodeForActivity(LessonActivity? activity) {
@@ -308,10 +352,7 @@ class LessonSessionNotifier
       ActivityType.orderCodeBlocks => '',
       ActivityType.findTheWrongLine => '',
       ActivityType.matchConcept => '',
-      ActivityType.predictOutput =>
-        (activity.options?.isNotEmpty ?? false)
-            ? ''
-            : (activity.initialCode ?? activity.codeSnippet ?? ''),
+      ActivityType.predictOutput => '',
       ActivityType.guidedWriting =>
         activity.starterCode ?? activity.initialCode ?? '',
       _ => activity.initialCode ?? '',
@@ -366,9 +407,9 @@ class LessonSessionNotifier
         feedbackMessage: null,
       );
     }
-    final options = activity.options ?? const <String>[];
+    final displayOptions = _displayOptions(activity);
     if (state.selectedOptionIndex! < 0 ||
-        state.selectedOptionIndex! >= options.length) {
+        state.selectedOptionIndex! >= displayOptions.length) {
       return const _ValidationResult(
         isCorrect: false,
         error: 'Esa opción no es válida.',
@@ -377,9 +418,10 @@ class LessonSessionNotifier
       );
     }
 
-    final selected = options[state.selectedOptionIndex!];
+    final selected = displayOptions[state.selectedOptionIndex!];
     final correct = (activity.correctAnswer ?? '').trim();
-    final isCorrect = selected.trim() == correct;
+    final isCorrect =
+        _normalize(selected).toLowerCase() == _normalize(correct).toLowerCase();
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
       isCorrect: isCorrect,
@@ -413,13 +455,32 @@ class LessonSessionNotifier
       );
     }
 
-    final isCorrect = initial.contains('_____')
-        ? (() {
-            final expectedFull = initial.replaceFirst('_____', expected);
-            return _normalize(answer) == _normalize(expectedFull) ||
-                _normalize(answer) == _normalize(expected);
-          })()
-        : _normalize(answer) == _normalize(expected);
+    final normalizedAnswer = _normalize(answer);
+    final normalizedExpected = _normalize(expected);
+
+    bool isCorrect = false;
+    final placeholder = RegExp(r'_{3,}');
+    if (placeholder.hasMatch(initial)) {
+      final expectedFull = initial.replaceFirst(placeholder, expected);
+      isCorrect =
+          normalizedAnswer == _normalize(expectedFull) ||
+          normalizedAnswer == normalizedExpected;
+    } else {
+      isCorrect = normalizedAnswer == normalizedExpected;
+      if (!isCorrect && initial.trim().isNotEmpty) {
+        final normalizedInitial = _normalize(initial);
+        if (normalizedAnswer == normalizedInitial &&
+            normalizedInitial.contains(normalizedExpected)) {
+          isCorrect = true;
+        }
+      }
+      if (!isCorrect &&
+          normalizedExpected.length <= 20 &&
+          normalizedExpected.split(' ').length <= 3 &&
+          normalizedAnswer.contains(normalizedExpected)) {
+        isCorrect = true;
+      }
+    }
 
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
@@ -449,10 +510,17 @@ class LessonSessionNotifier
       );
     }
 
-    final expected =
-        activity.correctOrder ??
-        List<int>.generate(blocks.length, (index) => index);
-    final isCorrect = _listEquals(state.blockOrder, expected);
+    final expected = activity.correctOrder ?? const <String>[];
+    if (expected.length != blocks.length) {
+      return const _ValidationResult(
+        isCorrect: false,
+        error: 'No hay una respuesta correcta válida en esta actividad.',
+        feedbackTitle: null,
+        feedbackMessage: null,
+      );
+    }
+    final userOrder = state.blockOrder.map((index) => blocks[index]).toList();
+    final isCorrect = _normalizedListEquals(userOrder, expected);
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
       isCorrect: isCorrect,
@@ -484,10 +552,8 @@ class LessonSessionNotifier
   }
 
   _ValidationResult _validateMatchConcept(LessonActivity activity) {
-    final left = activity.matchLeft ?? const <String>[];
-    final expected = activity.correctMatches ?? const <String, String>{};
-
-    if (left.isEmpty || expected.isEmpty) {
+    final pairs = activity.pairs ?? const <MatchConceptPair>[];
+    if (pairs.isEmpty) {
       return const _ValidationResult(
         isCorrect: false,
         error: 'No hay pares de concepto configurados en esta actividad.',
@@ -496,8 +562,8 @@ class LessonSessionNotifier
       );
     }
 
-    for (final key in left) {
-      if ((state.conceptMatches[key] ?? '').trim().isEmpty) {
+    for (final pair in pairs) {
+      if ((state.conceptMatches[pair.left] ?? '').trim().isEmpty) {
         return const _ValidationResult(
           isCorrect: false,
           error: 'Relaciona todos los conceptos antes de verificar.',
@@ -507,11 +573,12 @@ class LessonSessionNotifier
       }
     }
 
-    final isCorrect = left.every(
-      (key) =>
-          (state.conceptMatches[key] ?? '').trim() ==
-          (expected[key] ?? '').trim(),
-    );
+    final isCorrect = pairs.every((pair) {
+      final selected = _normalize(state.conceptMatches[pair.left] ?? '')
+          .toLowerCase();
+      final expectedValue = _normalize(pair.right).toLowerCase();
+      return selected == expectedValue;
+    });
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
       isCorrect: isCorrect,
@@ -522,20 +589,8 @@ class LessonSessionNotifier
   }
 
   _ValidationResult _validatePredictOutput(LessonActivity activity) {
-    final expected = (activity.expectedOutput ?? activity.expectedAnswer ?? '')
-        .trim();
-    if (expected.isEmpty) {
-      final feedback = _feedbackFor(activity: activity, isCorrect: false);
-      return _ValidationResult(
-        isCorrect: false,
-        error: null,
-        feedbackTitle: feedback.$1,
-        feedbackMessage: feedback.$2,
-      );
-    }
-
     final options = activity.options ?? const <String>[];
-    late final bool isCorrect;
+    bool isCorrect = false;
     if (options.isNotEmpty) {
       if (state.selectedOptionIndex == null) {
         return const _ValidationResult(
@@ -545,8 +600,9 @@ class LessonSessionNotifier
           feedbackMessage: null,
         );
       }
+      final displayOptions = _displayOptions(activity);
       if (state.selectedOptionIndex! < 0 ||
-          state.selectedOptionIndex! >= options.length) {
+          state.selectedOptionIndex! >= displayOptions.length) {
         return const _ValidationResult(
           isCorrect: false,
           error: 'La opción seleccionada no es válida.',
@@ -554,10 +610,23 @@ class LessonSessionNotifier
           feedbackMessage: null,
         );
       }
-      isCorrect =
-          _normalize(options[state.selectedOptionIndex!]) ==
-          _normalize(expected);
+      final selected = _normalize(displayOptions[state.selectedOptionIndex!])
+          .toLowerCase();
+      final answerFromJson = (activity.correctAnswer ?? '').trim();
+      if (answerFromJson.isNotEmpty) {
+        isCorrect = selected == _normalize(answerFromJson).toLowerCase();
+      }
     } else {
+      final expected = (activity.expectedAnswer ?? '').trim();
+      if (expected.isEmpty) {
+        final feedback = _feedbackFor(activity: activity, isCorrect: false);
+        return _ValidationResult(
+          isCorrect: false,
+          error: null,
+          feedbackTitle: feedback.$1,
+          feedbackMessage: feedback.$2,
+        );
+      }
       final answer = state.codeInput.trim();
       if (answer.isEmpty) {
         return const _ValidationResult(
@@ -567,7 +636,9 @@ class LessonSessionNotifier
           feedbackMessage: null,
         );
       }
-      isCorrect = _normalize(answer) == _normalize(expected);
+      isCorrect =
+          _normalize(answer).toLowerCase() ==
+          _normalize(expected).toLowerCase();
     }
 
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
@@ -612,12 +683,22 @@ class LessonSessionNotifier
     );
   }
 
-  bool _listEquals(List<int> a, List<int> b) {
-    if (a.length != b.length) return false;
-    for (int i = 0; i < a.length; i++) {
-      if (a[i] != b[i]) return false;
+  bool _normalizedListEquals(List<String> left, List<String> right) {
+    if (left.length != right.length) return false;
+    for (int i = 0; i < left.length; i++) {
+      if (_normalize(left[i]).toLowerCase() != _normalize(right[i]).toLowerCase()) {
+        return false;
+      }
     }
     return true;
+  }
+
+  List<String> _displayOptions(LessonActivity activity) {
+    final options = activity.options ?? const <String>[];
+    if (options.isEmpty) return const <String>[];
+    final order = state.optionOrder;
+    if (order.length != options.length) return options;
+    return order.map((index) => options[index]).toList();
   }
 
   (String, String) _feedbackFor({
