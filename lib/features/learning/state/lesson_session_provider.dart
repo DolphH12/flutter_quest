@@ -3,12 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/learning_models.dart';
 
-enum LessonSessionStage { intro, activity }
-
 class LessonSessionState {
   const LessonSessionState({
     required this.lesson,
-    required this.stage,
     required this.activityIndex,
     required this.correctCount,
     required this.potentialXp,
@@ -27,7 +24,6 @@ class LessonSessionState {
   });
 
   final LessonContent lesson;
-  final LessonSessionStage stage;
   final int activityIndex;
   final int correctCount;
   final int potentialXp;
@@ -60,8 +56,11 @@ class LessonSessionState {
   }
 
   String get primaryLabel {
-    if (stage == LessonSessionStage.intro) {
-      return lesson.isExam ? 'Comenzar examen' : 'Comenzar actividad';
+    final current = currentActivity;
+    if (current == null) return 'Finalizar';
+    if (current.type == ActivityType.intro) {
+      if (activityIndex == lesson.activities.length - 1) return 'Finalizar';
+      return 'Continuar';
     }
     if (!submitted) return 'Verificar';
     if (activityIndex == lesson.activities.length - 1) return 'Finalizar';
@@ -69,7 +68,6 @@ class LessonSessionState {
   }
 
   LessonSessionState copyWith({
-    LessonSessionStage? stage,
     int? activityIndex,
     int? correctCount,
     int? potentialXp,
@@ -94,7 +92,6 @@ class LessonSessionState {
   }) {
     return LessonSessionState(
       lesson: lesson,
-      stage: stage ?? this.stage,
       activityIndex: activityIndex ?? this.activityIndex,
       correctCount: correctCount ?? this.correctCount,
       potentialXp: potentialXp ?? this.potentialXp,
@@ -128,7 +125,6 @@ class LessonSessionState {
   factory LessonSessionState.initial(LessonContent lesson) {
     return LessonSessionState(
       lesson: lesson,
-      stage: LessonSessionStage.intro,
       activityIndex: 0,
       correctCount: 0,
       potentialXp: 0,
@@ -166,7 +162,15 @@ class LessonSessionNotifier
     extends AutoDisposeFamilyNotifier<LessonSessionState, LessonContent> {
   @override
   LessonSessionState build(LessonContent arg) {
-    return LessonSessionState.initial(arg);
+    final initial = LessonSessionState.initial(arg);
+    if (arg.activities.isEmpty) return initial;
+    final first = arg.activities.first;
+    return initial.copyWith(
+      blockOrder: _seedBlockOrderFromActivity(first),
+      optionOrder: _seedOptionOrderFromActivity(first),
+      matchRightOptions: _seedMatchRightOptionsFromActivity(first),
+      codeInput: _seedCodeForActivityFromActivity(first),
+    );
   }
 
   void selectOption(int index) {
@@ -215,13 +219,31 @@ class LessonSessionNotifier
   }
 
   LessonPrimaryActionResult onPrimaryPressed() {
-    if (state.stage == LessonSessionStage.intro) {
-      if (state.lesson.activities.isEmpty) {
+    if (state.lesson.activities.isEmpty) {
+      state = state.copyWith(completed: true);
+      return const LessonPrimaryActionResult(openResult: true);
+    }
+
+    final current = state.currentActivity;
+    if (current == null) {
+      state = state.copyWith(completed: true);
+      return const LessonPrimaryActionResult(openResult: true);
+    }
+
+    if (current.type == ActivityType.intro) {
+      if (state.activityIndex == state.lesson.activities.length - 1) {
         state = state.copyWith(completed: true);
         return const LessonPrimaryActionResult(openResult: true);
       }
-      _prepareActivityState(0);
-      state = state.copyWith(stage: LessonSessionStage.activity);
+      final nextIndex = state.activityIndex + 1;
+      _prepareActivityState(nextIndex);
+      state = state.copyWith(
+        activityIndex: nextIndex,
+        submitted: false,
+        clearLastValidation: true,
+        clearFeedbackTitle: true,
+        clearFeedbackMessage: true,
+      );
       return const LessonPrimaryActionResult();
     }
 
@@ -263,9 +285,11 @@ class LessonSessionNotifier
   }
 
   LessonAttemptResult buildResult() {
-    final total = state.lesson.activities.length;
+    final total = state.lesson.activities
+        .where((step) => step.requiresValidation)
+        .length;
     final safeTotal = total == 0 ? 1 : total;
-    final score = state.correctCount / safeTotal;
+    final score = total == 0 ? 1.0 : (state.correctCount / safeTotal);
     final required = state.lesson.passThreshold;
     final passed = score >= required;
     final awardedXp = passed ? state.potentialXp : 0;
@@ -308,13 +332,7 @@ class LessonSessionNotifier
     if (activity == null || activity.type != ActivityType.orderCodeBlocks) {
       return const <int>[];
     }
-    final blocks = activity.blocks ?? const <String>[];
-    if (blocks.isEmpty) return const <int>[];
-    final seeded = List<int>.generate(blocks.length, (index) => index);
-    if (activity.shuffle) {
-      seeded.shuffle(Random());
-    }
-    return seeded;
+    return _seedBlockOrderFromActivity(activity);
   }
 
   List<int> _seedOptionOrder(LessonActivity? activity) {
@@ -323,30 +341,46 @@ class LessonSessionNotifier
         activity.type != ActivityType.predictOutput) {
       return const <int>[];
     }
-    final options = activity.options ?? const <String>[];
-    if (options.isEmpty) return const <int>[];
-    final seeded = List<int>.generate(options.length, (index) => index);
-    if (activity.shuffle) {
-      seeded.shuffle(Random());
-    }
-    return seeded;
+    return _seedOptionOrderFromActivity(activity);
   }
 
   List<String> _seedMatchRightOptions(LessonActivity? activity) {
     if (activity == null || activity.type != ActivityType.matchConcept) {
       return const <String>[];
     }
-    final pairs = activity.pairs ?? const <MatchConceptPair>[];
-    if (pairs.isEmpty) return const <String>[];
-    final right = pairs.map((item) => item.right).toList();
-    if (activity.shuffle) {
-      right.shuffle(Random());
-    }
-    return right;
+    return _seedMatchRightOptionsFromActivity(activity);
   }
 
   String _seedCodeForActivity(LessonActivity? activity) {
     if (activity == null) return '';
+    return _seedCodeForActivityFromActivity(activity);
+  }
+
+  List<int> _seedBlockOrderFromActivity(LessonActivity activity) {
+    final blocks = activity.blocks ?? const <String>[];
+    if (blocks.isEmpty) return const <int>[];
+    final seeded = List<int>.generate(blocks.length, (index) => index);
+    if (activity.shuffle) seeded.shuffle(Random());
+    return seeded;
+  }
+
+  List<int> _seedOptionOrderFromActivity(LessonActivity activity) {
+    final options = activity.options ?? const <String>[];
+    if (options.isEmpty) return const <int>[];
+    final seeded = List<int>.generate(options.length, (index) => index);
+    if (activity.shuffle) seeded.shuffle(Random());
+    return seeded;
+  }
+
+  List<String> _seedMatchRightOptionsFromActivity(LessonActivity activity) {
+    final pairs = activity.pairs ?? const <MatchConceptPair>[];
+    if (pairs.isEmpty) return const <String>[];
+    final right = pairs.map((item) => item.right).toList();
+    if (activity.shuffle) right.shuffle(Random());
+    return right;
+  }
+
+  String _seedCodeForActivityFromActivity(LessonActivity activity) {
     return switch (activity.type) {
       ActivityType.multipleChoice => '',
       ActivityType.orderCodeBlocks => '',
@@ -355,6 +389,7 @@ class LessonSessionNotifier
       ActivityType.predictOutput => '',
       ActivityType.guidedWriting =>
         activity.starterCode ?? activity.initialCode ?? '',
+      ActivityType.intro => '',
       _ => activity.initialCode ?? '',
     };
   }

@@ -8,20 +8,29 @@ class RouteContentRepository {
 
   final RouteAssetSource _assetSource;
   final Map<String, DartRouteContent> _cacheById = <String, DartRouteContent>{};
+  final Map<String, String> _loadErrorsByRouteId = <String, String>{};
+
+  Map<String, String> get loadErrorsByRouteId =>
+      Map<String, String>.unmodifiable(_loadErrorsByRouteId);
 
   Future<List<DartRouteContent>> loadRoutes({
     required List<RouteAssetManifest> manifests,
     bool forceRefresh = false,
   }) async {
     final result = <DartRouteContent>[];
+    _loadErrorsByRouteId.clear();
     for (final manifest in manifests) {
       if (!forceRefresh && _cacheById.containsKey(manifest.routeId)) {
         result.add(_cacheById[manifest.routeId]!);
         continue;
       }
-      final route = await _assetSource.loadRoute(manifest.assetPath);
-      _cacheById[manifest.routeId] = route;
-      result.add(route);
+      try {
+        final route = await _assetSource.loadRoute(manifest.assetPath);
+        _cacheById[manifest.routeId] = route;
+        result.add(route);
+      } catch (error) {
+        _loadErrorsByRouteId[manifest.routeId] = '$error';
+      }
     }
     return result;
   }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class _QuestShellState extends ConsumerState<QuestShell> {
   int _currentIndex = 0;
   bool _hideBottomNavigation = false;
   bool _welcomeDialogOpen = false;
+  OverlayEntry? _topSnackEntry;
+  Timer? _topSnackTimer;
 
   late final List<_TabItem> _tabs = [
     _TabItem(
@@ -43,6 +46,16 @@ class _QuestShellState extends ConsumerState<QuestShell> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<List<BadgeUnlockUiEvent>>(badgeUiEventQueueProvider, (
+      previous,
+      next,
+    ) {
+      if (!mounted || next.isEmpty) return;
+      final event = next.first;
+      ref.read(badgeUiEventQueueProvider.notifier).consumeFirst();
+      _showTopBadgeSnack(event);
+    });
+
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final progress = progressAsync.valueOrNull;
     if (progress != null) {
@@ -290,6 +303,95 @@ class _QuestShellState extends ConsumerState<QuestShell> {
       );
       _welcomeDialogOpen = false;
     });
+  }
+
+  void _showTopBadgeSnack(BadgeUnlockUiEvent event) {
+    _topSnackTimer?.cancel();
+    _topSnackEntry?.remove();
+
+    final overlay = Overlay.of(context, rootOverlay: true);
+    final topInset = MediaQuery.of(context).padding.top;
+
+    _topSnackEntry = OverlayEntry(
+      builder: (context) {
+        return Positioned(
+          top: topInset + 10,
+          left: 0,
+          right: 0,
+          child: IgnorePointer(
+            ignoring: true,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 520),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: FQSurfaceCard(
+                    radius: FQRadius.large,
+                    gradient: FQGradients.primaryCta,
+                    useHighlightOverlay: false,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    shadow: FQShadows.floating,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 34,
+                          height: 34,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withValues(alpha: 0.2),
+                          ),
+                          child: Icon(event.icon, color: Colors.white, size: 18),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Nueva insignia desbloqueada',
+                                style: Theme.of(context).textTheme.labelLarge
+                                    ?.copyWith(
+                                      color: Colors.white.withValues(alpha: 0.9),
+                                    ),
+                              ),
+                              Text(
+                                event.title,
+                                style: Theme.of(context).textTheme.titleMedium
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    overlay.insert(_topSnackEntry!);
+    _topSnackTimer = Timer(const Duration(milliseconds: 2600), () {
+      _topSnackEntry?.remove();
+      _topSnackEntry = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    _topSnackTimer?.cancel();
+    _topSnackEntry?.remove();
+    super.dispose();
   }
 }
 

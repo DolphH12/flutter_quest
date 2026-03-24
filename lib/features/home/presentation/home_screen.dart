@@ -12,6 +12,7 @@ import '../../learning/data/route_progress_mapper.dart';
 import '../../learning/models/learning_models.dart';
 import '../../learning/state/app_state_providers.dart';
 import '../../lesson_flow/presentation/lesson_flow_screen.dart';
+import 'route_completion_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key, this.onRouteViewChanged});
@@ -25,6 +26,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _inRouteDetail = false;
   LessonContent? _activeLesson;
+  RouteCompletionResultData? _routeCompletionData;
   String? _focusedNodeId;
   String? _selectedRouteId;
 
@@ -39,6 +41,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final routesAsync = ref.watch(allRoutesProvider);
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
+    final routeLoadErrors = ref.watch(routeLoadErrorsProvider);
 
     if (routesAsync.isLoading || progressAsync.isLoading) {
       return const FQPageContainer(
@@ -59,8 +62,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final routes = routesAsync.value;
     final progress = progressAsync.value;
     if (routes == null || routes.isEmpty || progress == null) {
-      return const FQPageContainer(
-        child: Center(child: CircularProgressIndicator()),
+      return FQPageContainer(
+        child: Center(
+          child: Text(
+            routeLoadErrors.isEmpty
+                ? 'No se pudo cargar el contenido de rutas.'
+                : _buildLoadErrorMessage(routeLoadErrors),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    if (_routeCompletionData != null) {
+      return RouteCompletionScreen(
+        data: _routeCompletionData!,
+        onGoHome: () {
+          setState(() {
+            _routeCompletionData = null;
+            _activeLesson = null;
+            _inRouteDetail = false;
+          });
+          widget.onRouteViewChanged?.call(false);
+        },
+        onContinueLearning: () {
+          setState(() {
+            _routeCompletionData = null;
+            _activeLesson = null;
+          });
+        },
       );
     }
 
@@ -71,6 +101,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onBack: () {
             setState(() {
               _activeLesson = null;
+              _routeCompletionData = null;
+              _inRouteDetail = true;
+            });
+            widget.onRouteViewChanged?.call(true);
+          },
+          onRouteCompleted: (data) {
+            setState(() {
+              _activeLesson = null;
+              _routeCompletionData = data;
             });
           },
         ),
@@ -82,6 +121,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         routes: routes,
         progress: progress,
         unlockRequirements: unlockRequirements,
+        routeLoadErrors: routeLoadErrors,
         onOpenRoute: (route) => _openRouteDetail(route.routeId),
       );
     }
@@ -93,6 +133,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         routes: routes,
         progress: progress,
         unlockRequirements: unlockRequirements,
+        routeLoadErrors: routeLoadErrors,
         onOpenRoute: (route) => _openRouteDetail(route.routeId),
       );
     }
@@ -155,6 +196,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     setState(() {
       _inRouteDetail = false;
       _activeLesson = null;
+      _routeCompletionData = null;
       _focusedNodeId = null;
     });
     widget.onRouteViewChanged?.call(false);
@@ -164,39 +206,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (uiNode.status == NodeStatus.locked) return;
     _focusedNodeId = uiNode.node.id;
 
-    final introSteps = uiNode.node.steps
-        .where((step) => step.type == LessonStepType.intro)
-        .toList();
-    final activitySteps = uiNode.node.steps
-        .where((step) => step.type != LessonStepType.intro)
-        .toList();
-    final introBody = introSteps
-        .map((step) => step.body ?? '')
-        .where((text) => text.isNotEmpty)
-        .join('\n\n');
-    final introExamples = introSteps
-        .map((step) => step.example)
-        .whereType<String>()
-        .toList();
-    final introExample = introExamples.isEmpty ? null : introExamples.first;
-
     final lesson = LessonContent(
       id: '${route.routeId}:${uiNode.node.id}',
       routeId: route.routeId,
       nodeId: uiNode.node.id,
       nodeTitle: uiNode.node.title,
-      introTitle: introSteps.isNotEmpty && introSteps.first.title != null
-          ? introSteps.first.title!
-          : uiNode.node.title,
-      introBody: introBody.isEmpty ? uiNode.node.shortDescription : introBody,
-      introExample: introExample,
-      activities: activitySteps,
+      introTitle: uiNode.node.title,
+      introBody: uiNode.node.shortDescription,
+      introExample: null,
+      activities: uiNode.node.steps,
       isExam: uiNode.node.isExam,
     );
 
     setState(() {
       _activeLesson = lesson;
     });
+  }
+
+  String _buildLoadErrorMessage(Map<String, String> errors) {
+    final lines = <String>['No se pudieron cargar algunas rutas:'];
+    errors.forEach((routeId, message) {
+      lines.add('- $routeId: $message');
+    });
+    return lines.join('\n');
   }
 }
 
@@ -205,12 +237,14 @@ class _RouteOverview extends StatelessWidget {
     required this.routes,
     required this.progress,
     required this.unlockRequirements,
+    required this.routeLoadErrors,
     required this.onOpenRoute,
   });
 
   final List<DartRouteContent> routes;
   final LearningProgressState progress;
   final Map<String, String?> unlockRequirements;
+  final Map<String, String> routeLoadErrors;
   final ValueChanged<DartRouteContent> onOpenRoute;
 
   @override
@@ -227,6 +261,11 @@ class _RouteOverview extends StatelessWidget {
             ).textTheme.titleLarge?.copyWith(color: FQColors.deepNavy),
           ),
           const SizedBox(height: 10),
+          if (routeLoadErrors.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _RouteLoadWarning(errors: routeLoadErrors),
+            ),
           for (final route in routes)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
@@ -259,6 +298,43 @@ class _RouteOverview extends StatelessWidget {
       }
     }
     return 'Completa la ruta requerida para desbloquear';
+  }
+}
+
+class _RouteLoadWarning extends StatelessWidget {
+  const _RouteLoadWarning({required this.errors});
+
+  final Map<String, String> errors;
+
+  @override
+  Widget build(BuildContext context) {
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      color: const Color(0xFFFFF4E0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Algunas rutas no cargaron',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: const Color(0xFF755700),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 6),
+          for (final entry in errors.entries)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                '${entry.key}: ${entry.value}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: const Color(0xFF755700),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
 

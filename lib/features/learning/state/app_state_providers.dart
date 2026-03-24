@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/badge_catalog.dart';
 import '../data/local_progress_store.dart';
 import '../data/progress_repository.dart';
 import '../data/route_asset_source.dart';
@@ -48,9 +50,23 @@ final allRoutesProvider = FutureProvider<List<DartRouteContent>>((ref) async {
   return repository.loadRoutes(manifests: manifests);
 });
 
+final routeLoadErrorsProvider = Provider<Map<String, String>>((ref) {
+  ref.watch(allRoutesProvider);
+  final repository = ref.watch(routeContentRepositoryProvider);
+  return repository.loadErrorsByRouteId;
+});
+
 // Backward compatibility for screens/components still expecting the Dart route.
 final routeContentProvider = FutureProvider<DartRouteContent>((ref) async {
   final routes = await ref.watch(allRoutesProvider.future);
+  if (routes.isEmpty) {
+    final errors = ref.read(routeContentRepositoryProvider).loadErrorsByRouteId;
+    throw StateError(
+      errors.isEmpty
+          ? 'No routes available.'
+          : 'No routes could be loaded: ${errors.values.join(' | ')}',
+    );
+  }
   for (final route in routes) {
     if (route.routeId == 'dart_route') return route;
   }
@@ -219,11 +235,15 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     });
   }
 
-  Future<LearningProgressState?> completeLesson(
+  Future<LessonProgressUpdate?> completeLesson(
     LessonAttemptResult result,
   ) async {
     final previous = state.valueOrNull;
-    if (previous == null) return null;
+    if (previous == null) {
+      return null;
+    }
+    final previousBadges = {...previous.unlockedBadgeIds};
+    final previousCompletedRoutes = {...previous.completedRouteIds};
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final routes = await ref.read(allRoutesProvider.future);
@@ -240,7 +260,40 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
         route: route,
       );
     });
-    return state.valueOrNull;
+    final next = state.valueOrNull;
+    if (next == null) return null;
+    final newlyUnlockedBadgeIds = next.unlockedBadgeIds
+        .where((id) => !previousBadges.contains(id))
+        .toList();
+    if (newlyUnlockedBadgeIds.isNotEmpty) {
+      final events = <BadgeUnlockUiEvent>[];
+      for (final badgeId in newlyUnlockedBadgeIds) {
+        final definition = BadgeCatalog.byId(badgeId);
+        if (definition == null) continue;
+        events.add(
+          BadgeUnlockUiEvent(
+            badgeId: badgeId,
+            title: definition.title,
+            description: definition.description,
+            icon: definition.icon,
+          ),
+        );
+      }
+      if (events.isNotEmpty) {
+        ref.read(badgeUiEventQueueProvider.notifier).enqueueAll(events);
+      }
+    }
+    final routeJustCompleted =
+        result.isExam &&
+        result.passed &&
+        next.completedRouteIds.contains(result.routeId) &&
+        !previousCompletedRoutes.contains(result.routeId);
+
+    return LessonProgressUpdate(
+      progress: next,
+      routeJustCompleted: routeJustCompleted,
+      newlyUnlockedBadgeIds: newlyUnlockedBadgeIds,
+    );
   }
 
   Future<void> setUserName(String rawName) async {
@@ -263,3 +316,51 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     });
   }
 }
+
+class LessonProgressUpdate {
+  const LessonProgressUpdate({
+    required this.progress,
+    required this.routeJustCompleted,
+    required this.newlyUnlockedBadgeIds,
+  });
+
+  final LearningProgressState progress;
+  final bool routeJustCompleted;
+  final List<String> newlyUnlockedBadgeIds;
+}
+
+class BadgeUnlockUiEvent {
+  const BadgeUnlockUiEvent({
+    required this.badgeId,
+    required this.title,
+    required this.description,
+    required this.icon,
+  });
+
+  final String badgeId;
+  final String title;
+  final String description;
+  final IconData icon;
+}
+
+class BadgeUiEventQueueNotifier extends Notifier<List<BadgeUnlockUiEvent>> {
+  @override
+  List<BadgeUnlockUiEvent> build() => const <BadgeUnlockUiEvent>[];
+
+  void enqueueAll(List<BadgeUnlockUiEvent> events) {
+    if (events.isEmpty) return;
+    state = [...state, ...events];
+  }
+
+  BadgeUnlockUiEvent? consumeFirst() {
+    if (state.isEmpty) return null;
+    final first = state.first;
+    state = state.sublist(1);
+    return first;
+  }
+}
+
+final badgeUiEventQueueProvider =
+    NotifierProvider<BadgeUiEventQueueNotifier, List<BadgeUnlockUiEvent>>(
+      BadgeUiEventQueueNotifier.new,
+    );
