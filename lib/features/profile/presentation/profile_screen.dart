@@ -154,12 +154,16 @@ class _ProfileHero extends StatelessWidget {
                 height: 76,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: FQColors.tertiary,
                 ),
-                child: const Icon(
-                  Icons.person_rounded,
-                  size: 38,
-                  color: Colors.white,
+                child: ClipOval(
+                  child: Padding(
+                    padding: const EdgeInsets.all(6),
+                    child: Image.asset(
+                      'assets/images/perfil_FC.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 14),

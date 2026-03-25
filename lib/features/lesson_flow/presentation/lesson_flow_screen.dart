@@ -58,14 +58,6 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
 
     return Column(
       children: [
-        _LessonTopBar(
-          title: _resultData == null ? widget.lesson.nodeTitle : 'Resultado',
-          progress: _resultData == null ? session.progress : 1,
-          xpReward: widget.lesson.maxXp,
-          onBack: _resultData == null ? widget.onBack : null,
-          isExam: widget.lesson.isExam,
-        ),
-        const SizedBox(height: 12),
         if (_resultData != null)
           Expanded(
             child: _LessonResultScreen(
@@ -82,6 +74,14 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
             ),
           )
         else ...[
+          _LessonTopBar(
+            title: widget.lesson.nodeTitle,
+            progress: session.progress,
+            xpReward: widget.lesson.maxXp,
+            onBack: widget.onBack,
+            isExam: widget.lesson.isExam,
+          ),
+          const SizedBox(height: 12),
           Expanded(
             child: SingleChildScrollView(
               child: activity == null
@@ -187,10 +187,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
         ? _ResultMood.excellent
         : (rate >= 0.6 ? _ResultMood.good : _ResultMood.reinforce);
     setState(() {
-      _resultData = _LessonResultViewData(
-        mood: mood,
-        result: result,
-      );
+      _resultData = _LessonResultViewData(mood: mood, result: result);
     });
   }
 
@@ -321,7 +318,6 @@ class _LessonTopBar extends StatelessWidget {
   }
 }
 
-
 class _ActivityStep extends StatelessWidget {
   const _ActivityStep({
     required this.activity,
@@ -338,7 +334,10 @@ class _ActivityStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (activity.type == ActivityType.intro) {
-      return _IntroActivityStep(activity: activity, isExam: session.lesson.isExam);
+      return _IntroActivityStep(
+        activity: activity,
+        isExam: session.lesson.isExam,
+      );
     }
 
     final title = switch (activity.type) {
@@ -503,6 +502,13 @@ class _LessonResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final result = data.result;
+    final isSuccess = result.passed;
+    final precision = result.totalAnswers == 0
+        ? 100
+        : ((result.correctAnswers / result.totalAnswers) * 100).round();
+    final imageAsset = isSuccess
+        ? 'assets/images/felicitaciones_FC.png'
+        : 'assets/images/fallaste_FC.png';
     final (title, message, icon, color) = switch (data.mood) {
       _ResultMood.excellent => (
         result.isExam ? 'Examen dominado' : 'Excelente',
@@ -530,109 +536,155 @@ class _LessonResultScreen extends StatelessWidget {
       ),
     };
 
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: FQSurfaceCard(
-              radius: FQRadius.xLarge,
-              gradient: result.isExam
-                  ? FQGradients.heroBlue
-                  : FQGradients.subtlePanel,
-              useHighlightOverlay: !result.isExam,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(icon, color: result.isExam ? Colors.white : color),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: Theme.of(context).textTheme.headlineMedium
-                              ?.copyWith(
-                                color: result.isExam
-                                    ? Colors.white
-                                    : FQColors.deepNavy,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    message,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: result.isExam
-                          ? Colors.white.withValues(alpha: 0.9)
-                          : FQColors.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Correctas: ${result.correctAnswers} / ${result.totalAnswers}',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: result.isExam ? Colors.white : FQColors.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'Resultado: ${result.passed ? 'Aprobado' : 'No aprobado'} · requisito ${(result.requiredScore * 100).toInt()}%',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: result.isExam
-                          ? Colors.white.withValues(alpha: 0.9)
-                          : (result.passed
-                                ? const Color(0xFF1D8D4A)
-                                : const Color(0xFFC23737)),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'XP ganada: +${result.xpEarned}',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: result.isExam ? Colors.white : FQColors.onSurface,
-                    ),
-                  ),
-                  if (!result.passed) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      result.isExam
-                          ? 'El examen final no se aprueba aun. Repite para cerrar la ruta.'
-                          : 'Esta leccion no se marcara como completada hasta aprobar.',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: result.isExam
-                            ? Colors.white.withValues(alpha: 0.86)
-                            : FQColors.onSurface.withValues(alpha: 0.75),
-                      ),
-                    ),
-                  ],
-                ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(height: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              imageAsset,
+              width: 250,
+              //height: 250,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(height: 28),
+          Text(
+            isSuccess ? '¡Excelente trabajo!' : 'Sigue intentando',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+              color: FQColors.deepNavy,
+              fontWeight: FontWeight.w800,
+              height: 1.08,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            isSuccess
+                ? 'Has completado la lección con éxito.'
+                : 'No alcanzaste el puntaje requerido esta vez.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: FQColors.onSurface.withValues(alpha: 0.78),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 22),
+          Row(
+            children: [
+              Expanded(
+                child: _MetricCard(
+                  value: '+${result.xpEarned} XP',
+                  label: 'PUNTOS DE\nEXPERIENCIA',
+                  valueColor: FQColors.tertiaryDark,
+                  icon: Icons.auto_awesome_rounded,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _MetricCard(
+                  value: '$precision%',
+                  label: 'PRECISIÓN',
+                  valueColor: FQColors.deepNavy,
+                  icon: Icons.timer_rounded,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          FQSurfaceCard(
+            radius: FQRadius.xLarge,
+            color: Colors.white.withValues(alpha: 0.9),
+            child: Text(
+              isSuccess
+                  ? '"Tu racha de aprendizaje es impresionante. ¡Sigue así!"'
+                  : '"Cada intento te acerca al dominio. Ajusta y vuelve más fuerte."',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: FQColors.deepNavy,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.w700,
+                height: 1.35,
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 12),
-        SizedBox(
-          width: double.infinity,
-          child: FQPrimaryButton(
-            label: saving ? 'Guardando...' : 'Volver a la ruta',
-            icon: Icons.arrow_back_rounded,
-            onPressed: saving ? null : onContinue,
-          ),
-        ),
-        if (!data.result.passed) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 18),
           SizedBox(
             width: double.infinity,
-            child: FQSecondaryButton(
-              label: 'Repetir',
-              onPressed: saving ? null : onRepeat,
+            child: FQPrimaryButton(
+              label: saving ? 'Guardando...' : 'Continuar',
+              icon: Icons.arrow_forward_rounded,
+              onPressed: saving ? null : onContinue,
             ),
           ),
+          if (!data.result.passed) ...[
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: FQSecondaryButton(
+                label: 'Repetir',
+                onPressed: saving ? null : onRepeat,
+              ),
+            ),
+          ],
+          const SizedBox(height: 8),
         ],
-      ],
+      ),
+    );
+  }
+}
+
+class _MetricCard extends StatelessWidget {
+  const _MetricCard({
+    required this.value,
+    required this.label,
+    required this.valueColor,
+    required this.icon,
+  });
+
+  final String value;
+  final String label;
+  final Color valueColor;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return FQSurfaceCard(
+      radius: FQRadius.xLarge,
+      color: Colors.white.withValues(alpha: 0.92),
+      child: SizedBox(
+        height: 116,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 18, color: valueColor),
+                const SizedBox(width: 6),
+                Text(
+                  value,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: valueColor,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: FQColors.deepNavy.withValues(alpha: 0.9),
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.8,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

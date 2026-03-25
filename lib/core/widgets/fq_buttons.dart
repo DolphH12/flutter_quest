@@ -29,7 +29,7 @@ class FQPrimaryButton extends StatelessWidget {
         style: FilledButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

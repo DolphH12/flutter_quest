@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../core/responsive/breakpoints.dart';
 import '../core/theme/fq_colors.dart';
@@ -11,51 +11,27 @@ import '../core/theme/fq_tokens.dart';
 import '../core/widgets/fq_background.dart';
 import '../core/widgets/fq_buttons.dart';
 import '../core/widgets/fq_surface_card.dart';
-import '../features/home/presentation/home_screen.dart';
 import '../features/learning/state/app_state_providers.dart';
-import '../features/profile/presentation/profile_screen.dart';
 
 class QuestShell extends ConsumerStatefulWidget {
-  const QuestShell({super.key});
+  const QuestShell({
+    super.key,
+    required this.navigationShell,
+    required this.location,
+  });
+
+  final StatefulNavigationShell navigationShell;
+  final String location;
 
   @override
   ConsumerState<QuestShell> createState() => _QuestShellState();
 }
 
 class _QuestShellState extends ConsumerState<QuestShell> {
-  int _currentIndex = 0;
-  bool _hideBottomNavigation = false;
   bool _welcomeDialogOpen = false;
-  OverlayEntry? _topSnackEntry;
-  Timer? _topSnackTimer;
-
-  late final List<_TabItem> _tabs = [
-    _TabItem(
-      label: 'Home',
-      icon: Icons.explore_outlined,
-      selectedIcon: Icons.explore,
-      screen: HomeScreen(onRouteViewChanged: _onHomeRouteViewChanged),
-    ),
-    _TabItem(
-      label: 'Profile',
-      icon: Icons.workspace_premium_outlined,
-      selectedIcon: Icons.workspace_premium,
-      screen: ProfileScreen(onAfterReset: _goToHomeAfterReset),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<List<BadgeUnlockUiEvent>>(badgeUiEventQueueProvider, (
-      previous,
-      next,
-    ) {
-      if (!mounted || next.isEmpty) return;
-      final event = next.first;
-      ref.read(badgeUiEventQueueProvider.notifier).consumeFirst();
-      _showTopBadgeSnack(event);
-    });
-
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final progress = progressAsync.valueOrNull;
     if (progress != null) {
@@ -67,6 +43,7 @@ class _QuestShellState extends ConsumerState<QuestShell> {
     }
 
     final isDesktop = FQBreakpoints.isDesktop(context);
+    final hideBottomNavigation = widget.location.startsWith('/home/route/');
 
     if (isDesktop) {
       return Scaffold(
@@ -105,7 +82,8 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                             child: NavigationRail(
                               backgroundColor: Colors.transparent,
                               groupAlignment: -0.95,
-                              selectedIndex: _currentIndex,
+                              selectedIndex:
+                                  widget.navigationShell.currentIndex,
                               onDestinationSelected: _onTabSelected,
                               labelType: NavigationRailLabelType.all,
                               indicatorShape: RoundedRectangleBorder(
@@ -135,15 +113,18 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                                   ?.copyWith(
                                     color: Colors.white.withValues(alpha: 0.66),
                                   ),
-                              destinations: _tabs
-                                  .map(
-                                    (tab) => NavigationRailDestination(
-                                      icon: Icon(tab.icon),
-                                      selectedIcon: Icon(tab.selectedIcon),
-                                      label: Text(tab.label),
-                                    ),
-                                  )
-                                  .toList(),
+                              destinations: const [
+                                NavigationRailDestination(
+                                  icon: Icon(Icons.explore_outlined),
+                                  selectedIcon: Icon(Icons.explore),
+                                  label: Text('Home'),
+                                ),
+                                NavigationRailDestination(
+                                  icon: Icon(Icons.workspace_premium_outlined),
+                                  selectedIcon: Icon(Icons.workspace_premium),
+                                  label: Text('Profile'),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -151,7 +132,7 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                     ),
                   ),
                 ),
-                Expanded(child: _buildPageStack()),
+                Expanded(child: widget.navigationShell),
               ],
             ),
           ),
@@ -161,8 +142,8 @@ class _QuestShellState extends ConsumerState<QuestShell> {
 
     return Scaffold(
       extendBody: true,
-      body: FQBackground(child: _buildPageStack()),
-      bottomNavigationBar: _currentIndex == 0 && _hideBottomNavigation
+      body: FQBackground(child: widget.navigationShell),
+      bottomNavigationBar: hideBottomNavigation
           ? null
           : SafeArea(
               minimum: const EdgeInsets.fromLTRB(14, 0, 14, 10),
@@ -191,14 +172,16 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                       padding: const EdgeInsets.fromLTRB(10, 8, 10, 9),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          final itemCount = _tabs.length;
+                          const itemCount = 2;
                           final itemWidth = constraints.maxWidth / itemCount;
                           return Stack(
                             children: [
                               AnimatedPositioned(
                                 duration: const Duration(milliseconds: 240),
                                 curve: Curves.easeOutCubic,
-                                left: itemWidth * _currentIndex,
+                                left:
+                                    itemWidth *
+                                    widget.navigationShell.currentIndex,
                                 top: 0,
                                 bottom: 0,
                                 width: itemWidth,
@@ -216,22 +199,44 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                                 ),
                               ),
                               Row(
-                                children: List.generate(_tabs.length, (index) {
-                                  final tab = _tabs[index];
-                                  final isSelected = _currentIndex == index;
-                                  return Expanded(
+                                children: [
+                                  Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 3,
                                       ),
                                       child: _BottomNavItem(
-                                        tab: tab,
-                                        isSelected: isSelected,
-                                        onTap: () => _onTabSelected(index),
+                                        label: 'Home',
+                                        icon: Icons.explore_outlined,
+                                        selectedIcon: Icons.explore,
+                                        isSelected:
+                                            widget
+                                                .navigationShell
+                                                .currentIndex ==
+                                            0,
+                                        onTap: () => _onTabSelected(0),
                                       ),
                                     ),
-                                  );
-                                }),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 3,
+                                      ),
+                                      child: _BottomNavItem(
+                                        label: 'Profile',
+                                        icon: Icons.workspace_premium_outlined,
+                                        selectedIcon: Icons.workspace_premium,
+                                        isSelected:
+                                            widget
+                                                .navigationShell
+                                                .currentIndex ==
+                                            1,
+                                        onTap: () => _onTabSelected(1),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           );
@@ -245,35 +250,11 @@ class _QuestShellState extends ConsumerState<QuestShell> {
     );
   }
 
-  Widget _buildPageStack() {
-    return IndexedStack(
-      index: _currentIndex,
-      children: _tabs.map((tab) => tab.screen).toList(),
+  void _onTabSelected(int index) {
+    widget.navigationShell.goBranch(
+      index,
+      initialLocation: index == widget.navigationShell.currentIndex,
     );
-  }
-
-  void _onTabSelected(int value) {
-    setState(() {
-      _currentIndex = value;
-      if (value != 0) {
-        _hideBottomNavigation = false;
-      }
-    });
-  }
-
-  void _onHomeRouteViewChanged(bool isRouteDetail) {
-    if (_hideBottomNavigation == isRouteDetail) return;
-    setState(() {
-      _hideBottomNavigation = isRouteDetail;
-    });
-  }
-
-  void _goToHomeAfterReset() {
-    if (!mounted) return;
-    setState(() {
-      _currentIndex = 0;
-      _hideBottomNavigation = false;
-    });
   }
 
   bool _requiresWelcome(String? userName) {
@@ -285,11 +266,14 @@ class _QuestShellState extends ConsumerState<QuestShell> {
     _welcomeDialogOpen = true;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      await showDialog<void>(
+      await showGeneralDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (dialogContext) {
-          return _WelcomeNameDialog(
+        barrierLabel: 'welcome',
+        barrierColor: const Color(0x550A1635),
+        transitionDuration: const Duration(milliseconds: 280),
+        pageBuilder: (dialogContext, animation, secondaryAnimation) {
+          return _WelcomeNameFullscreen(
             onSubmit: (name) async {
               await ref
                   .read(appProgressNotifierProvider.notifier)
@@ -300,109 +284,30 @@ class _QuestShellState extends ConsumerState<QuestShell> {
             },
           );
         },
+        transitionBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+            child: child,
+          );
+        },
       );
       _welcomeDialogOpen = false;
     });
-  }
-
-  void _showTopBadgeSnack(BadgeUnlockUiEvent event) {
-    _topSnackTimer?.cancel();
-    _topSnackEntry?.remove();
-
-    final overlay = Overlay.of(context, rootOverlay: true);
-    final topInset = MediaQuery.of(context).padding.top;
-
-    _topSnackEntry = OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          top: topInset + 10,
-          left: 0,
-          right: 0,
-          child: IgnorePointer(
-            ignoring: true,
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 520),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: FQSurfaceCard(
-                    radius: FQRadius.large,
-                    gradient: FQGradients.primaryCta,
-                    useHighlightOverlay: false,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 10,
-                    ),
-                    shadow: FQShadows.floating,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 34,
-                          height: 34,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white.withValues(alpha: 0.2),
-                          ),
-                          child: Icon(event.icon, color: Colors.white, size: 18),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Nueva insignia desbloqueada',
-                                style: Theme.of(context).textTheme.labelLarge
-                                    ?.copyWith(
-                                      color: Colors.white.withValues(alpha: 0.9),
-                                    ),
-                              ),
-                              Text(
-                                event.title,
-                                style: Theme.of(context).textTheme.titleMedium
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-
-    overlay.insert(_topSnackEntry!);
-    _topSnackTimer = Timer(const Duration(milliseconds: 2600), () {
-      _topSnackEntry?.remove();
-      _topSnackEntry = null;
-    });
-  }
-
-  @override
-  void dispose() {
-    _topSnackTimer?.cancel();
-    _topSnackEntry?.remove();
-    super.dispose();
   }
 }
 
 class _BottomNavItem extends StatelessWidget {
   const _BottomNavItem({
-    required this.tab,
+    required this.label,
+    required this.icon,
+    required this.selectedIcon,
     required this.isSelected,
     required this.onTap,
   });
 
-  final _TabItem tab;
+  final String label;
+  final IconData icon;
+  final IconData selectedIcon;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -420,10 +325,10 @@ class _BottomNavItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(isSelected ? tab.selectedIcon : tab.icon, color: iconColor),
+            Icon(isSelected ? selectedIcon : icon, color: iconColor),
             const SizedBox(height: 5),
             Text(
-              tab.label,
+              label,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: iconColor,
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
@@ -436,109 +341,117 @@ class _BottomNavItem extends StatelessWidget {
   }
 }
 
-class _TabItem {
-  const _TabItem({
-    required this.label,
-    required this.icon,
-    required this.selectedIcon,
-    required this.screen,
-  });
-
-  final String label;
-  final IconData icon;
-  final IconData selectedIcon;
-  final Widget screen;
-}
-
-class _WelcomeNameDialog extends StatefulWidget {
-  const _WelcomeNameDialog({required this.onSubmit});
+class _WelcomeNameFullscreen extends StatefulWidget {
+  const _WelcomeNameFullscreen({required this.onSubmit});
 
   final Future<void> Function(String name) onSubmit;
 
   @override
-  State<_WelcomeNameDialog> createState() => _WelcomeNameDialogState();
+  State<_WelcomeNameFullscreen> createState() => _WelcomeNameFullscreenState();
 }
 
-class _WelcomeNameDialogState extends State<_WelcomeNameDialog> {
-  final TextEditingController _nameController = TextEditingController();
+class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
+  final TextEditingController _controller = TextEditingController();
   bool _saving = false;
   String? _error;
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 22),
-      child: FQSurfaceCard(
-        radius: FQRadius.xLarge,
-        gradient: FQGradients.subtlePanel,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Bienvenido a Flutter Quest',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: FQColors.deepNavy,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Antes de empezar, cuentanos como quieres que te llamemos.',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontSize: 16, height: 1.35),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _nameController,
-              enabled: !_saving,
-              textInputAction: TextInputAction.done,
-              onSubmitted: (_) => _submit(),
-              decoration: InputDecoration(
-                hintText: 'Tu nombre',
-                errorText: _error,
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: FQRadius.medium,
-                  borderSide: BorderSide(
-                    color: FQColors.outlineVariant.withValues(alpha: 0.6),
+    return Material(
+      color: const Color(0xFFF0F3FD),
+      child: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            'assets/images/hola_FC.png',
+                            width: 250,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: FQRadius.medium,
-                  borderSide: BorderSide(color: FQColors.primary, width: 1.5),
-                ),
+                  const SizedBox(height: 24),
+                  Text(
+                    '¡Bienvenido a\nFlutter Quest!',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: FQColors.primary,
+                      fontWeight: FontWeight.w800,
+                      height: 1.08,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Tu viaje para dominar Dart y Flutter comienza aquí. ¡Prepárate para programar el futuro!',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: FQColors.onSurface.withValues(alpha: 0.76),
+                      fontSize: 17,
+                      height: 1.35,
+                    ),
+                  ),
+                  const SizedBox(height: 26),
+                  FQSurfaceCard(
+                    radius: FQRadius.xLarge,
+                    color: Colors.white.withValues(alpha: 0.92),
+                    child: TextField(
+                      controller: _controller,
+                      textInputAction: TextInputAction.done,
+                      onSubmitted: (_) => _submit(),
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.person_rounded,
+                          color: FQColors.outlineVariant,
+                        ),
+                        labelText: 'DANOS TU NOMBRE',
+                        hintText: 'Tu nombre aquí...',
+                        filled: false,
+                        border: InputBorder.none,
+                        errorText: _error,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FQPrimaryButton(
+                      label: _saving ? 'Guardando...' : 'Empezar',
+                      icon: Icons.arrow_forward_rounded,
+                      onPressed: _saving ? null : _submit,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 14),
-            SizedBox(
-              width: double.infinity,
-              child: FQPrimaryButton(
-                label: _saving ? 'Guardando...' : 'Empezar',
-                icon: Icons.arrow_forward_rounded,
-                onPressed: _saving ? null : _submit,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   Future<void> _submit() async {
-    final cleaned = _nameController.text.trim().replaceAll(RegExp(r'\s+'), ' ');
-    if (cleaned.isEmpty) {
+    final clean = _controller.text.trim().replaceAll(RegExp(r'\s+'), ' ');
+    if (clean.isEmpty) {
       setState(() {
-        _error = 'Ingresa un nombre para continuar.';
+        _error = 'Escribe un nombre para continuar.';
       });
       return;
     }
@@ -546,14 +459,10 @@ class _WelcomeNameDialogState extends State<_WelcomeNameDialog> {
       _saving = true;
       _error = null;
     });
-    try {
-      await widget.onSubmit(cleaned);
-    } finally {
-      if (mounted) {
-        setState(() {
-          _saving = false;
-        });
-      }
-    }
+    await widget.onSubmit(clean);
+    if (!mounted) return;
+    setState(() {
+      _saving = false;
+    });
   }
 }
