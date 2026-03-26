@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
 import '../../../core/theme/fq_tokens.dart';
@@ -56,27 +57,42 @@ class ProfileScreen extends ConsumerWidget {
         .map(BadgeCatalog.byId)
         .whereType<BadgeDefinition>()
         .toList();
+    final isDesktop = FQBreakpoints.isDesktop(context);
 
     return FQPageContainer(
       child: ListView(
         children: [
-          const FQHeader(
-            kicker: 'PLAYER PROFILE',
-            title: 'Profile',
-            subtitle: 'Your real learning progress, streak and achievements.',
-          ),
+          if (isDesktop)
+            _ProfileTopDesktop(summary: summary)
+          else
+            const FQHeader(
+              kicker: 'PLAYER PROFILE',
+              title: 'Profile',
+              subtitle: 'Your real learning progress, streak and achievements.',
+            ),
           const SizedBox(height: FQSpacing.lg),
-          _ProfileHero(summary: summary),
+          if (!isDesktop) _ProfileHero(summary: summary),
           const SizedBox(height: FQSpacing.lg),
           _StatsGrid(summary: summary),
           const SizedBox(height: FQSpacing.lg),
-          _RouteProgressCard(route: activeRoute, progress: progress),
-          const SizedBox(height: FQSpacing.lg),
-          _BadgesSection(badges: badges),
-          const SizedBox(height: FQSpacing.lg),
-          _RecentActivity(progress: progress, routes: routes),
-          const SizedBox(height: FQSpacing.lg),
-          _DevResetSection(onReset: () => _confirmReset(context, ref)),
+          if (isDesktop)
+            _DesktopProfileSections(
+              children: [
+                _RouteProgressCard(route: activeRoute, progress: progress),
+                _BadgesSection(badges: badges),
+                _RecentActivity(progress: progress, routes: routes),
+                _DevResetSection(onReset: () => _confirmReset(context, ref)),
+              ],
+            )
+          else ...[
+            _RouteProgressCard(route: activeRoute, progress: progress),
+            const SizedBox(height: FQSpacing.lg),
+            _BadgesSection(badges: badges),
+            const SizedBox(height: FQSpacing.lg),
+            _RecentActivity(progress: progress, routes: routes),
+            const SizedBox(height: FQSpacing.lg),
+            _DevResetSection(onReset: () => _confirmReset(context, ref)),
+          ],
           const SizedBox(height: FQSpacing.xl),
         ],
       ),
@@ -127,6 +143,30 @@ class ProfileScreen extends ConsumerWidget {
     if (confirmed != true) return;
     await ref.read(appProgressNotifierProvider.notifier).resetAllProgress();
     onAfterReset?.call();
+  }
+}
+
+class _ProfileTopDesktop extends StatelessWidget {
+  const _ProfileTopDesktop({required this.summary});
+
+  final ProfileSummary summary;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Expanded(
+          child: FQHeader(
+            kicker: 'PLAYER PROFILE',
+            title: 'Profile',
+            subtitle: 'Your real learning progress and achievements.',
+          ),
+        ),
+        const SizedBox(width: 16),
+        SizedBox(width: 440, child: _ProfileHero(summary: summary)),
+      ],
+    );
   }
 }
 
@@ -227,6 +267,7 @@ class _StatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = FQBreakpoints.isDesktop(context);
     final cards = <Map<String, String>>[
       {
         'label': 'Completed Lessons',
@@ -241,11 +282,11 @@ class _StatsGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: cards.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: isDesktop ? 4 : 2,
         mainAxisSpacing: 12,
         crossAxisSpacing: 12,
-        childAspectRatio: 1.25,
+        childAspectRatio: isDesktop ? 1.55 : 1.25,
       ),
       itemBuilder: (context, index) {
         final item = cards[index];
@@ -267,7 +308,9 @@ class _StatsGrid extends StatelessWidget {
               Text(
                 item['value']!,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontSize: item['label'] == 'Current Node' ? 20 : 30,
+                  fontSize: item['label'] == 'Current Node'
+                      ? (isDesktop ? 17 : 20)
+                      : (isDesktop ? 24 : 30),
                   height: 1.1,
                 ),
                 textAlign: TextAlign.center,
@@ -276,6 +319,29 @@ class _StatsGrid extends StatelessWidget {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+}
+
+class _DesktopProfileSections extends StatelessWidget {
+  const _DesktopProfileSections({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final itemWidth = (constraints.maxWidth - 12) / 2;
+        return Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            for (final child in children)
+              SizedBox(width: itemWidth, child: child),
+          ],
         );
       },
     );

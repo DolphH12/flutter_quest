@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
 import '../../../core/theme/fq_tokens.dart';
@@ -15,11 +16,7 @@ import '../../learning/state/app_state_providers.dart';
 import 'home_overview_screen.dart';
 
 class RouteDetailScreen extends ConsumerWidget {
-  const RouteDetailScreen({
-    super.key,
-    required this.routeId,
-    this.focusNodeId,
-  });
+  const RouteDetailScreen({super.key, required this.routeId, this.focusNodeId});
 
   final String routeId;
   final String? focusNodeId;
@@ -36,7 +33,8 @@ class RouteDetailScreen extends ConsumerWidget {
     }
 
     final requirement = unlockRequirements[route.routeId];
-    if (requirement != null && !progress.completedRouteIds.contains(requirement)) {
+    if (requirement != null &&
+        !progress.completedRouteIds.contains(requirement)) {
       return FQPageContainer(
         child: Center(
           child: FQSurfaceCard(
@@ -204,7 +202,7 @@ class _PathBoard extends StatefulWidget {
 
 class _PathBoardState extends State<_PathBoard> {
   final ScrollController _scrollController = ScrollController();
-  double _viewportHeight = 0;
+  double _viewportMainAxis = 0;
 
   @override
   void initState() {
@@ -229,13 +227,14 @@ class _PathBoardState extends State<_PathBoard> {
 
   void _scrollToFocused() {
     if (!_scrollController.hasClients) return;
+    final isDesktop = FQBreakpoints.isDesktop(context);
     final focusedIndex = widget.nodeStates.indexWhere(
       (state) => state.node.id == widget.focusedNodeId,
     );
     if (focusedIndex < 0) return;
-    const estimatedItemHeight = 178.0;
-    final estimatedCenter = focusedIndex * estimatedItemHeight;
-    final target = estimatedCenter - (_viewportHeight / 2) + 70;
+    final estimatedItemExtent = isDesktop ? 220.0 : 178.0;
+    final estimatedCenter = focusedIndex * estimatedItemExtent;
+    final target = estimatedCenter - (_viewportMainAxis / 2) + 90;
     final clamped = target.clamp(
       _scrollController.position.minScrollExtent,
       _scrollController.position.maxScrollExtent,
@@ -249,6 +248,7 @@ class _PathBoardState extends State<_PathBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = FQBreakpoints.isDesktop(context);
     return FQSurfaceCard(
       radius: FQRadius.xLarge,
       gradient: const LinearGradient(
@@ -256,10 +256,64 @@ class _PathBoardState extends State<_PathBoard> {
         end: Alignment.bottomCenter,
         colors: [Color(0xFFF0F4FF), Color(0xFFE8EEFF)],
       ),
-      padding: const EdgeInsets.fromLTRB(8, 20, 8, 22),
+      padding: const EdgeInsets.fromLTRB(8, 50, 8, 50),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          _viewportHeight = constraints.maxHeight;
+          _viewportMainAxis = isDesktop
+              ? constraints.maxWidth
+              : constraints.maxHeight;
+          if (isDesktop) {
+            final trackHeight = constraints.maxHeight;
+            return Center(
+              child: SizedBox(
+                height: trackHeight / 2,
+                width: constraints.maxWidth,
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(width: 18),
+                          for (int i = 0; i < widget.nodeStates.length; i++)
+                            _PathStepHorizontal(
+                              nodeState: widget.nodeStates[i],
+                              visualOffsetY:
+                                  widget.nodeStates[i].node.xOffset == 0
+                                  ? ((i % 4 == 0)
+                                        ? 6
+                                        : (i % 4 == 1)
+                                        ? 64
+                                        : (i % 4 == 2)
+                                        ? 12
+                                        : 64)
+                                  : (widget.nodeStates[i].node.xOffset * 0.2) +
+                                        18,
+                              isExam:
+                                  widget.nodeStates[i].node.id ==
+                                  widget.examNodeId,
+                              isExamPassed: widget.nodeStates[i].isExamPassed,
+                              isFocused:
+                                  widget.nodeStates[i].node.id ==
+                                  widget.focusedNodeId,
+                              hasConnector: i != widget.nodeStates.length - 1,
+                              onTap: () =>
+                                  widget.onNodeTap(widget.nodeStates[i]),
+                            ),
+                          const SizedBox(width: 22),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
           return SingleChildScrollView(
             controller: _scrollController,
             child: Align(
@@ -284,7 +338,8 @@ class _PathBoardState extends State<_PathBoard> {
                             widget.nodeStates[i].node.id == widget.examNodeId,
                         isExamPassed: widget.nodeStates[i].isExamPassed,
                         isFocused:
-                            widget.nodeStates[i].node.id == widget.focusedNodeId,
+                            widget.nodeStates[i].node.id ==
+                            widget.focusedNodeId,
                         hasConnector: i != widget.nodeStates.length - 1,
                         onTap: () => widget.onNodeTap(widget.nodeStates[i]),
                       ),
@@ -294,6 +349,62 @@ class _PathBoardState extends State<_PathBoard> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _PathStepHorizontal extends StatelessWidget {
+  const _PathStepHorizontal({
+    required this.nodeState,
+    required this.visualOffsetY,
+    required this.isExam,
+    required this.isExamPassed,
+    required this.isFocused,
+    required this.hasConnector,
+    required this.onTap,
+  });
+
+  final NodeUiState nodeState;
+  final double visualOffsetY;
+  final bool isExam;
+  final bool isExamPassed;
+  final bool isFocused;
+  final bool hasConnector;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.translate(
+      offset: Offset(0, visualOffsetY),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 168,
+            child: _PathStep(
+              nodeState: nodeState,
+              visualOffset: 0,
+              isExam: isExam,
+              isExamPassed: isExamPassed,
+              isFocused: isFocused,
+              hasConnector: false,
+              onTap: onTap,
+            ),
+          ),
+          if (hasConnector)
+            Padding(
+              padding: const EdgeInsets.only(top: 50),
+              child: Container(
+                width: 58,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: FQColors.primary.withValues(alpha: 0.18),
+                  borderRadius: FQRadius.pill,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

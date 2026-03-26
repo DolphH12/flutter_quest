@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
 import '../../../core/theme/fq_tokens.dart';
@@ -333,10 +334,12 @@ class _ActivityStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = FQBreakpoints.isDesktop(context);
     if (activity.type == ActivityType.intro) {
       return _IntroActivityStep(
         activity: activity,
         isExam: session.lesson.isExam,
+        isDesktop: isDesktop,
       );
     }
 
@@ -352,6 +355,66 @@ class _ActivityStep extends StatelessWidget {
       _ => activity.prompt ?? 'Completa el codigo',
     };
     final inlineCodeQuestion = _resolveInlineCodeQuestion(activity, title);
+
+    if (isDesktop) {
+      return FQSurfaceCard(
+        radius: FQRadius.large,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: FQColors.deepNavy,
+                      fontSize: 24,
+                    ),
+                  ),
+                  if (inlineCodeQuestion != null) ...[
+                    const SizedBox(height: 12),
+                    QuestCodePreview(
+                      content: inlineCodeQuestion,
+                      fileName: 'question.dart',
+                      minLines: 7,
+                      maxHeight: 340,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(width: 18),
+            Expanded(
+              flex: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LessonActivityRenderer(
+                    activity: activity,
+                    session: session,
+                    codeController: codeController,
+                    callbacks: callbacks,
+                  ),
+                  if (session.submitted) ...[
+                    const SizedBox(height: 12),
+                    LessonFeedbackCard(
+                      isCorrect: session.lastValidationCorrect ?? false,
+                      title: session.feedbackTitle ?? 'Feedback',
+                      message:
+                          session.feedbackMessage ??
+                          'Revisa tu respuesta e intenta de nuevo.',
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     return FQSurfaceCard(
       radius: FQRadius.large,
@@ -423,10 +486,15 @@ class _ActivityStep extends StatelessWidget {
 }
 
 class _IntroActivityStep extends StatelessWidget {
-  const _IntroActivityStep({required this.activity, required this.isExam});
+  const _IntroActivityStep({
+    required this.activity,
+    required this.isExam,
+    required this.isDesktop,
+  });
 
   final LessonActivity activity;
   final bool isExam;
+  final bool isDesktop;
 
   @override
   Widget build(BuildContext context) {
@@ -435,6 +503,56 @@ class _IntroActivityStep extends StatelessWidget {
         : activity.title!.trim();
     final body = (activity.body ?? '').trim();
     final example = (activity.example ?? '').trim();
+    if (isDesktop && example.isNotEmpty) {
+      return FQSurfaceCard(
+        radius: FQRadius.xLarge,
+        gradient: isExam ? FQGradients.heroBlue : FQGradients.subtlePanel,
+        useHighlightOverlay: !isExam,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 5,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: isExam ? Colors.white : FQColors.deepNavy,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  if (body.isNotEmpty) ...[
+                    const SizedBox(height: 10),
+                    Text(
+                      body,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 17,
+                        height: 1.46,
+                        color: isExam
+                            ? Colors.white.withValues(alpha: 0.9)
+                            : FQColors.onSurface,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(width: 18),
+            Expanded(
+              flex: 6,
+              child: QuestCodePreview(
+                content: example,
+                fileName: isExam ? 'exam_intro.dart' : 'lesson_intro.dart',
+                minLines: 9,
+                maxHeight: 420,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     return FQSurfaceCard(
       radius: FQRadius.xLarge,
       gradient: isExam ? FQGradients.heroBlue : FQGradients.subtlePanel,
@@ -509,32 +627,6 @@ class _LessonResultScreen extends StatelessWidget {
     final imageAsset = isSuccess
         ? 'assets/images/felicitaciones_FC.png'
         : 'assets/images/fallaste_FC.png';
-    final (title, message, icon, color) = switch (data.mood) {
-      _ResultMood.excellent => (
-        result.isExam ? 'Examen dominado' : 'Excelente',
-        result.isExam
-            ? 'Cerraste el examen con autoridad. Flutter Quest te respeta.'
-            : 'Dominaste esta leccion con precision.',
-        Icons.emoji_events_rounded,
-        const Color(0xFF1D8D4A),
-      ),
-      _ResultMood.good => (
-        result.isExam ? 'Examen aprobado' : 'Buen resultado',
-        result.isExam
-            ? 'Aprobaste el examen final. Base solida de Dart desbloqueada.'
-            : 'Vas bien, sigue practicando para consolidar.',
-        Icons.thumb_up_alt_rounded,
-        const Color(0xFF2D79D8),
-      ),
-      _ResultMood.reinforce => (
-        result.isExam ? 'Examen con refuerzo' : 'Necesita refuerzo',
-        result.isExam
-            ? 'Casi. Repite el examen y termina la ruta con confianza.'
-            : 'Repite la leccion para reforzar conceptos clave.',
-        Icons.school_rounded,
-        const Color(0xFFC23737),
-      ),
-    };
 
     return SingleChildScrollView(
       child: Column(

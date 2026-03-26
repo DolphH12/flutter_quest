@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
 import '../../../core/theme/fq_tokens.dart';
@@ -54,6 +55,7 @@ class HomeOverviewScreen extends ConsumerWidget {
       );
     }
 
+    final isDesktop = FQBreakpoints.isDesktop(context);
     return FQPageContainer(
       child: ListView(
         children: [
@@ -71,22 +73,60 @@ class HomeOverviewScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(bottom: 10),
               child: _RouteLoadWarning(errors: routeLoadErrors),
             ),
-          for (final route in routes)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _RouteCardTile(
-                route: route,
-                progress: progress,
-                isUnlocked: _isUnlocked(route, progress, unlockRequirements),
-                lockReason: _lockReason(
-                  route,
-                  routes,
-                  progress,
-                  unlockRequirements,
+          if (isDesktop)
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final width = constraints.maxWidth;
+                final crossAxisCount = width >= 1200 ? 3 : 2;
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: routes.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: 14,
+                    mainAxisSpacing: 14,
+                    mainAxisExtent: 188,
+                  ),
+                  itemBuilder: (context, index) {
+                    final route = routes[index];
+                    return _RouteCardTile(
+                      route: route,
+                      progress: progress,
+                      isUnlocked: _isUnlocked(
+                        route,
+                        progress,
+                        unlockRequirements,
+                      ),
+                      lockReason: _lockReason(
+                        route,
+                        routes,
+                        progress,
+                        unlockRequirements,
+                      ),
+                      onTap: () => context.go('/home/route/${route.routeId}'),
+                    );
+                  },
+                );
+              },
+            )
+          else
+            for (final route in routes)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _RouteCardTile(
+                  route: route,
+                  progress: progress,
+                  isUnlocked: _isUnlocked(route, progress, unlockRequirements),
+                  lockReason: _lockReason(
+                    route,
+                    routes,
+                    progress,
+                    unlockRequirements,
+                  ),
+                  onTap: () => context.go('/home/route/${route.routeId}'),
                 ),
-                onTap: () => context.go('/home/route/${route.routeId}'),
               ),
-            ),
         ],
       ),
     );
@@ -154,9 +194,9 @@ class _RouteLoadWarning extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
                 '${entry.key}: ${entry.value}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFF755700),
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: const Color(0xFF755700)),
               ),
             ),
         ],
@@ -182,6 +222,7 @@ class _RouteCardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = FQBreakpoints.isDesktop(context);
     final progressValue = progress.routeProgress(route.routeId);
     final cardBody = FQSurfaceCard(
       radius: FQRadius.large,
@@ -203,8 +244,8 @@ class _RouteCardTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: isDesktop ? 44 : 50,
+            height: isDesktop ? 44 : 50,
             decoration: BoxDecoration(
               borderRadius: FQRadius.medium,
               gradient: isUnlocked
@@ -229,6 +270,7 @@ class _RouteCardTile extends StatelessWidget {
                       child: Text(
                         route.title,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: isDesktop ? 22 : null,
                           color: isUnlocked
                               ? FQColors.deepNavy
                               : FQColors.onSurface.withValues(alpha: 0.66),
@@ -246,6 +288,8 @@ class _RouteCardTile extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   route.description,
+                  maxLines: isDesktop ? 2 : 4,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: FQColors.onSurface.withValues(alpha: 0.72),
                   ),
@@ -304,45 +348,95 @@ class _OverviewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = FQBreakpoints.isDesktop(context);
+    final chips = Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        FQStatChip(
+          icon: Icons.auto_awesome_rounded,
+          label: 'XP',
+          value: '${progress.totalXp}',
+          accent: FQColors.primary,
+        ),
+        FQStatChip(
+          icon: Icons.local_fire_department_rounded,
+          label: 'Streak',
+          value: '${progress.currentStreak}',
+          accent: FQColors.tertiaryDark,
+        ),
+      ],
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Flutter Quest',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(
-            fontSize: 36,
-            color: FQColors.primary,
-            height: 1.0,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          'Elige una ruta y sigue avanzando',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: FQColors.onSurface.withValues(alpha: 0.7),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            FQStatChip(
-              icon: Icons.auto_awesome_rounded,
-              label: 'XP',
-              value: '${progress.totalXp}',
-              accent: FQColors.primary,
+        if (isDesktop)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 80,
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Image.asset(
+                    'assets/images/LOGO_FC.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Flutter Quest',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        fontSize: 44,
+                        color: FQColors.primary,
+                        height: 1.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Elige una ruta y sigue avanzando',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 19,
+                        color: FQColors.onSurface.withValues(alpha: 0.74),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              chips,
+            ],
+          )
+        else ...[
+          Text(
+            'Flutter Quest',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.displaySmall?.copyWith(
+              fontSize: 36,
+              color: FQColors.primary,
+              height: 1.0,
+              fontWeight: FontWeight.w800,
             ),
-            const SizedBox(width: 8),
-            FQStatChip(
-              icon: Icons.local_fire_department_rounded,
-              label: 'Streak',
-              value: '${progress.currentStreak}',
-              accent: FQColors.tertiaryDark,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Elige una ruta y sigue avanzando',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: FQColors.onSurface.withValues(alpha: 0.7),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          chips,
+        ],
       ],
     );
   }

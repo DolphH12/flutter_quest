@@ -17,6 +17,24 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  image_path: assets/images/LOGO_FC.png
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: assets/images/LOGO_FC.png
+    background_color: "#FFFFFF"
+    theme_color: "#005E9E"
+  windows:
+    generate: true
+    image_path: assets/images/LOGO_FC.png
+    icon_size: 256
+  macos:
+    generate: true
+    image_path: assets/images/LOGO_FC.png
 
 flutter:
   uses-material-design: true

@@ -52,80 +52,59 @@ class _QuestShellState extends ConsumerState<QuestShell> {
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(18, 18, 12, 18),
+                  padding: const EdgeInsets.fromLTRB(16, 16, 10, 16),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 270),
+                    constraints: const BoxConstraints.tightFor(width: 122),
                     child: FQSurfaceCard(
-                      radius: FQRadius.xLarge,
+                      radius: FQRadius.large,
                       gradient: FQGradients.deepQuest,
-                      padding: const EdgeInsets.all(14),
+                      padding: const EdgeInsets.fromLTRB(6, 12, 6, 12),
                       shadow: FQShadows.floating,
                       useHighlightOverlay: false,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Flutter Quest',
-                            style: Theme.of(context).textTheme.titleLarge
-                                ?.copyWith(color: Colors.white),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            'Learn Dart with focus and momentum',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                ),
-                          ),
-                          const SizedBox(height: 20),
-                          Expanded(
-                            child: NavigationRail(
-                              backgroundColor: Colors.transparent,
-                              groupAlignment: -0.95,
-                              selectedIndex:
-                                  widget.navigationShell.currentIndex,
-                              onDestinationSelected: _onTabSelected,
-                              labelType: NavigationRailLabelType.all,
-                              indicatorShape: RoundedRectangleBorder(
-                                borderRadius: FQRadius.medium,
-                              ),
-                              indicatorColor: Colors.white.withValues(
-                                alpha: 0.14,
-                              ),
-                              selectedIconTheme: const IconThemeData(
-                                color: Colors.white,
-                                size: 22,
-                              ),
-                              unselectedIconTheme: IconThemeData(
-                                color: Colors.white.withValues(alpha: 0.66),
-                                size: 21,
-                              ),
-                              selectedLabelTextStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                              unselectedLabelTextStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.66),
-                                  ),
-                              destinations: const [
-                                NavigationRailDestination(
-                                  icon: Icon(Icons.explore_outlined),
-                                  selectedIcon: Icon(Icons.explore),
-                                  label: Text('Home'),
-                                ),
-                                NavigationRailDestination(
-                                  icon: Icon(Icons.workspace_premium_outlined),
-                                  selectedIcon: Icon(Icons.workspace_premium),
-                                  label: Text('Profile'),
-                                ),
-                              ],
+                      child: NavigationRail(
+                        backgroundColor: Colors.transparent,
+                        groupAlignment: -0.9,
+                        selectedIndex: widget.navigationShell.currentIndex,
+                        onDestinationSelected: _onTabSelected,
+                        labelType: NavigationRailLabelType.all,
+                        useIndicator: true,
+                        minWidth: 96,
+                        minExtendedWidth: 116,
+                        indicatorShape: RoundedRectangleBorder(
+                          borderRadius: FQRadius.medium,
+                        ),
+                        indicatorColor: Colors.white.withValues(alpha: 0.16),
+                        selectedIconTheme: const IconThemeData(
+                          color: Colors.white,
+                          size: 22,
+                        ),
+                        unselectedIconTheme: IconThemeData(
+                          color: Colors.white.withValues(alpha: 0.66),
+                          size: 21,
+                        ),
+                        selectedLabelTextStyle: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
                             ),
+                        unselectedLabelTextStyle: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(
+                              color: Colors.white.withValues(alpha: 0.72),
+                            ),
+                        destinations: const [
+                          NavigationRailDestination(
+                            icon: Icon(Icons.explore_outlined),
+                            selectedIcon: Icon(Icons.explore),
+                            label: Text('Home'),
+                          ),
+                          NavigationRailDestination(
+                            icon: Icon(Icons.workspace_premium_outlined),
+                            selectedIcon: Icon(Icons.workspace_premium),
+                            label: Text('Profile'),
                           ),
                         ],
                       ),
@@ -366,84 +345,128 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
     return Material(
       color: const Color(0xFFF0F3FD),
       child: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 520),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Stack(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth >= 920;
+            if (!isWide) {
+              return Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 520),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
+                    child: _buildWelcomeContent(context, centered: true),
+                  ),
+                ),
+              );
+            }
+
+            return Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1180),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(26, 30, 26, 30),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/images/hola_FC.png',
-                            width: 250,
-                            fit: BoxFit.cover,
+                      Expanded(
+                        flex: 5,
+                        child: Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              'assets/images/hola_FC.png',
+                              width: 380,
+                              //height: 380,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
+                      const SizedBox(width: 36),
+                      Expanded(
+                        flex: 6,
+                        child: _buildWelcomeContent(context, centered: false),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    '¡Bienvenido a\nFlutter Quest!',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: FQColors.primary,
-                      fontWeight: FontWeight.w800,
-                      height: 1.08,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Tu viaje para dominar Dart y Flutter comienza aquí. ¡Prepárate para programar el futuro!',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: FQColors.onSurface.withValues(alpha: 0.76),
-                      fontSize: 17,
-                      height: 1.35,
-                    ),
-                  ),
-                  const SizedBox(height: 26),
-                  FQSurfaceCard(
-                    radius: FQRadius.xLarge,
-                    color: Colors.white.withValues(alpha: 0.92),
-                    child: TextField(
-                      controller: _controller,
-                      textInputAction: TextInputAction.done,
-                      onSubmitted: (_) => _submit(),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person_rounded,
-                          color: FQColors.outlineVariant,
-                        ),
-                        labelText: 'DANOS TU NOMBRE',
-                        hintText: 'Tu nombre aquí...',
-                        filled: false,
-                        border: InputBorder.none,
-                        errorText: _error,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FQPrimaryButton(
-                      label: _saving ? 'Guardando...' : 'Empezar',
-                      icon: Icons.arrow_forward_rounded,
-                      onPressed: _saving ? null : _submit,
-                    ),
-                  ),
-                ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeContent(BuildContext context, {required bool centered}) {
+    return Column(
+      crossAxisAlignment: centered
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      children: [
+        if (centered) ...[
+          Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                'assets/images/hola_FC.png',
+                width: 250,
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          const SizedBox(height: 24),
+        ],
+        Text(
+          '¡Bienvenido a\nFlutter Quest!',
+          textAlign: centered ? TextAlign.center : TextAlign.left,
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+            color: FQColors.primary,
+            fontWeight: FontWeight.w800,
+            height: 1.08,
+          ),
         ),
-      ),
+        const SizedBox(height: 16),
+        Text(
+          'Tu viaje para dominar Dart y Flutter comienza aquí. ¡Prepárate para programar el futuro!',
+          textAlign: centered ? TextAlign.center : TextAlign.left,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: FQColors.onSurface.withValues(alpha: 0.76),
+            fontSize: 17,
+            height: 1.35,
+          ),
+        ),
+        const SizedBox(height: 26),
+        FQSurfaceCard(
+          radius: FQRadius.xLarge,
+          color: Colors.white.withValues(alpha: 0.92),
+          child: TextField(
+            controller: _controller,
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _submit(),
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                Icons.person_rounded,
+                color: FQColors.outlineVariant,
+              ),
+              labelText: 'DANOS TU NOMBRE',
+              hintText: 'Tu nombre aquí...',
+              filled: false,
+              border: InputBorder.none,
+              errorText: _error,
+            ),
+          ),
+        ),
+        const SizedBox(height: 40),
+        SizedBox(
+          width: double.infinity,
+          child: FQPrimaryButton(
+            label: _saving ? 'Guardando...' : 'Empezar',
+            icon: Icons.arrow_forward_rounded,
+            onPressed: _saving ? null : _submit,
+          ),
+        ),
+      ],
     );
   }
 
