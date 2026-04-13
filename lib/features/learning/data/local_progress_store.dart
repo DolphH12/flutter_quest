@@ -18,11 +18,22 @@ class LocalProgressStore {
       final prefs = await SharedPreferences.getInstance();
       final raw = prefs.getString(_progressKey);
       if (raw == null || raw.isEmpty) {
-        return _memoryFallback ?? LearningProgressState.initial();
+        final fallback = _memoryFallback ?? LearningProgressState.initial();
+        final decayed = _applyStreakDecay(fallback);
+        if (decayed != fallback) {
+          await save(decayed);
+        }
+        return decayed;
       }
-      return LearningProgressState.decode(raw);
+      final decoded = LearningProgressState.decode(raw);
+      final decayed = _applyStreakDecay(decoded);
+      if (decayed != decoded) {
+        await save(decayed);
+      }
+      return decayed;
     } on MissingPluginException {
-      return _memoryFallback ?? LearningProgressState.initial();
+      final fallback = _memoryFallback ?? LearningProgressState.initial();
+      return _applyStreakDecay(fallback);
     }
   }
 
@@ -315,6 +326,20 @@ class LocalProgressStore {
       best: nextBest,
       lastStudyDate: null,
     ).withDate(today);
+  }
+
+  LearningProgressState _applyStreakDecay(LearningProgressState state) {
+    final lastRaw = state.lastStudyDate;
+    if (lastRaw == null || lastRaw.trim().isEmpty) return state;
+    final parsed = DateTime.tryParse(lastRaw);
+    if (parsed == null) return state;
+    final lastDay = DateTime(parsed.year, parsed.month, parsed.day);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final difference = today.difference(lastDay).inDays;
+    if (difference <= 1) return state;
+    if (state.currentStreak == 0) return state;
+    return state.copyWith(currentStreak: 0);
   }
 }
 

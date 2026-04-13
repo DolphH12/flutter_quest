@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
@@ -23,6 +24,7 @@ class RouteCompletionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final badge = data.primaryBadge;
     final score = data.totalAnswers == 0
         ? 0
@@ -58,7 +60,7 @@ class RouteCompletionScreen extends StatelessWidget {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Ruta completada',
+                              l10n.routeCompleted,
                               style: Theme.of(context).textTheme.headlineSmall
                                   ?.copyWith(
                                     color: Colors.white,
@@ -96,7 +98,7 @@ class RouteCompletionScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Resumen final',
+                        l10n.routeCompleted,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: FQColors.deepNavy,
                         ),
@@ -112,11 +114,13 @@ class RouteCompletionScreen extends StatelessWidget {
                           ),
                           _SummaryChip(
                             icon: Icons.check_circle_rounded,
-                            label: '$score% aciertos',
+                            label:
+                                '$score% ${l10n.accuracyLabel.toLowerCase()}',
                           ),
                           _SummaryChip(
                             icon: Icons.quiz_rounded,
-                            label: '${data.correctCount}/${data.totalAnswers} correctas',
+                            label:
+                                '${data.correctCount}/${data.totalAnswers} ${l10n.passedStatus.toLowerCase()}',
                           ),
                         ],
                       ),
@@ -134,7 +138,7 @@ class RouteCompletionScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FQPrimaryButton(
-              label: 'Volver al Home',
+              label: l10n.backToHome,
               icon: Icons.home_rounded,
               onPressed: onGoHome,
             ),
@@ -143,7 +147,7 @@ class RouteCompletionScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FQSecondaryButton(
-              label: 'Seguir aprendiendo',
+              label: l10n.continueLearning,
               onPressed: onContinueLearning,
             ),
           ),
@@ -192,6 +196,7 @@ class _BadgeCelebrationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
@@ -219,7 +224,7 @@ class _BadgeCelebrationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Insignia desbloqueada',
+                  l10n.badgeUnlockedTitle,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                     color: const Color(0xFF755700),
                     fontWeight: FontWeight.w800,

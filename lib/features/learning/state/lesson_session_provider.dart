@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/learning_models.dart';
+import 'app_state_providers.dart';
 
 class LessonSessionState {
   const LessonSessionState({
@@ -609,8 +610,9 @@ class LessonSessionNotifier
     }
 
     final isCorrect = pairs.every((pair) {
-      final selected = _normalize(state.conceptMatches[pair.left] ?? '')
-          .toLowerCase();
+      final selected = _normalize(
+        state.conceptMatches[pair.left] ?? '',
+      ).toLowerCase();
       final expectedValue = _normalize(pair.right).toLowerCase();
       return selected == expectedValue;
     });
@@ -645,8 +647,9 @@ class LessonSessionNotifier
           feedbackMessage: null,
         );
       }
-      final selected = _normalize(displayOptions[state.selectedOptionIndex!])
-          .toLowerCase();
+      final selected = _normalize(
+        displayOptions[state.selectedOptionIndex!],
+      ).toLowerCase();
       final answerFromJson = (activity.correctAnswer ?? '').trim();
       if (answerFromJson.isNotEmpty) {
         isCorrect = selected == _normalize(answerFromJson).toLowerCase();
@@ -721,7 +724,8 @@ class LessonSessionNotifier
   bool _normalizedListEquals(List<String> left, List<String> right) {
     if (left.length != right.length) return false;
     for (int i = 0; i < left.length; i++) {
-      if (_normalize(left[i]).toLowerCase() != _normalize(right[i]).toLowerCase()) {
+      if (_normalize(left[i]).toLowerCase() !=
+          _normalize(right[i]).toLowerCase()) {
         return false;
       }
     }
@@ -746,45 +750,94 @@ class LessonSessionNotifier
 
     final explanation = isCorrect
         ? (activity.correctExplanation ??
-              'Bien jugado. Ese concepto quedó claro.')
+              _t(
+                es: 'Bien jugado. Ese concepto quedó claro.',
+                en: 'Well played. That concept is now clear.',
+              ))
         : (activity.incorrectExplanation ??
-              'Casi, pero aquí Dart te puso una zancadilla. Revisa la pista y vuelve a intentar.');
+              _t(
+                es: 'Casi, pero aquí Dart te puso una zancadilla. Revisa la pista y vuelve a intentar.',
+                en: 'Close one. Dart tripped you here. Review the hint and try again.',
+              ));
 
     final didacticTail = isCorrect
-        ? 'Sigue así, ya estás pensando como dev.'
-        : 'Lee la explicación, ajusta y vuelve a verificar.';
+        ? _t(
+            es: 'Sigue así, ya estás pensando como dev.',
+            en: 'Keep it up, you are already thinking like a dev.',
+          )
+        : _t(
+            es: 'Lee la explicación, ajusta y vuelve a verificar.',
+            en: 'Read the explanation, adjust your answer, and verify again.',
+          );
 
     return (title, '$explanation\n\n$didacticTail');
   }
 
   String _positiveTitle(ActivityType type) {
+    if (_isSpanish) {
+      return switch (type) {
+        ActivityType.multipleChoice => 'Bien jugado',
+        ActivityType.fillInTheCode => 'Código en orden',
+        ActivityType.fixTheBug => 'Ese bug ya no te asusta',
+        ActivityType.completeSnippet => 'Snippet completo',
+        ActivityType.orderCodeBlocks => 'Secuencia impecable',
+        ActivityType.findTheWrongLine => 'Ojo clínico activado',
+        ActivityType.matchConcept => 'Conceptos conectados',
+        ActivityType.predictOutput => 'Predicción precisa',
+        ActivityType.guidedWriting => 'Escritura sólida',
+        _ => 'Excelente',
+      };
+    }
     return switch (type) {
-      ActivityType.multipleChoice => 'Bien jugado',
-      ActivityType.fillInTheCode => 'Código en orden',
-      ActivityType.fixTheBug => 'Ese bug ya no te asusta',
-      ActivityType.completeSnippet => 'Snippet completo',
-      ActivityType.orderCodeBlocks => 'Secuencia impecable',
-      ActivityType.findTheWrongLine => 'Ojo clínico activado',
-      ActivityType.matchConcept => 'Conceptos conectados',
-      ActivityType.predictOutput => 'Predicción precisa',
-      ActivityType.guidedWriting => 'Escritura sólida',
-      _ => 'Excelente',
+      ActivityType.multipleChoice => 'Nice move',
+      ActivityType.fillInTheCode => 'Code on point',
+      ActivityType.fixTheBug => 'That bug no longer scares you',
+      ActivityType.completeSnippet => 'Snippet completed',
+      ActivityType.orderCodeBlocks => 'Order nailed',
+      ActivityType.findTheWrongLine => 'Sharp eye unlocked',
+      ActivityType.matchConcept => 'Concepts connected',
+      ActivityType.predictOutput => 'Accurate prediction',
+      ActivityType.guidedWriting => 'Solid writing',
+      _ => 'Excellent',
     };
   }
 
   String _negativeTitle(ActivityType type) {
+    if (_isSpanish) {
+      return switch (type) {
+        ActivityType.multipleChoice => 'Casi, pero venía con trampa',
+        ActivityType.fillInTheCode => 'Te faltó una pieza',
+        ActivityType.fixTheBug => 'Aquí fue donde Dart te puso la zancadilla',
+        ActivityType.completeSnippet => 'Snippet incompleto',
+        ActivityType.orderCodeBlocks => 'El orden manda',
+        ActivityType.findTheWrongLine => 'No era esa línea',
+        ActivityType.matchConcept => 'Cruce incorrecto',
+        ActivityType.predictOutput => 'Salida inesperada',
+        ActivityType.guidedWriting => 'Necesita un ajuste más',
+        _ => 'Todavía no',
+      };
+    }
     return switch (type) {
-      ActivityType.multipleChoice => 'Casi, pero venía con trampa',
-      ActivityType.fillInTheCode => 'Te faltó una pieza',
-      ActivityType.fixTheBug => 'Aquí fue donde Dart te puso la zancadilla',
-      ActivityType.completeSnippet => 'Snippet incompleto',
-      ActivityType.orderCodeBlocks => 'El orden manda',
-      ActivityType.findTheWrongLine => 'No era esa línea',
-      ActivityType.matchConcept => 'Cruce incorrecto',
-      ActivityType.predictOutput => 'Salida inesperada',
-      ActivityType.guidedWriting => 'Necesita un ajuste más',
-      _ => 'Todavía no',
+      ActivityType.multipleChoice => 'Close, but it had a trap',
+      ActivityType.fillInTheCode => 'You are missing one piece',
+      ActivityType.fixTheBug => 'Dart tripped you here',
+      ActivityType.completeSnippet => 'Incomplete snippet',
+      ActivityType.orderCodeBlocks => 'Order matters',
+      ActivityType.findTheWrongLine => 'That was not the line',
+      ActivityType.matchConcept => 'Incorrect match',
+      ActivityType.predictOutput => 'Unexpected output',
+      ActivityType.guidedWriting => 'Needs one more tweak',
+      _ => 'Not yet',
     };
+  }
+
+  bool get _isSpanish {
+    final languageCode = ref.read(effectiveLanguageCodeProvider);
+    return languageCode.toLowerCase().startsWith('es');
+  }
+
+  String _t({required String es, required String en}) {
+    return _isSpanish ? es : en;
   }
 
   String _normalize(String value) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/responsive/breakpoints.dart';
@@ -23,6 +24,7 @@ class RouteDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final route = ref.watch(routeByIdProvider(routeId));
     final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
     final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
@@ -43,7 +45,7 @@ class RouteDetailScreen extends ConsumerWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Ruta bloqueada',
+                  l10n.lockedRouteTitle,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: FQColors.deepNavy,
                     fontWeight: FontWeight.w800,
@@ -57,7 +59,7 @@ class RouteDetailScreen extends ConsumerWidget {
                 const SizedBox(height: 12),
                 FilledButton(
                   onPressed: () => context.go('/home'),
-                  child: const Text('Volver al Home'),
+                  child: Text(l10n.backToHome),
                 ),
               ],
             ),
@@ -103,10 +105,10 @@ class RouteDetailScreen extends ConsumerWidget {
               ),
               FQPill(
                 label: progress.completedNodeIds.contains(route.examNodeId)
-                    ? 'Exam passed'
+                    ? l10n.examPassed
                     : (progress.unlockedExamIds.contains(route.examNodeId)
-                          ? 'Exam unlocked'
-                          : 'Exam locked'),
+                          ? l10n.examUnlocked
+                          : l10n.examLocked),
                 icon: Icons.military_tech_rounded,
                 color: progress.completedNodeIds.contains(route.examNodeId)
                     ? const Color(0xFFDFF7E8)
@@ -148,6 +150,7 @@ class _CurrentPathCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FQSurfaceCard(
       radius: FQRadius.large,
       gradient: FQGradients.subtlePanel,
@@ -158,7 +161,7 @@ class _CurrentPathCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'COMPLETION',
+                l10n.completionLabel.toUpperCase(),
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   color: FQColors.primary,
                   fontWeight: FontWeight.w700,

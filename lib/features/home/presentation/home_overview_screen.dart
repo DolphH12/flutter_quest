@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/responsive/breakpoints.dart';
@@ -18,6 +19,7 @@ class HomeOverviewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final routesAsync = ref.watch(allRoutesProvider);
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
@@ -32,10 +34,7 @@ class HomeOverviewScreen extends ConsumerWidget {
     if (routesAsync.hasError || progressAsync.hasError) {
       return FQPageContainer(
         child: Center(
-          child: Text(
-            'No se pudo cargar el contenido de las rutas.',
-            textAlign: TextAlign.center,
-          ),
+          child: Text(l10n.loadRoutesError, textAlign: TextAlign.center),
         ),
       );
     }
@@ -47,7 +46,7 @@ class HomeOverviewScreen extends ConsumerWidget {
         child: Center(
           child: Text(
             routeLoadErrors.isEmpty
-                ? 'No se pudo cargar el contenido de rutas.'
+                ? l10n.loadRoutesError
                 : _buildLoadErrorMessage(routeLoadErrors),
             textAlign: TextAlign.center,
           ),
@@ -62,7 +61,7 @@ class HomeOverviewScreen extends ConsumerWidget {
           _OverviewHeader(progress: progress),
           const SizedBox(height: 14),
           Text(
-            'Rutas disponibles',
+            l10n.routesAvailable,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(color: FQColors.deepNavy),
@@ -175,6 +174,7 @@ class _RouteLoadWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FQSurfaceCard(
       radius: FQRadius.large,
       color: const Color(0xFFFFF4E0),
@@ -182,7 +182,7 @@ class _RouteLoadWarning extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Algunas rutas no cargaron',
+            l10n.routeLoadWarningTitle,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: const Color(0xFF755700),
               fontWeight: FontWeight.w800,
@@ -309,7 +309,7 @@ class _RouteCardTile extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Progress',
+                        AppLocalizations.of(context)!.progressLabel,
                         style: Theme.of(context).textTheme.labelMedium
                             ?.copyWith(
                               color: FQColors.primary,
@@ -348,6 +348,7 @@ class _OverviewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDesktop = FQBreakpoints.isDesktop(context);
     final chips = Wrap(
       spacing: 8,
@@ -361,7 +362,7 @@ class _OverviewHeader extends StatelessWidget {
         ),
         FQStatChip(
           icon: Icons.local_fire_department_rounded,
-          label: 'Streak',
+          label: l10n.streakLabel,
           value: '${progress.currentStreak}',
           accent: FQColors.tertiaryDark,
         ),
@@ -402,7 +403,7 @@ class _OverviewHeader extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Elige una ruta y sigue avanzando',
+                      l10n.homeSubtitle,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: 19,
                         color: FQColors.onSurface.withValues(alpha: 0.74),
@@ -429,7 +430,7 @@ class _OverviewHeader extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Elige una ruta y sigue avanzando',
+            l10n.homeSubtitle,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
               color: FQColors.onSurface.withValues(alpha: 0.7),
             ),

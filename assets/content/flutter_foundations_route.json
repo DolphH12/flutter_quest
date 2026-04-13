@@ -1,7 +1,13 @@
 {
   "routeId": "flutter_foundations_route",
-  "title": "Flutter Foundations",
-  "description": "Aprende las bases de Flutter construyendo criterio sobre widgets, estructura, layout, navegación e interacción.",
+  "title": {
+    "es": "Flutter Foundations",
+    "en": "Flutter Foundations"
+  },
+  "description": {
+    "es": "Aprende las bases de Flutter construyendo criterio sobre widgets, estructura, layout, navegación e interacción.",
+    "en": "Learn Flutter fundamentals by building judgement around widgets, structure, layout, navigation, and interaction."
+  },
   "icon": "flutter_dash",
   "themeColor": "#005E9E",
   "version": 2,
@@ -10,8 +16,14 @@
   "nodes": [
     {
       "id": "flutter_intro",
-      "title": "¿Qué es Flutter?",
-      "shortDescription": "Entiende qué resuelve Flutter y cómo piensa una app basada en widgets.",
+      "title": {
+        "es": "¿Qué es Flutter?",
+        "en": "What is Flutter?"
+      },
+      "shortDescription": {
+        "es": "Entiende qué resuelve Flutter y cómo piensa una app basada en widgets.",
+        "en": "Understand what Flutter solves and how a widget-based app is built."
+      },
       "icon": "flutter_dash",
       "nodeType": "lesson",
       "xpReward": 60,
@@ -19,93 +31,216 @@
         {
           "id": "flutter_intro_1",
           "type": "intro",
-          "title": "Flutter es UI declarativa",
-          "body": "Flutter es un framework para construir interfaces multiplataforma. En lugar de decirle paso por paso cómo pintar cada pixel, normalmente declaras qué widget quieres mostrar y Flutter se encarga de renderizarlo. Esa idea hace que construir UI sea más expresivo, más componible y más cercano a pensar en piezas.",
-          "example": "return const Text('Hola Flutter');\n\n// Declaras qué quieres mostrar.\n// Flutter lo renderiza."
+          "title": {
+            "es": "Flutter es UI declarativa",
+            "en": "Flutter is declarative UI"
+          },
+          "body": {
+            "es": "Flutter es un framework para construir interfaces multiplataforma. En lugar de decirle paso por paso cómo pintar cada pixel, normalmente declaras qué widget quieres mostrar y Flutter se encarga de renderizarlo. Esa idea hace que construir UI sea más expresivo, más componible y más cercano a pensar en piezas.",
+            "en": "Flutter is a framework for building cross-platform interfaces. Instead of telling you step by step how to paint each pixel, you typically declare which widget you want to display and Flutter takes care of rendering it. That idea makes building UI more expressive, more composable, and closer to thinking in pieces."
+          },
+          "example": {
+            "es": "return const Text('Hola Flutter');\n\n// Declaras qué quieres mostrar.\n// Flutter lo renderiza.",
+            "en": "return const Text('Hello Flutter');\n\n// You declare what you want to show.\n// Flutter renders it."
+          }
         },
         {
           "id": "flutter_intro_2",
           "type": "intro",
-          "title": "Todo en Flutter gira alrededor de widgets",
-          "body": "En Flutter, casi todo es un widget: texto, botones, layouts, espacios, pantallas completas y hasta estructuras más complejas. Esto te obliga a pensar la interfaz como una composición de piezas pequeñas. Y sí, al principio parece mucho widget por centímetro cuadrado, pero luego se vuelve natural.",
-          "example": "Column(\n  children: [\n    Text('Hola'),\n    ElevatedButton(onPressed: () {}, child: Text('Tap')),\n  ],\n)"
+          "title": {
+            "es": "Todo en Flutter gira alrededor de widgets",
+            "en": "Everything in Flutter revolves around widgets"
+          },
+          "body": {
+            "es": "En Flutter, casi todo es un widget: texto, botones, layouts, espacios, pantallas completas y hasta estructuras más complejas. Esto te obliga a pensar la interfaz como una composición de piezas pequeñas. Y sí, al principio parece mucho widget por centímetro cuadrado, pero luego se vuelve natural.",
+            "en": "In Flutter, almost everything is a widget: text, buttons, layouts, spaces, full screens and even more complex structures. This forces you to think of the interface as a composition of small pieces. And yes, at first it seems like a lot of widgets per square centimeter, but then it becomes natural."
+          },
+          "example": {
+            "es": "Column(\n  children: [\n    Text('Hola'),\n    ElevatedButton(onPressed: () {}, child: Text('Tap')),\n  ],\n)",
+            "en": "Column(\n  children: [\n    Text('Hello'),\n    ElevatedButton(onPressed: () {}, child: Text('Tap')),\n  ],\n)"
+          }
         },
         {
           "id": "flutter_intro_q1",
           "type": "multipleChoice",
-          "question": "¿Qué describe mejor a Flutter?",
+          "question": {
+            "es": "¿Qué describe mejor a Flutter?",
+            "en": "What best describes Flutter?"
+          },
           "options": [
-            "Un lenguaje de programación",
-            "Un framework para construir interfaces multiplataforma",
-            "Una base de datos para móviles",
-            "Un motor exclusivo de Android"
+            {
+              "es": "Un lenguaje de programación",
+              "en": "A programming language"
+            },
+            {
+              "es": "Un framework para construir interfaces multiplataforma",
+              "en": "A framework to build cross-platform interfaces"
+            },
+            {
+              "es": "Una base de datos para móviles",
+              "en": "A mobile database"
+            },
+            {
+              "es": "Un motor exclusivo de Android",
+              "en": "An exclusive Android engine"
+            }
           ],
-          "correctAnswer": "Un framework para construir interfaces multiplataforma",
-          "correctExplanation": "Flutter es un framework UI que permite construir apps para varias plataformas desde una misma base.",
-          "incorrectExplanation": "Flutter no es un lenguaje ni una base de datos. Es un framework para crear interfaces multiplataforma.",
+          "correctAnswer": {
+            "es": "Un framework para construir interfaces multiplataforma",
+            "en": "A framework to build cross-platform interfaces"
+          },
+          "correctExplanation": {
+            "es": "Flutter es un framework UI que permite construir apps para varias plataformas desde una misma base.",
+            "en": "Flutter is a UI framework that allows you to build apps for various platforms from the same base."
+          },
+          "incorrectExplanation": {
+            "es": "Flutter no es un lenguaje ni una base de datos. Es un framework para crear interfaces multiplataforma.",
+            "en": "Flutter is not a language or a database. It is a framework for creating cross-platform interfaces."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "flutter_intro_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada concepto con su significado.",
+          "prompt": {
+            "es": "Relaciona cada concepto con su significado.",
+            "en": "Relate each concept to its meaning."
+          },
           "pairs": [
             {
-              "left": "Flutter",
-              "right": "Framework para construir interfaces multiplataforma"
+              "left": {
+                "es": "Flutter",
+                "en": "flutter"
+              },
+              "right": {
+                "es": "Framework para construir interfaces multiplataforma",
+                "en": "Framework to build cross-platform interfaces"
+              }
             },
             {
-              "left": "widget",
-              "right": "Pieza reutilizable de UI"
+              "left": {
+                "es": "widget",
+                "en": "widget"
+              },
+              "right": {
+                "es": "Pieza reutilizable de UI",
+                "en": "Reusable UI part"
+              }
             },
             {
-              "left": "UI declarativa",
-              "right": "Describir qué mostrar según el estado"
+              "left": {
+                "es": "UI declarativa",
+                "en": "Declarative UI"
+              },
+              "right": {
+                "es": "Describir qué mostrar según el estado",
+                "en": "Describe what to show based on status"
+              }
             }
           ],
-          "correctExplanation": "Estas tres ideas forman el corazón mental de Flutter.",
-          "incorrectExplanation": "Revisa qué es Flutter, qué representa un widget y qué significa declarar una interfaz.",
+          "correctExplanation": {
+            "es": "Estas tres ideas forman el corazón mental de Flutter.",
+            "en": "These three ideas form the mental heart of Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué es Flutter, qué representa un widget y qué significa declarar una interfaz.",
+            "en": "Review what Flutter is, what a widget represents, and what it means to declare an interface."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "flutter_intro_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué se vería en pantalla con este widget?",
-          "codeSnippet": "return const Text('Hola Flutter');",
+          "question": {
+            "es": "¿Qué se vería en pantalla con este widget?",
+            "en": "What would be seen on the screen with this widget?"
+          },
+          "codeSnippet": {
+            "es": "return const Text('Hola Flutter');",
+            "en": "return const Text('Hello Flutter');"
+          },
           "options": [
-            "Un botón azul",
-            "El texto Hola Flutter",
-            "Una lista vacía",
-            "Nada, porque falta main"
+            {
+              "es": "Un botón azul",
+              "en": "a blue button"
+            },
+            {
+              "es": "El texto Hola Flutter",
+              "en": "The text Hello Flutter"
+            },
+            {
+              "es": "Una lista vacía",
+              "en": "An empty list"
+            },
+            {
+              "es": "Nada, porque falta main",
+              "en": "Nothing, because main is missing"
+            }
           ],
-          "correctAnswer": "El texto Hola Flutter",
-          "correctExplanation": "Text muestra directamente el contenido de texto que recibe.",
-          "incorrectExplanation": "Ese snippet renderiza un Text con el contenido Hola Flutter.",
+          "correctAnswer": {
+            "es": "El texto Hola Flutter",
+            "en": "The text Hello Flutter"
+          },
+          "correctExplanation": {
+            "es": "Text muestra directamente el contenido de texto que recibe.",
+            "en": "Text directly displays the text content you receive."
+          },
+          "incorrectExplanation": {
+            "es": "Ese snippet renderiza un Text con el contenido Hola Flutter.",
+            "en": "That snippet renders a Text with the content Hello Flutter."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "flutter_intro_guided_1",
           "type": "guidedWriting",
-          "instructions": "Escribe el fragmento mínimo para mostrar el texto 'Hola Flutter' usando un widget.",
-          "starterCode": "return _____;",
+          "instructions": {
+            "es": "Escribe el fragmento mínimo para mostrar el texto 'Hola Flutter' usando un widget.",
+            "en": "Write the minimal fragment to display the text 'Hello Flutter' using a widget."
+          },
+          "starterCode": {
+            "es": "return _____;",
+            "en": "return _____;"
+          },
           "expectedFragments": [
-            "Text(",
-            "'Hola Flutter'"
+            {
+              "es": "Text(",
+              "en": "Text("
+            },
+            {
+              "es": "'Hola Flutter'",
+              "en": "'Hola Flutter'"
+            }
           ],
-          "correctExplanation": "Para mostrar texto simple, Text es uno de los widgets más básicos y directos.",
-          "incorrectExplanation": "Tu respuesta debe incluir un Text con el contenido 'Hola Flutter'.",
-          "hint": "Empieza por el widget más básico para texto.",
+          "correctExplanation": {
+            "es": "Para mostrar texto simple, Text es uno de los widgets más básicos y directos.",
+            "en": "For displaying simple text, Text is one of the most basic and straightforward widgets."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir un Text con el contenido 'Hola Flutter'.",
+            "en": "Your response must include a Text with the content 'Hello Flutter'."
+          },
+          "hint": {
+            "es": "Empieza por el widget más básico para texto.",
+            "en": "Start with the most basic text widget."
+          },
           "xpReward": 15
         }
       ]
     },
     {
       "id": "flutter_project_structure",
-      "title": "Estructura de proyecto",
-      "shortDescription": "Ubica los archivos clave y entiende qué papel cumple cada uno.",
+      "title": {
+        "es": "Estructura de proyecto",
+        "en": "Project structure"
+      },
+      "shortDescription": {
+        "es": "Ubica los archivos clave y entiende qué papel cumple cada uno.",
+        "en": "Locate key files and understand each one’s role."
+      },
       "icon": "folder_copy",
       "nodeType": "lesson",
       "xpReward": 60,
@@ -113,85 +248,202 @@
         {
           "id": "fps_intro_1",
           "type": "intro",
-          "title": "Un proyecto Flutter tiene piezas con roles distintos",
-          "body": "Cuando creas un proyecto Flutter, aparecen carpetas y archivos con responsabilidades claras. Saber dónde vive el código, dónde se declaran assets y dónde van las pruebas te evita convertir el proyecto en una habitación donde todo está tirado en el piso.",
-          "example": "lib/\nassets/\npubspec.yaml\ntest/\n\n// No todo va en main.dart.\n// Y sí, eso también es una lección de vida."
+          "title": {
+            "es": "Un proyecto Flutter tiene piezas con roles distintos",
+            "en": "A Flutter project has pieces with different roles"
+          },
+          "body": {
+            "es": "Cuando creas un proyecto Flutter, aparecen carpetas y archivos con responsabilidades claras. Saber dónde vive el código, dónde se declaran assets y dónde van las pruebas te evita convertir el proyecto en una habitación donde todo está tirado en el piso.",
+            "en": "When you create a Flutter project, folders and files with clear responsibilities appear. Knowing where the code lives, where assets are declared, and where tests go prevents you from turning the project into a room where everything is lying on the floor."
+          },
+          "example": {
+            "es": "lib/\nassets/\npubspec.yaml\ntest/\n\n// No todo va en main.dart.\n// Y sí, eso también es una lección de vida.",
+            "en": "lib/\nassets/\npubspec.yaml\ntest/\n\n// Not everything goes in main.dart.\n// And yes, that is also a life lesson."
+          }
         },
         {
           "id": "fps_intro_2",
           "type": "intro",
-          "title": "pubspec.yaml no es decoración",
-          "body": "pubspec.yaml es un archivo central del proyecto. Allí se definen dependencias, assets y parte de la configuración del paquete. Si agregas imágenes, JSON o fuentes, normalmente terminarás declarándolos allí.",
-          "example": "flutter:\n  assets:\n    - assets/content/\n\ndependencies:\n  flutter:\n    sdk: flutter"
+          "title": {
+            "es": "pubspec.yaml no es decoración",
+            "en": "pubspec.yaml is not decoration"
+          },
+          "body": {
+            "es": "pubspec.yaml es un archivo central del proyecto. Allí se definen dependencias, assets y parte de la configuración del paquete. Si agregas imágenes, JSON o fuentes, normalmente terminarás declarándolos allí.",
+            "en": "pubspec.yaml is a core project file. There, dependencies, assets and part of the package configuration are defined. If you add images, JSON, or fonts, you'll usually end up declaring them there."
+          },
+          "example": {
+            "es": "flutter:\n  assets:\n    - assets/content/\n\ndependencies:\n  flutter:\n    sdk: flutter",
+            "en": "flutter:\n  assets:\n    - assets/content/\n\ndependencies:\n  flutter:\n    sdk: flutter"
+          }
         },
         {
           "id": "fps_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada elemento con su responsabilidad principal.",
+          "prompt": {
+            "es": "Relaciona cada elemento con su responsabilidad principal.",
+            "en": "Relate each element to its main responsibility."
+          },
           "pairs": [
             {
-              "left": "pubspec.yaml",
-              "right": "Declara dependencias y assets"
+              "left": {
+                "es": "pubspec.yaml",
+                "en": "pubspec.yaml"
+              },
+              "right": {
+                "es": "Declara dependencias y assets",
+                "en": "Declare dependencies and assets"
+              }
             },
             {
-              "left": "lib/",
-              "right": "Contiene el código principal de la app"
+              "left": {
+                "es": "lib/",
+                "en": "lib/"
+              },
+              "right": {
+                "es": "Contiene el código principal de la app",
+                "en": "Contains the main code of the app"
+              }
             },
             {
-              "left": "assets/",
-              "right": "Guarda recursos como imágenes o JSON"
+              "left": {
+                "es": "assets/",
+                "en": "assets/"
+              },
+              "right": {
+                "es": "Guarda recursos como imágenes o JSON",
+                "en": "Save resources as images or JSON"
+              }
             }
           ],
-          "correctExplanation": "Cada carpeta o archivo tiene un propósito distinto y conocerlo te da dirección en el proyecto.",
-          "incorrectExplanation": "Revisa mejor qué vive en lib, qué se declara en pubspec y dónde van los recursos.",
+          "correctExplanation": {
+            "es": "Cada carpeta o archivo tiene un propósito distinto y conocerlo te da dirección en el proyecto.",
+            "en": "Each folder or file has a different purpose and knowing it gives you direction in the project."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa mejor qué vive en lib, qué se declara en pubspec y dónde van los recursos.",
+            "en": "Take a better look at what lives in lib, what is declared in pubspec, and where the resources go."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "fps_q1",
           "type": "multipleChoice",
-          "question": "¿En qué archivo se suelen declarar assets y dependencias?",
+          "question": {
+            "es": "¿En qué archivo se suelen declarar assets y dependencias?",
+            "en": "In which file are assets and dependencies usually declared?"
+          },
           "options": [
-            "main.dart",
-            "pubspec.yaml",
-            "analysis_options.yaml",
-            "README.md"
+            {
+              "es": "main.dart",
+              "en": "main.dart"
+            },
+            {
+              "es": "pubspec.yaml",
+              "en": "pubspec.yaml"
+            },
+            {
+              "es": "analysis_options.yaml",
+              "en": "analysis_options.yaml"
+            },
+            {
+              "es": "README.md",
+              "en": "README.md"
+            }
           ],
-          "correctAnswer": "pubspec.yaml",
-          "correctExplanation": "pubspec.yaml es donde Flutter registra dependencias, assets y configuración general del paquete.",
-          "incorrectExplanation": "El archivo correcto es pubspec.yaml.",
+          "correctAnswer": {
+            "es": "pubspec.yaml",
+            "en": "pubspec.yaml"
+          },
+          "correctExplanation": {
+            "es": "pubspec.yaml es donde Flutter registra dependencias, assets y configuración general del paquete.",
+            "en": "pubspec.yaml is where Flutter records dependencies, assets, and general package configuration."
+          },
+          "incorrectExplanation": {
+            "es": "El archivo correcto es pubspec.yaml.",
+            "en": "The correct file is pubspec.yaml."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fps_find_1",
           "type": "findTheWrongLine",
-          "prompt": "Identifica la línea más sospechosa en esta estructura de proyecto.",
+          "prompt": {
+            "es": "Identifica la línea más sospechosa en esta estructura de proyecto.",
+            "en": "Identify the most suspicious line in this project structure."
+          },
           "codeLines": [
-            "assets/",
-            "lib/",
-            "pubspec.yaml",
-            "main.yaml"
+            {
+              "es": "assets/",
+              "en": "assets/"
+            },
+            {
+              "es": "lib/",
+              "en": "lib/"
+            },
+            {
+              "es": "pubspec.yaml",
+              "en": "pubspec.yaml"
+            },
+            {
+              "es": "main.yaml",
+              "en": "main.yaml"
+            }
           ],
           "wrongLineIndex": 3,
-          "correctExplanation": "main.yaml no es parte típica de la estructura base de un proyecto Flutter estándar.",
-          "incorrectExplanation": "La línea incorrecta es main.yaml; no es un archivo base típico de Flutter.",
+          "correctExplanation": {
+            "es": "main.yaml no es parte típica de la estructura base de un proyecto Flutter estándar.",
+            "en": "main.yaml is not a typical part of the base structure of a standard Flutter project."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es main.yaml; no es un archivo base típico de Flutter.",
+            "en": "The wrong line is main.yaml; It is not a typical Flutter base file."
+          },
           "xpReward": 15
         },
         {
           "id": "fps_predict_1",
           "type": "predictOutput",
-          "question": "¿Dónde guardarías un archivo JSON local que será leído por la app?",
-          "codeSnippet": "// Necesitas leer contenido local desde la app",
+          "question": {
+            "es": "¿Dónde guardarías un archivo JSON local que será leído por la app?",
+            "en": "Where would you save a local JSON file that will be read by the app?"
+          },
+          "codeSnippet": {
+            "es": "// Necesitas leer contenido local desde la app",
+            "en": "// You need to read local content from the app"
+          },
           "options": [
-            "assets/",
-            "test/",
-            "android/",
-            "ios/Runner.xcodeproj"
+            {
+              "es": "assets/",
+              "en": "assets/"
+            },
+            {
+              "es": "test/",
+              "en": "test/"
+            },
+            {
+              "es": "android/",
+              "en": "android/"
+            },
+            {
+              "es": "ios/Runner.xcodeproj",
+              "en": "ios/Runner.xcodeproj"
+            }
           ],
-          "correctAnswer": "assets/",
-          "correctExplanation": "Los recursos estáticos como JSON suelen vivir dentro de assets/.",
-          "incorrectExplanation": "Para recursos estáticos consumidos por la app, la carpeta correcta es assets/.",
+          "correctAnswer": {
+            "es": "assets/",
+            "en": "assets/"
+          },
+          "correctExplanation": {
+            "es": "Los recursos estáticos como JSON suelen vivir dentro de assets/.",
+            "en": "Static resources like JSON typically live inside assets/."
+          },
+          "incorrectExplanation": {
+            "es": "Para recursos estáticos consumidos por la app, la carpeta correcta es assets/.",
+            "en": "For static resources consumed by the app, the correct folder is assets/."
+          },
           "xpReward": 15,
           "shuffle": true
         }
@@ -199,8 +451,14 @@
     },
     {
       "id": "flutter_main_materialapp",
-      "title": "main.dart y MaterialApp",
-      "shortDescription": "Comprende el punto de entrada y el widget raíz de una app Flutter.",
+      "title": {
+        "es": "main.dart y MaterialApp",
+        "en": "main.dart and MaterialApp"
+      },
+      "shortDescription": {
+        "es": "Comprende el punto de entrada y el widget raíz de una app Flutter.",
+        "en": "Understand the entry point and root widget of a Flutter app."
+      },
       "icon": "play_circle",
       "nodeType": "lesson",
       "xpReward": 65,
@@ -208,98 +466,242 @@
         {
           "id": "fmm_intro_1",
           "type": "intro",
-          "title": "runApp enciende la interfaz",
-          "body": "En Flutter, main() suele llamar a runApp() con el widget raíz. Esa llamada le dice al framework qué árbol de widgets debe empezar a renderizar. Sin runApp(), la app no despega visualmente.",
-          "example": "void main() {\n  runApp(const MyApp());\n}"
+          "title": {
+            "es": "runApp enciende la interfaz",
+            "en": "runApp turns on the interface"
+          },
+          "body": {
+            "es": "En Flutter, main() suele llamar a runApp() con el widget raíz. Esa llamada le dice al framework qué árbol de widgets debe empezar a renderizar. Sin runApp(), la app no despega visualmente.",
+            "en": "In Flutter, main() usually calls runApp() with the root widget. That call tells the framework which widget tree to start rendering. Without runApp(), the app doesn't take off visually."
+          },
+          "example": {
+            "es": "void main() {\n  runApp(const MyApp());\n}",
+            "en": "void main() {\n  runApp(const MyApp());\n}"
+          }
         },
         {
           "id": "fmm_intro_2",
           "type": "intro",
-          "title": "MaterialApp suele ser la raíz visual",
-          "body": "MaterialApp configura una base conveniente para apps con estilo Material: tema, rutas, navegación y otras piezas importantes. No significa que sea obligatorio en todos los casos, pero en muchas apps Flutter es el punto de arranque más común.",
-          "example": "class MyApp extends StatelessWidget {\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      home: HomeScreen(),\n    );\n  }\n}"
+          "title": {
+            "es": "MaterialApp suele ser la raíz visual",
+            "en": "MaterialApp is usually the visual root"
+          },
+          "body": {
+            "es": "MaterialApp configura una base conveniente para apps con estilo Material: tema, rutas, navegación y otras piezas importantes. No significa que sea obligatorio en todos los casos, pero en muchas apps Flutter es el punto de arranque más común.",
+            "en": "MaterialApp sets up a convenient base for Material-style apps: theme, routes, navigation, and other important pieces. It does not mean that it is mandatory in all cases, but in many apps Flutter is the most common starting point."
+          },
+          "example": {
+            "es": "class MyApp extends StatelessWidget {\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      home: HomeScreen(),\n    );\n  }\n}",
+            "en": "class MyApp extends StatelessWidget {\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      home: HomeScreen(),\n    );\n  }\n}"
+          }
         },
         {
           "id": "fmm_q1",
           "type": "multipleChoice",
-          "question": "¿Qué función suele montar el widget raíz de la app?",
+          "question": {
+            "es": "¿Qué función suele montar el widget raíz de la app?",
+            "en": "What function does the root widget of the app usually mount?"
+          },
           "options": [
-            "renderUi()",
-            "runApp()",
-            "mountRoot()",
-            "startApp()"
+            {
+              "es": "renderUi()",
+              "en": "renderUi()"
+            },
+            {
+              "es": "runApp()",
+              "en": "runApp()"
+            },
+            {
+              "es": "mountRoot()",
+              "en": "mountRoot()"
+            },
+            {
+              "es": "startApp()",
+              "en": "startApp()"
+            }
           ],
-          "correctAnswer": "runApp()",
-          "correctExplanation": "runApp() recibe el widget raíz y arranca la interfaz.",
-          "incorrectExplanation": "La función estándar para montar el widget raíz es runApp().",
+          "correctAnswer": {
+            "es": "runApp()",
+            "en": "runApp()"
+          },
+          "correctExplanation": {
+            "es": "runApp() recibe el widget raíz y arranca la interfaz.",
+            "en": "runApp() receives the root widget and bootstraps the interface."
+          },
+          "incorrectExplanation": {
+            "es": "La función estándar para montar el widget raíz es runApp().",
+            "en": "The standard function for mounting the root widget is runApp()."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fmm_code_1",
           "type": "completeSnippet",
-          "prompt": "Completa la función que monta el widget raíz.",
-          "initialCode": "void main() {\n  _____(const MyApp());\n}",
-          "expectedAnswer": "runApp",
-          "correctExplanation": "runApp monta el widget raíz y arranca la interfaz de Flutter.",
-          "incorrectExplanation": "La función que recibe el widget raíz es runApp.",
-          "hint": "Es la función que literalmente corre la app.",
+          "prompt": {
+            "es": "Completa la función que monta el widget raíz.",
+            "en": "Complete the function that mounts the root widget."
+          },
+          "initialCode": {
+            "es": "void main() {\n  _____(const MyApp());\n}",
+            "en": "void main() {\n  _____(const MyApp());\n}"
+          },
+          "expectedAnswer": {
+            "es": "runApp",
+            "en": "runApp"
+          },
+          "correctExplanation": {
+            "es": "runApp monta el widget raíz y arranca la interfaz de Flutter.",
+            "en": "runApp mounts the root widget and bootstraps the Flutter interface."
+          },
+          "incorrectExplanation": {
+            "es": "La función que recibe el widget raíz es runApp.",
+            "en": "The function that receives the root widget is runApp."
+          },
+          "hint": {
+            "es": "Es la función que literalmente corre la app.",
+            "en": "It is the function that literally runs the app."
+          },
           "xpReward": 15
         },
         {
           "id": "fmm_bug_1",
           "type": "fixTheBug",
-          "prompt": "Corrige el widget raíz para usar MaterialApp en vez de Material.",
-          "initialCode": "return Material(\n  home: HomeScreen(),\n);",
-          "expectedAnswer": "return MaterialApp(\n  home: HomeScreen(),\n);",
-          "correctExplanation": "MaterialApp es el widget raíz apropiado para configurar una app Material.",
-          "incorrectExplanation": "Material no reemplaza a MaterialApp como raíz de la app.",
-          "hint": "Necesitas el widget raíz de una app Material.",
+          "prompt": {
+            "es": "Corrige el widget raíz para usar MaterialApp en vez de Material.",
+            "en": "Fix root widget to use MaterialApp instead of Material."
+          },
+          "initialCode": {
+            "es": "return Material(\n  home: HomeScreen(),\n);",
+            "en": "return Material(\n  home: HomeScreen(),\n);"
+          },
+          "expectedAnswer": {
+            "es": "return MaterialApp(\n  home: HomeScreen(),\n);",
+            "en": "return MaterialApp(\n  home: HomeScreen(),\n);"
+          },
+          "correctExplanation": {
+            "es": "MaterialApp es el widget raíz apropiado para configurar una app Material.",
+            "en": "MaterialApp is the appropriate root widget for configuring a Material app."
+          },
+          "incorrectExplanation": {
+            "es": "Material no reemplaza a MaterialApp como raíz de la app.",
+            "en": "Material does not replace MaterialApp as the root of the app."
+          },
+          "hint": {
+            "es": "Necesitas el widget raíz de una app Material.",
+            "en": "You need the root widget of a Material app."
+          },
           "xpReward": 15
         },
         {
           "id": "fmm_order_1",
           "type": "orderCodeBlocks",
-          "prompt": "Ordena estos pasos para arrancar una app Flutter básica.",
+          "prompt": {
+            "es": "Ordena estos pasos para arrancar una app Flutter básica.",
+            "en": "Order these steps to start a basic Flutter app."
+          },
           "blocks": [
-            "runApp(const MyApp());",
-            "return MaterialApp(home: HomeScreen());",
-            "void main() {",
-            "class MyApp extends StatelessWidget {",
-            "}"
+            {
+              "es": "runApp(const MyApp());",
+              "en": "runApp(const MyApp());"
+            },
+            {
+              "es": "return MaterialApp(home: HomeScreen());",
+              "en": "return MaterialApp(home: HomeScreen());"
+            },
+            {
+              "es": "void main() {",
+              "en": "void main() {"
+            },
+            {
+              "es": "class MyApp extends StatelessWidget {",
+              "en": "class MyApp extends StatelessWidget {"
+            },
+            {
+              "es": "}",
+              "en": "}"
+            }
           ],
           "correctOrder": [
-            "void main() {",
-            "runApp(const MyApp());",
-            "}",
-            "class MyApp extends StatelessWidget {",
-            "return MaterialApp(home: HomeScreen());"
+            {
+              "es": "void main() {",
+              "en": "void main() {"
+            },
+            {
+              "es": "runApp(const MyApp());",
+              "en": "runApp(const MyApp());"
+            },
+            {
+              "es": "}",
+              "en": "}"
+            },
+            {
+              "es": "class MyApp extends StatelessWidget {",
+              "en": "class MyApp extends StatelessWidget {"
+            },
+            {
+              "es": "return MaterialApp(home: HomeScreen());",
+              "en": "return MaterialApp(home: HomeScreen());"
+            }
           ],
-          "correctExplanation": "Primero defines el punto de entrada y luego el widget raíz que devuelve MaterialApp.",
-          "incorrectExplanation": "Piensa en el orden natural: entrada del programa y luego el widget principal.",
+          "correctExplanation": {
+            "es": "Primero defines el punto de entrada y luego el widget raíz que devuelve MaterialApp.",
+            "en": "You first define the entry point and then the root widget that MaterialApp returns."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en el orden natural: entrada del programa y luego el widget principal.",
+            "en": "Think of the natural order: program input and then the main widget."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "fmm_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada pieza con su responsabilidad.",
+          "prompt": {
+            "es": "Relaciona cada pieza con su responsabilidad.",
+            "en": "Relate each piece to its responsibility."
+          },
           "pairs": [
             {
-              "left": "main()",
-              "right": "Punto de entrada del programa"
+              "left": {
+                "es": "main()",
+                "en": "main()"
+              },
+              "right": {
+                "es": "Punto de entrada del programa",
+                "en": "Program entry point"
+              }
             },
             {
-              "left": "runApp()",
-              "right": "Monta el widget raíz"
+              "left": {
+                "es": "runApp()",
+                "en": "runApp()"
+              },
+              "right": {
+                "es": "Monta el widget raíz",
+                "en": "Mount the root widget"
+              }
             },
             {
-              "left": "MaterialApp",
-              "right": "Base visual de una app Material"
+              "left": {
+                "es": "MaterialApp",
+                "en": "MaterialApp"
+              },
+              "right": {
+                "es": "Base visual de una app Material",
+                "en": "Visual base of a Material app"
+              }
             }
           ],
-          "correctExplanation": "Estas tres piezas definen una base clara para arrancar una app Flutter.",
-          "incorrectExplanation": "Revisa qué entra primero, qué monta la UI y qué widget da la base Material.",
+          "correctExplanation": {
+            "es": "Estas tres piezas definen una base clara para arrancar una app Flutter.",
+            "en": "These three pieces define a clear foundation for starting a Flutter app."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué entra primero, qué monta la UI y qué widget da la base Material.",
+            "en": "Check what comes in first, what mounts the UI and what widget gives the Material base."
+          },
           "xpReward": 10,
           "shuffle": true
         }
@@ -307,8 +709,14 @@
     },
     {
       "id": "flutter_scaffold",
-      "title": "Scaffold",
-      "shortDescription": "Aprende a estructurar una pantalla con AppBar, body y acciones base.",
+      "title": {
+        "es": "Scaffold",
+        "en": "Scaffold"
+      },
+      "shortDescription": {
+        "es": "Aprende a estructurar una pantalla con AppBar, body y acciones base.",
+        "en": "Learn to structure a screen with AppBar, body and base actions."
+      },
       "icon": "web_asset",
       "nodeType": "lesson",
       "xpReward": 65,
@@ -316,100 +724,241 @@
         {
           "id": "fs_intro_1",
           "type": "intro",
-          "title": "Scaffold te da estructura",
-          "body": "Scaffold es una base muy común para pantallas Material. Te da zonas como appBar, body, floatingActionButton y más. En vez de armar todo desde cero, te ofrece una estructura reconocible para pantallas reales.",
-          "example": "return Scaffold(\n  appBar: AppBar(title: const Text('Inicio')),\n  body: const Center(child: Text('Hola')),\n);"
+          "title": {
+            "es": "Scaffold te da estructura",
+            "en": "Scaffold gives you structure"
+          },
+          "body": {
+            "es": "Scaffold es una base muy común para pantallas Material. Te da zonas como appBar, body, floatingActionButton y más. En vez de armar todo desde cero, te ofrece una estructura reconocible para pantallas reales.",
+            "en": "Scaffold is a very common base for Material screens. It gives you areas like appBar, body, floatingActionButton and more. Instead of building everything from scratch, it gives you a recognizable structure for real screens."
+          },
+          "example": {
+            "es": "return Scaffold(\n  appBar: AppBar(title: const Text('Inicio')),\n  body: const Center(child: Text('Hola')),\n);",
+            "en": "return Scaffold(\n  appBar: AppBar(title: const Text('Home')),\n  body: const Center(child: Text('Hello')),\n);"
+          }
         },
         {
           "id": "fs_intro_2",
           "type": "intro",
-          "title": "Cada propiedad tiene un rol claro",
-          "body": "appBar sirve para la parte superior, body para el contenido principal y otras propiedades cubren necesidades frecuentes. Entender eso te ayuda a dejar de meter widgets donde no van, que es una tradición dolorosamente humana al comenzar.",
-          "example": "Scaffold(\n  appBar: AppBar(title: const Text('Home')),\n  body: const Text('Contenido'),\n)"
+          "title": {
+            "es": "Cada propiedad tiene un rol claro",
+            "en": "Each property has a clear role"
+          },
+          "body": {
+            "es": "appBar sirve para la parte superior, body para el contenido principal y otras propiedades cubren necesidades frecuentes. Entender eso te ayuda a dejar de meter widgets donde no van, que es una tradición dolorosamente humana al comenzar.",
+            "en": "appBar serves for the top part, body for the main content and other properties cover frequent needs. Understanding that helps you stop putting widgets where they don't belong, which is a painfully human tradition to start with."
+          },
+          "example": {
+            "es": "Scaffold(\n  appBar: AppBar(title: const Text('Home')),\n  body: const Text('Contenido'),\n)",
+            "en": "Scaffold(\n  appBar: AppBar(title: const Text('Home')),\n  body: const Text('Content'),\n)"
+          }
         },
         {
           "id": "fs_q1",
           "type": "multipleChoice",
-          "question": "¿Qué propiedad de Scaffold suele contener el contenido principal de la pantalla?",
+          "question": {
+            "es": "¿Qué propiedad de Scaffold suele contener el contenido principal de la pantalla?",
+            "en": "Which Scaffold property typically contains the main content of the screen?"
+          },
           "options": [
-            "title",
-            "child",
-            "body",
-            "screen"
+            {
+              "es": "title",
+              "en": "title"
+            },
+            {
+              "es": "child",
+              "en": "child"
+            },
+            {
+              "es": "body",
+              "en": "bodysuit"
+            },
+            {
+              "es": "screen",
+              "en": "screen"
+            }
           ],
-          "correctAnswer": "body",
-          "correctExplanation": "body es el lugar principal donde colocas el contenido de la pantalla.",
-          "incorrectExplanation": "La propiedad correcta es body.",
+          "correctAnswer": {
+            "es": "body",
+            "en": "bodysuit"
+          },
+          "correctExplanation": {
+            "es": "body es el lugar principal donde colocas el contenido de la pantalla.",
+            "en": "body is the main place where you put the screen content."
+          },
+          "incorrectExplanation": {
+            "es": "La propiedad correcta es body.",
+            "en": "The correct property is body."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fs_find_1",
           "type": "findTheWrongLine",
-          "prompt": "Identifica la línea incorrecta en este snippet.",
+          "prompt": {
+            "es": "Identifica la línea incorrecta en este snippet.",
+            "en": "Identify the incorrect line in this snippet."
+          },
           "codeLines": [
-            "return Scaffold(",
-            "  title: const Text('Inicio'),",
-            "  body: const Center(child: Text('Hola')),",
-            ");"
+            {
+              "es": "return Scaffold(",
+              "en": "return Scaffold("
+            },
+            {
+              "es": "  title: const Text('Inicio'),",
+              "en": "title: const Text('Home'),"
+            },
+            {
+              "es": "  body: const Center(child: Text('Hola')),",
+              "en": "body: const Center(child: Text('Hello')),"
+            },
+            {
+              "es": ");",
+              "en": ");"
+            }
           ],
           "wrongLineIndex": 1,
-          "correctExplanation": "Scaffold no tiene una propiedad title. Si quieres título visible normalmente va dentro de AppBar.",
-          "incorrectExplanation": "La línea incorrecta es la que intenta usar title directamente en Scaffold.",
+          "correctExplanation": {
+            "es": "Scaffold no tiene una propiedad title. Si quieres título visible normalmente va dentro de AppBar.",
+            "en": "Scaffold does not have a title property. If you want visible title it normally goes inside AppBar."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que intenta usar title directamente en Scaffold.",
+            "en": "The wrong line is the one trying to use title directly in Scaffold."
+          },
           "xpReward": 15
         },
         {
           "id": "fs_code_1",
           "type": "guidedWriting",
-          "instructions": "Escribe la línea necesaria para agregar un AppBar simple con el título 'Inicio'.",
-          "starterCode": "return Scaffold(\n  _____\n  body: const Center(child: Text('Hola')),\n);",
+          "instructions": {
+            "es": "Escribe la línea necesaria para agregar un AppBar simple con el título 'Inicio'.",
+            "en": "Write the line needed to add a simple AppBar with the title 'Home'."
+          },
+          "starterCode": {
+            "es": "return Scaffold(\n  _____\n  body: const Center(child: Text('Hola')),\n);",
+            "en": "return Scaffold(\n  _____\n  body: const Center(child: Text('Hello')),\n);"
+          },
           "expectedFragments": [
-            "appBar:",
-            "AppBar(",
-            "Text('Inicio')"
+            {
+              "es": "appBar:",
+              "en": "appBar:"
+            },
+            {
+              "es": "AppBar(",
+              "en": "AppBar("
+            },
+            {
+              "es": "Text('Inicio')",
+              "en": "Text('Inicio')"
+            }
           ],
-          "correctExplanation": "Un AppBar simple se declara con la propiedad appBar y un widget AppBar con su title.",
-          "incorrectExplanation": "Tu respuesta debe incluir la propiedad appBar y un AppBar con el título Inicio.",
-          "hint": "Empieza por la propiedad appBar.",
+          "correctExplanation": {
+            "es": "Un AppBar simple se declara con la propiedad appBar y un widget AppBar con su title.",
+            "en": "A simple AppBar is declared with the appBar property and an AppBar widget with its title."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir la propiedad appBar y un AppBar con el título Inicio.",
+            "en": "Your response should include the appBar property and an AppBar with the title Home."
+          },
+          "hint": {
+            "es": "Empieza por la propiedad appBar.",
+            "en": "Start with the appBar property."
+          },
           "xpReward": 15
         },
         {
           "id": "fs_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada propiedad con su intención.",
+          "prompt": {
+            "es": "Relaciona cada propiedad con su intención.",
+            "en": "Relate each property to its intention."
+          },
           "pairs": [
             {
-              "left": "appBar",
-              "right": "Zona superior de la pantalla"
+              "left": {
+                "es": "appBar",
+                "en": "appBar"
+              },
+              "right": {
+                "es": "Zona superior de la pantalla",
+                "en": "Upper area of ​​the screen"
+              }
             },
             {
-              "left": "body",
-              "right": "Contenido principal"
+              "left": {
+                "es": "body",
+                "en": "bodysuit"
+              },
+              "right": {
+                "es": "Contenido principal",
+                "en": "Main content"
+              }
             },
             {
-              "left": "floatingActionButton",
-              "right": "Acción destacada flotante"
+              "left": {
+                "es": "floatingActionButton",
+                "en": "floatingActionButton"
+              },
+              "right": {
+                "es": "Acción destacada flotante",
+                "en": "floating featured action"
+              }
             }
           ],
-          "correctExplanation": "Scaffold organiza varias zonas frecuentes de una pantalla Material.",
-          "incorrectExplanation": "Revisa qué va arriba, qué contiene el contenido principal y qué acción flota sobre la UI.",
+          "correctExplanation": {
+            "es": "Scaffold organiza varias zonas frecuentes de una pantalla Material.",
+            "en": "Scaffold organizes several common areas of a Material screen."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué va arriba, qué contiene el contenido principal y qué acción flota sobre la UI.",
+            "en": "Review what goes on top, what contains the main content, and what action floats above the UI."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fs_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué parte de la pantalla mostraría el texto 'Hola' en este snippet?",
-          "codeSnippet": "Scaffold(\n  body: const Center(child: Text('Hola')),\n)",
+          "question": {
+            "es": "¿Qué parte de la pantalla mostraría el texto 'Hola' en este snippet?",
+            "en": "What part of the screen would show the text 'Hello' in this snippet?"
+          },
+          "codeSnippet": {
+            "es": "Scaffold(\n  body: const Center(child: Text('Hola')),\n)",
+            "en": "Scaffold(\n  body: const Center(child: Text('Hello')),\n)"
+          },
           "options": [
-            "La barra superior",
-            "El cuerpo de la pantalla",
-            "El drawer",
-            "El snackbar"
+            {
+              "es": "La barra superior",
+              "en": "The top bar"
+            },
+            {
+              "es": "El cuerpo de la pantalla",
+              "en": "screen body"
+            },
+            {
+              "es": "El drawer",
+              "en": "The drawer"
+            },
+            {
+              "es": "El snackbar",
+              "en": "The snack bar"
+            }
           ],
-          "correctAnswer": "El cuerpo de la pantalla",
-          "correctExplanation": "El widget está dentro de body, así que se mostrará en el contenido principal.",
-          "incorrectExplanation": "Al estar dentro de body, el texto se verá en la zona principal de la pantalla.",
+          "correctAnswer": {
+            "es": "El cuerpo de la pantalla",
+            "en": "screen body"
+          },
+          "correctExplanation": {
+            "es": "El widget está dentro de body, así que se mostrará en el contenido principal.",
+            "en": "The widget is inside body, so it will be displayed in the main content."
+          },
+          "incorrectExplanation": {
+            "es": "Al estar dentro de body, el texto se verá en la zona principal de la pantalla.",
+            "en": "Being inside body, the text will be seen in the main area of ​​the screen."
+          },
           "xpReward": 15,
           "shuffle": true
         }
@@ -417,8 +966,14 @@
     },
     {
       "id": "flutter_text_row_column",
-      "title": "Text, Row y Column",
-      "shortDescription": "Empieza a componer interfaces con widgets básicos de contenido y layout.",
+      "title": {
+        "es": "Text, Row y Column",
+        "en": "Text, Row and Column"
+      },
+      "shortDescription": {
+        "es": "Empieza a componer interfaces con widgets básicos de contenido y layout.",
+        "en": "Start composing interfaces with basic content and layout widgets."
+      },
       "icon": "view_column",
       "nodeType": "lesson",
       "xpReward": 70,
@@ -426,119 +981,290 @@
         {
           "id": "ftrc_intro_1",
           "type": "intro",
-          "title": "Flutter se construye componiendo piezas",
-          "body": "Los widgets se combinan para construir interfaces. Text muestra texto, Row organiza horizontalmente y Column verticalmente. Al entender estas piezas básicas, empiezas a ver la UI como una composición y no como una sola pantalla gigante llena de cosas.",
-          "example": "Column(\n  children: [\n    Text('Hola'),\n    Text('Mundo'),\n  ],\n)"
+          "title": {
+            "es": "Flutter se construye componiendo piezas",
+            "en": "Flutter is built by composing pieces"
+          },
+          "body": {
+            "es": "Los widgets se combinan para construir interfaces. Text muestra texto, Row organiza horizontalmente y Column verticalmente. Al entender estas piezas básicas, empiezas a ver la UI como una composición y no como una sola pantalla gigante llena de cosas.",
+            "en": "Widgets are combined to build interfaces. Text displays text, Row organizes horizontally, and Column organizes vertically. By understanding these basic pieces, you start to see the UI as a composition and not as a single giant screen full of things."
+          },
+          "example": {
+            "es": "Column(\n  children: [\n    Text('Hola'),\n    Text('Mundo'),\n  ],\n)",
+            "en": "Column(\n  children: [\n    Text('Hello'),\n    Text('World'),\n  ],\n)"
+          }
         },
         {
           "id": "ftrc_intro_2",
           "type": "intro",
-          "title": "Row y Column no hacen magia, organizan",
-          "body": "Row coloca widgets en horizontal; Column lo hace en vertical. Eso parece simple, pero es la base de muchísimos layouts. Saber cuándo usar uno u otro evita interfaces torcidas y decisiones de diseño con energía de caos.",
-          "example": "Row(\n  children: [\n    Icon(Icons.star),\n    Text('Favorito'),\n  ],\n)"
+          "title": {
+            "es": "Row y Column no hacen magia, organizan",
+            "en": "Row and Column don't do magic, they organize"
+          },
+          "body": {
+            "es": "Row coloca widgets en horizontal; Column lo hace en vertical. Eso parece simple, pero es la base de muchísimos layouts. Saber cuándo usar uno u otro evita interfaces torcidas y decisiones de diseño con energía de caos.",
+            "en": "Row places widgets horizontally; Column does it vertically. That seems simple, but it is the basis of many layouts. Knowing when to use one or the other avoids wonky interfaces and chaos-energy design decisions."
+          },
+          "example": {
+            "es": "Row(\n  children: [\n    Icon(Icons.star),\n    Text('Favorito'),\n  ],\n)",
+            "en": "Row(\n  children: [\n    Icon(Icons.star),\n    Text('Favorite'),\n  ],\n)"
+          }
         },
         {
           "id": "ftrc_q1",
           "type": "multipleChoice",
-          "question": "¿Qué widget organiza sus hijos verticalmente?",
+          "question": {
+            "es": "¿Qué widget organiza sus hijos verticalmente?",
+            "en": "Which widget organizes its children vertically?"
+          },
           "options": [
-            "Row",
-            "Column",
-            "Stack",
-            "Center"
+            {
+              "es": "Row",
+              "en": "Row"
+            },
+            {
+              "es": "Column",
+              "en": "Column"
+            },
+            {
+              "es": "Stack",
+              "en": "stack"
+            },
+            {
+              "es": "Center",
+              "en": "Center"
+            }
           ],
-          "correctAnswer": "Column",
-          "correctExplanation": "Column distribuye widgets uno debajo del otro.",
-          "incorrectExplanation": "Row organiza horizontalmente. El widget vertical es Column.",
+          "correctAnswer": {
+            "es": "Column",
+            "en": "Column"
+          },
+          "correctExplanation": {
+            "es": "Column distribuye widgets uno debajo del otro.",
+            "en": "Column distributes widgets one below the other."
+          },
+          "incorrectExplanation": {
+            "es": "Row organiza horizontalmente. El widget vertical es Column.",
+            "en": "Row organized horizontally. The vertical widget is Column."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "ftrc_predict_1",
           "type": "predictOutput",
-          "question": "¿Cómo se vería este layout?",
-          "codeSnippet": "Row(\n  children: [\n    Text('A'),\n    Text('B'),\n  ],\n)",
+          "question": {
+            "es": "¿Cómo se vería este layout?",
+            "en": "What would this layout look like?"
+          },
+          "codeSnippet": {
+            "es": "Row(\n  children: [\n    Text('A'),\n    Text('B'),\n  ],\n)",
+            "en": "Row(\n  children: [\n    Text('A'),\n    Text('B'),\n  ],\n)"
+          },
           "options": [
-            "A y B una debajo de la otra",
-            "A y B una al lado de la otra",
-            "Solo aparece A",
-            "Da error porque Row no acepta Text"
+            {
+              "es": "A y B una debajo de la otra",
+              "en": "A and B one below the other"
+            },
+            {
+              "es": "A y B una al lado de la otra",
+              "en": "A and B next to each other"
+            },
+            {
+              "es": "Solo aparece A",
+              "en": "Only A appears"
+            },
+            {
+              "es": "Da error porque Row no acepta Text",
+              "en": "It gives an error because Row does not accept Text"
+            }
           ],
-          "correctAnswer": "A y B una al lado de la otra",
-          "correctExplanation": "Row coloca sus hijos en dirección horizontal.",
-          "incorrectExplanation": "Row organiza horizontalmente, así que A y B se verán una al lado de la otra.",
+          "correctAnswer": {
+            "es": "A y B una al lado de la otra",
+            "en": "A and B next to each other"
+          },
+          "correctExplanation": {
+            "es": "Row coloca sus hijos en dirección horizontal.",
+            "en": "Row places its children in a horizontal direction."
+          },
+          "incorrectExplanation": {
+            "es": "Row organiza horizontalmente, así que A y B se verán una al lado de la otra.",
+            "en": "Row arranges horizontally, so A and B will look next to each other."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "ftrc_order_1",
           "type": "orderCodeBlocks",
-          "prompt": "Ordena el snippet para mostrar dos textos en columna.",
+          "prompt": {
+            "es": "Ordena el snippet para mostrar dos textos en columna.",
+            "en": "Arranges the snippet to display two texts in a column."
+          },
           "blocks": [
-            "children: [",
-            "Column(",
-            "Text('Hola'),",
-            "Text('Flutter'),",
-            "],",
-            ")"
+            {
+              "es": "children: [",
+              "en": "children: ["
+            },
+            {
+              "es": "Column(",
+              "en": "Column("
+            },
+            {
+              "es": "Text('Hola'),",
+              "en": "Text('Hola'),"
+            },
+            {
+              "es": "Text('Flutter'),",
+              "en": "Text('Flutter'),"
+            },
+            {
+              "es": "],",
+              "en": "],"
+            },
+            {
+              "es": ")",
+              "en": ")"
+            }
           ],
           "correctOrder": [
-            "Column(",
-            "children: [",
-            "Text('Hola'),",
-            "Text('Flutter'),",
-            "],",
-            ")"
+            {
+              "es": "Column(",
+              "en": "Column("
+            },
+            {
+              "es": "children: [",
+              "en": "children: ["
+            },
+            {
+              "es": "Text('Hola'),",
+              "en": "Text('Hola'),"
+            },
+            {
+              "es": "Text('Flutter'),",
+              "en": "Text('Flutter'),"
+            },
+            {
+              "es": "],",
+              "en": "],"
+            },
+            {
+              "es": ")",
+              "en": ")"
+            }
           ],
-          "correctExplanation": "La estructura correcta empieza con Column y luego define sus children.",
-          "incorrectExplanation": "Piensa en el contenedor primero y luego en su lista de hijos.",
+          "correctExplanation": {
+            "es": "La estructura correcta empieza con Column y luego define sus children.",
+            "en": "The correct structure starts with Column and then defines its children."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en el contenedor primero y luego en su lista de hijos.",
+            "en": "Think about the container first and then its list of children."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "ftrc_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada widget con su intención principal.",
+          "prompt": {
+            "es": "Relaciona cada widget con su intención principal.",
+            "en": "Relate each widget to its main intent."
+          },
           "pairs": [
             {
-              "left": "Text",
-              "right": "Muestra texto"
+              "left": {
+                "es": "Text",
+                "en": "text"
+              },
+              "right": {
+                "es": "Muestra texto",
+                "en": "Shows text"
+              }
             },
             {
-              "left": "Row",
-              "right": "Organiza widgets horizontalmente"
+              "left": {
+                "es": "Row",
+                "en": "Row"
+              },
+              "right": {
+                "es": "Organiza widgets horizontalmente",
+                "en": "Arrange widgets horizontally"
+              }
             },
             {
-              "left": "Column",
-              "right": "Organiza widgets verticalmente"
+              "left": {
+                "es": "Column",
+                "en": "Column"
+              },
+              "right": {
+                "es": "Organiza widgets verticalmente",
+                "en": "Organize widgets vertically"
+              }
             }
           ],
-          "correctExplanation": "Estos tres widgets forman parte del vocabulario base de interfaces en Flutter.",
-          "incorrectExplanation": "Revisa cuál muestra texto, cuál alinea en fila y cuál apila verticalmente.",
+          "correctExplanation": {
+            "es": "Estos tres widgets forman parte del vocabulario base de interfaces en Flutter.",
+            "en": "These three widgets are part of the base vocabulary of interfaces in Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cuál muestra texto, cuál alinea en fila y cuál apila verticalmente.",
+            "en": "Check which one displays text, which one aligns in a row, and which one stacks vertically."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "ftrc_guided_1",
           "type": "guidedWriting",
-          "instructions": "Escribe el fragmento clave para agregar dos Text dentro de una Column usando children.",
-          "starterCode": "Column(\n  _____\n)",
+          "instructions": {
+            "es": "Escribe el fragmento clave para agregar dos Text dentro de una Column usando children.",
+            "en": "Write the key snippet to add two Text inside a Column using children."
+          },
+          "starterCode": {
+            "es": "Column(\n  _____\n)",
+            "en": "Column(\n  _____\n)"
+          },
           "expectedFragments": [
-            "children:",
-            "Text('Hola')",
-            "Text('Flutter')"
+            {
+              "es": "children:",
+              "en": "children:"
+            },
+            {
+              "es": "Text('Hola')",
+              "en": "Text('Hola')"
+            },
+            {
+              "es": "Text('Flutter')",
+              "en": "Text('Flutter')"
+            }
           ],
-          "correctExplanation": "Column usa la propiedad children para recibir una lista de widgets hijos.",
-          "incorrectExplanation": "Tu respuesta debe incluir children y al menos dos widgets Text dentro de la lista.",
-          "hint": "La clave está en la lista de hijos.",
+          "correctExplanation": {
+            "es": "Column usa la propiedad children para recibir una lista de widgets hijos.",
+            "en": "Column uses the children property to receive a list of child widgets."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir children y al menos dos widgets Text dentro de la lista.",
+            "en": "Your response must include children and at least two Text widgets within the list."
+          },
+          "hint": {
+            "es": "La clave está en la lista de hijos.",
+            "en": "The key is in the list of children."
+          },
           "xpReward": 10
         }
       ]
     },
     {
       "id": "flutter_container_padding",
-      "title": "Container y Padding",
-      "shortDescription": "Controla espacio, tamaño, color y respiración visual.",
+      "title": {
+        "es": "Container y Padding",
+        "en": "Container and Padding"
+      },
+      "shortDescription": {
+        "es": "Controla espacio, tamaño, color y respiración visual.",
+        "en": "Control space, size, color and visual breathing."
+      },
       "icon": "crop_square",
       "nodeType": "lesson",
       "xpReward": 70,
@@ -546,99 +1272,234 @@
         {
           "id": "fcp_intro_1",
           "type": "intro",
-          "title": "Espacio también comunica",
-          "body": "Container te ayuda a decorar y dimensionar, mientras que Padding agrega espacio interno alrededor de un widget. Una interfaz no es solo color y texto: también vive del aire que dejas entre elementos.",
-          "example": "Padding(\n  padding: EdgeInsets.all(16),\n  child: Container(color: Colors.blue),\n)"
+          "title": {
+            "es": "Espacio también comunica",
+            "en": "Space also communicates"
+          },
+          "body": {
+            "es": "Container te ayuda a decorar y dimensionar, mientras que Padding agrega espacio interno alrededor de un widget. Una interfaz no es solo color y texto: también vive del aire que dejas entre elementos.",
+            "en": "Container helps you decorate and size, while Padding adds internal space around a widget. An interface is not just color and text: it also lives on the air you leave between elements."
+          },
+          "example": {
+            "es": "Padding(\n  padding: EdgeInsets.all(16),\n  child: Container(color: Colors.blue),\n)",
+            "en": "Padding\n  padding: EdgeInsets.all(16),\n  child: Container(color: Colors.blue),\n)"
+          }
         },
         {
           "id": "fcp_intro_2",
           "type": "intro",
-          "title": "No todos los widgets hacen todo",
-          "body": "Padding sirve para espacio; Container puede servir para tamaño, color o decoración. Aprender qué widget usar para cada intención te evita soluciones raras donde un widget termina haciendo un trabajo que no le corresponde.",
-          "example": "Container(\n  color: Colors.blue,\n  padding: const EdgeInsets.all(12),\n  child: const Text('Hola'),\n)"
+          "title": {
+            "es": "No todos los widgets hacen todo",
+            "en": "Not all widgets do everything"
+          },
+          "body": {
+            "es": "Padding sirve para espacio; Container puede servir para tamaño, color o decoración. Aprender qué widget usar para cada intención te evita soluciones raras donde un widget termina haciendo un trabajo que no le corresponde.",
+            "en": "Padding is for space; Container can be used for size, color or decoration. Learning which widget to use for each intent saves you from weird solutions where a widget ends up doing a job it's not supposed to."
+          },
+          "example": {
+            "es": "Container(\n  color: Colors.blue,\n  padding: const EdgeInsets.all(12),\n  child: const Text('Hola'),\n)",
+            "en": "Container(\n  color: Colors.blue,\n  padding: const EdgeInsets.all(12),\n  child: const Text('Hello'),\n)"
+          }
         },
         {
           "id": "fcp_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona el widget con su intención principal.",
+          "prompt": {
+            "es": "Relaciona el widget con su intención principal.",
+            "en": "Relates the widget to its main intent."
+          },
           "pairs": [
             {
-              "left": "Padding",
-              "right": "Agrega espacio alrededor del child"
+              "left": {
+                "es": "Padding",
+                "en": "Padding"
+              },
+              "right": {
+                "es": "Agrega espacio alrededor del child",
+                "en": "Add space around the child"
+              }
             },
             {
-              "left": "Container",
-              "right": "Permite decorar, dimensionar o posicionar"
+              "left": {
+                "es": "Container",
+                "en": "Container"
+              },
+              "right": {
+                "es": "Permite decorar, dimensionar o posicionar",
+                "en": "Allows you to decorate, size or position"
+              }
             },
             {
-              "left": "Text",
-              "right": "Muestra contenido textual"
+              "left": {
+                "es": "Text",
+                "en": "text"
+              },
+              "right": {
+                "es": "Muestra contenido textual",
+                "en": "Shows textual content"
+              }
             }
           ],
-          "correctExplanation": "Cada widget tiene una responsabilidad principal y entenderla evita usar uno para todo.",
-          "incorrectExplanation": "Revisa qué widget agrega espacio y cuál se usa para decoración o tamaño.",
+          "correctExplanation": {
+            "es": "Cada widget tiene una responsabilidad principal y entenderla evita usar uno para todo.",
+            "en": "Each widget has a main responsibility and understanding it avoids using one for everything."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué widget agrega espacio y cuál se usa para decoración o tamaño.",
+            "en": "Check which widget adds space and which is used for decoration or size."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "fcp_code_1",
           "type": "completeSnippet",
-          "prompt": "Completa el constructor para agregar padding uniforme de 16.",
-          "initialCode": "Padding(\n  padding: EdgeInsets._____(16),\n  child: Text('Hola'),\n)",
-          "expectedAnswer": "all",
-          "correctExplanation": "EdgeInsets.all aplica el mismo padding a todos los lados.",
-          "incorrectExplanation": "Para el mismo padding en todos los lados usas EdgeInsets.all.",
-          "hint": "Mismo valor en todos los lados.",
+          "prompt": {
+            "es": "Completa el constructor para agregar padding uniforme de 16.",
+            "en": "Complete the constructor to add uniform padding of 16."
+          },
+          "initialCode": {
+            "es": "Padding(\n  padding: EdgeInsets._____(16),\n  child: Text('Hola'),\n)",
+            "en": "Padding\n  padding:EdgeInsets._____(16),\n  child: Text('Hello'),\n)"
+          },
+          "expectedAnswer": {
+            "es": "all",
+            "en": "there"
+          },
+          "correctExplanation": {
+            "es": "EdgeInsets.all aplica el mismo padding a todos los lados.",
+            "en": "EdgeInsets.all applies the same padding to all sides."
+          },
+          "incorrectExplanation": {
+            "es": "Para el mismo padding en todos los lados usas EdgeInsets.all.",
+            "en": "For the same padding on all sides you use EdgeInsets.all."
+          },
+          "hint": {
+            "es": "Mismo valor en todos los lados.",
+            "en": "Same value on all sides."
+          },
           "xpReward": 15
         },
         {
           "id": "fcp_bug_1",
           "type": "fixTheBug",
-          "prompt": "Corrige el widget para que el color se aplique correctamente.",
-          "initialCode": "Padding(\n  color: Colors.blue,\n  child: Text('Hola'),\n)",
-          "expectedAnswer": "Container(\n  color: Colors.blue,\n  child: Text('Hola'),\n)",
-          "correctExplanation": "Padding no tiene propiedad color. Para color y child puedes usar Container.",
-          "incorrectExplanation": "El error está en usar color sobre Padding. Ese tipo de decoración va mejor en Container.",
-          "hint": "Padding da espacio, no color.",
+          "prompt": {
+            "es": "Corrige el widget para que el color se aplique correctamente.",
+            "en": "Fix the widget so that the color is applied correctly."
+          },
+          "initialCode": {
+            "es": "Padding(\n  color: Colors.blue,\n  child: Text('Hola'),\n)",
+            "en": "Padding\n  color: Colors.blue,\n  child: Text('Hello'),\n)"
+          },
+          "expectedAnswer": {
+            "es": "Container(\n  color: Colors.blue,\n  child: Text('Hola'),\n)",
+            "en": "Container(\n  color: Colors.blue,\n  child: Text('Hello'),\n)"
+          },
+          "correctExplanation": {
+            "es": "Padding no tiene propiedad color. Para color y child puedes usar Container.",
+            "en": "Padding has no color property. For color and child you can use Container."
+          },
+          "incorrectExplanation": {
+            "es": "El error está en usar color sobre Padding. Ese tipo de decoración va mejor en Container.",
+            "en": "The error is in using color over Padding. That type of decoration works better in Container."
+          },
+          "hint": {
+            "es": "Padding da espacio, no color.",
+            "en": "Padding gives space, not color."
+          },
           "xpReward": 15
         },
         {
           "id": "fcp_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué efecto principal tiene Padding en este snippet?",
-          "codeSnippet": "Padding(\n  padding: EdgeInsets.all(16),\n  child: Text('Hola'),\n)",
+          "question": {
+            "es": "¿Qué efecto principal tiene Padding en este snippet?",
+            "en": "What main effect does Padding have on this snippet?"
+          },
+          "codeSnippet": {
+            "es": "Padding(\n  padding: EdgeInsets.all(16),\n  child: Text('Hola'),\n)",
+            "en": "Padding\n  padding: EdgeInsets.all(16),\n  child: Text('Hello'),\n)"
+          },
           "options": [
-            "Cambia el color del texto",
-            "Agrega espacio alrededor del child",
-            "Convierte el texto en botón",
-            "Activa navegación"
+            {
+              "es": "Cambia el color del texto",
+              "en": "Change the text color"
+            },
+            {
+              "es": "Agrega espacio alrededor del child",
+              "en": "Add space around the child"
+            },
+            {
+              "es": "Convierte el texto en botón",
+              "en": "Convert text to button"
+            },
+            {
+              "es": "Activa navegación",
+              "en": "Activate navigation"
+            }
           ],
-          "correctAnswer": "Agrega espacio alrededor del child",
-          "correctExplanation": "Padding añade espacio interior alrededor del widget hijo.",
-          "incorrectExplanation": "El propósito principal de Padding es agregar espacio alrededor del child.",
+          "correctAnswer": {
+            "es": "Agrega espacio alrededor del child",
+            "en": "Add space around the child"
+          },
+          "correctExplanation": {
+            "es": "Padding añade espacio interior alrededor del widget hijo.",
+            "en": "Padding adds interior space around the child widget."
+          },
+          "incorrectExplanation": {
+            "es": "El propósito principal de Padding es agregar espacio alrededor del child.",
+            "en": "The main purpose of Padding is to add space around the child."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fcp_guided_1",
           "type": "guidedWriting",
-          "instructions": "Escribe el fragmento para dar color azul a un Container simple.",
-          "starterCode": "Container(\n  _____\n  child: Text('Hola'),\n)",
+          "instructions": {
+            "es": "Escribe el fragmento para dar color azul a un Container simple.",
+            "en": "Write the fragment to give blue color to a simple Container."
+          },
+          "starterCode": {
+            "es": "Container(\n  _____\n  child: Text('Hola'),\n)",
+            "en": "Container(\n  _____\n  child: Text('Hello'),\n)"
+          },
           "expectedFragments": [
-            "color:",
-            "Colors.blue"
+            {
+              "es": "color:",
+              "en": "color:"
+            },
+            {
+              "es": "Colors.blue",
+              "en": "Colors.blue"
+            }
           ],
-          "correctExplanation": "Container puede recibir color directamente para decorar su fondo.",
-          "incorrectExplanation": "Tu respuesta debe incluir la propiedad color y un valor como Colors.blue.",
-          "hint": "Piensa en decoración básica de fondo.",
+          "correctExplanation": {
+            "es": "Container puede recibir color directamente para decorar su fondo.",
+            "en": "Container can receive color directly to decorate its background."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir la propiedad color y un valor como Colors.blue.",
+            "en": "Your response must include the color property and a value like Colors.blue."
+          },
+          "hint": {
+            "es": "Piensa en decoración básica de fondo.",
+            "en": "Think basic background decoration."
+          },
           "xpReward": 10
         }
       ]
     },
     {
       "id": "flutter_buttons",
-      "title": "Botones e interacción",
-      "shortDescription": "Activa acciones con botones y callbacks.",
+      "title": {
+        "es": "Botones e interacción",
+        "en": "Buttons and interaction"
+      },
+      "shortDescription": {
+        "es": "Activa acciones con botones y callbacks.",
+        "en": "Activate actions with buttons and callbacks."
+      },
       "icon": "smart_button",
       "nodeType": "lesson",
       "xpReward": 70,
@@ -646,99 +1507,237 @@
         {
           "id": "fb_intro_1",
           "type": "intro",
-          "title": "Si no se puede tocar, duele",
-          "body": "Los botones permiten ejecutar acciones cuando el usuario interactúa. En Flutter, muchos widgets de botón reciben callbacks como onPressed. Es decir: no solo pintas UI, también defines comportamiento.",
-          "example": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Guardar'),\n)"
+          "title": {
+            "es": "Si no se puede tocar, duele",
+            "en": "If you can't touch it, it hurts"
+          },
+          "body": {
+            "es": "Los botones permiten ejecutar acciones cuando el usuario interactúa. En Flutter, muchos widgets de botón reciben callbacks como onPressed. Es decir: no solo pintas UI, también defines comportamiento.",
+            "en": "Buttons allow actions to be executed when the user interacts. In Flutter, many button widgets receive callbacks like onPressed. That is to say: you don't just paint UI, you also define behavior."
+          },
+          "example": {
+            "es": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Guardar'),\n)",
+            "en": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Save'),\n)"
+          }
         },
         {
           "id": "fb_intro_2",
           "type": "intro",
-          "title": "Una interfaz vive cuando responde",
-          "body": "Una app no solo muestra cosas: también reacciona a acciones del usuario. onPressed define qué sucede cuando el botón es tocado. Puede disparar navegación, guardar datos, mostrar mensajes o cambiar estado.",
-          "example": "ElevatedButton(\n  onPressed: () {\n    print('Tap');\n  },\n  child: Text('Enviar'),\n)"
+          "title": {
+            "es": "Una interfaz vive cuando responde",
+            "en": "An interface lives when it responds"
+          },
+          "body": {
+            "es": "Una app no solo muestra cosas: también reacciona a acciones del usuario. onPressed define qué sucede cuando el botón es tocado. Puede disparar navegación, guardar datos, mostrar mensajes o cambiar estado.",
+            "en": "An app doesn't just show things: it also reacts to user actions. onPressed defines what happens when the button is touched. You can trigger navigation, save data, display messages or change status."
+          },
+          "example": {
+            "es": "ElevatedButton(\n  onPressed: () {\n    print('Tap');\n  },\n  child: Text('Enviar'),\n)",
+            "en": "ElevatedButton(\n  onPressed: () {\n    print('Tap');\n  },\n  child: Text('Send'),\n)"
+          }
         },
         {
           "id": "fb_q1",
           "type": "multipleChoice",
-          "question": "¿Qué propiedad suele usarse para definir la acción de un botón?",
+          "question": {
+            "es": "¿Qué propiedad suele usarse para definir la acción de un botón?",
+            "en": "What property is typically used to define the action of a button?"
+          },
           "options": [
-            "onTapTitle",
-            "child",
-            "onPressed",
-            "execute"
+            {
+              "es": "onTapTitle",
+              "en": "onTapTitle"
+            },
+            {
+              "es": "child",
+              "en": "child"
+            },
+            {
+              "es": "onPressed",
+              "en": "onPressed"
+            },
+            {
+              "es": "execute",
+              "en": "execute"
+            }
           ],
-          "correctAnswer": "onPressed",
-          "correctExplanation": "onPressed define la acción que ejecutará el botón al ser presionado.",
-          "incorrectExplanation": "La propiedad correcta para acciones en muchos botones es onPressed.",
+          "correctAnswer": {
+            "es": "onPressed",
+            "en": "onPressed"
+          },
+          "correctExplanation": {
+            "es": "onPressed define la acción que ejecutará el botón al ser presionado.",
+            "en": "onPressed defines the action that the button will execute when pressed."
+          },
+          "incorrectExplanation": {
+            "es": "La propiedad correcta para acciones en muchos botones es onPressed.",
+            "en": "The correct property for actions on many buttons is onPressed."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fb_find_1",
           "type": "findTheWrongLine",
-          "prompt": "Identifica la línea incorrecta en este botón.",
+          "prompt": {
+            "es": "Identifica la línea incorrecta en este botón.",
+            "en": "Identify the incorrect line on this button."
+          },
           "codeLines": [
-            "ElevatedButton(",
-            "  onPressed: () {},",
-            "  text: Text('Guardar'),",
-            ")"
+            {
+              "es": "ElevatedButton(",
+              "en": "ElevatedButton("
+            },
+            {
+              "es": "  onPressed: () {},",
+              "en": "onPressed: () {},"
+            },
+            {
+              "es": "  text: Text('Guardar'),",
+              "en": "text: Text('Save'),"
+            },
+            {
+              "es": ")",
+              "en": ")"
+            }
           ],
           "wrongLineIndex": 2,
-          "correctExplanation": "ElevatedButton usa child, no text, para el widget interno.",
-          "incorrectExplanation": "La línea incorrecta es la que usa text en lugar de child.",
+          "correctExplanation": {
+            "es": "ElevatedButton usa child, no text, para el widget interno.",
+            "en": "ElevatedButton uses child, not text, for the internal widget."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que usa text en lugar de child.",
+            "en": "The wrong line is the one that uses text instead of child."
+          },
           "xpReward": 15
         },
         {
           "id": "fb_guided_1",
           "type": "guidedWriting",
-          "instructions": "Escribe el fragmento necesario para mostrar el texto 'Guardar' dentro del botón.",
-          "starterCode": "ElevatedButton(\n  onPressed: () {},\n  _____\n)",
+          "instructions": {
+            "es": "Escribe el fragmento necesario para mostrar el texto 'Guardar' dentro del botón.",
+            "en": "Write the necessary fragment to display the 'Save' text inside the button."
+          },
+          "starterCode": {
+            "es": "ElevatedButton(\n  onPressed: () {},\n  _____\n)",
+            "en": "ElevatedButton(\n  onPressed: () {},\n  _____\n)"
+          },
           "expectedFragments": [
-            "child:",
-            "Text('Guardar')"
+            {
+              "es": "child:",
+              "en": "child:"
+            },
+            {
+              "es": "Text('Guardar')",
+              "en": "Text('Guardar')"
+            }
           ],
-          "correctExplanation": "El contenido visual del botón se define con child.",
-          "incorrectExplanation": "Necesitas usar child y un Text con el contenido Guardar.",
-          "hint": "Piensa en el widget interno del botón.",
+          "correctExplanation": {
+            "es": "El contenido visual del botón se define con child.",
+            "en": "The visual content of the button is defined with child."
+          },
+          "incorrectExplanation": {
+            "es": "Necesitas usar child y un Text con el contenido Guardar.",
+            "en": "You need to use child and a Text with the content Save."
+          },
+          "hint": {
+            "es": "Piensa en el widget interno del botón.",
+            "en": "Think about the internal widget of the button."
+          },
           "xpReward": 15
         },
         {
           "id": "fb_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada pieza del botón con su rol.",
+          "prompt": {
+            "es": "Relaciona cada pieza del botón con su rol.",
+            "en": "Match each piece of the button with its role."
+          },
           "pairs": [
             {
-              "left": "onPressed",
-              "right": "Acción al tocar el botón"
+              "left": {
+                "es": "onPressed",
+                "en": "onPressed"
+              },
+              "right": {
+                "es": "Acción al tocar el botón",
+                "en": "Action on button touch"
+              }
             },
             {
-              "left": "child",
-              "right": "Contenido visual interno"
+              "left": {
+                "es": "child",
+                "en": "child"
+              },
+              "right": {
+                "es": "Contenido visual interno",
+                "en": "Internal visual content"
+              }
             },
             {
-              "left": "ElevatedButton",
-              "right": "Widget de botón con elevación"
+              "left": {
+                "es": "ElevatedButton",
+                "en": "ElevatedButton"
+              },
+              "right": {
+                "es": "Widget de botón con elevación",
+                "en": "Lift Button Widget"
+              }
             }
           ],
-          "correctExplanation": "Estas piezas te ayudan a entender qué hace y cómo se compone un botón.",
-          "incorrectExplanation": "Revisa qué define el comportamiento, qué muestra el contenido y qué widget representa el botón.",
+          "correctExplanation": {
+            "es": "Estas piezas te ayudan a entender qué hace y cómo se compone un botón.",
+            "en": "These pieces help you understand what a button does and how it is made up."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué define el comportamiento, qué muestra el contenido y qué widget representa el botón.",
+            "en": "Review what defines the behavior, what displays the content, and what widget represents the button."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fb_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué ocurre cuando tocas este botón?",
-          "codeSnippet": "ElevatedButton(\n  onPressed: () {\n    print('Tap');\n  },\n  child: Text('Enviar'),\n)",
+          "question": {
+            "es": "¿Qué ocurre cuando tocas este botón?",
+            "en": "What happens when you touch this button?"
+          },
+          "codeSnippet": {
+            "es": "ElevatedButton(\n  onPressed: () {\n    print('Tap');\n  },\n  child: Text('Enviar'),\n)",
+            "en": "ElevatedButton(\n  onPressed: () {\n    print('Tap');\n  },\n  child: Text('Send'),\n)"
+          },
           "options": [
-            "Imprime Tap",
-            "Navega automáticamente",
-            "Se cierra la app",
-            "No ocurre nada"
+            {
+              "es": "Imprime Tap",
+              "en": "Print Tap"
+            },
+            {
+              "es": "Navega automáticamente",
+              "en": "Automatically navigate"
+            },
+            {
+              "es": "Se cierra la app",
+              "en": "The app closes"
+            },
+            {
+              "es": "No ocurre nada",
+              "en": "nothing happens"
+            }
           ],
-          "correctAnswer": "Imprime Tap",
-          "correctExplanation": "El callback de onPressed ejecuta print('Tap') al tocar el botón.",
-          "incorrectExplanation": "El comportamiento definido en onPressed es imprimir Tap.",
+          "correctAnswer": {
+            "es": "Imprime Tap",
+            "en": "Print Tap"
+          },
+          "correctExplanation": {
+            "es": "El callback de onPressed ejecuta print('Tap') al tocar el botón.",
+            "en": "The onPressed callback executes print('Tap') when the button is tapped."
+          },
+          "incorrectExplanation": {
+            "es": "El comportamiento definido en onPressed es imprimir Tap.",
+            "en": "The behavior defined in onPressed is to print Tap."
+          },
           "xpReward": 10,
           "shuffle": true
         }
@@ -746,8 +1745,14 @@
     },
     {
       "id": "flutter_listview",
-      "title": "ListView",
-      "shortDescription": "Muestra colecciones de elementos de forma scrollable.",
+      "title": {
+        "es": "ListView",
+        "en": "ListView"
+      },
+      "shortDescription": {
+        "es": "Muestra colecciones de elementos de forma scrollable.",
+        "en": "Displays collections of elements in a scrollable way."
+      },
       "icon": "format_list_bulleted",
       "nodeType": "lesson",
       "xpReward": 70,
@@ -755,101 +1760,239 @@
         {
           "id": "flv_intro_1",
           "type": "intro",
-          "title": "Cuando hay mucho contenido, necesitas scroll",
-          "body": "ListView permite mostrar varios widgets desplazables. Es ideal para listas, chats, catálogos y muchas pantallas donde el contenido puede crecer más allá del alto disponible.",
-          "example": "ListView(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n)"
+          "title": {
+            "es": "Cuando hay mucho contenido, necesitas scroll",
+            "en": "When there is a lot of content, you need to scroll"
+          },
+          "body": {
+            "es": "ListView permite mostrar varios widgets desplazables. Es ideal para listas, chats, catálogos y muchas pantallas donde el contenido puede crecer más allá del alto disponible.",
+            "en": "ListView allows displaying multiple scrollable widgets. It is ideal for lists, chats, catalogs and many screens where content can grow beyond the available height."
+          },
+          "example": {
+            "es": "ListView(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n)",
+            "en": "ListView(\n  children: [\n    Text('One'),\n    Text('Two'),\n  ],\n)"
+          }
         },
         {
           "id": "flv_intro_2",
           "type": "intro",
-          "title": "Column no reemplaza a ListView",
-          "body": "Una Column puede organizar widgets verticalmente, pero no hace scroll por sí sola. Si metes demasiado contenido dentro de una Column sin manejo adicional, puedes provocar overflow. ListView existe precisamente para resolver eso.",
-          "example": "Column(\n  children: manyWidgets,\n)\n\n// Si no cabe, puede desbordarse."
+          "title": {
+            "es": "Column no reemplaza a ListView",
+            "en": "Column does not replace ListView"
+          },
+          "body": {
+            "es": "Una Column puede organizar widgets verticalmente, pero no hace scroll por sí sola. Si metes demasiado contenido dentro de una Column sin manejo adicional, puedes provocar overflow. ListView existe precisamente para resolver eso.",
+            "en": "A Column can organize widgets vertically, but it does not scroll on its own. If you put too much content inside a Column without additional handling, you can cause overflow. ListView exists precisely to solve that."
+          },
+          "example": {
+            "es": "Column(\n  children: manyWidgets,\n)\n\n// Si no cabe, puede desbordarse.",
+            "en": "Column(\n  children: manyWidgets,\n)\n\n// If it doesn't fit, it may overflow."
+          }
         },
         {
           "id": "flv_q1",
           "type": "multipleChoice",
-          "question": "¿Qué widget usarías para mostrar muchos elementos con scroll vertical?",
+          "question": {
+            "es": "¿Qué widget usarías para mostrar muchos elementos con scroll vertical?",
+            "en": "What widget would you use to display many elements with vertical scrolling?"
+          },
           "options": [
-            "Column",
-            "Padding",
-            "ListView",
-            "AppBar"
+            {
+              "es": "Column",
+              "en": "Column"
+            },
+            {
+              "es": "Padding",
+              "en": "Padding"
+            },
+            {
+              "es": "ListView",
+              "en": "ListView"
+            },
+            {
+              "es": "AppBar",
+              "en": "AppBar"
+            }
           ],
-          "correctAnswer": "ListView",
-          "correctExplanation": "ListView está pensado para mostrar listas desplazables.",
-          "incorrectExplanation": "Column no hace scroll por sí sola. El widget adecuado es ListView.",
+          "correctAnswer": {
+            "es": "ListView",
+            "en": "ListView"
+          },
+          "correctExplanation": {
+            "es": "ListView está pensado para mostrar listas desplazables.",
+            "en": "ListView is intended to display scrollable lists."
+          },
+          "incorrectExplanation": {
+            "es": "Column no hace scroll por sí sola. El widget adecuado es ListView.",
+            "en": "Column does not scroll by itself. The proper widget is ListView."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "flv_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué problema puede ocurrir si pones demasiados elementos en una Column sin scroll?",
-          "codeSnippet": "Column(\n  children: manyWidgets,\n)",
+          "question": {
+            "es": "¿Qué problema puede ocurrir si pones demasiados elementos en una Column sin scroll?",
+            "en": "What problem can occur if you put too many elements in a Column without scrolling?"
+          },
+          "codeSnippet": {
+            "es": "Column(\n  children: manyWidgets,\n)",
+            "en": "Column(\n  children: manyWidgets,\n)"
+          },
           "options": [
-            "Nada, Flutter lo resuelve solo",
-            "Puede ocurrir overflow",
-            "La app se vuelve backend",
-            "Column se convierte en ListView"
+            {
+              "es": "Nada, Flutter lo resuelve solo",
+              "en": "Nothing, Flutter solves it by itself"
+            },
+            {
+              "es": "Puede ocurrir overflow",
+              "en": "Overflow may occur"
+            },
+            {
+              "es": "La app se vuelve backend",
+              "en": "The app becomes backend"
+            },
+            {
+              "es": "Column se convierte en ListView",
+              "en": "Column becomes ListView"
+            }
           ],
-          "correctAnswer": "Puede ocurrir overflow",
-          "correctExplanation": "Si el contenido supera el espacio disponible, una Column puede desbordarse.",
-          "incorrectExplanation": "Sin scroll, una Column puede generar overflow si el contenido no cabe.",
+          "correctAnswer": {
+            "es": "Puede ocurrir overflow",
+            "en": "Overflow may occur"
+          },
+          "correctExplanation": {
+            "es": "Si el contenido supera el espacio disponible, una Column puede desbordarse.",
+            "en": "If the content exceeds the available space, a Column may overflow."
+          },
+          "incorrectExplanation": {
+            "es": "Sin scroll, una Column puede generar overflow si el contenido no cabe.",
+            "en": "Without scrolling, a Column can generate overflow if the content does not fit."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "flv_code_1",
           "type": "completeSnippet",
-          "prompt": "Completa el widget correcto para tener una lista con scroll.",
-          "initialCode": "return _____(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n);",
-          "expectedAnswer": "ListView",
-          "correctExplanation": "ListView permite desplazamiento para una colección de widgets.",
-          "incorrectExplanation": "El widget correcto para este caso es ListView.",
-          "hint": "Piensa en listas con scroll.",
+          "prompt": {
+            "es": "Completa el widget correcto para tener una lista con scroll.",
+            "en": "Complete the correct widget to have a scrollable list."
+          },
+          "initialCode": {
+            "es": "return _____(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n);",
+            "en": "return _____(\n  children: [\n    Text('One'),\n    Text('Two'),\n  ],\n);"
+          },
+          "expectedAnswer": {
+            "es": "ListView",
+            "en": "ListView"
+          },
+          "correctExplanation": {
+            "es": "ListView permite desplazamiento para una colección de widgets.",
+            "en": "ListView allows scrolling for a collection of widgets."
+          },
+          "incorrectExplanation": {
+            "es": "El widget correcto para este caso es ListView.",
+            "en": "The correct widget for this case is ListView."
+          },
+          "hint": {
+            "es": "Piensa en listas con scroll.",
+            "en": "Think about scrolling lists."
+          },
           "xpReward": 15
         },
         {
           "id": "flv_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada widget con su comportamiento más cercano.",
+          "prompt": {
+            "es": "Relaciona cada widget con su comportamiento más cercano.",
+            "en": "Match each widget with its closest behavior."
+          },
           "pairs": [
             {
-              "left": "ListView",
-              "right": "Lista desplazable"
+              "left": {
+                "es": "ListView",
+                "en": "ListView"
+              },
+              "right": {
+                "es": "Lista desplazable",
+                "en": "Scrollable list"
+              }
             },
             {
-              "left": "Column",
-              "right": "Organización vertical sin scroll automático"
+              "left": {
+                "es": "Column",
+                "en": "Column"
+              },
+              "right": {
+                "es": "Organización vertical sin scroll automático",
+                "en": "Vertical organization without automatic scrolling"
+              }
             },
             {
-              "left": "children",
-              "right": "Lista de widgets hijos"
+              "left": {
+                "es": "children",
+                "en": "children"
+              },
+              "right": {
+                "es": "Lista de widgets hijos",
+                "en": "List of child widgets"
+              }
             }
           ],
-          "correctExplanation": "Entender estas relaciones te ayuda a escoger mejor el widget adecuado.",
-          "incorrectExplanation": "Revisa qué widget desplaza, cuál organiza y qué representa children.",
+          "correctExplanation": {
+            "es": "Entender estas relaciones te ayuda a escoger mejor el widget adecuado.",
+            "en": "Understanding these relationships helps you better choose the right widget."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué widget desplaza, cuál organiza y qué representa children.",
+            "en": "Check which widget moves, which organizes, and which represents children."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "flv_bug_1",
           "type": "fixTheBug",
-          "prompt": "Corrige el widget para que represente una lista desplazable y no una columna fija.",
-          "initialCode": "return Column(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n);",
-          "expectedAnswer": "return ListView(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n);",
-          "correctExplanation": "Si quieres comportamiento de lista con scroll, ListView es una mejor opción.",
-          "incorrectExplanation": "El problema es que Column no resuelve el caso de lista desplazable.",
-          "hint": "Piensa en scroll vertical.",
+          "prompt": {
+            "es": "Corrige el widget para que represente una lista desplazable y no una columna fija.",
+            "en": "Fix the widget to render a scrolling list and not a fixed column."
+          },
+          "initialCode": {
+            "es": "return Column(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n);",
+            "en": "return Column(\n  children: [\n    Text('One'),\n    Text('Two'),\n  ],\n);"
+          },
+          "expectedAnswer": {
+            "es": "return ListView(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n);",
+            "en": "return ListView(\n  children: [\n    Text('One'),\n    Text('Two'),\n  ],\n);"
+          },
+          "correctExplanation": {
+            "es": "Si quieres comportamiento de lista con scroll, ListView es una mejor opción.",
+            "en": "If you want list behavior with scrolling, ListView is a better option."
+          },
+          "incorrectExplanation": {
+            "es": "El problema es que Column no resuelve el caso de lista desplazable.",
+            "en": "The problem is that Column doesn't solve the scrolling list case."
+          },
+          "hint": {
+            "es": "Piensa en scroll vertical.",
+            "en": "Think vertical scroll."
+          },
           "xpReward": 10
         }
       ]
     },
     {
       "id": "flutter_navigation_basic",
-      "title": "Navegación básica",
-      "shortDescription": "Muévete entre pantallas usando Navigator.",
+      "title": {
+        "es": "Navegación básica",
+        "en": "Basic navigation"
+      },
+      "shortDescription": {
+        "es": "Muévete entre pantallas usando Navigator.",
+        "en": "Move between screens using Navigator."
+      },
       "icon": "navigation",
       "nodeType": "lesson",
       "xpReward": 75,
@@ -857,96 +2000,234 @@
         {
           "id": "fnav_intro_1",
           "type": "intro",
-          "title": "Una app vive en movimiento",
-          "body": "La navegación permite abrir nuevas pantallas y volver atrás. Navigator es una de las formas más comunes de manejar ese flujo en Flutter. Si entiendes push y pop, ya tienes una base mental muy útil para apps reales.",
-          "example": "Navigator.push(\n  context,\n  MaterialPageRoute(builder: (_) => const DetailScreen()),\n);"
+          "title": {
+            "es": "Una app vive en movimiento",
+            "en": "An app lives in motion"
+          },
+          "body": {
+            "es": "La navegación permite abrir nuevas pantallas y volver atrás. Navigator es una de las formas más comunes de manejar ese flujo en Flutter. Si entiendes push y pop, ya tienes una base mental muy útil para apps reales.",
+            "en": "Navigation allows you to open new screens and go back. Navigator is one of the most common ways to handle that flow in Flutter. If you understand push and pop, you already have a very useful mental foundation for real apps."
+          },
+          "example": {
+            "es": "Navigator.push(\n  context,\n  MaterialPageRoute(builder: (_) => const DetailScreen()),\n);",
+            "en": "Navigator.push(\n  context,\n  MaterialPageRoute(builder: (_) => const DetailScreen()),\n);"
+          }
         },
         {
           "id": "fnav_intro_2",
           "type": "intro",
-          "title": "Push abre, pop regresa",
-          "body": "Navigator.push agrega una nueva ruta a la pila de navegación. Navigator.pop cierra la actual y vuelve a la anterior. Esa idea de pila es importante: vas entrando y saliendo de pantallas como quien abre y cierra puertas en el flujo de la app.",
-          "example": "Navigator.pop(context);\n\n// Vuelve a la pantalla anterior."
+          "title": {
+            "es": "Push abre, pop regresa",
+            "en": "Push opens, pop returns"
+          },
+          "body": {
+            "es": "Navigator.push agrega una nueva ruta a la pila de navegación. Navigator.pop cierra la actual y vuelve a la anterior. Esa idea de pila es importante: vas entrando y saliendo de pantallas como quien abre y cierra puertas en el flujo de la app.",
+            "en": "Navigator.push adds a new route to the navigation stack. Navigator.pop closes the current one and returns to the previous one. That idea of ​​a stack is important: you enter and exit screens like someone opening and closing doors in the flow of the app."
+          },
+          "example": {
+            "es": "Navigator.pop(context);\n\n// Vuelve a la pantalla anterior.",
+            "en": "Navigator.pop(context);\n\n// Return to the previous screen."
+          }
         },
         {
           "id": "fnav_q1",
           "type": "multipleChoice",
-          "question": "¿Qué método suele usarse para abrir una nueva pantalla?",
+          "question": {
+            "es": "¿Qué método suele usarse para abrir una nueva pantalla?",
+            "en": "What method is usually used to open a new screen?"
+          },
           "options": [
-            "Navigator.hide",
-            "Navigator.push",
-            "Navigator.reset",
-            "Navigator.build"
+            {
+              "es": "Navigator.hide",
+              "en": "Navigator.hide"
+            },
+            {
+              "es": "Navigator.push",
+              "en": "Navigator.push"
+            },
+            {
+              "es": "Navigator.reset",
+              "en": "Navigator.reset"
+            },
+            {
+              "es": "Navigator.build",
+              "en": "Navigator.build"
+            }
           ],
-          "correctAnswer": "Navigator.push",
-          "correctExplanation": "Navigator.push agrega una nueva ruta a la pila de navegación.",
-          "incorrectExplanation": "El método común para abrir una pantalla es Navigator.push.",
+          "correctAnswer": {
+            "es": "Navigator.push",
+            "en": "Navigator.push"
+          },
+          "correctExplanation": {
+            "es": "Navigator.push agrega una nueva ruta a la pila de navegación.",
+            "en": "Navigator.push adds a new route to the navigation stack."
+          },
+          "incorrectExplanation": {
+            "es": "El método común para abrir una pantalla es Navigator.push.",
+            "en": "The common method to open a screen is Navigator.push."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fnav_bug_1",
           "type": "fixTheBug",
-          "prompt": "Corrige el método para regresar a la pantalla anterior.",
-          "initialCode": "Navigator.push(context);",
-          "expectedAnswer": "Navigator.pop(context);",
-          "correctExplanation": "Navigator.pop cierra la ruta actual y regresa a la anterior.",
-          "incorrectExplanation": "Para volver atrás debes usar Navigator.pop.",
-          "hint": "No quieres abrir, quieres regresar.",
+          "prompt": {
+            "es": "Corrige el método para regresar a la pantalla anterior.",
+            "en": "Corrects the method to return to the previous screen."
+          },
+          "initialCode": {
+            "es": "Navigator.push(context);",
+            "en": "Navigator.push(context);"
+          },
+          "expectedAnswer": {
+            "es": "Navigator.pop(context);",
+            "en": "Navigator.pop(context);"
+          },
+          "correctExplanation": {
+            "es": "Navigator.pop cierra la ruta actual y regresa a la anterior.",
+            "en": "Navigator.pop closes the current route and returns to the previous one."
+          },
+          "incorrectExplanation": {
+            "es": "Para volver atrás debes usar Navigator.pop.",
+            "en": "To go back you must use Navigator.pop."
+          },
+          "hint": {
+            "es": "No quieres abrir, quieres regresar.",
+            "en": "You don't want to open, you want to go back."
+          },
           "xpReward": 15
         },
         {
           "id": "fnav_guided_1",
           "type": "guidedWriting",
-          "instructions": "Escribe la parte esencial para abrir DetailScreen con Navigator.push.",
-          "starterCode": "onPressed: () {\n  _____\n}",
+          "instructions": {
+            "es": "Escribe la parte esencial para abrir DetailScreen con Navigator.push.",
+            "en": "Write the essential part to open DetailScreen with Navigator.push."
+          },
+          "starterCode": {
+            "es": "onPressed: () {\n  _____\n}",
+            "en": "onPressed: () {\n  _____\n}"
+          },
           "expectedFragments": [
-            "Navigator.push",
-            "MaterialPageRoute",
-            "DetailScreen"
+            {
+              "es": "Navigator.push",
+              "en": "Navigator.push"
+            },
+            {
+              "es": "MaterialPageRoute",
+              "en": "MaterialPageRoute"
+            },
+            {
+              "es": "DetailScreen",
+              "en": "DetailScreen"
+            }
           ],
-          "correctExplanation": "Para navegar normalmente usas Navigator.push con una MaterialPageRoute.",
-          "incorrectExplanation": "Tu respuesta debe incluir Navigator.push y una MaterialPageRoute hacia DetailScreen.",
-          "hint": "Piensa en push + route.",
+          "correctExplanation": {
+            "es": "Para navegar normalmente usas Navigator.push con una MaterialPageRoute.",
+            "en": "To navigate you normally use Navigator.push with a MaterialPageRoute."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir Navigator.push y una MaterialPageRoute hacia DetailScreen.",
+            "en": "Your response should include Navigator.push and a MaterialPageRoute to DetailScreen."
+          },
+          "hint": {
+            "es": "Piensa en push + route.",
+            "en": "Think push + route."
+          },
           "xpReward": 15
         },
         {
           "id": "fnav_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada concepto con su acción.",
+          "prompt": {
+            "es": "Relaciona cada concepto con su acción.",
+            "en": "Relate each concept to its action."
+          },
           "pairs": [
             {
-              "left": "Navigator.push",
-              "right": "Abre una nueva pantalla"
+              "left": {
+                "es": "Navigator.push",
+                "en": "Navigator.push"
+              },
+              "right": {
+                "es": "Abre una nueva pantalla",
+                "en": "Open a new screen"
+              }
             },
             {
-              "left": "Navigator.pop",
-              "right": "Regresa a la pantalla anterior"
+              "left": {
+                "es": "Navigator.pop",
+                "en": "Navigator.pop"
+              },
+              "right": {
+                "es": "Regresa a la pantalla anterior",
+                "en": "Return to the previous screen"
+              }
             },
             {
-              "left": "MaterialPageRoute",
-              "right": "Define una ruta basada en widget"
+              "left": {
+                "es": "MaterialPageRoute",
+                "en": "MaterialPageRoute"
+              },
+              "right": {
+                "es": "Define una ruta basada en widget",
+                "en": "Defines a widget-based route"
+              }
             }
           ],
-          "correctExplanation": "Estas piezas forman parte del flujo básico de navegación en Flutter.",
-          "incorrectExplanation": "Revisa qué abre, qué cierra y qué representa la ruta basada en widget.",
+          "correctExplanation": {
+            "es": "Estas piezas forman parte del flujo básico de navegación en Flutter.",
+            "en": "These pieces are part of the basic navigation flow in Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué abre, qué cierra y qué representa la ruta basada en widget.",
+            "en": "Review what opens, closes, and represents the widget-based route."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "fnav_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué debería ocurrir tras llamar Navigator.pop(context)?",
-          "codeSnippet": "Navigator.pop(context);",
+          "question": {
+            "es": "¿Qué debería ocurrir tras llamar Navigator.pop(context)?",
+            "en": "What should happen after calling Navigator.pop(context)?"
+          },
+          "codeSnippet": {
+            "es": "Navigator.pop(context);",
+            "en": "Navigator.pop(context);"
+          },
           "options": [
-            "Se abre una nueva pantalla",
-            "Se regresa a la pantalla anterior",
-            "Se reinicia la app",
-            "Se crea un diálogo automáticamente"
+            {
+              "es": "Se abre una nueva pantalla",
+              "en": "A new screen opens"
+            },
+            {
+              "es": "Se regresa a la pantalla anterior",
+              "en": "Returns to the previous screen"
+            },
+            {
+              "es": "Se reinicia la app",
+              "en": "The app restarts"
+            },
+            {
+              "es": "Se crea un diálogo automáticamente",
+              "en": "A dialog is created automatically"
+            }
           ],
-          "correctAnswer": "Se regresa a la pantalla anterior",
-          "correctExplanation": "pop cierra la ruta actual y vuelve a la anterior en la pila.",
-          "incorrectExplanation": "Navigator.pop se usa para regresar, no para abrir nuevas rutas.",
+          "correctAnswer": {
+            "es": "Se regresa a la pantalla anterior",
+            "en": "Returns to the previous screen"
+          },
+          "correctExplanation": {
+            "es": "pop cierra la ruta actual y vuelve a la anterior en la pila.",
+            "en": "pop closes the current path and returns to the previous one on the stack."
+          },
+          "incorrectExplanation": {
+            "es": "Navigator.pop se usa para regresar, no para abrir nuevas rutas.",
+            "en": "Navigator.pop is used to return, not to open new routes."
+          },
           "xpReward": 15,
           "shuffle": true
         }
@@ -954,8 +2235,14 @@
     },
     {
       "id": "flutter_layout_mindset",
-      "title": "Pensar en layout",
-      "shortDescription": "Entiende constraints, overflow y composición básica de interfaz.",
+      "title": {
+        "es": "Pensar en layout",
+        "en": "Thinking in layout"
+      },
+      "shortDescription": {
+        "es": "Entiende constraints, overflow y composición básica de interfaz.",
+        "en": "Understand constraints, overflow and basic interface composition."
+      },
       "icon": "dashboard_customize",
       "nodeType": "lesson",
       "xpReward": 80,
@@ -963,112 +2250,280 @@
         {
           "id": "flm_intro_1",
           "type": "intro",
-          "title": "No todo cabe por arte de magia",
-          "body": "En Flutter los widgets reciben restricciones de tamaño. Pensar en layout significa entender espacio disponible, composición y por qué aparece un overflow. Si entiendes constraints, dejas de pelear con la UI y empiezas a trabajar con ella.",
-          "example": "Expanded(\n  child: Container(color: Colors.blue),\n)"
+          "title": {
+            "es": "No todo cabe por arte de magia",
+            "en": "Not everything fits by magic"
+          },
+          "body": {
+            "es": "En Flutter los widgets reciben restricciones de tamaño. Pensar en layout significa entender espacio disponible, composición y por qué aparece un overflow. Si entiendes constraints, dejas de pelear con la UI y empiezas a trabajar con ella.",
+            "en": "In Flutter widgets receive size restrictions. Thinking about layout means understanding available space, composition and why overflow appears. If you understand constraints, you stop fighting with the UI and start working with it."
+          },
+          "example": {
+            "es": "Expanded(\n  child: Container(color: Colors.blue),\n)",
+            "en": "Expanded(\n  child: Container(color: Colors.blue),\n)"
+          }
         },
         {
           "id": "flm_intro_2",
           "type": "intro",
-          "title": "Expanded ayuda a repartir espacio",
-          "body": "Dentro de Row y Column, Expanded puede ayudar a que un widget ocupe el espacio disponible restante. Es una herramienta muy útil para evitar que ciertos hijos se queden sin espacio o generen layouts torcidos.",
-          "example": "Row(\n  children: [\n    Expanded(child: Text('Texto largo')),\n    Icon(Icons.star),\n  ],\n)"
+          "title": {
+            "es": "Expanded ayuda a repartir espacio",
+            "en": "Expanded helps distribute space"
+          },
+          "body": {
+            "es": "Dentro de Row y Column, Expanded puede ayudar a que un widget ocupe el espacio disponible restante. Es una herramienta muy útil para evitar que ciertos hijos se queden sin espacio o generen layouts torcidos.",
+            "en": "Within Row and Column, Expanded can help a widget occupy the remaining available space. It is a very useful tool to prevent certain children from running out of space or generating crooked layouts."
+          },
+          "example": {
+            "es": "Row(\n  children: [\n    Expanded(child: Text('Texto largo')),\n    Icon(Icons.star),\n  ],\n)",
+            "en": "Row(\n  children: [\n    Expanded(child: Text('Long text')),\n    Icon(Icons.star),\n  ],\n)"
+          }
         },
         {
           "id": "flm_q1",
           "type": "multipleChoice",
-          "question": "¿Qué widget suele ayudar a ocupar espacio disponible dentro de Row o Column?",
+          "question": {
+            "es": "¿Qué widget suele ayudar a ocupar espacio disponible dentro de Row o Column?",
+            "en": "Which widget usually helps occupy available space within Row or Column?"
+          },
           "options": [
-            "Text",
-            "Expanded",
-            "Scaffold",
-            "Icon"
+            {
+              "es": "Text",
+              "en": "text"
+            },
+            {
+              "es": "Expanded",
+              "en": "Expanded"
+            },
+            {
+              "es": "Scaffold",
+              "en": "Scaffold"
+            },
+            {
+              "es": "Icon",
+              "en": "Icon"
+            }
           ],
-          "correctAnswer": "Expanded",
-          "correctExplanation": "Expanded le dice al layout que ese child debe ocupar espacio disponible dentro de Flex widgets.",
-          "incorrectExplanation": "El widget típico para ocupar espacio restante dentro de Row o Column es Expanded.",
+          "correctAnswer": {
+            "es": "Expanded",
+            "en": "Expanded"
+          },
+          "correctExplanation": {
+            "es": "Expanded le dice al layout que ese child debe ocupar espacio disponible dentro de Flex widgets.",
+            "en": "Expanded tells the layout that that child should take up available space within Flex widgets."
+          },
+          "incorrectExplanation": {
+            "es": "El widget típico para ocupar espacio restante dentro de Row o Column es Expanded.",
+            "en": "The typical widget to occupy remaining space within Row or Column is Expanded."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "flm_find_1",
           "type": "findTheWrongLine",
-          "prompt": "Identifica la línea más sospechosa en este layout que puede causar problemas.",
+          "prompt": {
+            "es": "Identifica la línea más sospechosa en este layout que puede causar problemas.",
+            "en": "Identify the most suspicious line in this layout that can cause problems."
+          },
           "codeLines": [
-            "Row(",
-            "  children: [",
-            "    Text('Texto muy largo muy largo muy largo muy largo'),",
-            "    Text('Otro texto'),",
-            "  ],",
-            ")"
+            {
+              "es": "Row(",
+              "en": "Row("
+            },
+            {
+              "es": "  children: [",
+              "en": "children: ["
+            },
+            {
+              "es": "    Text('Texto muy largo muy largo muy largo muy largo'),",
+              "en": "Text('Very long very long very long very long text'),"
+            },
+            {
+              "es": "    Text('Otro texto'),",
+              "en": "Text('Other text'),"
+            },
+            {
+              "es": "  ],",
+              "en": "],"
+            },
+            {
+              "es": ")",
+              "en": ")"
+            }
           ],
           "wrongLineIndex": 2,
-          "correctExplanation": "Un texto largo dentro de Row sin manejo de espacio puede producir overflow.",
-          "incorrectExplanation": "La línea problemática es el texto largo sin restricción dentro de la Row.",
+          "correctExplanation": {
+            "es": "Un texto largo dentro de Row sin manejo de espacio puede producir overflow.",
+            "en": "Long text inside a Row without space management can cause overflow."
+          },
+          "incorrectExplanation": {
+            "es": "La línea problemática es el texto largo sin restricción dentro de la Row.",
+            "en": "The problematic line is the long unrestricted text within the Row."
+          },
           "xpReward": 15
         },
         {
           "id": "flm_order_1",
           "type": "orderCodeBlocks",
-          "prompt": "Ordena este snippet para envolver un texto en Expanded dentro de Row.",
+          "prompt": {
+            "es": "Ordena este snippet para envolver un texto en Expanded dentro de Row.",
+            "en": "Command this snippet to wrap some Expanded text inside a Row."
+          },
           "blocks": [
-            "Text('Hola mundo muy largo'),",
-            "Expanded(",
-            "),",
-            "Row(",
-            "children: [",
-            "],"
+            {
+              "es": "Text('Hola mundo muy largo'),",
+              "en": "Text('Hola mundo muy largo'),"
+            },
+            {
+              "es": "Expanded(",
+              "en": "Expanded("
+            },
+            {
+              "es": "),",
+              "en": "),"
+            },
+            {
+              "es": "Row(",
+              "en": "Row("
+            },
+            {
+              "es": "children: [",
+              "en": "children: ["
+            },
+            {
+              "es": "],",
+              "en": "],"
+            }
           ],
           "correctOrder": [
-            "Row(",
-            "children: [",
-            "Expanded(",
-            "Text('Hola mundo muy largo'),",
-            "),",
-            "],"
+            {
+              "es": "Row(",
+              "en": "Row("
+            },
+            {
+              "es": "children: [",
+              "en": "children: ["
+            },
+            {
+              "es": "Expanded(",
+              "en": "Expanded("
+            },
+            {
+              "es": "Text('Hola mundo muy largo'),",
+              "en": "Text('Hola mundo muy largo'),"
+            },
+            {
+              "es": "),",
+              "en": "),"
+            },
+            {
+              "es": "],",
+              "en": "],"
+            }
           ],
-          "correctExplanation": "Primero el contenedor Row, luego children y dentro Expanded con el Text.",
-          "incorrectExplanation": "Debes pensar en contenedor exterior y luego anidar correctamente.",
+          "correctExplanation": {
+            "es": "Primero el contenedor Row, luego children y dentro Expanded con el Text.",
+            "en": "First the Row container, then children and inside Expanded with the Text."
+          },
+          "incorrectExplanation": {
+            "es": "Debes pensar en contenedor exterior y luego anidar correctamente.",
+            "en": "You must think about outer container and then nest correctly."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "flm_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada concepto con su idea principal.",
+          "prompt": {
+            "es": "Relaciona cada concepto con su idea principal.",
+            "en": "Relate each concept to its main idea."
+          },
           "pairs": [
             {
-              "left": "constraints",
-              "right": "Restricciones de tamaño disponibles"
+              "left": {
+                "es": "constraints",
+                "en": "constraints"
+              },
+              "right": {
+                "es": "Restricciones de tamaño disponibles",
+                "en": "Size restrictions available"
+              }
             },
             {
-              "left": "overflow",
-              "right": "Contenido que no cabe en el espacio dado"
+              "left": {
+                "es": "overflow",
+                "en": "overflow"
+              },
+              "right": {
+                "es": "Contenido que no cabe en el espacio dado",
+                "en": "Content that does not fit in the given space"
+              }
             },
             {
-              "left": "Expanded",
-              "right": "Ocupa espacio disponible dentro de Row o Column"
+              "left": {
+                "es": "Expanded",
+                "en": "Expanded"
+              },
+              "right": {
+                "es": "Ocupa espacio disponible dentro de Row o Column",
+                "en": "Occupies available space within Row or Column"
+              }
             }
           ],
-          "correctExplanation": "Estos conceptos ayudan a pensar mejor el layout en Flutter.",
-          "incorrectExplanation": "Revisa qué representa el espacio disponible, qué significa desbordar y qué hace Expanded.",
+          "correctExplanation": {
+            "es": "Estos conceptos ayudan a pensar mejor el layout en Flutter.",
+            "en": "These concepts help you think better about the layout in Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué representa el espacio disponible, qué significa desbordar y qué hace Expanded.",
+            "en": "Review what free space represents, what overflow means, and what Expanded does."
+          },
           "xpReward": 10,
           "shuffle": true
         },
         {
           "id": "flm_predict_1",
           "type": "predictOutput",
-          "question": "¿Qué problema intenta resolver Expanded en muchos layouts?",
-          "codeSnippet": "Expanded(child: Text('Texto largo'))",
+          "question": {
+            "es": "¿Qué problema intenta resolver Expanded en muchos layouts?",
+            "en": "What problem is Expanded trying to solve in many layouts?"
+          },
+          "codeSnippet": {
+            "es": "Expanded(child: Text('Texto largo'))",
+            "en": "Expanded(child: Text('Long text'))"
+          },
           "options": [
-            "Navegación entre pantallas",
-            "Ocupar espacio disponible dentro de un layout flexible",
-            "Persistencia local",
-            "Crear un tema global"
+            {
+              "es": "Navegación entre pantallas",
+              "en": "Navigation between screens"
+            },
+            {
+              "es": "Ocupar espacio disponible dentro de un layout flexible",
+              "en": "Occupy available space within a flexible layout"
+            },
+            {
+              "es": "Persistencia local",
+              "en": "Local persistence"
+            },
+            {
+              "es": "Crear un tema global",
+              "en": "Create a global theme"
+            }
           ],
-          "correctAnswer": "Ocupar espacio disponible dentro de un layout flexible",
-          "correctExplanation": "Expanded ayuda a distribuir espacio disponible dentro de Row o Column.",
-          "incorrectExplanation": "Expanded está relacionado con distribución de espacio, no con navegación ni persistencia.",
+          "correctAnswer": {
+            "es": "Ocupar espacio disponible dentro de un layout flexible",
+            "en": "Occupy available space within a flexible layout"
+          },
+          "correctExplanation": {
+            "es": "Expanded ayuda a distribuir espacio disponible dentro de Row o Column.",
+            "en": "Expanded helps distribute available space within Row or Column."
+          },
+          "incorrectExplanation": {
+            "es": "Expanded está relacionado con distribución de espacio, no con navegación ni persistencia.",
+            "en": "Expanded is related to space distribution, not navigation or persistence."
+          },
           "xpReward": 15,
           "shuffle": true
         }
@@ -1076,8 +2531,14 @@
     },
     {
       "id": "flutter_foundations_final_exam",
-      "title": "Examen Final Flutter Foundations",
-      "shortDescription": "Valida lo aprendido sobre estructura, widgets y layout básico en Flutter.",
+      "title": {
+        "es": "Examen Final Flutter Foundations",
+        "en": "Flutter Foundations final exam"
+      },
+      "shortDescription": {
+        "es": "Valida lo aprendido sobre estructura, widgets y layout básico en Flutter.",
+        "en": "Validates what you have learned about structure, widgets and basic layout in Flutter."
+      },
       "icon": "workspace_premium",
       "nodeType": "exam",
       "xpReward": 150,
@@ -1085,137 +2546,326 @@
         {
           "id": "ffe_intro_1",
           "type": "intro",
-          "title": "Última parada antes del siguiente mundo",
-          "body": "Este examen mezcla conceptos de widgets, estructura de proyecto, navegación y layout. Ya no es solo memorizar: aquí toca conectar ideas como alguien que ya le agarró el truco a Flutter.",
-          "example": "Respira. Lee. Piensa. Y luego prográmalo con flow."
+          "title": {
+            "es": "Última parada antes del siguiente mundo",
+            "en": "Last stop before the next world"
+          },
+          "body": {
+            "es": "Este examen mezcla conceptos de widgets, estructura de proyecto, navegación y layout. Ya no es solo memorizar: aquí toca conectar ideas como alguien que ya le agarró el truco a Flutter.",
+            "en": "This exam mixes concepts of widgets, project structure, navigation and layout. It's no longer just memorizing: here it's time to connect ideas like someone who has already gotten the hang of Flutter."
+          },
+          "example": {
+            "es": "Respira. Lee. Piensa. Y luego prográmalo con flow.",
+            "en": "Breathe. Read. Think. And then program it with flow."
+          }
         },
         {
           "id": "ffe_intro_2",
           "type": "intro",
-          "title": "Piensa como constructor de interfaces",
-          "body": "Aquí no basta con reconocer nombres de widgets. Toca entender qué hacen, dónde encajan y por qué una estructura es mejor que otra. Ese cambio de mentalidad es lo que convierte snippets en criterio.",
-          "example": "No todo widget va donde cabe.\nVa donde tiene sentido."
+          "title": {
+            "es": "Piensa como constructor de interfaces",
+            "en": "Think like an interface builder"
+          },
+          "body": {
+            "es": "Aquí no basta con reconocer nombres de widgets. Toca entender qué hacen, dónde encajan y por qué una estructura es mejor que otra. Ese cambio de mentalidad es lo que convierte snippets en criterio.",
+            "en": "Recognizing widget names is not enough here. It's time to understand what they do, where they fit and why one structure is better than another. That change in mentality is what turns snippets into criteria."
+          },
+          "example": {
+            "es": "No todo widget va donde cabe.\nVa donde tiene sentido.",
+            "en": "Not every widget goes where it fits.\nIt goes where it makes sense."
+          }
         },
         {
           "id": "ffe_q1",
           "type": "multipleChoice",
-          "question": "¿Qué widget raíz se usa comúnmente para una app estilo Material?",
+          "question": {
+            "es": "¿Qué widget raíz se usa comúnmente para una app estilo Material?",
+            "en": "What root widget is commonly used for a Material style app?"
+          },
           "options": [
-            "Container",
-            "MaterialApp",
-            "Scaffold",
-            "Text"
+            {
+              "es": "Container",
+              "en": "Container"
+            },
+            {
+              "es": "MaterialApp",
+              "en": "MaterialApp"
+            },
+            {
+              "es": "Scaffold",
+              "en": "Scaffold"
+            },
+            {
+              "es": "Text",
+              "en": "text"
+            }
           ],
-          "correctAnswer": "MaterialApp",
-          "correctExplanation": "MaterialApp configura la base de una app Material en Flutter.",
-          "incorrectExplanation": "El widget raíz común para una app Material es MaterialApp.",
+          "correctAnswer": {
+            "es": "MaterialApp",
+            "en": "MaterialApp"
+          },
+          "correctExplanation": {
+            "es": "MaterialApp configura la base de una app Material en Flutter.",
+            "en": "MaterialApp sets up the base of a Material app in Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "El widget raíz común para una app Material es MaterialApp.",
+            "en": "The common root widget for a Material app is MaterialApp."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "ffe_predict_1",
           "type": "predictOutput",
-          "question": "¿Cómo se verán estos widgets?",
-          "codeSnippet": "Column(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n)",
+          "question": {
+            "es": "¿Cómo se verán estos widgets?",
+            "en": "What will these widgets look like?"
+          },
+          "codeSnippet": {
+            "es": "Column(\n  children: [\n    Text('Uno'),\n    Text('Dos'),\n  ],\n)",
+            "en": "Column(\n  children: [\n    Text('One'),\n    Text('Two'),\n  ],\n)"
+          },
           "options": [
-            "Uno y Dos uno al lado del otro",
-            "Uno y Dos uno debajo del otro",
-            "No se ve nada",
-            "Se convierte automáticamente en lista con scroll"
+            {
+              "es": "Uno y Dos uno al lado del otro",
+              "en": "One and Two next to each other"
+            },
+            {
+              "es": "Uno y Dos uno debajo del otro",
+              "en": "One and Two one under the other"
+            },
+            {
+              "es": "No se ve nada",
+              "en": "You can't see anything"
+            },
+            {
+              "es": "Se convierte automáticamente en lista con scroll",
+              "en": "Automatically converts to scroll list"
+            }
           ],
-          "correctAnswer": "Uno y Dos uno debajo del otro",
-          "correctExplanation": "Column organiza a sus hijos verticalmente.",
-          "incorrectExplanation": "Column coloca los widgets uno debajo del otro.",
+          "correctAnswer": {
+            "es": "Uno y Dos uno debajo del otro",
+            "en": "One and Two one under the other"
+          },
+          "correctExplanation": {
+            "es": "Column organiza a sus hijos verticalmente.",
+            "en": "Column organizes its children vertically."
+          },
+          "incorrectExplanation": {
+            "es": "Column coloca los widgets uno debajo del otro.",
+            "en": "Column places the widgets one below the other."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "ffe_bug_1",
           "type": "fixTheBug",
-          "prompt": "Corrige el widget para usar la propiedad correcta del botón.",
-          "initialCode": "ElevatedButton(\n  onPressed: () {},\n  text: Text('Enviar'),\n)",
-          "expectedAnswer": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Enviar'),\n)",
-          "correctExplanation": "ElevatedButton usa child para mostrar su contenido interno.",
-          "incorrectExplanation": "La propiedad correcta es child, no text.",
-          "hint": "Piensa en el widget hijo del botón.",
+          "prompt": {
+            "es": "Corrige el widget para usar la propiedad correcta del botón.",
+            "en": "Fix the widget to use the correct button property."
+          },
+          "initialCode": {
+            "es": "ElevatedButton(\n  onPressed: () {},\n  text: Text('Enviar'),\n)",
+            "en": "ElevatedButton(\n  onPressed: () {},\n  text: Text('Send'),\n)"
+          },
+          "expectedAnswer": {
+            "es": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Enviar'),\n)",
+            "en": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Send'),\n)"
+          },
+          "correctExplanation": {
+            "es": "ElevatedButton usa child para mostrar su contenido interno.",
+            "en": "ElevatedButton uses child to display its internal content."
+          },
+          "incorrectExplanation": {
+            "es": "La propiedad correcta es child, no text.",
+            "en": "The correct property is child, not text."
+          },
+          "hint": {
+            "es": "Piensa en el widget hijo del botón.",
+            "en": "Think about the child widget of the button."
+          },
           "xpReward": 20
         },
         {
           "id": "ffe_match_1",
           "type": "matchConcept",
-          "prompt": "Relaciona cada widget o concepto con su responsabilidad.",
+          "prompt": {
+            "es": "Relaciona cada widget o concepto con su responsabilidad.",
+            "en": "Relate each widget or concept to its responsibility."
+          },
           "pairs": [
             {
-              "left": "Scaffold",
-              "right": "Estructura base de una pantalla"
+              "left": {
+                "es": "Scaffold",
+                "en": "Scaffold"
+              },
+              "right": {
+                "es": "Estructura base de una pantalla",
+                "en": "Base structure of a screen"
+              }
             },
             {
-              "left": "ListView",
-              "right": "Lista desplazable"
+              "left": {
+                "es": "ListView",
+                "en": "ListView"
+              },
+              "right": {
+                "es": "Lista desplazable",
+                "en": "Scrollable list"
+              }
             },
             {
-              "left": "Navigator.push",
-              "right": "Abre una nueva pantalla"
+              "left": {
+                "es": "Navigator.push",
+                "en": "Navigator.push"
+              },
+              "right": {
+                "es": "Abre una nueva pantalla",
+                "en": "Open a new screen"
+              }
             }
           ],
-          "correctExplanation": "Estas piezas son básicas para construir pantallas funcionales en Flutter.",
-          "incorrectExplanation": "Revisa qué widget estructura, cuál desplaza contenido y qué hace Navigator.push.",
+          "correctExplanation": {
+            "es": "Estas piezas son básicas para construir pantallas funcionales en Flutter.",
+            "en": "These pieces are basic to building functional screens in Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué widget estructura, cuál desplaza contenido y qué hace Navigator.push.",
+            "en": "Check which widget structures, which scrolls content, and what Navigator.push does."
+          },
           "xpReward": 20,
           "shuffle": true
         },
         {
           "id": "ffe_guided_1",
           "type": "guidedWriting",
-          "instructions": "Escribe el fragmento esencial para agregar padding uniforme de 16 a un widget.",
-          "starterCode": "Padding(\n  _____\n  child: Text('Hola'),\n)",
+          "instructions": {
+            "es": "Escribe el fragmento esencial para agregar padding uniforme de 16 a un widget.",
+            "en": "Write the essential snippet to add uniform 16 padding to a widget."
+          },
+          "starterCode": {
+            "es": "Padding(\n  _____\n  child: Text('Hola'),\n)",
+            "en": "Padding\n  _____\n  child: Text('Hello'),\n)"
+          },
           "expectedFragments": [
-            "padding:",
-            "EdgeInsets.all(16)"
+            {
+              "es": "padding:",
+              "en": "padding:"
+            },
+            {
+              "es": "EdgeInsets.all(16)",
+              "en": "EdgeInsets.all(16)"
+            }
           ],
-          "correctExplanation": "Padding recibe la propiedad padding, y EdgeInsets.all(16) aplica el mismo espacio a todos los lados.",
-          "incorrectExplanation": "Necesitas incluir padding: EdgeInsets.all(16).",
-          "hint": "La propiedad se llama igual que el widget.",
+          "correctExplanation": {
+            "es": "Padding recibe la propiedad padding, y EdgeInsets.all(16) aplica el mismo espacio a todos los lados.",
+            "en": "Padding receives the padding property, and EdgeInsets.all(16) applies equal spacing to all sides."
+          },
+          "incorrectExplanation": {
+            "es": "Necesitas incluir padding: EdgeInsets.all(16).",
+            "en": "You need to include padding: EdgeInsets.all(16)."
+          },
+          "hint": {
+            "es": "La propiedad se llama igual que el widget.",
+            "en": "The property is called the same as the widget."
+          },
           "xpReward": 20
         },
         {
           "id": "ffe_find_1",
           "type": "findTheWrongLine",
-          "prompt": "Identifica la línea incorrecta en este snippet de navegación.",
+          "prompt": {
+            "es": "Identifica la línea incorrecta en este snippet de navegación.",
+            "en": "Identify the incorrect line in this navigation snippet."
+          },
           "codeLines": [
-            "onPressed: () {",
-            "  Navigator.hide(context);",
-            "}"
+            {
+              "es": "onPressed: () {",
+              "en": "onPressed: () {"
+            },
+            {
+              "es": "  Navigator.hide(context);",
+              "en": "Navigator.hide(context);"
+            },
+            {
+              "es": "}",
+              "en": "}"
+            }
           ],
           "wrongLineIndex": 1,
-          "correctExplanation": "Navigator.hide no es el método común para navegar. Para abrir pantallas se usa Navigator.push.",
-          "incorrectExplanation": "La línea incorrecta es la que intenta usar Navigator.hide.",
+          "correctExplanation": {
+            "es": "Navigator.hide no es el método común para navegar. Para abrir pantallas se usa Navigator.push.",
+            "en": "Navigator.hide is not the common method for navigating. Navigator.push is used to open screens."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que intenta usar Navigator.hide.",
+            "en": "The wrong line is the one trying to use Navigator.hide."
+          },
           "xpReward": 15
         },
         {
           "id": "ffe_order_1",
           "type": "orderCodeBlocks",
-          "prompt": "Ordena este snippet para crear una pantalla simple con Scaffold y body.",
+          "prompt": {
+            "es": "Ordena este snippet para crear una pantalla simple con Scaffold y body.",
+            "en": "Sort this snippet to create a simple screen with Scaffold and body."
+          },
           "blocks": [
-            "body: const Center(child: Text('Hola')),",
-            "return Scaffold(",
-            ");"
+            {
+              "es": "body: const Center(child: Text('Hola')),",
+              "en": "body: const Center(child: Text('Hola')),"
+            },
+            {
+              "es": "return Scaffold(",
+              "en": "return Scaffold("
+            },
+            {
+              "es": ");",
+              "en": ");"
+            }
           ],
           "correctOrder": [
-            "return Scaffold(",
-            "body: const Center(child: Text('Hola')),",
-            ");"
+            {
+              "es": "return Scaffold(",
+              "en": "return Scaffold("
+            },
+            {
+              "es": "body: const Center(child: Text('Hola')),",
+              "en": "body: const Center(child: Text('Hola')),"
+            },
+            {
+              "es": ");",
+              "en": ");"
+            }
           ],
-          "correctExplanation": "Primero declaras Scaffold, luego sus propiedades y finalmente el cierre.",
-          "incorrectExplanation": "Piensa en el widget contenedor antes de sus propiedades internas.",
+          "correctExplanation": {
+            "es": "Primero declaras Scaffold, luego sus propiedades y finalmente el cierre.",
+            "en": "First you declare Scaffold, then its properties and finally the closure."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en el widget contenedor antes de sus propiedades internas.",
+            "en": "Think of the container widget before its internal properties."
+          },
           "xpReward": 15,
           "shuffle": true
         },
         {
           "id": "ffe_summary",
           "type": "intro",
-          "title": "Ruta cerrada",
-          "body": "Si aprobaste este examen, ya tienes una base muy seria para empezar a construir pantallas en Flutter con criterio. Ya no estás poniendo widgets al azar: ya estás entendiendo por qué van ahí.",
-          "example": "Siguiente paso: hacer que todo eso viva, reaccione y tenga estado."
+          "title": {
+            "es": "Ruta cerrada",
+            "en": "Closed route"
+          },
+          "body": {
+            "es": "Si aprobaste este examen, ya tienes una base muy seria para empezar a construir pantallas en Flutter con criterio. Ya no estás poniendo widgets al azar: ya estás entendiendo por qué van ahí.",
+            "en": "If you passed this exam, you already have a very serious foundation to start building screens in Flutter with discretion. You're no longer putting widgets at random: you're already understanding why they go there."
+          },
+          "example": {
+            "es": "Siguiente paso: hacer que todo eso viva, reaccione y tenga estado.",
+            "en": "Next step: make all of that live, react and have state."
+          }
         }
       ]
     }

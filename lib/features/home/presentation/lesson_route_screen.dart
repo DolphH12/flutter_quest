@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/fq_page_container.dart';
@@ -20,6 +21,7 @@ class LessonRouteScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final route = ref.watch(routeByIdProvider(routeId));
     final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
     if (route == null || progress == null) {
@@ -40,7 +42,7 @@ class LessonRouteScreen extends ConsumerWidget {
         child: Center(
           child: FilledButton(
             onPressed: () => context.go('/home/route/$routeId'),
-            child: const Text('Volver a la ruta'),
+            child: Text(l10n.backToRoute),
           ),
         ),
       );
@@ -62,7 +64,7 @@ class LessonRouteScreen extends ConsumerWidget {
         child: Center(
           child: FilledButton(
             onPressed: () => context.go('/home/route/$routeId'),
-            child: const Text('Nodo bloqueado · Volver'),
+            child: Text(l10n.nodeLockedBack),
           ),
         ),
       );

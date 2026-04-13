@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/badge_catalog.dart';
 import '../data/local_progress_store.dart';
@@ -9,6 +11,7 @@ import '../data/route_content_repository.dart';
 import '../data/route_progress_mapper.dart';
 import '../models/learning_models.dart';
 import '../models/progress_view_models.dart';
+import '../../notifications/state/habit_notifications_provider.dart';
 
 final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
   return const [
@@ -44,10 +47,40 @@ final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   return ProgressRepository(LocalProgressStore());
 });
 
+final systemLanguageCodeProvider = Provider<String>((ref) {
+  final locale = WidgetsBinding.instance.platformDispatcher.locale;
+  return locale.languageCode.toLowerCase();
+});
+
+final languagePreferenceProvider =
+    AsyncNotifierProvider<LanguagePreferenceNotifier, String?>(
+      LanguagePreferenceNotifier.new,
+    );
+
+final preferredLanguageCodeProvider = Provider<String?>((ref) {
+  return ref.watch(languagePreferenceProvider).valueOrNull;
+});
+
+final effectiveLanguageCodeProvider = Provider<String>((ref) {
+  final preferred = ref.watch(preferredLanguageCodeProvider);
+  if (preferred != null && preferred.isNotEmpty) return preferred;
+  return ref.watch(systemLanguageCodeProvider);
+});
+
+final appLocaleProvider = Provider<Locale?>((ref) {
+  final preferred = ref.watch(preferredLanguageCodeProvider);
+  if (preferred == null || preferred.isEmpty) return null;
+  return Locale(preferred);
+});
+
 final allRoutesProvider = FutureProvider<List<DartRouteContent>>((ref) async {
   final repository = ref.watch(routeContentRepositoryProvider);
   final manifests = ref.watch(routeManifestsProvider);
-  return repository.loadRoutes(manifests: manifests);
+  final languageCode = ref.watch(effectiveLanguageCodeProvider);
+  return repository.loadRoutes(
+    manifests: manifests,
+    languageCode: languageCode,
+  );
 });
 
 final routeLoadErrorsProvider = Provider<Map<String, String>>((ref) {
@@ -218,20 +251,27 @@ final profileSummaryProvider = Provider<ProfileSummary?>((ref) {
 });
 
 class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
+  static const _streakLostToastDateKey = 'fq_streak_lost_toast_date';
+
   ProgressRepository get _progressRepository =>
       ref.read(progressRepositoryProvider);
 
   @override
   Future<LearningProgressState> build() async {
     final routes = await ref.watch(allRoutesProvider.future);
-    return _progressRepository.loadAndInitializeAll(routes);
+    final next = await _progressRepository.loadAndInitializeAll(routes);
+    await _maybeEmitStreakLost(previous: null, next: next);
+    return next;
   }
 
   Future<void> loadProgress() async {
+    final previous = state.valueOrNull;
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final routes = await ref.read(allRoutesProvider.future);
-      return _progressRepository.loadAndInitializeAll(routes);
+      final next = await _progressRepository.loadAndInitializeAll(routes);
+      await _maybeEmitStreakLost(previous: previous, next: next);
+      return next;
     });
   }
 
@@ -289,6 +329,8 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
         next.completedRouteIds.contains(result.routeId) &&
         !previousCompletedRoutes.contains(result.routeId);
 
+    await _maybeEmitStreakLost(previous: previous, next: next);
+
     return LessonProgressUpdate(
       progress: next,
       routeJustCompleted: routeJustCompleted,
@@ -308,12 +350,61 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     });
   }
 
+  Future<void> setPreferredLanguage(String? languageCode) async {
+    await ref
+        .read(languagePreferenceProvider.notifier)
+        .setLanguage(languageCode);
+    ref.invalidate(allRoutesProvider);
+  }
+
   Future<void> resetAllProgress() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final routes = await ref.read(allRoutesProvider.future);
       return _progressRepository.resetAll(routes: routes);
     });
+    await ref.read(languagePreferenceProvider.notifier).setLanguage(null);
+    await ref.read(habitNotificationsProvider.notifier).clearAll();
+    ref.invalidate(allRoutesProvider);
+  }
+
+  Future<void> _maybeEmitStreakLost({
+    required LearningProgressState? previous,
+    required LearningProgressState next,
+  }) async {
+    final droppedNow =
+        previous != null &&
+        previous.currentStreak > 0 &&
+        next.currentStreak == 0;
+    final expiredAtStartup =
+        previous == null &&
+        next.bestStreak > 0 &&
+        next.currentStreak == 0 &&
+        _isStreakExpired(next.lastStudyDate);
+    if (!droppedNow && !expiredAtStartup) return;
+
+    final now = DateTime.now();
+    final todayKey =
+        '${now.year.toString().padLeft(4, '0')}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString(_streakLostToastDateKey) == todayKey) return;
+    await prefs.setString(_streakLostToastDateKey, todayKey);
+
+    ref
+        .read(streakUiEventQueueProvider.notifier)
+        .enqueue(const StreakLostUiEvent());
+  }
+
+  bool _isStreakExpired(String? lastStudyDateIso) {
+    if (lastStudyDateIso == null || lastStudyDateIso.trim().isEmpty) {
+      return false;
+    }
+    final last = DateTime.tryParse(lastStudyDateIso);
+    if (last == null) return false;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final lastDay = DateTime(last.year, last.month, last.day);
+    return today.difference(lastDay).inDays > 1;
   }
 }
 
@@ -364,3 +455,52 @@ final badgeUiEventQueueProvider =
     NotifierProvider<BadgeUiEventQueueNotifier, List<BadgeUnlockUiEvent>>(
       BadgeUiEventQueueNotifier.new,
     );
+
+class StreakLostUiEvent {
+  const StreakLostUiEvent();
+}
+
+class StreakUiEventQueueNotifier extends Notifier<List<StreakLostUiEvent>> {
+  @override
+  List<StreakLostUiEvent> build() => const <StreakLostUiEvent>[];
+
+  void enqueue(StreakLostUiEvent event) {
+    state = [...state, event];
+  }
+
+  StreakLostUiEvent? consumeFirst() {
+    if (state.isEmpty) return null;
+    final first = state.first;
+    state = state.sublist(1);
+    return first;
+  }
+}
+
+final streakUiEventQueueProvider =
+    NotifierProvider<StreakUiEventQueueNotifier, List<StreakLostUiEvent>>(
+      StreakUiEventQueueNotifier.new,
+    );
+
+class LanguagePreferenceNotifier extends AsyncNotifier<String?> {
+  static const _key = 'preferred_language_code';
+
+  @override
+  Future<String?> build() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_key);
+    if (raw == null || raw.trim().isEmpty) return null;
+    return raw.trim().toLowerCase();
+  }
+
+  Future<void> setLanguage(String? code) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (code == null || code.trim().isEmpty) {
+      await prefs.remove(_key);
+      state = const AsyncData(null);
+      return;
+    }
+    final normalized = code.trim().toLowerCase();
+    await prefs.setString(_key, normalized);
+    state = AsyncData(normalized);
+  }
+}

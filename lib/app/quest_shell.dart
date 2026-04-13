@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/responsive/breakpoints.dart';
@@ -32,6 +33,7 @@ class _QuestShellState extends ConsumerState<QuestShell> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final progress = progressAsync.valueOrNull;
     if (progress != null) {
@@ -95,16 +97,16 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                             ?.copyWith(
                               color: Colors.white.withValues(alpha: 0.72),
                             ),
-                        destinations: const [
+                        destinations: [
                           NavigationRailDestination(
                             icon: Icon(Icons.explore_outlined),
                             selectedIcon: Icon(Icons.explore),
-                            label: Text('Home'),
+                            label: Text(l10n.homeTab),
                           ),
                           NavigationRailDestination(
                             icon: Icon(Icons.workspace_premium_outlined),
                             selectedIcon: Icon(Icons.workspace_premium),
-                            label: Text('Profile'),
+                            label: Text(l10n.profileTab),
                           ),
                         ],
                       ),
@@ -185,7 +187,7 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                                         horizontal: 3,
                                       ),
                                       child: _BottomNavItem(
-                                        label: 'Home',
+                                        label: l10n.homeTab,
                                         icon: Icons.explore_outlined,
                                         selectedIcon: Icons.explore,
                                         isSelected:
@@ -203,7 +205,7 @@ class _QuestShellState extends ConsumerState<QuestShell> {
                                         horizontal: 3,
                                       ),
                                       child: _BottomNavItem(
-                                        label: 'Profile',
+                                        label: l10n.profileTab,
                                         icon: Icons.workspace_premium_outlined,
                                         selectedIcon: Icons.workspace_premium,
                                         isSelected:
@@ -399,6 +401,7 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
   }
 
   Widget _buildWelcomeContent(BuildContext context, {required bool centered}) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: centered
           ? CrossAxisAlignment.center
@@ -418,7 +421,7 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
           const SizedBox(height: 24),
         ],
         Text(
-          '¡Bienvenido a\nFlutter Quest!',
+          l10n.welcomeTitle,
           textAlign: centered ? TextAlign.center : TextAlign.left,
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
             color: FQColors.primary,
@@ -428,7 +431,7 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
         ),
         const SizedBox(height: 16),
         Text(
-          'Tu viaje para dominar Dart y Flutter comienza aquí. ¡Prepárate para programar el futuro!',
+          l10n.welcomeSubtitle,
           textAlign: centered ? TextAlign.center : TextAlign.left,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: FQColors.onSurface.withValues(alpha: 0.76),
@@ -449,8 +452,8 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
                 Icons.person_rounded,
                 color: FQColors.outlineVariant,
               ),
-              labelText: 'DANOS TU NOMBRE',
-              hintText: 'Tu nombre aquí...',
+              labelText: l10n.nameInputLabel,
+              hintText: l10n.nameInputHint,
               filled: false,
               border: InputBorder.none,
               errorText: _error,
@@ -461,7 +464,7 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
         SizedBox(
           width: double.infinity,
           child: FQPrimaryButton(
-            label: _saving ? 'Guardando...' : 'Empezar',
+            label: _saving ? l10n.saveInProgress : l10n.startButton,
             icon: Icons.arrow_forward_rounded,
             onPressed: _saving ? null : _submit,
           ),
@@ -473,8 +476,9 @@ class _WelcomeNameFullscreenState extends State<_WelcomeNameFullscreen> {
   Future<void> _submit() async {
     final clean = _controller.text.trim().replaceAll(RegExp(r'\s+'), ' ');
     if (clean.isEmpty) {
+      final l10n = AppLocalizations.of(context)!;
       setState(() {
-        _error = 'Escribe un nombre para continuar.';
+        _error = l10n.nameRequiredError;
       });
       return;
     }

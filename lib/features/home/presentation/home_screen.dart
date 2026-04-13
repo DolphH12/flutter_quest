@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
@@ -327,9 +328,9 @@ class _RouteLoadWarning extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
                 '${entry.key}: ${entry.value}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: const Color(0xFF755700),
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: const Color(0xFF755700)),
               ),
             ),
         ],
@@ -477,6 +478,7 @@ class _OverviewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -510,7 +512,7 @@ class _OverviewHeader extends StatelessWidget {
             const SizedBox(width: 8),
             FQStatChip(
               icon: Icons.local_fire_department_rounded,
-              label: 'Streak',
+              label: l10n.streakLabel,
               value: '${progress.currentStreak}',
               accent: FQColors.tertiaryDark,
             ),

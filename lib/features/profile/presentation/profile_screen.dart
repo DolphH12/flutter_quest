@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 
 import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
@@ -15,6 +16,8 @@ import '../../learning/data/badge_catalog.dart';
 import '../../learning/models/learning_models.dart';
 import '../../learning/models/progress_view_models.dart';
 import '../../learning/state/app_state_providers.dart';
+import '../../notifications/models/habit_notification_settings.dart';
+import '../../notifications/state/habit_notifications_provider.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key, this.onAfterReset});
@@ -23,9 +26,13 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final routesAsync = ref.watch(allRoutesProvider);
     final progressAsync = ref.watch(appProgressNotifierProvider);
     final summary = ref.watch(profileSummaryProvider);
+    final preferredLanguage = ref.watch(preferredLanguageCodeProvider);
+    final effectiveLanguage = ref.watch(effectiveLanguageCodeProvider);
+    final notifications = ref.watch(habitNotificationsProvider);
 
     if (routesAsync.isLoading || progressAsync.isLoading || summary == null) {
       return const FQPageContainer(
@@ -37,7 +44,7 @@ class ProfileScreen extends ConsumerWidget {
       return FQPageContainer(
         child: Center(
           child: Text(
-            'No se pudo cargar el perfil.',
+            l10n.loadRoutesError,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
@@ -63,12 +70,24 @@ class ProfileScreen extends ConsumerWidget {
       child: ListView(
         children: [
           if (isDesktop)
-            _ProfileTopDesktop(summary: summary)
+            _ProfileTopDesktop(
+              summary: summary,
+              preferredLanguageCode: preferredLanguage,
+              onChanged: (value) => ref
+                  .read(appProgressNotifierProvider.notifier)
+                  .setPreferredLanguage(value),
+            )
           else
-            const FQHeader(
-              kicker: 'PLAYER PROFILE',
-              title: 'Profile',
-              subtitle: 'Your real learning progress, streak and achievements.',
+            FQHeader(
+              kicker: l10n.profileKicker,
+              title: l10n.profileTitle,
+              subtitle: l10n.profileSubtitle,
+              trailing: _LanguageMenuButton(
+                preferredLanguageCode: preferredLanguage,
+                onChanged: (value) => ref
+                    .read(appProgressNotifierProvider.notifier)
+                    .setPreferredLanguage(value),
+              ),
             ),
           const SizedBox(height: FQSpacing.lg),
           if (!isDesktop) _ProfileHero(summary: summary),
@@ -82,6 +101,29 @@ class ProfileScreen extends ConsumerWidget {
                 _BadgesSection(badges: badges),
                 _RecentActivity(progress: progress, routes: routes),
                 _DevResetSection(onReset: () => _confirmReset(context, ref)),
+                _NotificationsHabitSection(
+                  enabled:
+                      notifications.valueOrNull?.enabled ??
+                      HabitNotificationSettings.defaults.enabled,
+                  loading: notifications.isLoading,
+                  onChanged: (enabled) async {
+                    final result = await ref
+                        .read(habitNotificationsProvider.notifier)
+                        .setEnabled(
+                          enabled: enabled,
+                          progress: progress,
+                          languageCode: effectiveLanguage,
+                        );
+                    if (!context.mounted) return;
+                    if (result == NotificationToggleResult.permissionDenied) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l10n.notificationPermissionDenied),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ],
             )
           else ...[
@@ -92,6 +134,28 @@ class ProfileScreen extends ConsumerWidget {
             _RecentActivity(progress: progress, routes: routes),
             const SizedBox(height: FQSpacing.lg),
             _DevResetSection(onReset: () => _confirmReset(context, ref)),
+            const SizedBox(height: FQSpacing.lg),
+            _NotificationsHabitSection(
+              enabled:
+                  notifications.valueOrNull?.enabled ??
+                  HabitNotificationSettings.defaults.enabled,
+              loading: notifications.isLoading,
+              onChanged: (enabled) async {
+                final result = await ref
+                    .read(habitNotificationsProvider.notifier)
+                    .setEnabled(
+                      enabled: enabled,
+                      progress: progress,
+                      languageCode: effectiveLanguage,
+                    );
+                if (!context.mounted) return;
+                if (result == NotificationToggleResult.permissionDenied) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.notificationPermissionDenied)),
+                  );
+                }
+              },
+            ),
           ],
           const SizedBox(height: FQSpacing.xl),
         ],
@@ -116,25 +180,24 @@ class ProfileScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmReset(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Resetear progreso'),
-          content: const Text(
-            'Se borraran todos los datos locales: progreso, XP, streak, badges y nombre. Esta accion no se puede deshacer.',
-          ),
+          title: Text(l10n.resetDialogTitle),
+          content: Text(l10n.resetDialogBody),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancelar'),
+              child: Text(l10n.cancelButton),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFFC23737),
               ),
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Borrar todo'),
+              child: Text(l10n.deleteAllButton),
             ),
           ],
         );
@@ -147,20 +210,31 @@ class ProfileScreen extends ConsumerWidget {
 }
 
 class _ProfileTopDesktop extends StatelessWidget {
-  const _ProfileTopDesktop({required this.summary});
+  const _ProfileTopDesktop({
+    required this.summary,
+    required this.preferredLanguageCode,
+    required this.onChanged,
+  });
 
   final ProfileSummary summary;
+  final String? preferredLanguageCode;
+  final ValueChanged<String?> onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Expanded(
+        Expanded(
           child: FQHeader(
-            kicker: 'PLAYER PROFILE',
-            title: 'Profile',
-            subtitle: 'Your real learning progress and achievements.',
+            kicker: l10n.profileKicker,
+            title: l10n.profileTitle,
+            subtitle: l10n.profileSubtitleDesktop,
+            trailing: _LanguageMenuButton(
+              preferredLanguageCode: preferredLanguageCode,
+              onChanged: onChanged,
+            ),
           ),
         ),
         const SizedBox(width: 16),
@@ -177,6 +251,7 @@ class _ProfileHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final level = (summary.totalXp ~/ 120) + 1;
     return FQSurfaceCard(
       radius: FQRadius.xLarge,
@@ -219,7 +294,7 @@ class _ProfileHero extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Level $level · Dart Adventurer',
+                      l10n.levelAdventurer(level),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: Colors.white.withValues(alpha: 0.82),
                       ),
@@ -242,13 +317,13 @@ class _ProfileHero extends StatelessWidget {
               ),
               FQStatChip(
                 icon: Icons.local_fire_department_rounded,
-                label: 'Streak',
+                label: l10n.streakLabel,
                 value: '${summary.currentStreak}',
                 accent: const Color(0xFFFFDF70),
               ),
               FQStatChip(
                 icon: Icons.emoji_events_rounded,
-                label: 'Best',
+                label: l10n.bestLabel,
                 value: '${summary.bestStreak}',
                 accent: const Color(0xFFFFDF70),
               ),
@@ -268,14 +343,18 @@ class _StatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDesktop = FQBreakpoints.isDesktop(context);
+    final l10n = AppLocalizations.of(context)!;
     final cards = <Map<String, String>>[
       {
-        'label': 'Completed Lessons',
+        'label': l10n.completedLessons,
         'value': '${summary.completedLessonsCount}',
       },
-      {'label': 'Completed Routes', 'value': '${summary.completedRoutesCount}'},
-      {'label': 'Unlocked Badges', 'value': '${summary.unlockedBadgesCount}'},
-      {'label': 'Current Node', 'value': summary.currentNodeTitle},
+      {
+        'label': l10n.completedRoutes,
+        'value': '${summary.completedRoutesCount}',
+      },
+      {'label': l10n.unlockedBadges, 'value': '${summary.unlockedBadgesCount}'},
+      {'label': l10n.currentNode, 'value': summary.currentNodeTitle},
     ];
 
     return GridView.builder(
@@ -308,7 +387,7 @@ class _StatsGrid extends StatelessWidget {
               Text(
                 item['value']!,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontSize: item['label'] == 'Current Node'
+                  fontSize: item['label'] == l10n.currentNode
                       ? (isDesktop ? 17 : 20)
                       : (isDesktop ? 24 : 30),
                   height: 1.1,
@@ -356,6 +435,7 @@ class _RouteProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final routeProgress = progress.routeProgress(route.routeId);
     final examPassed = progress.completedNodeIds.contains(route.examNodeId);
     return FQSurfaceCard(
@@ -382,10 +462,10 @@ class _RouteProgressCard extends StatelessWidget {
           const SizedBox(height: 10),
           FQPill(
             label: examPassed
-                ? 'Final exam passed'
+                ? l10n.finalExamPassed
                 : (progress.unlockedExamIds.contains(route.examNodeId)
-                      ? 'Final exam unlocked'
-                      : 'Final exam locked'),
+                      ? l10n.finalExamUnlocked
+                      : l10n.finalExamLocked),
             icon: Icons.military_tech_rounded,
             color: examPassed
                 ? const Color(0xFFDFF7E8)
@@ -407,17 +487,18 @@ class _BadgesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FQSurfaceCard(
       radius: FQRadius.large,
       gradient: FQGradients.subtlePanel,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Badges', style: Theme.of(context).textTheme.titleLarge),
+          Text(l10n.badgesTitle, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 12),
           if (badges.isEmpty)
             Text(
-              'Aun no hay badges desbloqueados. Completa nodos para ganar logros.',
+              l10n.badgesEmpty,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: FQColors.onSurface.withValues(alpha: 0.66),
               ),
@@ -451,6 +532,7 @@ class _RecentActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final result = progress.lastLessonResult;
     String? nodeTitle;
     if (result != null) {
@@ -470,13 +552,13 @@ class _RecentActivity extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Recent Activity',
+            l10n.recentActivityTitle,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 10),
           if (result == null)
             Text(
-              'Todavia no tienes actividad registrada.',
+              l10n.noRecentActivity,
               style: Theme.of(context).textTheme.bodyMedium,
             )
           else
@@ -511,7 +593,7 @@ class _RecentActivity extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        '${nodeTitle ?? 'Leccion'} · ${result.passed ? 'Aprobado' : 'Reintentar'} · +${result.xpEarned} XP',
+                        '${nodeTitle ?? l10n.lessonFallbackTitle} · ${result.passed ? l10n.passedStatus : l10n.retryStatus} · +${result.xpEarned} XP',
                       ),
                     ),
                   ],
@@ -531,6 +613,7 @@ class _DevResetSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return FQSurfaceCard(
       radius: FQRadius.large,
       color: FQColors.surfaceHigh.withValues(alpha: 0.55),
@@ -538,14 +621,14 @@ class _DevResetSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Herramientas de desarrollo',
+            l10n.devToolsTitle,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: FQColors.onSurface.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Boton temporal para pruebas locales.',
+            l10n.devToolsSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: FQColors.onSurface.withValues(alpha: 0.65),
             ),
@@ -554,12 +637,135 @@ class _DevResetSection extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FQSecondaryButton(
-              label: 'Resetear progreso',
+              label: l10n.resetProgressButton,
               onPressed: onReset,
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _NotificationsHabitSection extends StatelessWidget {
+  const _NotificationsHabitSection({
+    required this.enabled,
+    required this.loading,
+    required this.onChanged,
+  });
+
+  final bool enabled;
+  final bool loading;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      gradient: FQGradients.subtlePanel,
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.habitReminderTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  l10n.habitReminderSubtitle,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: FQColors.onSurface.withValues(alpha: 0.72),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Switch.adaptive(
+            value: enabled,
+            onChanged: loading ? null : onChanged,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageMenuButton extends StatelessWidget {
+  const _LanguageMenuButton({
+    required this.preferredLanguageCode,
+    required this.onChanged,
+  });
+
+  final String? preferredLanguageCode;
+  final ValueChanged<String?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return PopupMenuButton<String?>(
+      tooltip: 'Language',
+      onSelected: onChanged,
+      shape: RoundedRectangleBorder(borderRadius: FQRadius.medium),
+      position: PopupMenuPosition.under,
+      itemBuilder: (context) => [
+        PopupMenuItem<String?>(
+          value: null,
+          child: _LanguageMenuItem(
+            label: 'Auto',
+            selected: preferredLanguageCode == null,
+          ),
+        ),
+        PopupMenuItem<String?>(
+          value: 'es',
+          child: _LanguageMenuItem(
+            label: 'Español',
+            selected: preferredLanguageCode == 'es',
+          ),
+        ),
+        PopupMenuItem<String?>(
+          value: 'en',
+          child: _LanguageMenuItem(
+            label: 'English',
+            selected: preferredLanguageCode == 'en',
+          ),
+        ),
+      ],
+      child: Container(
+        width: 44,
+        height: 44,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: FQColors.primary.withValues(alpha: 0.12),
+        ),
+        child: Icon(
+          Icons.language_rounded,
+          color: FQColors.primary,
+          semanticLabel: l10n.profileTitle,
+        ),
+      ),
+    );
+  }
+}
+
+class _LanguageMenuItem extends StatelessWidget {
+  const _LanguageMenuItem({required this.label, required this.selected});
+
+  final String label;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Text(label)),
+        if (selected)
+          const Icon(Icons.check_rounded, size: 18, color: FQColors.primary),
+      ],
     );
   }
 }

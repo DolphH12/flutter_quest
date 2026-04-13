@@ -88,7 +88,11 @@ int _requiredInt(Map<String, dynamic> json, String key, String error) {
   return raw.toInt();
 }
 
-bool _optionalBool(Map<String, dynamic> json, String key, {required bool fallback}) {
+bool _optionalBool(
+  Map<String, dynamic> json,
+  String key, {
+  required bool fallback,
+}) {
   final value = json[key];
   if (value is bool) return value;
   return fallback;
@@ -104,16 +108,8 @@ class MatchConceptPair {
     if (raw is! Map<String, dynamic>) {
       throw const FormatException('matchConcept requires pairs');
     }
-    final left = _requiredString(
-      raw,
-      'left',
-      'matchConcept requires pairs',
-    );
-    final right = _requiredString(
-      raw,
-      'right',
-      'matchConcept requires pairs',
-    );
+    final left = _requiredString(raw, 'left', 'matchConcept requires pairs');
+    final right = _requiredString(raw, 'right', 'matchConcept requires pairs');
     return MatchConceptPair(left: left, right: right);
   }
 
@@ -182,7 +178,10 @@ class DartRouteContent {
       estimatedMinutes: estimatedMinutes,
       examNodeId: examNodeId,
       nodes: rawNodes
-          .map((item) => LearningNodeContent.fromJson(item as Map<String, dynamic>))
+          .map(
+            (item) =>
+                LearningNodeContent.fromJson(item as Map<String, dynamic>),
+          )
           .toList(),
     );
   }
@@ -234,7 +233,11 @@ class LearningNodeContent {
       'node requires shortDescription',
     );
     final icon = _requiredString(json, 'icon', 'node requires icon');
-    final nodeType = _requiredString(json, 'nodeType', 'node requires nodeType');
+    final nodeType = _requiredString(
+      json,
+      'nodeType',
+      'node requires nodeType',
+    );
     if (nodeType != 'lesson' && nodeType != 'exam') {
       throw const FormatException('nodeType must be lesson or exam');
     }
@@ -384,7 +387,9 @@ class LessonStep {
       LessonStepType.matchConcept => _buildMatchConcept(json, id, type),
       LessonStepType.predictOutput => _buildPredictOutput(json, id, type),
       LessonStepType.guidedWriting => _buildGuidedWriting(json, id, type),
-      LessonStepType.unknown => throw const FormatException('unknown activity type'),
+      LessonStepType.unknown => throw const FormatException(
+        'unknown activity type',
+      ),
     };
   }
 
@@ -442,7 +447,11 @@ class LessonStep {
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
-      question: _requiredString(json, 'question', 'multipleChoice requires question'),
+      question: _requiredString(
+        json,
+        'question',
+        'multipleChoice requires question',
+      ),
       options: options,
       correctAnswer: correct,
       correctExplanation: _requiredString(
@@ -455,7 +464,11 @@ class LessonStep {
         'incorrectExplanation',
         'multipleChoice requires incorrectExplanation',
       ),
-      xpReward: _requiredInt(json, 'xpReward', 'multipleChoice requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        'multipleChoice requires xpReward',
+      ),
     );
   }
 
@@ -491,7 +504,11 @@ class LessonStep {
         '$errorPrefix requires incorrectExplanation',
       ),
       hint: json['hint'] == null ? null : _asString(json['hint']),
-      xpReward: _requiredInt(json, 'xpReward', '$errorPrefix requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        '$errorPrefix requires xpReward',
+      ),
     );
   }
 
@@ -526,7 +543,11 @@ class LessonStep {
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
-      prompt: _requiredString(json, 'prompt', 'orderCodeBlocks requires prompt'),
+      prompt: _requiredString(
+        json,
+        'prompt',
+        'orderCodeBlocks requires prompt',
+      ),
       blocks: blocks,
       correctOrder: correctOrder,
       correctExplanation: _requiredString(
@@ -539,7 +560,11 @@ class LessonStep {
         'incorrectExplanation',
         'orderCodeBlocks requires incorrectExplanation',
       ),
-      xpReward: _requiredInt(json, 'xpReward', 'orderCodeBlocks requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        'orderCodeBlocks requires xpReward',
+      ),
     );
   }
 
@@ -567,7 +592,11 @@ class LessonStep {
       id: id,
       type: type,
       shuffle: false,
-      prompt: _requiredString(json, 'prompt', 'findTheWrongLine requires prompt'),
+      prompt: _requiredString(
+        json,
+        'prompt',
+        'findTheWrongLine requires prompt',
+      ),
       codeLines: codeLines,
       wrongLineIndex: wrongLineIndex,
       correctExplanation: _requiredString(
@@ -580,7 +609,11 @@ class LessonStep {
         'incorrectExplanation',
         'findTheWrongLine requires incorrectExplanation',
       ),
-      xpReward: _requiredInt(json, 'xpReward', 'findTheWrongLine requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        'findTheWrongLine requires xpReward',
+      ),
     );
   }
 
@@ -615,7 +648,11 @@ class LessonStep {
         'incorrectExplanation',
         'matchConcept requires incorrectExplanation',
       ),
-      xpReward: _requiredInt(json, 'xpReward', 'matchConcept requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        'matchConcept requires xpReward',
+      ),
     );
   }
 
@@ -635,13 +672,19 @@ class LessonStep {
       'predictOutput requires options and correctAnswer',
     );
     if (!options.contains(correct)) {
-      throw const FormatException('predictOutput requires options and correctAnswer');
+      throw const FormatException(
+        'predictOutput requires options and correctAnswer',
+      );
     }
     return LessonStep(
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
-      question: _requiredString(json, 'question', 'predictOutput requires question'),
+      question: _requiredString(
+        json,
+        'question',
+        'predictOutput requires question',
+      ),
       codeSnippet: _requiredString(
         json,
         'codeSnippet',
@@ -659,7 +702,11 @@ class LessonStep {
         'incorrectExplanation',
         'predictOutput requires incorrectExplanation',
       ),
-      xpReward: _requiredInt(json, 'xpReward', 'predictOutput requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        'predictOutput requires xpReward',
+      ),
     );
   }
 
@@ -699,7 +746,11 @@ class LessonStep {
         'guidedWriting requires incorrectExplanation',
       ),
       hint: json['hint'] == null ? null : _asString(json['hint']),
-      xpReward: _requiredInt(json, 'xpReward', 'guidedWriting requires xpReward'),
+      xpReward: _requiredInt(
+        json,
+        'xpReward',
+        'guidedWriting requires xpReward',
+      ),
     );
   }
 }

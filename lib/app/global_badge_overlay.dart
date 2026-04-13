@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 
 import '../core/theme/fq_gradients.dart';
 import '../core/theme/fq_tokens.dart';
@@ -34,6 +35,14 @@ class _GlobalBadgeOverlayHostState
       final event = next.first;
       ref.read(badgeUiEventQueueProvider.notifier).consumeFirst();
       _showTopBadgeSnack(event);
+    });
+    ref.listen<List<StreakLostUiEvent>>(streakUiEventQueueProvider, (
+      previous,
+      next,
+    ) {
+      if (!mounted || next.isEmpty) return;
+      ref.read(streakUiEventQueueProvider.notifier).consumeFirst();
+      _showTopStreakLostSnack();
     });
     return widget.child;
   }
@@ -87,7 +96,11 @@ class _GlobalBadgeOverlayHostState
                             shape: BoxShape.circle,
                             color: Colors.white.withValues(alpha: 0.2),
                           ),
-                          child: Icon(event.icon, color: Colors.white, size: 18),
+                          child: Icon(
+                            event.icon,
+                            color: Colors.white,
+                            size: 18,
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Expanded(
@@ -96,10 +109,15 @@ class _GlobalBadgeOverlayHostState
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'Nueva insignia desbloqueada',
+                                AppLocalizations.of(
+                                      context,
+                                    )?.badgeUnlockedTitle ??
+                                    'New badge unlocked',
                                 style: Theme.of(context).textTheme.labelLarge
                                     ?.copyWith(
-                                      color: Colors.white.withValues(alpha: 0.9),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.9,
+                                      ),
                                     ),
                               ),
                               Text(
@@ -126,6 +144,91 @@ class _GlobalBadgeOverlayHostState
 
     overlayState.insert(_topSnackEntry!);
     _topSnackTimer = Timer(const Duration(milliseconds: 2600), () {
+      _topSnackEntry?.remove();
+      _topSnackEntry = null;
+    });
+  }
+
+  void _showTopStreakLostSnack() {
+    _topSnackTimer?.cancel();
+    _topSnackEntry?.remove();
+
+    final overlayState = rootNavigatorKey.currentState?.overlay;
+    if (overlayState == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _showTopStreakLostSnack();
+      });
+      return;
+    }
+
+    final navigatorContext = rootNavigatorKey.currentContext;
+    final topInset = navigatorContext == null
+        ? 0.0
+        : MediaQuery.of(navigatorContext).padding.top;
+
+    _topSnackEntry = OverlayEntry(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context);
+        return Positioned(
+          top: topInset + 10,
+          left: 0,
+          right: 0,
+          child: IgnorePointer(
+            ignoring: true,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 520),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: FQSurfaceCard(
+                    radius: FQRadius.large,
+                    color: const Color(0xFFC23737),
+                    useHighlightOverlay: false,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    shadow: FQShadows.floating,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 34,
+                          height: 34,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withValues(alpha: 0.2),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            '😢',
+                            style: TextStyle(fontSize: 17),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            l10n?.streakLostToast ?? 'You lost your streak 😢',
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    overlayState.insert(_topSnackEntry!);
+    _topSnackTimer = Timer(const Duration(milliseconds: 2800), () {
       _topSnackEntry?.remove();
       _topSnackEntry = null;
     });

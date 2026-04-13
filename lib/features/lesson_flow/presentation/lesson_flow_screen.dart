@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_quest/l10n/app_localizations.dart';
 
 import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
@@ -45,6 +46,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final session = ref.watch(lessonSessionProvider(widget.lesson));
     final activity = session.currentActivity;
 
@@ -142,7 +144,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
           SizedBox(
             width: double.infinity,
             child: FQPrimaryButton(
-              label: session.primaryLabel,
+              label: _primaryLabelFor(session, l10n),
               icon: Icons.arrow_forward_rounded,
               onPressed: _onPrimaryPressed,
             ),
@@ -199,6 +201,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
       _savingResult = true;
     });
     final result = resultData.result;
+    final l10n = AppLocalizations.of(context)!;
     final update = await ref
         .read(appProgressNotifierProvider.notifier)
         .completeLesson(result);
@@ -207,7 +210,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
 
     if (showRouteCelebration) {
       final routes = ref.read(allRoutesProvider).valueOrNull;
-      String routeTitle = 'Ruta';
+      String routeTitle = l10n.routeCompleted;
       if (routes != null) {
         for (final route in routes) {
           if (route.routeId == result.routeId) {
@@ -233,9 +236,34 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
   }
 
   void _showMessage(String message) {
+    final l10n = AppLocalizations.of(context)!;
+    final mappedMessage = switch (message) {
+      'Selecciona una opción para verificar.' => l10n.quizSelectOptionError,
+      'Selecciona la línea que consideras incorrecta.' =>
+        l10n.quizSelectWrongLineError,
+      'Elige la salida que esperas del código.' => l10n.quizSelectOutputError,
+      'Escribe una respuesta antes de verificar.' => l10n.quizFixInputError,
+      _ => message,
+    };
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ).showSnackBar(SnackBar(content: Text(mappedMessage)));
+  }
+
+  String _primaryLabelFor(LessonSessionState session, AppLocalizations l10n) {
+    final current = session.currentActivity;
+    if (current == null) return l10n.finishButton;
+    if (current.type == ActivityType.intro) {
+      if (session.activityIndex == session.lesson.activities.length - 1) {
+        return l10n.finishButton;
+      }
+      return l10n.continueButton;
+    }
+    if (!session.submitted) return l10n.verifyButton;
+    if (session.activityIndex == session.lesson.activities.length - 1) {
+      return l10n.finishButton;
+    }
+    return l10n.nextActivityButton;
   }
 }
 
@@ -619,6 +647,7 @@ class _LessonResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final result = data.result;
     final isSuccess = result.passed;
     final precision = result.totalAnswers == 0
@@ -643,7 +672,7 @@ class _LessonResultScreen extends StatelessWidget {
           ),
           const SizedBox(height: 28),
           Text(
-            isSuccess ? '¡Excelente trabajo!' : 'Sigue intentando',
+            isSuccess ? l10n.excellentWork : l10n.keepTrying,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.displaySmall?.copyWith(
               color: FQColors.deepNavy,
@@ -653,9 +682,7 @@ class _LessonResultScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            isSuccess
-                ? 'Has completado la lección con éxito.'
-                : 'No alcanzaste el puntaje requerido esta vez.',
+            isSuccess ? l10n.lessonSuccessSubtitle : l10n.lessonFailSubtitle,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: FQColors.onSurface.withValues(alpha: 0.78),
@@ -668,7 +695,7 @@ class _LessonResultScreen extends StatelessWidget {
               Expanded(
                 child: _MetricCard(
                   value: '+${result.xpEarned} XP',
-                  label: 'PUNTOS DE\nEXPERIENCIA',
+                  label: l10n.experiencePoints,
                   valueColor: FQColors.tertiaryDark,
                   icon: Icons.auto_awesome_rounded,
                 ),
@@ -677,7 +704,7 @@ class _LessonResultScreen extends StatelessWidget {
               Expanded(
                 child: _MetricCard(
                   value: '$precision%',
-                  label: 'PRECISIÓN',
+                  label: l10n.accuracyLabel,
                   valueColor: FQColors.deepNavy,
                   icon: Icons.timer_rounded,
                 ),
@@ -689,9 +716,7 @@ class _LessonResultScreen extends StatelessWidget {
             radius: FQRadius.xLarge,
             color: Colors.white.withValues(alpha: 0.9),
             child: Text(
-              isSuccess
-                  ? '"Tu racha de aprendizaje es impresionante. ¡Sigue así!"'
-                  : '"Cada intento te acerca al dominio. Ajusta y vuelve más fuerte."',
+              isSuccess ? l10n.resultQuoteSuccess : l10n.resultQuoteFail,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: FQColors.deepNavy,
@@ -705,7 +730,7 @@ class _LessonResultScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FQPrimaryButton(
-              label: saving ? 'Guardando...' : 'Continuar',
+              label: saving ? l10n.saveInProgress : l10n.continueButton,
               icon: Icons.arrow_forward_rounded,
               onPressed: saving ? null : onContinue,
             ),
@@ -715,7 +740,7 @@ class _LessonResultScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: FQSecondaryButton(
-                label: 'Repetir',
+                label: l10n.repeatButton,
                 onPressed: saving ? null : onRepeat,
               ),
             ),
