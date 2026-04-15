@@ -75,7 +75,7 @@ flutter analyze
 ## Open Source Model / Modelo Open Source
 
 This project uses:
-- `AGPL-3.0-only` as public open-source license [`LICENSE`](LICENSE.md).
+- `AGPL-3.0-only` as public open-source license [`LICENSE`](LICENSE).
 - Commercial licensing options [`LICENSE-COMMERCIAL.md`](LICENSE-COMMERCIAL.md).
 
 Any commercial usage outside AGPL obligations requires a commercial license.
