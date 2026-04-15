@@ -12,10 +12,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Flutter Quest';
 
   @override
-  String get homeTab => 'Home';
+  String get homeTab => 'Inicio';
 
   @override
-  String get profileTab => 'Profile';
+  String get profileTab => 'Perfil';
 
   @override
   String get routesAvailable => 'Rutas disponibles';
@@ -24,10 +24,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeSubtitle => 'Elige una ruta y sigue avanzando';
 
   @override
-  String get loadRoutesError => 'No se pudo cargar el contenido de las rutas.';
+  String get loadRoutesError =>
+      'No pudimos cargar el contenido de las rutas. Inténtalo de nuevo.';
 
   @override
-  String get loadPartialRoutesError => 'No se pudieron cargar algunas rutas';
+  String get loadPartialRoutesError => 'No pudimos cargar algunas rutas';
+
+  @override
+  String get loadPartialRoutesErrorWithColon =>
+      'No pudimos cargar algunas rutas:';
 
   @override
   String get routeLoadWarningTitle => 'Algunas rutas no cargaron';
@@ -51,6 +56,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lockedRouteTitle => 'Ruta bloqueada';
 
   @override
+  String get routeOpenErrorMessage =>
+      'No pudimos abrir esta ruta ahora. Inténtalo de nuevo.';
+
+  @override
+  String completeRouteToUnlock(String routeTitle) {
+    return 'Completa $routeTitle para desbloquear';
+  }
+
+  @override
+  String get completeRequiredRouteToUnlock =>
+      'Completa la ruta requerida para desbloquear';
+
+  @override
+  String completeRouteIdToUnlock(String routeId) {
+    return 'Completa $routeId para desbloquear esta ruta.';
+  }
+
+  @override
   String get backToHome => 'Volver al Home';
 
   @override
@@ -67,13 +90,93 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get welcomeSubtitle =>
-      'Tu viaje para dominar Dart y Flutter comienza aquí.';
+      'Tu viaje para dominar Dart y Flutter arranca aquí. Vamos paso a paso, sin drama y con mucho power.';
 
   @override
   String get nameInputLabel => 'DANOS TU NOMBRE';
 
   @override
   String get nameInputHint => 'Tu nombre aquí...';
+
+  @override
+  String get onboardingWelcomeTitle => 'Bienvenido a Flutter Quest';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Aprende Dart y Flutter con misiones cortas, feedback claro y progreso real.';
+
+  @override
+  String get onboardingRoutesTitle => 'Rutas';
+
+  @override
+  String get onboardingRoutesBody =>
+      'Cada ruta es un camino guiado. Empieza por Dart y luego desbloquea Flutter Foundations.';
+
+  @override
+  String get onboardingRoutesBodyGeneral =>
+      'Explora rutas temáticas y sube de nivel paso a paso. Hoy fundamentos, mañana builds legendarios.';
+
+  @override
+  String get onboardingNodesTitle => 'Nodos';
+
+  @override
+  String get onboardingNodesBody =>
+      'Cada nodo es una mini misión. Ganas una, desbloqueas la siguiente y mantienes el combo activo.';
+
+  @override
+  String get onboardingNodeCompletedLabel => 'Completado';
+
+  @override
+  String get onboardingNodeNextLabel => 'Siguiente';
+
+  @override
+  String get onboardingRewardsTitle => 'Recompensas';
+
+  @override
+  String get onboardingRewardsBody =>
+      'Cada lección completada te da XP, insignias y progreso real. Tu perfil se pone cada vez más pro.';
+
+  @override
+  String get onboardingStreakTitle => 'Racha';
+
+  @override
+  String get onboardingStreakBody =>
+      'Tu racha crece cada día que estudias. Si te saltas uno, vuelve a cero... pero siempre puedes volver más fuerte.';
+
+  @override
+  String get onboardingAllSetTitle => 'Todo listo';
+
+  @override
+  String get onboardingAllSetBody =>
+      'Todo listo. Entra, completa nodos y haz que Dart y Flutter jueguen a tu favor.';
+
+  @override
+  String get onboardingBackButton => 'Atrás';
+
+  @override
+  String get onboardingLanguageTitle => 'Elige idioma';
+
+  @override
+  String get languageAuto => 'Auto';
+
+  @override
+  String get languageSpanish => 'Español';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get onboardingRemindersTitle => 'Recordatorios diarios';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Activa recordatorios para proteger tu racha y mantener tu ritmo de aprendizaje.';
+
+  @override
+  String get onboardingEnableReminders => 'Activar recordatorios';
+
+  @override
+  String get onboardingSkipButton => 'Saltar';
 
   @override
   String get nameRequiredError => 'Escribe un nombre para continuar.';
@@ -100,10 +203,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lessonFallbackTitle => 'Lección';
 
   @override
-  String get feedbackFallbackTitle => 'Feedback';
+  String get feedbackFallbackTitle => 'Retroalimentación';
 
   @override
-  String get retryFeedback => 'Revisa tu respuesta e intenta de nuevo.';
+  String get retryFeedback => 'Revisa tu respuesta e inténtalo de nuevo.';
 
   @override
   String get excellentWork => '¡Excelente trabajo!';
@@ -167,7 +270,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get completedRoutes => 'Rutas completadas';
 
   @override
-  String get unlockedBadges => 'Badges desbloqueados';
+  String get unlockedBadges => 'Insignias desbloqueadas';
 
   @override
   String get currentNode => 'Nodo actual';
@@ -182,11 +285,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get finalExamLocked => 'Examen final bloqueado';
 
   @override
-  String get badgesTitle => 'Badges';
+  String get badgesTitle => 'Insignias';
 
   @override
   String get badgesEmpty =>
-      'Aún no hay badges desbloqueados. Completa nodos para ganar logros.';
+      'Aún no hay insignias desbloqueadas. Completa nodos para ganar logros.';
 
   @override
   String get recentActivityTitle => 'Actividad reciente';
@@ -207,7 +310,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get devToolsSubtitle => 'Botón temporal para pruebas locales.';
 
   @override
-  String get resetProgressButton => 'Resetear progreso';
+  String get resetProgressButton => 'Reiniciar progreso';
 
   @override
   String get habitReminderTitle => 'Recordatorios diarios';
@@ -218,10 +321,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notificationPermissionDenied =>
-      'Se requiere permiso de notificaciones para activar los recordatorios.';
+      'No pudimos activar los recordatorios sin permiso de notificaciones.';
 
   @override
-  String get resetDialogTitle => 'Resetear progreso';
+  String reminderTimeLabel(int hour, int minute) {
+    return 'Hora: $hour:$minute';
+  }
+
+  @override
+  String get resetDialogTitle => 'Reiniciar progreso';
 
   @override
   String get resetDialogBody =>
@@ -234,6 +342,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get deleteAllButton => 'Borrar todo';
 
   @override
+  String get initializationErrorTitle => 'No pudimos iniciar la app';
+
+  @override
+  String get retryButton => 'Reintentar';
+
+  @override
   String get nodeLockedBack => 'Nodo bloqueado · Volver';
 
   @override
@@ -241,6 +355,54 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get badgeUnlockedTitle => 'Nueva insignia desbloqueada';
+
+  @override
+  String get languageMenuTooltip => 'Idioma';
+
+  @override
+  String get backupSectionTitle => 'Respaldo del progreso';
+
+  @override
+  String get backupSectionSubtitle =>
+      'Exporta o importa tu progreso local para recuperar tu avance.';
+
+  @override
+  String get backupExportButton => 'Exportar';
+
+  @override
+  String get backupImportButton => 'Importar';
+
+  @override
+  String get backupExportSuccess => 'Progreso exportado correctamente';
+
+  @override
+  String backupExportError(String error) {
+    return 'No pudimos exportar el progreso: $error';
+  }
+
+  @override
+  String get backupImportTitle => 'Importar progreso';
+
+  @override
+  String get backupUnknownUser => 'N/A';
+
+  @override
+  String backupImportPreview(
+    String user,
+    int xp,
+    int routes,
+    String backupDate,
+  ) {
+    return 'Usuario: $user\\nXP: $xp\\nRutas completadas: $routes\\nBackup: $backupDate\\n\\nEsta acción sobrescribirá tus datos locales.';
+  }
+
+  @override
+  String get backupImportSuccess => 'Progreso importado correctamente';
+
+  @override
+  String backupImportError(String error) {
+    return 'No pudimos importar el respaldo: $error';
+  }
 
   @override
   String get streakLostToast => 'Perdiste la racha 😢';

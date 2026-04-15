@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +12,10 @@ class LocalProgressStore {
   factory LocalProgressStore() => _instance;
   static final LocalProgressStore _instance = LocalProgressStore._();
 
-  static const _progressKey = 'learning_progress_v2';
+  // Storage wrapper version for persisted progress payload.
+  // Keep this stable and migrate in `_decodeWithMigration`.
+  static const _progressKey = 'learning_progress_v3';
+  static const _schemaVersion = 3;
   static LearningProgressState? _memoryFallback;
 
   Future<LearningProgressState> load() async {
@@ -25,7 +30,7 @@ class LocalProgressStore {
         }
         return decayed;
       }
-      final decoded = LearningProgressState.decode(raw);
+      final decoded = _decodeWithMigration(raw);
       final decayed = _applyStreakDecay(decoded);
       if (decayed != decoded) {
         await save(decayed);
@@ -39,9 +44,14 @@ class LocalProgressStore {
 
   Future<void> save(LearningProgressState state) async {
     _memoryFallback = state;
+    final payload = jsonEncode({
+      'schemaVersion': _schemaVersion,
+      'savedAt': DateTime.now().toIso8601String(),
+      'progress': state.toJson(),
+    });
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_progressKey, state.encode());
+      await prefs.setString(_progressKey, payload);
     } on MissingPluginException {
       // Keep app functional when plugin bridge is unavailable.
     }
@@ -70,6 +80,14 @@ class LocalProgressStore {
     }
     final initial = LearningProgressState.initial();
     await save(initial);
+    return ensureRoutesInitialized(routes);
+  }
+
+  Future<LearningProgressState> importProgress({
+    required LearningProgressState imported,
+    required List<DartRouteContent> routes,
+  }) async {
+    await save(imported);
     return ensureRoutesInitialized(routes);
   }
 
@@ -340,6 +358,31 @@ class LocalProgressStore {
     if (difference <= 1) return state;
     if (state.currentStreak == 0) return state;
     return state.copyWith(currentStreak: 0);
+  }
+
+  LearningProgressState _decodeWithMigration(String raw) {
+    try {
+      final decodedRaw = jsonDecode(raw);
+      if (decodedRaw is Map<String, dynamic>) {
+        final version = decodedRaw['schemaVersion'];
+        if (version is num && decodedRaw['progress'] is Map<String, dynamic>) {
+          // Current wrapped format: {schemaVersion, savedAt, progress}
+          return LearningProgressState.fromJson(
+            decodedRaw['progress'] as Map<String, dynamic>,
+          );
+        }
+        // Legacy payload without wrapper.
+        return LearningProgressState.fromJson(decodedRaw);
+      }
+      throw const FormatException('Unexpected progress payload');
+    } catch (_) {
+      // Last fallback for very old/invalid payloads.
+      try {
+        return LearningProgressState.decode(raw);
+      } catch (_) {
+        return LearningProgressState.initial();
+      }
+    }
   }
 }
 

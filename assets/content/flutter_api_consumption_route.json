@@ -1,0 +1,2214 @@
+{
+  "routeId": "flutter_api_consumption_route",
+  "title": {
+    "es": "Consumo de APIs",
+    "en": "API Consumption"
+  },
+  "description": {
+    "es": "Aprende a consumir APIs en Flutter entendiendo requests, parsing, estados de carga, errores y arquitectura para datos remotos.",
+    "en": "Learn to consume APIs in Flutter by understanding requests, parsing, loading states, errors, and architecture for remote data."
+  },
+  "icon": "cloud_download",
+  "themeColor": "#006D77",
+  "version": 1,
+  "estimatedMinutes": 360,
+  "examNodeId": "api_final_exam",
+  "nodes": [
+    {
+      "id": "api_mental_model",
+      "title": {
+        "es": "Pensar una API antes de tocar código",
+        "en": "Thinking about an API before touching code"
+      },
+      "shortDescription": {
+        "es": "Entiende qué estás pidiendo, qué vuelve y cómo afecta a la UI.",
+        "en": "Understand what you are requesting, what comes back, and how it affects the UI."
+      },
+      "icon": "psychology",
+      "nodeType": "lesson",
+      "xpReward": 55,
+      "steps": [
+        {
+          "id": "api_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una API es una puerta a datos remotos",
+            "en": "An API is a door to remote data"
+          },
+          "body": {
+            "es": "Una API te permite pedir información a otro sistema. Tu app Flutter no inventa los datos: los solicita, espera una respuesta y luego decide qué mostrar. Es como pedir comida a domicilio: tú no cocinas el backend, pero sí decides cuándo pedir, qué hacer si se demora y dónde pones el plato.",
+            "en": "An API lets you request information from another system. Your Flutter app does not invent the data: it requests them, waits for a response, and then decides what to show. It is like ordering food delivery: you do not cook the backend, but you decide when to order, what to do if it is late, and where to place the plate."
+          },
+          "example": {
+            "es": "GET /products\n\n// Pides recursos.\n// El servidor responde con datos.",
+            "en": "GET /products\n\n// You request resources.\n// The server answers with data."
+          }
+        },
+        {
+          "id": "api_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Consumir una API no es solo pegar una URL",
+            "en": "Consuming an API is not just pasting a URL"
+          },
+          "body": {
+            "es": "También implica entender respuestas, errores, estados de carga y cómo transformar los datos para que tengan sentido en la interfaz. Si solo haces requests sin criterio, la app termina funcionando 'más o menos'... que es una forma elegante de decir 'con vibras y oración'.",
+            "en": "It also means understanding responses, errors, loading states, and how to transform data so they make sense in the UI. If you only make requests without judgment, the app ends up working 'more or less'... which is an elegant way to say 'with vibes and prayer'."
+          },
+          "example": {
+            "es": "loading -> success -> render\nloading -> error -> retry",
+            "en": "loading -> success -> render\nloading -> error -> retry"
+          }
+        },
+        {
+          "id": "api_intro_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué describe mejor el consumo de APIs en una app Flutter?",
+            "en": "What best describes API consumption in a Flutter app?"
+          },
+          "options": {
+            "es": [
+              "Pintar widgets sin datos",
+              "Pedir datos a un sistema externo y usarlos en la app",
+              "Crear bases de datos locales únicamente",
+              "Compilar la app más rápido"
+            ],
+            "en": [
+              "Painting widgets without data",
+              "Requesting data from an external system and using them in the app",
+              "Creating only local databases",
+              "Compiling the app faster"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Pedir datos a un sistema externo y usarlos en la app",
+            "en": "Requesting data from an external system and using them in the app"
+          },
+          "correctExplanation": {
+            "es": "Consumir una API significa obtener datos remotos y utilizarlos dentro de la app.",
+            "en": "Consuming an API means fetching remote data and using them inside the app."
+          },
+          "incorrectExplanation": {
+            "es": "No se trata solo de UI o compilación. Se trata de comunicación con un servicio remoto.",
+            "en": "It is not only about UI or compilation. It is about communication with a remote service."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "api_intro_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su significado",
+            "en": "Match each concept with its meaning"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "API",
+                "en": "API"
+              },
+              "right": {
+                "es": "Interfaz para intercambiar datos entre sistemas",
+                "en": "Interface to exchange data between systems"
+              }
+            },
+            {
+              "left": {
+                "es": "request",
+                "en": "request"
+              },
+              "right": {
+                "es": "Petición que envías al servidor",
+                "en": "Petition you send to the server"
+              }
+            },
+            {
+              "left": {
+                "es": "response",
+                "en": "response"
+              },
+              "right": {
+                "es": "Respuesta que devuelve el servidor",
+                "en": "Answer returned by the server"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Excelente base mental para empezar la ruta.",
+            "en": "Excellent mental foundation to start the route."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué envías, qué recibes y qué representa una API.",
+            "en": "Review what you send, what you receive, and what an API represents."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "api_intro_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué está intentando hacer esta línea?",
+            "en": "What is this line trying to do?"
+          },
+          "codeSnippet": {
+            "es": "final response = await client.get(Uri.parse(url));",
+            "en": "final response = await client.get(Uri.parse(url));"
+          },
+          "options": {
+            "es": [
+              "Pedir datos a una URL",
+              "Guardar datos en SQLite",
+              "Navegar a otra pantalla",
+              "Dibujar un botón"
+            ],
+            "en": [
+              "Request data from a URL",
+              "Store data in SQLite",
+              "Navigate to another screen",
+              "Draw a button"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Pedir datos a una URL",
+            "en": "Request data from a URL"
+          },
+          "correctExplanation": {
+            "es": "La línea hace una petición GET al recurso indicado por la URL.",
+            "en": "The line performs a GET request to the resource indicated by the URL."
+          },
+          "incorrectExplanation": {
+            "es": "Aquí no hay navegación ni almacenamiento local. Hay una petición HTTP.",
+            "en": "There is no navigation or local storage here. There is an HTTP request."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "api_http_basics",
+      "title": {
+        "es": "HTTP y códigos de estado",
+        "en": "HTTP and status codes"
+      },
+      "shortDescription": {
+        "es": "Aprende los verbos y señales básicas de una API real.",
+        "en": "Learn the basic verbs and signals of a real API."
+      },
+      "icon": "http",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "http_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "HTTP es el idioma básico de la conversación",
+            "en": "HTTP is the basic language of the conversation"
+          },
+          "body": {
+            "es": "Cuando tu app habla con una API, normalmente usa HTTP. Métodos como GET, POST, PUT y DELETE expresan intención. No es lo mismo pedir datos que crear un recurso. El verbo importa, y bastante.",
+            "en": "When your app talks to an API, it usually uses HTTP. Methods like GET, POST, PUT, and DELETE express intent. Requesting data is not the same as creating a resource. The verb matters, and quite a lot."
+          },
+          "example": {
+            "es": "GET /users\nPOST /users\nPUT /users/1\nDELETE /users/1",
+            "en": "GET /users\nPOST /users\nPUT /users/1\nDELETE /users/1"
+          }
+        },
+        {
+          "id": "http_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Los códigos de estado cuentan una historia",
+            "en": "Status codes tell a story"
+          },
+          "body": {
+            "es": "Un 200 suele significar que todo salió bien. Un 404 dice que el recurso no apareció. Un 500 te recuerda que el problema puede estar del otro lado. Saber leer esto te ayuda a no culpar al widget por pecados del servidor.",
+            "en": "A 200 usually means everything went well. A 404 says the resource did not show up. A 500 reminds you the problem may be on the other side. Knowing how to read this helps you avoid blaming the widget for the server's sins."
+          },
+          "example": {
+            "es": "200 OK\n404 Not Found\n500 Server Error",
+            "en": "200 OK\n404 Not Found\n500 Server Error"
+          }
+        },
+        {
+          "id": "http_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método HTTP se usa normalmente para pedir datos sin modificarlos?",
+            "en": "Which HTTP method is commonly used to fetch data without modifying it?"
+          },
+          "options": {
+            "es": [
+              "POST",
+              "GET",
+              "DELETE",
+              "PATCH"
+            ],
+            "en": [
+              "POST",
+              "GET",
+              "DELETE",
+              "PATCH"
+            ]
+          },
+          "correctAnswer": {
+            "es": "GET",
+            "en": "GET"
+          },
+          "correctExplanation": {
+            "es": "GET se usa normalmente para consultar recursos.",
+            "en": "GET is commonly used to retrieve resources."
+          },
+          "incorrectExplanation": {
+            "es": "POST crea o envía datos. Para consultar, el método típico es GET.",
+            "en": "POST creates or sends data. To fetch, the typical method is GET."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "http_code_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método para pedir una lista de productos.",
+            "en": "Complete the method to request a product list."
+          },
+          "initialCode": {
+            "es": "final response = await client._____(Uri.parse(url));",
+            "en": "final response = await client._____(Uri.parse(url));"
+          },
+          "expectedAnswer": {
+            "es": "get",
+            "en": "get"
+          },
+          "correctExplanation": {
+            "es": "Para consultar datos, aquí encaja get.",
+            "en": "To fetch data, get fits here."
+          },
+          "incorrectExplanation": {
+            "es": "La intención es consultar, no crear ni borrar. Debe ser get.",
+            "en": "The intention is to fetch, not create or delete. It must be get."
+          },
+          "hint": {
+            "es": "Es el verbo más usado para lectura.",
+            "en": "It is the most used verb for reading."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "http_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para verificar un estado exitoso.",
+            "en": "Fix the code to check for a successful status."
+          },
+          "initialCode": {
+            "es": "if (response.statusCode = 200) {\n  print('ok');\n}",
+            "en": "if (response.statusCode = 200) {\n  print('ok');\n}"
+          },
+          "expectedAnswer": {
+            "es": "if (response.statusCode == 200) {\n  print('ok');\n}",
+            "en": "if (response.statusCode == 200) {\n  print('ok');\n}"
+          },
+          "correctExplanation": {
+            "es": "Aquí necesitas comparar, no asignar.",
+            "en": "Here you need to compare, not assign."
+          },
+          "incorrectExplanation": {
+            "es": "El error es usar = en vez de == al revisar statusCode.",
+            "en": "The error is using = instead of == when checking statusCode."
+          },
+          "hint": {
+            "es": "Comparar no es asignar.",
+            "en": "Comparing is not assigning."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "http_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si una respuesta trae statusCode 404, ¿qué significa normalmente?",
+            "en": "If a response returns statusCode 404, what does it usually mean?"
+          },
+          "codeSnippet": {
+            "es": "print(response.statusCode); // 404",
+            "en": "print(response.statusCode); // 404"
+          },
+          "options": {
+            "es": [
+              "Éxito total",
+              "Recurso no encontrado",
+              "Error de tipado en Dart",
+              "La UI ya renderizó"
+            ],
+            "en": [
+              "Total success",
+              "Resource not found",
+              "Typing error in Dart",
+              "The UI already rendered"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Recurso no encontrado",
+            "en": "Resource not found"
+          },
+          "correctExplanation": {
+            "es": "404 suele indicar que el recurso pedido no fue encontrado.",
+            "en": "404 usually indicates the requested resource was not found."
+          },
+          "incorrectExplanation": {
+            "es": "No es éxito. Es una señal de que el recurso no apareció.",
+            "en": "It is not success. It is a signal that the resource did not appear."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "api_clients_requests",
+      "title": {
+        "es": "Cliente HTTP y primeras peticiones",
+        "en": "HTTP client and first requests"
+      },
+      "shortDescription": {
+        "es": "Haz requests correctamente sin pegar lógica de red por todos lados.",
+        "en": "Make requests correctly without pasting network logic everywhere."
+      },
+      "icon": "link",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "client_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Tu app necesita un cliente para pedir datos",
+            "en": "Your app needs a client to request data"
+          },
+          "body": {
+            "es": "En Flutter es común usar paquetes como http o dio. Ambos te ayudan a hacer requests, pero la idea clave es la misma: crear una petición, esperar una respuesta y procesarla con calma y criterio.",
+            "en": "In Flutter it is common to use packages like http or dio. Both help you make requests, but the key idea is the same: create a request, wait for a response, and process it calmly and with judgment."
+          },
+          "example": {
+            "es": "import 'package:http/http.dart' as http;\nfinal response = await http.get(...);",
+            "en": "import 'package:http/http.dart' as http;\nfinal response = await http.get(...);"
+          }
+        },
+        {
+          "id": "client_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "La petición vive fuera del widget tanto como sea posible",
+            "en": "The request should live outside the widget as much as possible"
+          },
+          "body": {
+            "es": "Sí, puedes disparar una request desde un widget, pero si mezclas demasiada red con UI, el código se vuelve pegajoso. Separar responsabilidades ayuda a que luego todo sea más fácil de mantener.",
+            "en": "Yes, you can trigger a request from a widget, but if you mix too much network code with UI, the code becomes sticky. Separating responsibilities helps make everything easier to maintain later."
+          },
+          "example": {
+            "es": "Widget -> repository -> api client",
+            "en": "Widget -> repository -> api client"
+          }
+        },
+        {
+          "id": "client_code_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el import típico del paquete http.",
+            "en": "Complete the typical import for the http package."
+          },
+          "initialCode": {
+            "es": "import 'package:_____/http.dart' as http;",
+            "en": "import 'package:_____/http.dart' as http;"
+          },
+          "expectedAnswer": {
+            "es": "http",
+            "en": "http"
+          },
+          "correctExplanation": {
+            "es": "Ese import corresponde al paquete http.",
+            "en": "That import corresponds to the http package."
+          },
+          "incorrectExplanation": {
+            "es": "La librería correcta es http.dart dentro del paquete http.",
+            "en": "The correct library is http.dart inside the http package."
+          },
+          "hint": {
+            "es": "Es el nombre del paquete también.",
+            "en": "It is the package name too."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "client_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea está mal en esta pequeña implementación?",
+            "en": "Which line is wrong in this small implementation?"
+          },
+          "codeLines": {
+            "es": [
+              "import 'package:http/http.dart' as http;",
+              "final response = await dio.get(url);",
+              "print(response.statusCode);"
+            ],
+            "en": [
+              "import 'package:http/http.dart' as http;",
+              "final response = await dio.get(url);",
+              "print(response.statusCode);"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "Se importó http, pero la línea intenta usar dio sin configurarlo.",
+            "en": "http was imported, but the line tries to use dio without configuring it."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta mezcla herramientas distintas sin consistencia.",
+            "en": "The wrong line mixes different tools without consistency."
+          },
+          "xpReward": 13
+        },
+        {
+          "id": "client_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada elemento con su responsabilidad",
+            "en": "Match each element with its responsibility"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "http package",
+                "en": "http package"
+              },
+              "right": {
+                "es": "Permite hacer requests HTTP simples",
+                "en": "Allows making simple HTTP requests"
+              }
+            },
+            {
+              "left": {
+                "es": "response.body",
+                "en": "response.body"
+              },
+              "right": {
+                "es": "Contiene el cuerpo de la respuesta",
+                "en": "Contains the response body"
+              }
+            },
+            {
+              "left": {
+                "es": "statusCode",
+                "en": "statusCode"
+              },
+              "right": {
+                "es": "Indica el resultado general de la petición",
+                "en": "Indicates the overall request result"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Ya estás entendiendo mejor la anatomía de una respuesta.",
+            "en": "Very good. You are understanding the anatomy of a response better."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué representa el cuerpo, el estado y la herramienta que hace la petición.",
+            "en": "Review what the body, the status, and the tool making the request represent."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "client_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe la parte esencial para hacer una petición GET con http.",
+            "en": "Write the essential part to make a GET request with http."
+          },
+          "starterCode": {
+            "es": "final response = await _____;",
+            "en": "final response = await _____;"
+          },
+          "expectedFragments": {
+            "es": [
+              "http.get",
+              "Uri.parse"
+            ],
+            "en": [
+              "http.get",
+              "Uri.parse"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La llamada base suele usar http.get junto con Uri.parse.",
+            "en": "The base call usually uses http.get together with Uri.parse."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir la llamada http.get y la construcción de la Uri.",
+            "en": "Your answer must include the http.get call and the Uri construction."
+          },
+          "hint": {
+            "es": "Piensa en paquete + método + Uri.",
+            "en": "Think package + method + Uri."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "api_json_parsing",
+      "title": {
+        "es": "JSON y parsing",
+        "en": "JSON and parsing"
+      },
+      "shortDescription": {
+        "es": "Decodifica respuestas y entiende la forma real de los datos.",
+        "en": "Decode responses and understand the real shape of data."
+      },
+      "icon": "data_object",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "json_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "La mayoría de APIs no te entregan widgets, te entregan JSON",
+            "en": "Most APIs do not return widgets, they return JSON"
+          },
+          "body": {
+            "es": "JSON es una estructura común para representar datos. Tu trabajo no termina cuando llega el response.body: apenas empieza. Ahora hay que decodificarlo y entender qué representa.",
+            "en": "JSON is a common structure for representing data. Your work does not end when response.body arrives: it is just beginning. Now you need to decode it and understand what it represents."
+          },
+          "example": {
+            "es": "{\"id\":1,\"title\":\"Curso\",\"price\":20}",
+            "en": "{\"id\":1,\"title\":\"Course\",\"price\":20}"
+          }
+        },
+        {
+          "id": "json_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Parsear no es adivinar",
+            "en": "Parsing is not guessing"
+          },
+          "body": {
+            "es": "Debes saber si recibes un objeto, una lista, campos opcionales o estructuras anidadas. Si asumes demasiado, el parsing te pasa factura. Y las facturas del parsing suelen llegar en producción, porque claro, es más emocionante.",
+            "en": "You must know whether you receive an object, a list, optional fields, or nested structures. If you assume too much, parsing charges you back. And parsing bills usually arrive in production, because of course, it is more exciting."
+          },
+          "example": {
+            "es": "final data = jsonDecode(response.body);",
+            "en": "final data = jsonDecode(response.body);"
+          }
+        },
+        {
+          "id": "json_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué función se usa normalmente para convertir un String JSON en una estructura Dart?",
+            "en": "Which function is usually used to convert a JSON String into a Dart structure?"
+          },
+          "options": {
+            "es": [
+              "jsonBuild",
+              "jsonDecode",
+              "parseWidget",
+              "httpDecode"
+            ],
+            "en": [
+              "jsonBuild",
+              "jsonDecode",
+              "parseWidget",
+              "httpDecode"
+            ]
+          },
+          "correctAnswer": {
+            "es": "jsonDecode",
+            "en": "jsonDecode"
+          },
+          "correctExplanation": {
+            "es": "jsonDecode transforma un string JSON en mapas o listas de Dart.",
+            "en": "jsonDecode transforms a JSON string into Dart maps or lists."
+          },
+          "incorrectExplanation": {
+            "es": "La función típica de decodificación es jsonDecode.",
+            "en": "The typical decoding function is jsonDecode."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "json_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa la función que decodifica el body.",
+            "en": "Complete the function that decodes the body."
+          },
+          "initialCode": {
+            "es": "final data = _____(response.body);",
+            "en": "final data = _____(response.body);"
+          },
+          "expectedAnswer": {
+            "es": "jsonDecode",
+            "en": "jsonDecode"
+          },
+          "correctExplanation": {
+            "es": "Esa es la función estándar para decodificar JSON en Dart.",
+            "en": "That is the standard function to decode JSON in Dart."
+          },
+          "incorrectExplanation": {
+            "es": "Debes usar jsonDecode para transformar el body a una estructura usable.",
+            "en": "You must use jsonDecode to transform the body into a usable structure."
+          },
+          "hint": {
+            "es": "Viene de dart:convert.",
+            "en": "It comes from dart:convert."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "json_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si el body contiene una lista JSON, ¿qué tipo de estructura suele devolverte jsonDecode?",
+            "en": "If the body contains a JSON list, what type of structure does jsonDecode usually return?"
+          },
+          "codeSnippet": {
+            "es": "final data = jsonDecode('[1,2,3]');",
+            "en": "final data = jsonDecode('[1,2,3]');"
+          },
+          "options": {
+            "es": [
+              "List dinámica",
+              "String puro",
+              "Widget",
+              "Future"
+            ],
+            "en": [
+              "Dynamic List",
+              "Pure String",
+              "Widget",
+              "Future"
+            ]
+          },
+          "correctAnswer": {
+            "es": "List dinámica",
+            "en": "Dynamic List"
+          },
+          "correctExplanation": {
+            "es": "Una lista JSON se decodifica normalmente como una List dinámica.",
+            "en": "A JSON list is usually decoded as a dynamic List."
+          },
+          "incorrectExplanation": {
+            "es": "No se queda como String ni se convierte mágicamente en widget.",
+            "en": "It does not stay as a String nor magically become a widget."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "json_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para decodificar desde response.body y no desde response.",
+            "en": "Fix the code to decode from response.body and not from response."
+          },
+          "initialCode": {
+            "es": "final data = jsonDecode(response);",
+            "en": "final data = jsonDecode(response);"
+          },
+          "expectedAnswer": {
+            "es": "final data = jsonDecode(response.body);",
+            "en": "final data = jsonDecode(response.body);"
+          },
+          "correctExplanation": {
+            "es": "jsonDecode espera el contenido del body como texto.",
+            "en": "jsonDecode expects the body content as text."
+          },
+          "incorrectExplanation": {
+            "es": "El error es pasar el objeto response entero en vez del body.",
+            "en": "The error is passing the whole response object instead of the body."
+          },
+          "hint": {
+            "es": "Piensa en el texto JSON real.",
+            "en": "Think about the actual JSON text."
+          },
+          "xpReward": 14
+        }
+      ]
+    },
+    {
+      "id": "api_models_mapping",
+      "title": {
+        "es": "Modelos y mapeo",
+        "en": "Models and mapping"
+      },
+      "shortDescription": {
+        "es": "Transforma JSON crudo en objetos claros y mantenibles.",
+        "en": "Transform raw JSON into clear and maintainable objects."
+      },
+      "icon": "badge",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "model_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Mapas crudos sirven para arrancar, no para vivir ahí",
+            "en": "Raw maps help you start, not live there"
+          },
+          "body": {
+            "es": "Puedes leer datos como Map<String, dynamic>, pero en apps reales conviene convertirlos a modelos. Eso da claridad, autocompletado, validación mental y menos magia rara distribuida por la app.",
+            "en": "You can read data as Map<String, dynamic>, but in real apps it is better to convert them into models. That gives clarity, autocomplete, mental validation, and less strange magic spread across the app."
+          },
+          "example": {
+            "es": "Product.fromJson(json)\nproduct.title",
+            "en": "Product.fromJson(json)\nproduct.title"
+          }
+        },
+        {
+          "id": "model_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "fromJson y toJson son tus traductores",
+            "en": "fromJson and toJson are your translators"
+          },
+          "body": {
+            "es": "El servidor te habla en JSON. Tu app quiere objetos con propiedades claras. Un constructor fromJson ayuda a cruzar ese puente con menos caos y más intención.",
+            "en": "The server speaks JSON to you. Your app wants objects with clear properties. A fromJson constructor helps cross that bridge with less chaos and more intent."
+          },
+          "example": {
+            "es": "factory Product.fromJson(Map<String, dynamic> json) { ... }",
+            "en": "factory Product.fromJson(Map<String, dynamic> json) { ... }"
+          }
+        },
+        {
+          "id": "model_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe los fragmentos esenciales de un factory fromJson para Product.",
+            "en": "Write the essential fragments of a factory fromJson for Product."
+          },
+          "starterCode": {
+            "es": "class Product {\n  final String title;\n\n  _____\n}",
+            "en": "class Product {\n  final String title;\n\n  _____\n}"
+          },
+          "expectedFragments": {
+            "es": [
+              "factory Product.fromJson",
+              "json['title']"
+            ],
+            "en": [
+              "factory Product.fromJson",
+              "json['title']"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Muy bien. Ese patrón ayuda a transformar JSON en objetos claros.",
+            "en": "Very good. That pattern helps transform JSON into clear objects."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir el factory fromJson y la lectura del campo title.",
+            "en": "Your answer must include the factory fromJson and the reading of the title field."
+          },
+          "hint": {
+            "es": "Piensa en constructor + mapa.",
+            "en": "Think constructor + map."
+          },
+          "xpReward": 18
+        },
+        {
+          "id": "model_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo correcto para transformar JSON en modelo.",
+            "en": "Order the correct flow to transform JSON into model."
+          },
+          "blocks": {
+            "es": [
+              "render product.title",
+              "jsonDecode(response.body)",
+              "Product.fromJson(data)"
+            ],
+            "en": [
+              "render product.title",
+              "jsonDecode(response.body)",
+              "Product.fromJson(data)"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "jsonDecode(response.body)",
+              "Product.fromJson(data)",
+              "render product.title"
+            ],
+            "en": [
+              "jsonDecode(response.body)",
+              "Product.fromJson(data)",
+              "render product.title"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Primero decodificas, luego modelas y finalmente renderizas.",
+            "en": "First you decode, then model, and finally render."
+          },
+          "incorrectExplanation": {
+            "es": "El orden lógico va de texto JSON a modelo y luego a UI.",
+            "en": "The logical order goes from JSON text to model and then to UI."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        },
+        {
+          "id": "model_wrong_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea está mal en este modelo?",
+            "en": "Which line is wrong in this model?"
+          },
+          "codeLines": {
+            "es": [
+              "factory Product.fromJson(Map<String, dynamic> json) {",
+              "  return Product(title: json[title]);",
+              "}"
+            ],
+            "en": [
+              "factory Product.fromJson(Map<String, dynamic> json) {",
+              "  return Product(title: json[title]);",
+              "}"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "El key del mapa debe ser un string literal: json['title'].",
+            "en": "The map key must be a string literal: json['title']."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta usa title sin comillas como si fuera variable.",
+            "en": "The wrong line uses title without quotes as if it were a variable."
+          },
+          "xpReward": 13
+        },
+        {
+          "id": "model_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada pieza con su rol",
+            "en": "Match each piece with its role"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Map<String, dynamic>",
+                "en": "Map<String, dynamic>"
+              },
+              "right": {
+                "es": "Representa datos JSON decodificados",
+                "en": "Represents decoded JSON data"
+              }
+            },
+            {
+              "left": {
+                "es": "fromJson",
+                "en": "fromJson"
+              },
+              "right": {
+                "es": "Convierte mapa en modelo",
+                "en": "Converts map into model"
+              }
+            },
+            {
+              "left": {
+                "es": "model",
+                "en": "model"
+              },
+              "right": {
+                "es": "Objeto con estructura clara en la app",
+                "en": "Object with clear structure in the app"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Excelente. Ya no estás viendo solo mapas sueltos.",
+            "en": "Excellent. You are no longer seeing only loose maps."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué es el mapa, qué hace fromJson y qué aporta un modelo.",
+            "en": "Review what the map is, what fromJson does, and what a model adds."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "api_lists_collections",
+      "title": {
+        "es": "Listas remotas y colecciones",
+        "en": "Remote lists and collections"
+      },
+      "shortDescription": {
+        "es": "Trabaja con respuestas que traen múltiples elementos.",
+        "en": "Work with responses that return multiple items."
+      },
+      "icon": "view_list",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "list_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Muchas APIs responden listas, no un único objeto",
+            "en": "Many APIs return lists, not a single object"
+          },
+          "body": {
+            "es": "Cuando recibes una colección, debes decodificarla, recorrerla y mapear cada elemento a tu modelo. Aquí es donde una app empieza a sentirse real: ya no muestras una tarjeta, muestras una colección completa.",
+            "en": "When you receive a collection, you must decode it, iterate it, and map each element to your model. This is where an app starts to feel real: you no longer show one card, you show a whole collection."
+          },
+          "example": {
+            "es": "[{\"id\":1,\"title\":\"A\"},{\"id\":2,\"title\":\"B\"}]",
+            "en": "[{\"id\":1,\"title\":\"A\"},{\"id\":2,\"title\":\"B\"}]"
+          }
+        },
+        {
+          "id": "list_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Mapear una lista no es opcional si quieres orden mental",
+            "en": "Mapping a list is not optional if you want mental order"
+          },
+          "body": {
+            "es": "Sí, podrías usar mapas dinámicos por todos lados. También podrías guardar cucharas en el teclado. Pero construir una lista de modelos te da consistencia y menos errores al renderizar.",
+            "en": "Yes, you could use dynamic maps everywhere. You could also store spoons on the keyboard. But building a list of models gives you consistency and fewer rendering errors."
+          },
+          "example": {
+            "es": "final products = data.map((e) => Product.fromJson(e)).toList();",
+            "en": "final products = data.map((e) => Product.fromJson(e)).toList();"
+          }
+        },
+        {
+          "id": "list_code_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa la llamada que convierte el iterable en lista.",
+            "en": "Complete the call that turns the iterable into a list."
+          },
+          "initialCode": {
+            "es": "final products = data.map((e) => Product.fromJson(e))._____();",
+            "en": "final products = data.map((e) => Product.fromJson(e))._____();"
+          },
+          "expectedAnswer": {
+            "es": "toList",
+            "en": "toList"
+          },
+          "correctExplanation": {
+            "es": "Después de map, toList materializa la colección final.",
+            "en": "After map, toList materializes the final collection."
+          },
+          "incorrectExplanation": {
+            "es": "El flujo típico termina en toList para obtener una lista real.",
+            "en": "The typical flow ends in toList to obtain a real list."
+          },
+          "hint": {
+            "es": "Piensa en 'convertir a lista'.",
+            "en": "Think about 'convert to list'."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "list_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué representa products después de este mapeo?",
+            "en": "What does products represent after this mapping?"
+          },
+          "codeSnippet": {
+            "es": "final products = data.map((e) => Product.fromJson(e)).toList();",
+            "en": "final products = data.map((e) => Product.fromJson(e)).toList();"
+          },
+          "options": {
+            "es": [
+              "Una lista de Product",
+              "Un solo Product",
+              "Un Widget de Flutter",
+              "Una petición HTTP nueva"
+            ],
+            "en": [
+              "A list of Product",
+              "A single Product",
+              "A Flutter Widget",
+              "A new HTTP request"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una lista de Product",
+            "en": "A list of Product"
+          },
+          "correctExplanation": {
+            "es": "Cada elemento se transformó en Product y luego se reunió en una lista.",
+            "en": "Each element was transformed into Product and then gathered into a list."
+          },
+          "incorrectExplanation": {
+            "es": "No es un solo objeto ni un widget. Es una colección de modelos.",
+            "en": "It is not a single object nor a widget. It is a collection of models."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "list_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el tipo esperado para una respuesta de lista.",
+            "en": "Fix the expected type for a list response."
+          },
+          "initialCode": {
+            "es": "final Map<String, dynamic> data = jsonDecode(response.body);",
+            "en": "final Map<String, dynamic> data = jsonDecode(response.body);"
+          },
+          "expectedAnswer": {
+            "es": "final List<dynamic> data = jsonDecode(response.body);",
+            "en": "final List<dynamic> data = jsonDecode(response.body);"
+          },
+          "correctExplanation": {
+            "es": "Si la respuesta es una lista JSON, el tipo base debe ser List.",
+            "en": "If the response is a JSON list, the base type must be List."
+          },
+          "incorrectExplanation": {
+            "es": "El error es asumir mapa cuando en realidad llega una colección.",
+            "en": "The error is assuming a map when a collection actually arrives."
+          },
+          "hint": {
+            "es": "Piensa en [ ] y no en { }.",
+            "en": "Think in [ ] and not in { }."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "list_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método suele usarse para transformar cada elemento de una lista JSON en un modelo?",
+            "en": "Which method is usually used to transform each element of a JSON list into a model?"
+          },
+          "options": {
+            "es": [
+              "where",
+              "map",
+              "fold",
+              "contains"
+            ],
+            "en": [
+              "where",
+              "map",
+              "fold",
+              "contains"
+            ]
+          },
+          "correctAnswer": {
+            "es": "map",
+            "en": "map"
+          },
+          "correctExplanation": {
+            "es": "map transforma cada elemento de la colección.",
+            "en": "map transforms each element of the collection."
+          },
+          "incorrectExplanation": {
+            "es": "Aquí no estás filtrando ni acumulando: estás transformando. Eso lo hace map.",
+            "en": "Here you are not filtering or accumulating: you are transforming. map does that."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "api_ui_states",
+      "title": {
+        "es": "Loading, error y success",
+        "en": "Loading, error, and success"
+      },
+      "shortDescription": {
+        "es": "Aprende a representar visualmente el ciclo de vida de una petición.",
+        "en": "Learn to visually represent the lifecycle of a request."
+      },
+      "icon": "hourglass_top",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "state_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una petición remota siempre necesita contexto visual",
+            "en": "A remote request always needs visual context"
+          },
+          "body": {
+            "es": "La UI no puede actuar como si todo llegara instantáneamente. Mientras esperas, debes mostrar loading. Si falla, debes mostrar error. Si llega, renderizas los datos. Esa triada es una de las bases más importantes del consumo de APIs.",
+            "en": "The UI cannot act as if everything arrived instantly. While you wait, you should show loading. If it fails, you should show an error. If it arrives, you render the data. That triad is one of the most important foundations of API consumption."
+          },
+          "example": {
+            "es": "loading / error / success",
+            "en": "loading / error / success"
+          }
+        },
+        {
+          "id": "state_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "El peor estado visual es el silencio",
+            "en": "The worst visual state is silence"
+          },
+          "body": {
+            "es": "Una pantalla en blanco sin explicación le dice al usuario: 'algo pasó, pero ni yo sé qué'. Mejor un loading claro, un error entendible y un retry digno que una interfaz muda con cara de inocencia.",
+            "en": "A blank screen without explanation tells the user: 'something happened, but even I do not know what'. Better a clear loading, an understandable error, and a dignified retry than a mute interface pretending innocence."
+          },
+          "example": {
+            "es": "if (isLoading) ...\nif (hasError) ...\nif (data != null) ...",
+            "en": "if (isLoading) ...\nif (hasError) ...\nif (data != null) ..."
+          }
+        },
+        {
+          "id": "state_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada estado con lo que la UI debería hacer",
+            "en": "Match each state with what the UI should do"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "loading",
+                "en": "loading"
+              },
+              "right": {
+                "es": "Mostrar progreso o espera",
+                "en": "Show progress or waiting"
+              }
+            },
+            {
+              "left": {
+                "es": "error",
+                "en": "error"
+              },
+              "right": {
+                "es": "Mostrar fallo y opción de reintento",
+                "en": "Show failure and retry option"
+              }
+            },
+            {
+              "left": {
+                "es": "success",
+                "en": "success"
+              },
+              "right": {
+                "es": "Renderizar datos",
+                "en": "Render data"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Esa triada sostiene mucha UI real.",
+            "en": "Very good. That triad supports a lot of real UI."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué debe ver el usuario cuando esperas, fallas o tienes datos.",
+            "en": "Review what the user should see when waiting, failing, or having data."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "state_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe los fragmentos esenciales para mostrar loading y luego una lista.",
+            "en": "Write the essential fragments to show loading and then a list."
+          },
+          "starterCode": {
+            "es": "if (_____ ) {\n  return const CircularProgressIndicator();\n}\nreturn ListView(...);",
+            "en": "if (_____ ) {\n  return const CircularProgressIndicator();\n}\nreturn ListView(...);"
+          },
+          "expectedFragments": {
+            "es": [
+              "isLoading"
+            ],
+            "en": [
+              "isLoading"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La condición de carga permite mostrar feedback mientras llegan los datos.",
+            "en": "The loading condition allows showing feedback while data arrives."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe activar el bloque de loading con una condición clara.",
+            "en": "Your answer must activate the loading block with a clear condition."
+          },
+          "hint": {
+            "es": "Piensa en la variable booleana del estado.",
+            "en": "Think about the boolean state variable."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "state_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si hasError es true, ¿qué sería lo más sano mostrar?",
+            "en": "If hasError is true, what would be the healthiest thing to show?"
+          },
+          "codeSnippet": {
+            "es": "if (hasError) { ... }",
+            "en": "if (hasError) { ... }"
+          },
+          "options": {
+            "es": [
+              "Una UI de error con retry",
+              "Nada y cruzar dedos",
+              "La misma data vieja sin decir nada",
+              "Cerrar la app"
+            ],
+            "en": [
+              "An error UI with retry",
+              "Nothing and cross fingers",
+              "The same old data without saying anything",
+              "Close the app"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una UI de error con retry",
+            "en": "An error UI with retry"
+          },
+          "correctExplanation": {
+            "es": "Un error claro con acción de reintento ayuda mucho más que el silencio.",
+            "en": "A clear error with a retry action helps much more than silence."
+          },
+          "incorrectExplanation": {
+            "es": "La mejor respuesta no es ocultar el problema, sino comunicarlo bien.",
+            "en": "The best response is not to hide the problem, but to communicate it well."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "state_wrong_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea refleja una mala práctica visual aquí?",
+            "en": "Which line reflects a bad visual practice here?"
+          },
+          "codeLines": {
+            "es": [
+              "if (isLoading) return const CircularProgressIndicator();",
+              "if (hasError) return const Text('Algo salió mal');",
+              "if (hasError) return const SizedBox.shrink();"
+            ],
+            "en": [
+              "if (isLoading) return const CircularProgressIndicator();",
+              "if (hasError) return const Text('Something went wrong');",
+              "if (hasError) return const SizedBox.shrink();"
+            ]
+          },
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "Ocultar el error deja al usuario sin contexto. Mejor comunicarlo.",
+            "en": "Hiding the error leaves the user without context. Better to communicate it."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que silencia el fallo en vez de explicarlo.",
+            "en": "The wrong line is the one that silences the failure instead of explaining it."
+          },
+          "xpReward": 13
+        }
+      ]
+    },
+    {
+      "id": "api_architecture",
+      "title": {
+        "es": "Arquitectura para datos remotos",
+        "en": "Architecture for remote data"
+      },
+      "shortDescription": {
+        "es": "Organiza la lógica de consumo para que escale con menos caos.",
+        "en": "Organize consumption logic so it scales with less chaos."
+      },
+      "icon": "account_tree",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "arch_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una app sana no hace requests por todas partes",
+            "en": "A healthy app does not make requests everywhere"
+          },
+          "body": {
+            "es": "Conviene separar capas: datasource para hablar con la API, repository para decidir cómo exponer datos y UI para mostrarlos. Así el proyecto crece sin convertirse en un festival de llamadas pegadas en widgets aleatorios.",
+            "en": "It is wise to separate layers: datasource to talk to the API, repository to decide how to expose data, and UI to display them. That way the project grows without becoming a festival of calls stuck in random widgets."
+          },
+          "example": {
+            "es": "UI -> Repository -> RemoteDataSource",
+            "en": "UI -> Repository -> RemoteDataSource"
+          }
+        },
+        {
+          "id": "arch_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Acoplar la red al widget sale caro",
+            "en": "Coupling network code to the widget is expensive"
+          },
+          "body": {
+            "es": "Sí, al inicio parece rápido meter todo en el mismo archivo. Luego quieres reutilizar, probar, cambiar proveedor o manejar errores mejor... y ese atajo te pasa factura. Separar desde antes te ahorra dolor después.",
+            "en": "Yes, at the beginning it seems quick to put everything in the same file. Later you want to reuse, test, change provider, or handle errors better... and that shortcut charges you back. Separating early saves pain later."
+          },
+          "example": {
+            "es": "HomeScreen -> ProductRepository -> ProductApi",
+            "en": "HomeScreen -> ProductRepository -> ProductApi"
+          }
+        },
+        {
+          "id": "arch_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena las capas desde la UI hasta la fuente remota.",
+            "en": "Order the layers from the UI to the remote source."
+          },
+          "blocks": {
+            "es": [
+              "RemoteDataSource",
+              "UI",
+              "Repository"
+            ],
+            "en": [
+              "RemoteDataSource",
+              "UI",
+              "Repository"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "UI",
+              "Repository",
+              "RemoteDataSource"
+            ],
+            "en": [
+              "UI",
+              "Repository",
+              "RemoteDataSource"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La UI pide, el repository organiza y el datasource consulta.",
+            "en": "The UI asks, the repository organizes, and the datasource queries."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en quién muestra, quién coordina y quién habla con la API.",
+            "en": "Think about who shows, who coordinates, and who speaks with the API."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "arch_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué capa debería conocer directamente la URL o detalles HTTP?",
+            "en": "Which layer should directly know the URL or HTTP details?"
+          },
+          "options": {
+            "es": [
+              "UI",
+              "RemoteDataSource",
+              "Widget de loading",
+              "ThemeData"
+            ],
+            "en": [
+              "UI",
+              "RemoteDataSource",
+              "Loading widget",
+              "ThemeData"
+            ]
+          },
+          "correctAnswer": {
+            "es": "RemoteDataSource",
+            "en": "RemoteDataSource"
+          },
+          "correctExplanation": {
+            "es": "La capa remota suele encapsular detalles de red y endpoints.",
+            "en": "The remote layer usually encapsulates network details and endpoints."
+          },
+          "incorrectExplanation": {
+            "es": "La UI no debería cargar con detalles HTTP si quieres un diseño más limpio.",
+            "en": "The UI should not carry HTTP details if you want a cleaner design."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige este enfoque para mover la lógica remota fuera del widget.",
+            "en": "Fix this approach to move remote logic out of the widget."
+          },
+          "initialCode": {
+            "es": "class HomeScreen extends StatelessWidget {\n  Future<List<Product>> load() async => api.fetchProducts();\n}",
+            "en": "class HomeScreen extends StatelessWidget {\n  Future<List<Product>> load() async => api.fetchProducts();\n}"
+          },
+          "expectedAnswer": {
+            "es": "class ProductRepository {\n  Future<List<Product>> load() async => api.fetchProducts();\n}",
+            "en": "class ProductRepository {\n  Future<List<Product>> load() async => api.fetchProducts();\n}"
+          },
+          "correctExplanation": {
+            "es": "Mover esa lógica a una capa dedicada mejora organización y escalabilidad.",
+            "en": "Moving that logic to a dedicated layer improves organization and scalability."
+          },
+          "incorrectExplanation": {
+            "es": "La idea es sacar responsabilidad de red del widget hacia una capa más estable.",
+            "en": "The idea is to move network responsibility out of the widget into a more stable layer."
+          },
+          "hint": {
+            "es": "Piensa en repositorio.",
+            "en": "Think repository."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "arch_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada capa con su rol",
+            "en": "Match each layer with its role"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "UI",
+                "en": "UI"
+              },
+              "right": {
+                "es": "Muestra datos y estados al usuario",
+                "en": "Displays data and states to the user"
+              }
+            },
+            {
+              "left": {
+                "es": "Repository",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Expone datos listos para la app",
+                "en": "Exposes data ready for the app"
+              }
+            },
+            {
+              "left": {
+                "es": "RemoteDataSource",
+                "en": "RemoteDataSource"
+              },
+              "right": {
+                "es": "Hace las peticiones a la API",
+                "en": "Makes requests to the API"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Excelente. Ya estás pensando en arquitectura, no solo en requests.",
+            "en": "Excellent. You are thinking about architecture, not only about requests."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa quién muestra, quién organiza y quién llama a la red.",
+            "en": "Review who shows, who organizes, and who calls the network."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "api_async_ui",
+      "title": {
+        "es": "FutureBuilder y UI asíncrona",
+        "en": "FutureBuilder and asynchronous UI"
+      },
+      "shortDescription": {
+        "es": "Conecta datos remotos con estados visuales asincrónicos.",
+        "en": "Connect remote data with asynchronous visual states."
+      },
+      "icon": "sync",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "async_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Consumir APIs es trabajo asíncrono por naturaleza",
+            "en": "Consuming APIs is asynchronous work by nature"
+          },
+          "body": {
+            "es": "La respuesta no llega al instante. Por eso aparecen herramientas como Future, FutureBuilder, AsyncValue o providers asíncronos. Tu trabajo es abrazar esa realidad, no fingir que internet funciona con telepatía.",
+            "en": "The response does not arrive instantly. That is why tools like Future, FutureBuilder, AsyncValue, or asynchronous providers appear. Your job is to embrace that reality, not pretend the internet works by telepathy."
+          },
+          "example": {
+            "es": "Future<List<Product>> loadProducts()",
+            "en": "Future<List<Product>> loadProducts()"
+          }
+        },
+        {
+          "id": "async_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "FutureBuilder resuelve una parte, no toda la arquitectura",
+            "en": "FutureBuilder solves a part, not the whole architecture"
+          },
+          "body": {
+            "es": "FutureBuilder puede ser útil para casos simples, pero no sustituye una buena separación de responsabilidades. Es una herramienta de UI, no una excusa para meterlo todo en un mismo rincón.",
+            "en": "FutureBuilder can be useful for simple cases, but it does not replace a good separation of responsibilities. It is a UI tool, not an excuse to put everything in the same corner."
+          },
+          "example": {
+            "es": "FutureBuilder(\n  future: repository.load(),\n  builder: ...\n)",
+            "en": "FutureBuilder(\n  future: repository.load(),\n  builder: ...\n)"
+          }
+        },
+        {
+          "id": "async_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué widget de Flutter suele ayudar a renderizar un Future en UI simple?",
+            "en": "Which Flutter widget usually helps render a Future in simple UI?"
+          },
+          "options": {
+            "es": [
+              "FutureBuilder",
+              "ListTile",
+              "Hero",
+              "Expanded"
+            ],
+            "en": [
+              "FutureBuilder",
+              "ListTile",
+              "Hero",
+              "Expanded"
+            ]
+          },
+          "correctAnswer": {
+            "es": "FutureBuilder",
+            "en": "FutureBuilder"
+          },
+          "correctExplanation": {
+            "es": "FutureBuilder permite reaccionar visualmente al estado de un Future.",
+            "en": "FutureBuilder allows reacting visually to the state of a Future."
+          },
+          "incorrectExplanation": {
+            "es": "Entre estas opciones, el widget pensado para ese caso es FutureBuilder.",
+            "en": "Among these options, the widget designed for that case is FutureBuilder."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "async_code_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el widget que recibe future y builder.",
+            "en": "Complete the widget that receives future and builder."
+          },
+          "initialCode": {
+            "es": "return _____(\n  future: repository.loadProducts(),\n  builder: (context, snapshot) => ...,\n);",
+            "en": "return _____(\n  future: repository.loadProducts(),\n  builder: (context, snapshot) => ...,\n);"
+          },
+          "expectedAnswer": {
+            "es": "FutureBuilder",
+            "en": "FutureBuilder"
+          },
+          "correctExplanation": {
+            "es": "Ese constructor corresponde al patrón clásico de FutureBuilder.",
+            "en": "That constructor corresponds to the classic FutureBuilder pattern."
+          },
+          "incorrectExplanation": {
+            "es": "El widget que recibe future y builder es FutureBuilder.",
+            "en": "The widget that receives future and builder is FutureBuilder."
+          },
+          "hint": {
+            "es": "Piensa en 'builder para Future'.",
+            "en": "Think 'builder for Future'."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "async_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si snapshot.hasError es true en FutureBuilder, ¿qué debería hacer tu UI?",
+            "en": "If snapshot.hasError is true in FutureBuilder, what should your UI do?"
+          },
+          "codeSnippet": {
+            "es": "if (snapshot.hasError) { ... }",
+            "en": "if (snapshot.hasError) { ... }"
+          },
+          "options": {
+            "es": [
+              "Mostrar error y opción de reintento",
+              "Ignorarlo y seguir",
+              "Asumir que ya hay datos",
+              "Cerrar la app"
+            ],
+            "en": [
+              "Show error and retry option",
+              "Ignore it and continue",
+              "Assume there is data already",
+              "Close the app"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Mostrar error y opción de reintento",
+            "en": "Show error and retry option"
+          },
+          "correctExplanation": {
+            "es": "Si el Future falló, la UI debe reflejarlo con claridad.",
+            "en": "If the Future failed, the UI should reflect it clearly."
+          },
+          "incorrectExplanation": {
+            "es": "No conviene ignorar el error ni fingir éxito.",
+            "en": "It is not wise to ignore the error nor pretend success."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "async_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe los fragmentos esenciales para leer snapshot.data en un FutureBuilder.",
+            "en": "Write the essential fragments to read snapshot.data in a FutureBuilder."
+          },
+          "starterCode": {
+            "es": "if (snapshot.hasData) {\n  final items = _____;\n  return ListView(...);\n}",
+            "en": "if (snapshot.hasData) {\n  final items = _____;\n  return ListView(...);\n}"
+          },
+          "expectedFragments": {
+            "es": [
+              "snapshot.data"
+            ],
+            "en": [
+              "snapshot.data"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Muy bien. Esa es la fuente típica de datos resueltos dentro del builder.",
+            "en": "Very good. That is the typical source of resolved data inside the builder."
+          },
+          "incorrectExplanation": {
+            "es": "Debes usar snapshot.data para obtener el resultado del Future.",
+            "en": "You must use snapshot.data to obtain the Future result."
+          },
+          "hint": {
+            "es": "Piensa en el resultado resuelto del snapshot.",
+            "en": "Think about the resolved result of the snapshot."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "api_reliability_security",
+      "title": {
+        "es": "Headers, timeouts y criterio real",
+        "en": "Headers, timeouts, and real-world judgment"
+      },
+      "shortDescription": {
+        "es": "Consume APIs con más madurez y menos ingenuidad.",
+        "en": "Consume APIs with more maturity and less naïveté."
+      },
+      "icon": "security",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "security_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una API real no siempre es pública",
+            "en": "A real API is not always public"
+          },
+          "body": {
+            "es": "Muchas APIs requieren headers, tokens o claves. También debes cuidar timeouts, validaciones y no exponer secretos donde no debes. Aquí no se trata de paranoia: se trata de no publicar llaves en la puerta y sorprenderte después.",
+            "en": "Many APIs require headers, tokens, or keys. You should also care about timeouts, validations, and not exposing secrets where you should not. This is not paranoia: it is about not leaving keys on the door and being surprised later."
+          },
+          "example": {
+            "es": "headers: {'Authorization': 'Bearer ...'}",
+            "en": "headers: {'Authorization': 'Bearer ...'}"
+          }
+        },
+        {
+          "id": "security_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No todo error es técnico: algunos son de estrategia",
+            "en": "Not every error is technical: some are strategic"
+          },
+          "body": {
+            "es": "Guardar claves sensibles en el cliente sin pensar es una mala idea. También lo es asumir que una respuesta siempre llegará perfecta. Esta etapa te enseña a mirar el consumo de APIs con un poco más de madurez.",
+            "en": "Storing sensitive keys in the client without thinking is a bad idea. So is assuming a response will always arrive perfectly. This stage teaches you to look at API consumption with a bit more maturity."
+          },
+          "example": {
+            "es": "timeout, headers, fallback, validation",
+            "en": "timeout, headers, fallback, validation"
+          }
+        },
+        {
+          "id": "security_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su intención",
+            "en": "Match each concept with its intention"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "headers",
+                "en": "headers"
+              },
+              "right": {
+                "es": "Enviar metadatos como autenticación",
+                "en": "Send metadata such as authentication"
+              }
+            },
+            {
+              "left": {
+                "es": "timeout",
+                "en": "timeout"
+              },
+              "right": {
+                "es": "Evitar esperar indefinidamente",
+                "en": "Avoid waiting forever"
+              }
+            },
+            {
+              "left": {
+                "es": "API key expuesta",
+                "en": "Exposed API key"
+              },
+              "right": {
+                "es": "Riesgo de seguridad",
+                "en": "Security risk"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Ya estás viendo el consumo con ojos más de producto real.",
+            "en": "Very good. You are seeing consumption with more real-product eyes."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa para qué sirven headers y timeout, y por qué exponer claves es riesgoso.",
+            "en": "Review what headers and timeout are for, and why exposing keys is risky."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "security_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué problema hay en dejar una API key sensible visible directamente en el código cliente?",
+            "en": "What is the problem with leaving a sensitive API key visible directly in client code?"
+          },
+          "options": {
+            "es": [
+              "Ninguno, es normal",
+              "Puede exponerse y ser usada por terceros",
+              "Hace la app más rápida",
+              "Mejora el parseo JSON"
+            ],
+            "en": [
+              "None, it is normal",
+              "It can be exposed and used by third parties",
+              "It makes the app faster",
+              "It improves JSON parsing"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Puede exponerse y ser usada por terceros",
+            "en": "It can be exposed and used by third parties"
+          },
+          "correctExplanation": {
+            "es": "Exponer claves sensibles en el cliente puede comprometer el servicio.",
+            "en": "Exposing sensitive keys in the client can compromise the service."
+          },
+          "incorrectExplanation": {
+            "es": "No mejora rendimiento ni parsing. Es un riesgo de seguridad.",
+            "en": "It does not improve performance nor parsing. It is a security risk."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "security_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el snippet para incluir headers correctamente en la petición.",
+            "en": "Fix the snippet to include headers correctly in the request."
+          },
+          "initialCode": {
+            "es": "await http.get(Uri.parse(url));\nfinal token = 'abc';",
+            "en": "await http.get(Uri.parse(url));\nfinal token = 'abc';"
+          },
+          "expectedAnswer": {
+            "es": "await http.get(\n  Uri.parse(url),\n  headers: {'Authorization': 'Bearer abc'},\n);",
+            "en": "await http.get(\n  Uri.parse(url),\n  headers: {'Authorization': 'Bearer abc'},\n);"
+          },
+          "correctExplanation": {
+            "es": "Los headers deben viajar junto con la petición.",
+            "en": "Headers must travel together with the request."
+          },
+          "incorrectExplanation": {
+            "es": "La petición original ignora el token. Debes enviarlo dentro de headers.",
+            "en": "The original request ignores the token. You must send it inside headers."
+          },
+          "hint": {
+            "es": "Piensa en Authorization.",
+            "en": "Think Authorization."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "security_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué problema intenta prevenir un timeout?",
+            "en": "What problem does a timeout try to prevent?"
+          },
+          "codeSnippet": {
+            "es": "await client.get(uri).timeout(Duration(seconds: 10));",
+            "en": "await client.get(uri).timeout(Duration(seconds: 10));"
+          },
+          "options": {
+            "es": [
+              "Esperar indefinidamente",
+              "Cambiar el JSON",
+              "Agregar navegación",
+              "Generar modelos automáticamente"
+            ],
+            "en": [
+              "Waiting forever",
+              "Changing the JSON",
+              "Adding navigation",
+              "Generating models automatically"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Esperar indefinidamente",
+            "en": "Waiting forever"
+          },
+          "correctExplanation": {
+            "es": "El timeout evita que la petición se quede colgada demasiado tiempo.",
+            "en": "The timeout prevents the request from hanging for too long."
+          },
+          "incorrectExplanation": {
+            "es": "No cambia los datos; controla el tiempo de espera.",
+            "en": "It does not change the data; it controls wait time."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "api_final_exam",
+      "title": {
+        "es": "Examen Final APIs",
+        "en": "Final API Exam"
+      },
+      "shortDescription": {
+        "es": "Valida tu criterio para pedir, transformar y mostrar datos remotos.",
+        "en": "Validate your judgment for requesting, transforming, and showing remote data."
+      },
+      "icon": "workspace_premium",
+      "nodeType": "exam",
+      "xpReward": 160,
+      "steps": [
+        {
+          "id": "exam_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Llegó la hora de conectar todas las piezas",
+            "en": "Time to connect all the pieces has arrived"
+          },
+          "body": {
+            "es": "En este examen ya no basta con saber qué hace GET o qué es jsonDecode. Ahora toca unir request, parsing, modelos, estados visuales y arquitectura. O sea: menos memoria suelta, más criterio real.",
+            "en": "In this exam it is not enough to know what GET does or what jsonDecode is. Now you need to connect request, parsing, models, visual states, and architecture. That means: less loose memory, more real judgment."
+          },
+          "example": {
+            "es": "request -> response -> decode -> model -> UI",
+            "en": "request -> response -> decode -> model -> UI"
+          }
+        },
+        {
+          "id": "exam_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué función se usa para convertir response.body en una estructura Dart?",
+            "en": "Which function is used to convert response.body into a Dart structure?"
+          },
+          "options": {
+            "es": [
+              "jsonPaint",
+              "jsonDecode",
+              "toWidget",
+              "futureMap"
+            ],
+            "en": [
+              "jsonPaint",
+              "jsonDecode",
+              "toWidget",
+              "futureMap"
+            ]
+          },
+          "correctAnswer": {
+            "es": "jsonDecode",
+            "en": "jsonDecode"
+          },
+          "correctExplanation": {
+            "es": "jsonDecode es la función estándar para interpretar JSON.",
+            "en": "jsonDecode is the standard function to interpret JSON."
+          },
+          "incorrectExplanation": {
+            "es": "La correcta es jsonDecode.",
+            "en": "The correct one is jsonDecode."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "exam_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si response.statusCode es 500, ¿qué indica normalmente?",
+            "en": "If response.statusCode is 500, what does it usually indicate?"
+          },
+          "codeSnippet": {
+            "es": "print(response.statusCode); // 500",
+            "en": "print(response.statusCode); // 500"
+          },
+          "options": {
+            "es": [
+              "Todo bien",
+              "Error del servidor",
+              "Lista vacía",
+              "Éxito parcial"
+            ],
+            "en": [
+              "Everything is fine",
+              "Server error",
+              "Empty list",
+              "Partial success"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Error del servidor",
+            "en": "Server error"
+          },
+          "correctExplanation": {
+            "es": "500 suele representar un fallo del lado del servidor.",
+            "en": "500 usually represents a server-side failure."
+          },
+          "incorrectExplanation": {
+            "es": "No es un éxito. Es una señal de error del servidor.",
+            "en": "It is not success. It is a server error signal."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "exam_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige este parsing para una respuesta de lista JSON.",
+            "en": "Fix this parsing for a JSON list response."
+          },
+          "initialCode": {
+            "es": "final Map<String, dynamic> data = jsonDecode(response.body);",
+            "en": "final Map<String, dynamic> data = jsonDecode(response.body);"
+          },
+          "expectedAnswer": {
+            "es": "final List<dynamic> data = jsonDecode(response.body);",
+            "en": "final List<dynamic> data = jsonDecode(response.body);"
+          },
+          "correctExplanation": {
+            "es": "Si la respuesta es una lista JSON, el tipo base correcto es List.",
+            "en": "If the response is a JSON list, the correct base type is List."
+          },
+          "incorrectExplanation": {
+            "es": "Se asumió un mapa cuando la respuesta es una colección.",
+            "en": "A map was assumed when the response is a collection."
+          },
+          "hint": {
+            "es": "Piensa en corchetes.",
+            "en": "Think in brackets."
+          },
+          "xpReward": 20
+        },
+        {
+          "id": "exam_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo correcto de consumo de API.",
+            "en": "Order the correct API consumption flow."
+          },
+          "blocks": {
+            "es": [
+              "Renderizar en la UI",
+              "Decodificar JSON",
+              "Hacer request",
+              "Mapear a modelo"
+            ],
+            "en": [
+              "Render in the UI",
+              "Decode JSON",
+              "Make request",
+              "Map to model"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "Hacer request",
+              "Decodificar JSON",
+              "Mapear a modelo",
+              "Renderizar en la UI"
+            ],
+            "en": [
+              "Make request",
+              "Decode JSON",
+              "Map to model",
+              "Render in the UI"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Ese es el recorrido sano de los datos desde la red hasta la pantalla.",
+            "en": "That is the healthy path of data from the network to the screen."
+          },
+          "incorrectExplanation": {
+            "es": "Primero llega la respuesta, luego se transforma y al final se muestra.",
+            "en": "First the response arrives, then it is transformed, and finally it is shown."
+          },
+          "xpReward": 20,
+          "shuffle": true
+        },
+        {
+          "id": "exam_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada capa o concepto con su rol",
+            "en": "Match each layer or concept with its role"
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Repository",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Expone datos listos para la app",
+                "en": "Exposes data ready for the app"
+              }
+            },
+            {
+              "left": {
+                "es": "FutureBuilder",
+                "en": "FutureBuilder"
+              },
+              "right": {
+                "es": "Ayuda a renderizar un Future en UI",
+                "en": "Helps render a Future in UI"
+              }
+            },
+            {
+              "left": {
+                "es": "fromJson",
+                "en": "fromJson"
+              },
+              "right": {
+                "es": "Convierte mapas en modelos",
+                "en": "Converts maps into models"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Buen cierre. Ya estás conectando arquitectura, UI y parsing.",
+            "en": "Good closing. You are connecting architecture, UI, and parsing."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa quién organiza datos, quién renderiza async y quién construye modelos.",
+            "en": "Review who organizes data, who renders async, and who builds models."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "exam_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe los fragmentos esenciales para cargar productos y mostrar loading en Flutter.",
+            "en": "Write the essential fragments to load products and show loading in Flutter."
+          },
+          "starterCode": {
+            "es": "FutureBuilder(\n  future: repository._____,\n  builder: (context, snapshot) {\n    if (_____) {\n      return const CircularProgressIndicator();\n    }\n    return ListView(...);\n  },\n)",
+            "en": "FutureBuilder(\n  future: repository._____,\n  builder: (context, snapshot) {\n    if (_____) {\n      return const CircularProgressIndicator();\n    }\n    return ListView(...);\n  },\n)"
+          },
+          "expectedFragments": {
+            "es": [
+              "loadProducts()",
+              "snapshot.connectionState"
+            ],
+            "en": [
+              "loadProducts()",
+              "snapshot.connectionState"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Muy bien. Esa estructura ya piensa en carga real y UI reactiva.",
+            "en": "Very good. That structure already thinks in real loading and reactive UI."
+          },
+          "incorrectExplanation": {
+            "es": "Debes completar tanto la carga como la condición de espera.",
+            "en": "You must complete both the loading call and the waiting condition."
+          },
+          "hint": {
+            "es": "Piensa en future + estado del snapshot.",
+            "en": "Think future + snapshot state."
+          },
+          "xpReward": 22
+        },
+        {
+          "id": "exam_summary",
+          "type": "intro",
+          "title": {
+            "es": "Cierre de ruta",
+            "en": "Route closing"
+          },
+          "body": {
+            "es": "Si llegaste hasta aquí, ya no ves una API como una caja negra misteriosa. Ahora la ves como un flujo que se pide, se interpreta, se modela y se muestra con intención. Y eso ya es un salto grande.",
+            "en": "If you made it here, you no longer see an API as a mysterious black box. Now you see it as a flow that is requested, interpreted, modeled, and shown with intention. And that is already a big leap."
+          },
+          "example": {
+            "es": "Siguiente nivel: combinar esto con estado, caché, autenticación o tiempo real.",
+            "en": "Next level: combine this with state, cache, authentication, or real-time data."
+          }
+        }
+      ]
+    }
+  ]
+}

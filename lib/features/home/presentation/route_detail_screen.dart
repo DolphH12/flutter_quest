@@ -10,6 +10,7 @@ import '../../../core/theme/fq_tokens.dart';
 import '../../../core/widgets/fq_chips.dart';
 import '../../../core/widgets/fq_page_container.dart';
 import '../../../core/widgets/fq_progress_bar.dart';
+import '../../../core/widgets/fq_state_views.dart';
 import '../../../core/widgets/fq_surface_card.dart';
 import '../../learning/data/route_progress_mapper.dart';
 import '../../learning/models/learning_models.dart';
@@ -29,8 +30,15 @@ class RouteDetailScreen extends ConsumerWidget {
     final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
     final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
     if (route == null || progress == null) {
-      return const FQPageContainer(
-        child: Center(child: CircularProgressIndicator()),
+      return FQPageContainer(
+        child: Center(
+          child: FQErrorState(
+            title: l10n.loadRoutesError,
+            message: l10n.routeOpenErrorMessage,
+            primaryActionLabel: l10n.backToHome,
+            onPrimaryAction: () => context.go('/home'),
+          ),
+        ),
       );
     }
 
@@ -53,7 +61,7 @@ class RouteDetailScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Completa $requirement para desbloquear esta ruta.',
+                  l10n.completeRouteIdToUnlock(requirement),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),

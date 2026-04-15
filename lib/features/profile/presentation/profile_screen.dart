@@ -11,6 +11,7 @@ import '../../../core/widgets/fq_chips.dart';
 import '../../../core/widgets/fq_header.dart';
 import '../../../core/widgets/fq_page_container.dart';
 import '../../../core/widgets/fq_progress_bar.dart';
+import '../../../core/widgets/fq_state_views.dart';
 import '../../../core/widgets/fq_surface_card.dart';
 import '../../learning/data/badge_catalog.dart';
 import '../../learning/models/learning_models.dart';
@@ -43,9 +44,13 @@ class ProfileScreen extends ConsumerWidget {
     if (routesAsync.hasError || progressAsync.hasError) {
       return FQPageContainer(
         child: Center(
-          child: Text(
-            l10n.loadRoutesError,
-            style: Theme.of(context).textTheme.bodyLarge,
+          child: FQErrorState(
+            title: l10n.loadRoutesError,
+            message: '${routesAsync.error ?? ''} ${progressAsync.error ?? ''}'
+                .trim(),
+            primaryActionLabel: l10n.continueButton,
+            onPrimaryAction: () =>
+                ref.read(appProgressNotifierProvider.notifier).loadProgress(),
           ),
         ),
       );
@@ -100,11 +105,16 @@ class ProfileScreen extends ConsumerWidget {
                 _RouteProgressCard(route: activeRoute, progress: progress),
                 _BadgesSection(badges: badges),
                 _RecentActivity(progress: progress, routes: routes),
-                _DevResetSection(onReset: () => _confirmReset(context, ref)),
                 _NotificationsHabitSection(
                   enabled:
                       notifications.valueOrNull?.enabled ??
                       HabitNotificationSettings.defaults.enabled,
+                  hour:
+                      notifications.valueOrNull?.hour ??
+                      HabitNotificationSettings.defaults.hour,
+                  minute:
+                      notifications.valueOrNull?.minute ??
+                      HabitNotificationSettings.defaults.minute,
                   loading: notifications.isLoading,
                   onChanged: (enabled) async {
                     final result = await ref
@@ -123,6 +133,17 @@ class ProfileScreen extends ConsumerWidget {
                       );
                     }
                   },
+                  onPickTime: () => _pickReminderTime(
+                    context,
+                    ref,
+                    progress,
+                    notifications.valueOrNull ??
+                        HabitNotificationSettings.defaults,
+                  ),
+                ),
+                _BackupSection(
+                  onExport: () => _exportBackup(context, ref),
+                  onImport: () => _importBackup(context, ref),
                 ),
               ],
             )
@@ -133,12 +154,16 @@ class ProfileScreen extends ConsumerWidget {
             const SizedBox(height: FQSpacing.lg),
             _RecentActivity(progress: progress, routes: routes),
             const SizedBox(height: FQSpacing.lg),
-            _DevResetSection(onReset: () => _confirmReset(context, ref)),
-            const SizedBox(height: FQSpacing.lg),
             _NotificationsHabitSection(
               enabled:
                   notifications.valueOrNull?.enabled ??
                   HabitNotificationSettings.defaults.enabled,
+              hour:
+                  notifications.valueOrNull?.hour ??
+                  HabitNotificationSettings.defaults.hour,
+              minute:
+                  notifications.valueOrNull?.minute ??
+                  HabitNotificationSettings.defaults.minute,
               loading: notifications.isLoading,
               onChanged: (enabled) async {
                 final result = await ref
@@ -155,7 +180,24 @@ class ProfileScreen extends ConsumerWidget {
                   );
                 }
               },
+              onPickTime: () => _pickReminderTime(
+                context,
+                ref,
+                progress,
+                notifications.valueOrNull ?? HabitNotificationSettings.defaults,
+              ),
             ),
+            const SizedBox(height: FQSpacing.lg),
+            _BackupSection(
+              onExport: () => _exportBackup(context, ref),
+              onImport: () => _importBackup(context, ref),
+            ),
+            const SizedBox(height: FQSpacing.lg),
+            _DevResetSection(onReset: () => _confirmReset(context, ref)),
+          ],
+          if (isDesktop) ...[
+            const SizedBox(height: FQSpacing.lg),
+            _DevResetSection(onReset: () => _confirmReset(context, ref)),
           ],
           const SizedBox(height: FQSpacing.xl),
         ],
@@ -206,6 +248,93 @@ class ProfileScreen extends ConsumerWidget {
     if (confirmed != true) return;
     await ref.read(appProgressNotifierProvider.notifier).resetAllProgress();
     onAfterReset?.call();
+  }
+
+  Future<void> _pickReminderTime(
+    BuildContext context,
+    WidgetRef ref,
+    LearningProgressState progress,
+    HabitNotificationSettings currentSettings,
+  ) async {
+    final initial = TimeOfDay(
+      hour: currentSettings.hour,
+      minute: currentSettings.minute,
+    );
+    final picked = await showTimePicker(context: context, initialTime: initial);
+    if (picked == null) return;
+    await ref
+        .read(habitNotificationsProvider.notifier)
+        .setReminderTime(
+          hour: picked.hour,
+          minute: picked.minute,
+          progress: progress,
+          languageCode: ref.read(effectiveLanguageCodeProvider),
+        );
+  }
+
+  Future<void> _exportBackup(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      await ref.read(appProgressNotifierProvider.notifier).exportBackup();
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.backupExportSuccess)));
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.backupExportError(error.toString()))),
+      );
+    }
+  }
+
+  Future<void> _importBackup(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
+    final preview = await ref
+        .read(appProgressNotifierProvider.notifier)
+        .pickBackupPreview();
+    if (preview == null || !context.mounted) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: Text(l10n.backupImportTitle),
+          content: Text(
+            l10n.backupImportPreview(
+              preview.progress.userName ?? l10n.backupUnknownUser,
+              preview.progress.totalXp,
+              preview.progress.completedRouteIds.length,
+              preview.exportedAt,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(l10n.cancelButton),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              child: Text(l10n.backupImportButton),
+            ),
+          ],
+        );
+      },
+    );
+    if (confirmed != true || !context.mounted) return;
+    try {
+      await ref
+          .read(appProgressNotifierProvider.notifier)
+          .importBackup(preview);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.backupImportSuccess)));
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.backupImportError(error.toString()))),
+      );
+    }
   }
 }
 
@@ -650,13 +779,19 @@ class _DevResetSection extends StatelessWidget {
 class _NotificationsHabitSection extends StatelessWidget {
   const _NotificationsHabitSection({
     required this.enabled,
+    required this.hour,
+    required this.minute,
     required this.loading,
     required this.onChanged,
+    required this.onPickTime,
   });
 
   final bool enabled;
+  final int hour;
+  final int minute;
   final bool loading;
   final ValueChanged<bool> onChanged;
+  final VoidCallback onPickTime;
 
   @override
   Widget build(BuildContext context) {
@@ -681,6 +816,12 @@ class _NotificationsHabitSection extends StatelessWidget {
                     color: FQColors.onSurface.withValues(alpha: 0.72),
                   ),
                 ),
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: (!enabled || loading) ? null : onPickTime,
+                  icon: const Icon(Icons.schedule_rounded),
+                  label: Text(l10n.reminderTimeLabel(hour, minute)),
+                ),
               ],
             ),
           ),
@@ -688,6 +829,60 @@ class _NotificationsHabitSection extends StatelessWidget {
           Switch.adaptive(
             value: enabled,
             onChanged: loading ? null : onChanged,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BackupSection extends StatelessWidget {
+  const _BackupSection({required this.onExport, required this.onImport});
+
+  final VoidCallback onExport;
+  final VoidCallback onImport;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      gradient: FQGradients.subtlePanel,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.backupSectionTitle,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            l10n.backupSectionSubtitle,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: FQColors.onSurface.withValues(alpha: 0.72),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: FQSecondaryButton(
+                  label: l10n.backupExportButton,
+                  icon: Icons.download_rounded,
+                  onPressed: onExport,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: FQPrimaryButton(
+                  label: l10n.backupImportButton,
+                  icon: Icons.upload_file_rounded,
+                  onPressed: onImport,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -708,7 +903,7 @@ class _LanguageMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return PopupMenuButton<String?>(
-      tooltip: 'Language',
+      tooltip: l10n.languageMenuTooltip,
       onSelected: onChanged,
       shape: RoundedRectangleBorder(borderRadius: FQRadius.medium),
       position: PopupMenuPosition.under,
@@ -716,21 +911,21 @@ class _LanguageMenuButton extends StatelessWidget {
         PopupMenuItem<String?>(
           value: null,
           child: _LanguageMenuItem(
-            label: 'Auto',
+            label: l10n.languageAuto,
             selected: preferredLanguageCode == null,
           ),
         ),
         PopupMenuItem<String?>(
           value: 'es',
           child: _LanguageMenuItem(
-            label: 'Español',
+            label: l10n.languageSpanish,
             selected: preferredLanguageCode == 'es',
           ),
         ),
         PopupMenuItem<String?>(
           value: 'en',
           child: _LanguageMenuItem(
-            label: 'English',
+            label: l10n.languageEnglish,
             selected: preferredLanguageCode == 'en',
           ),
         ),

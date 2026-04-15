@@ -1,0 +1,2811 @@
+{
+  "routeId": "flutter_navigation_route",
+  "title": {
+    "es": "Navegación",
+    "en": "Navigation"
+  },
+  "description": {
+    "es": "Aprende a diseñar, organizar y escalar la navegación de apps Flutter usando Navigator, rutas nombradas y GoRouter.",
+    "en": "Learn how to design, organize, and scale navigation in Flutter apps using Navigator, named routes, and GoRouter."
+  },
+  "icon": "navigation",
+  "themeColor": "#005E9E",
+  "version": 1,
+  "estimatedMinutes": 330,
+  "examNodeId": "flutter_navigation_final_exam",
+  "nodes": [
+    {
+      "id": "nav_flow_mindset",
+      "title": {
+        "es": "Pensar la navegación de una app",
+        "en": "Thinking about app navigation"
+      },
+      "shortDescription": {
+        "es": "Diseña el recorrido del usuario antes de disparar botones por costumbre.",
+        "en": "Design the user flow before wiring buttons by habit."
+      },
+      "icon": "alt_route",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "nav_flow_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Navegar no es solo abrir pantallas",
+            "en": "Navigation is not just opening screens"
+          },
+          "body": {
+            "es": "La navegación es el recorrido que sigue el usuario dentro de la app. No se trata solo de pasar de una pantalla a otra, sino de pensar qué debe ver primero, a dónde puede volver y qué estados ya no tienen sentido después de ciertas acciones. Diseñar bien ese flujo hace que la app se sienta clara en vez de laberíntica.",
+            "en": "Navigation is the journey the user follows inside the app. It is not only about moving from one screen to another, but about deciding what should be seen first, where the user can go back, and which states no longer make sense after certain actions. Designing that flow well makes the app feel clear instead of maze-like."
+          },
+          "example": {
+            "es": "Splash -> Login -> Home -> Detail\n\n// No todas las pantallas viven al mismo nivel.\n// Algunas son entrada, otras son paso, otras son destino.",
+            "en": "Splash -> Login -> Home -> Detail\n\n// Not every screen lives at the same level.\n// Some are entry points, some are steps, some are destinations."
+          }
+        },
+        {
+          "id": "nav_flow_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "El usuario siente la navegación aunque no la nombre",
+            "en": "Users feel navigation even if they cannot name it"
+          },
+          "body": {
+            "es": "Si una app regresa a pantallas viejas cuando no debería, deja volver al login después de iniciar sesión o mezcla flujos sin criterio, el usuario lo siente inmediatamente. La navegación correcta reduce fricción y da sensación de orden. La incorrecta da energía de '¿por qué terminé aquí?'.",
+            "en": "If an app goes back to old screens when it should not, lets users return to login after signing in, or mixes flows without clear intent, users feel it immediately. Good navigation reduces friction and creates a sense of order. Bad navigation creates a 'why am I here?' feeling."
+          },
+          "example": {
+            "es": "Después de un login exitoso, volver al splash normalmente ya no tiene sentido.\nEso afecta el flujo, no solo el código.",
+            "en": "After a successful login, going back to splash usually no longer makes sense.\nThat impacts the flow, not just the code."
+          }
+        },
+        {
+          "id": "nav_flow_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué describe mejor un flujo de navegación?",
+            "en": "What best describes a navigation flow?"
+          },
+          "options": {
+            "es": [
+              "Una lista aleatoria de pantallas",
+              "El recorrido que sigue el usuario dentro de la app",
+              "Un tema visual para los botones",
+              "El color del AppBar"
+            ],
+            "en": [
+              "A random list of screens",
+              "The path the user follows inside the app",
+              "A visual theme for buttons",
+              "The AppBar color"
+            ]
+          },
+          "correctAnswer": {
+            "es": "El recorrido que sigue el usuario dentro de la app",
+            "en": "The path the user follows inside the app"
+          },
+          "correctExplanation": {
+            "es": "La navegación trata del recorrido del usuario: qué ve, cómo avanza y a dónde puede volver.",
+            "en": "Navigation is about the user journey: what they see, how they move forward, and where they can go back."
+          },
+          "incorrectExplanation": {
+            "es": "Un flujo de navegación no es decoración. Es el recorrido lógico del usuario dentro de la app.",
+            "en": "A navigation flow is not decoration. It is the logical path the user follows inside the app."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "nav_flow_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su idea principal.",
+            "en": "Match each concept with its main idea."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Pantalla inicial",
+                "en": "Initial screen"
+              },
+              "right": {
+                "es": "Primer punto de entrada del flujo",
+                "en": "First entry point of the flow"
+              }
+            },
+            {
+              "left": {
+                "es": "Pantalla de detalle",
+                "en": "Detail screen"
+              },
+              "right": {
+                "es": "Muestra información específica de un elemento",
+                "en": "Shows specific information about an item"
+              }
+            },
+            {
+              "left": {
+                "es": "Flujo",
+                "en": "Flow"
+              },
+              "right": {
+                "es": "Recorrido general del usuario",
+                "en": "Overall user journey"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estos conceptos ayudan a pensar navegación como experiencia y no solo como código.",
+            "en": "These concepts help you think of navigation as experience, not only code."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cuál es el punto de entrada, cuál profundiza en información y cuál representa el recorrido completo.",
+            "en": "Review which is the entry point, which one goes deeper into information, and which represents the full journey."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "nav_flow_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué problema de experiencia suele revelar este flujo?",
+            "en": "What experience problem does this flow often reveal?"
+          },
+          "codeSnippet": {
+            "es": "Splash -> Login -> Home\n\nLuego el usuario toca atrás y vuelve a Login.",
+            "en": "Splash -> Login -> Home\n\nThen the user presses back and returns to Login."
+          },
+          "options": {
+            "es": [
+              "El flujo está bien y es ideal",
+              "Probablemente faltó reemplazar o limpiar la pila",
+              "El AppBar no tiene color",
+              "Hace falta un ListView"
+            ],
+            "en": [
+              "The flow is fine and ideal",
+              "The stack probably should have been replaced or cleaned",
+              "The AppBar has no color",
+              "A ListView is missing"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Probablemente faltó reemplazar o limpiar la pila",
+            "en": "The stack probably should have been replaced or cleaned"
+          },
+          "correctExplanation": {
+            "es": "Después del login, volver a esa pantalla suele indicar que la pila de navegación quedó mal administrada.",
+            "en": "After login, returning to that screen often means the navigation stack was managed incorrectly."
+          },
+          "incorrectExplanation": {
+            "es": "Si puedes volver al login después de entrar al home, normalmente faltó reemplazar o limpiar la pila.",
+            "en": "If you can go back to login after reaching home, the stack usually needed replacement or cleanup."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "nav_flow_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una secuencia simple de flujo para una app con splash, login y home.",
+            "en": "Write a simple flow sequence for an app with splash, login, and home."
+          },
+          "starterCode": {
+            "es": "Flujo:\n",
+            "en": "Flow:\n"
+          },
+          "expectedFragments": {
+            "es": [
+              "Splash",
+              "Login",
+              "Home"
+            ],
+            "en": [
+              "Splash",
+              "Login",
+              "Home"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Pensar primero en el orden de pantallas ayuda a diseñar una navegación más coherente.",
+            "en": "Thinking first about screen order helps design more coherent navigation."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe representar un flujo simple y ordenado entre Splash, Login y Home.",
+            "en": "Your answer should represent a simple, ordered flow between Splash, Login, and Home."
+          },
+          "hint": {
+            "es": "Piensa en entrada, validación y destino principal.",
+            "en": "Think in entry, validation, and main destination."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "navigator_deep_dive",
+      "title": {
+        "es": "Navigator a profundidad",
+        "en": "Navigator in depth"
+      },
+      "shortDescription": {
+        "es": "Domina push, pop, replacement y limpieza de pila.",
+        "en": "Master push, pop, replacement, and stack cleanup."
+      },
+      "icon": "navigation",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "navigator_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "La pila de navegación importa",
+            "en": "The navigation stack matters"
+          },
+          "body": {
+            "es": "Navigator funciona como una pila de rutas. Cuando haces push, agregas una nueva pantalla encima. Cuando haces pop, quitas la actual y vuelves a la anterior. Entender esa imagen mental evita muchos errores porque ya no navegas a ciegas: sabes qué queda detrás.",
+            "en": "Navigator works like a stack of routes. When you push, you add a new screen on top. When you pop, you remove the current one and return to the previous one. Understanding that mental model avoids many mistakes because you stop navigating blindly: you know what remains behind."
+          },
+          "example": {
+            "es": "Navigator.push(context, route);\nNavigator.pop(context);\n\n// Una entra.\n// La otra sale.",
+            "en": "Navigator.push(context, route);\nNavigator.pop(context);\n\n// One goes in.\n// The other goes out."
+          }
+        },
+        {
+          "id": "navigator_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No todo se resuelve con push",
+            "en": "Not everything is solved with push"
+          },
+          "body": {
+            "es": "Hay casos donde no quieres apilar más pantallas, sino reemplazar la actual o limpiar parte del historial. Por eso existen métodos como pushReplacement o pushAndRemoveUntil. Elegir el método correcto cambia cómo se comporta el botón de atrás y cómo se siente el flujo completo.",
+            "en": "There are cases where you do not want to stack more screens, but instead replace the current one or clean part of the history. That is why methods such as pushReplacement or pushAndRemoveUntil exist. Choosing the right method changes how the back button behaves and how the overall flow feels."
+          },
+          "example": {
+            "es": "Navigator.pushReplacement(context, route);\nNavigator.pushAndRemoveUntil(context, route, (_) => false);",
+            "en": "Navigator.pushReplacement(context, route);\nNavigator.pushAndRemoveUntil(context, route, (_) => false);"
+          }
+        },
+        {
+          "id": "navigator_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método se usa normalmente para volver a la pantalla anterior?",
+            "en": "Which method is typically used to return to the previous screen?"
+          },
+          "options": {
+            "es": [
+              "Navigator.push",
+              "Navigator.pop",
+              "Navigator.reset",
+              "Navigator.home"
+            ],
+            "en": [
+              "Navigator.push",
+              "Navigator.pop",
+              "Navigator.reset",
+              "Navigator.home"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Navigator.pop",
+            "en": "Navigator.pop"
+          },
+          "correctExplanation": {
+            "es": "pop remueve la ruta actual y permite regresar a la anterior.",
+            "en": "pop removes the current route and returns to the previous one."
+          },
+          "incorrectExplanation": {
+            "es": "Para volver atrás normalmente se usa Navigator.pop.",
+            "en": "To go back, Navigator.pop is typically used."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "navigator_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método para reemplazar la pantalla actual por HomeScreen.",
+            "en": "Complete the method to replace the current screen with HomeScreen."
+          },
+          "initialCode": {
+            "es": "Navigator._____(\n  context,\n  MaterialPageRoute(builder: (_) => const HomeScreen()),\n);",
+            "en": "Navigator._____(\n  context,\n  MaterialPageRoute(builder: (_) => const HomeScreen()),\n);"
+          },
+          "expectedAnswer": {
+            "es": "pushReplacement",
+            "en": "pushReplacement"
+          },
+          "correctExplanation": {
+            "es": "pushReplacement reemplaza la ruta actual por una nueva.",
+            "en": "pushReplacement replaces the current route with a new one."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es pushReplacement, porque aquí no quieres apilar, sino reemplazar.",
+            "en": "The expected answer is pushReplacement because you do not want to stack here, but replace."
+          },
+          "hint": {
+            "es": "Piensa en cambiar una pantalla por otra.",
+            "en": "Think about swapping one screen for another."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "navigator_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para regresar en lugar de abrir una nueva pantalla.",
+            "en": "Fix the code so it goes back instead of opening a new screen."
+          },
+          "initialCode": {
+            "es": "Navigator.push(context, MaterialPageRoute(builder: (_) => const PreviousScreen()));",
+            "en": "Navigator.push(context, MaterialPageRoute(builder: (_) => const PreviousScreen()));"
+          },
+          "expectedAnswer": {
+            "es": "Navigator.pop(context);",
+            "en": "Navigator.pop(context);"
+          },
+          "correctExplanation": {
+            "es": "Si la intención es volver atrás, pop expresa mejor ese comportamiento que abrir otra instancia.",
+            "en": "If the intention is to go back, pop expresses that behavior better than opening another instance."
+          },
+          "incorrectExplanation": {
+            "es": "Aquí no quieres abrir otra pantalla, sino regresar a la anterior con pop.",
+            "en": "Here you do not want to open another screen, but return to the previous one with pop."
+          },
+          "hint": {
+            "es": "No abras otra puerta si solo quieres devolverte.",
+            "en": "Do not open another door if you only want to go back."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "navigator_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea está mal si quieres limpiar toda la pila y dejar solo Home?",
+            "en": "Which line is wrong if you want to clear the whole stack and leave only Home?"
+          },
+          "codeLines": {
+            "es": [
+              "Navigator.pushAndRemoveUntil(",
+              "  context,",
+              "  MaterialPageRoute(builder: (_) => const HomeScreen()),",
+              "  (_) => true,",
+              ");"
+            ],
+            "en": [
+              "Navigator.pushAndRemoveUntil(",
+              "  context,",
+              "  MaterialPageRoute(builder: (_) => const HomeScreen()),",
+              "  (_) => true,",
+              ");"
+            ]
+          },
+          "wrongLineIndex": 3,
+          "correctExplanation": {
+            "es": "Si quieres limpiar toda la pila, la condición no debería conservar rutas. Usar (_) => false elimina todas las anteriores.",
+            "en": "If you want to clear the whole stack, the condition should not keep previous routes. Using (_) => false removes all prior routes."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la condición. Con (_) => true no limpias la pila completa.",
+            "en": "The wrong line is the condition. With (_) => true you do not clear the full stack."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "navigator_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué efecto suele tener pushReplacement sobre el botón atrás?",
+            "en": "What effect does pushReplacement usually have on the back button?"
+          },
+          "codeSnippet": {
+            "es": "Navigator.pushReplacement(context, route);",
+            "en": "Navigator.pushReplacement(context, route);"
+          },
+          "options": {
+            "es": [
+              "Permite volver siempre a la pantalla anterior reemplazada",
+              "Suele impedir volver a la pantalla reemplazada porque ya no queda en la pila",
+              "Abre dos pantallas al tiempo",
+              "Desactiva toda navegación futura"
+            ],
+            "en": [
+              "It always allows going back to the replaced screen",
+              "It usually prevents returning to the replaced screen because it no longer stays in the stack",
+              "It opens two screens at the same time",
+              "It disables all future navigation"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Suele impedir volver a la pantalla reemplazada porque ya no queda en la pila",
+            "en": "It usually prevents returning to the replaced screen because it no longer stays in the stack"
+          },
+          "correctExplanation": {
+            "es": "Al reemplazar una ruta, la anterior sale de la pila y normalmente ya no es destino del botón atrás.",
+            "en": "When replacing a route, the previous one leaves the stack and is no longer the back destination."
+          },
+          "incorrectExplanation": {
+            "es": "pushReplacement reemplaza la ruta actual, así que la pantalla vieja ya no suele quedar disponible al volver.",
+            "en": "pushReplacement replaces the current route, so the old screen usually no longer remains available when going back."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "navigator_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena este flujo para abrir una pantalla detalle con Navigator.push.",
+            "en": "Order this flow to open a detail screen with Navigator.push."
+          },
+          "blocks": {
+            "es": [
+              "Navigator.push(",
+              "context,",
+              "MaterialPageRoute(builder: (_) => const DetailScreen()),",
+              ");"
+            ],
+            "en": [
+              "Navigator.push(",
+              "context,",
+              "MaterialPageRoute(builder: (_) => const DetailScreen()),",
+              ");"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "Navigator.push(",
+              "context,",
+              "MaterialPageRoute(builder: (_) => const DetailScreen()),",
+              ");"
+            ],
+            "en": [
+              "Navigator.push(",
+              "context,",
+              "MaterialPageRoute(builder: (_) => const DetailScreen()),",
+              ");"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La llamada correcta a push necesita contexto, ruta y cierre en el orden adecuado.",
+            "en": "The correct push call needs context, route, and closing in the proper order."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa el orden de la llamada: primero push, luego context, luego la ruta y finalmente el cierre.",
+            "en": "Review the call order: first push, then context, then the route, and finally the close."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "passing_data_between_screens",
+      "title": {
+        "es": "Navegar pasando datos",
+        "en": "Navigating while passing data"
+      },
+      "shortDescription": {
+        "es": "Envía información útil entre pantallas.",
+        "en": "Send useful information between screens."
+      },
+      "icon": "send",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "pass_data_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una pantalla de detalle rara vez vive sola",
+            "en": "A detail screen rarely lives alone"
+          },
+          "body": {
+            "es": "Muchas pantallas dependen de información que viene desde otra: un id, un título, un producto, un usuario o un mensaje. Pasar datos correctamente permite que la siguiente pantalla sea dinámica y tenga contexto real. Sin eso, el detalle termina actuando como si adivinara cosas.",
+            "en": "Many screens depend on information coming from another one: an id, a title, a product, a user, or a message. Passing data correctly allows the next screen to be dynamic and have real context. Without it, the detail screen behaves as if it were guessing."
+          },
+          "example": {
+            "es": "Navigator.push(\n  context,\n  MaterialPageRoute(\n    builder: (_) => DetailScreen(title: 'Curso Flutter'),\n  ),\n);",
+            "en": "Navigator.push(\n  context,\n  MaterialPageRoute(\n    builder: (_) => DetailScreen(title: 'Flutter Course'),\n  ),\n);"
+          }
+        },
+        {
+          "id": "pass_data_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Pasar datos no es un lujo, es contexto",
+            "en": "Passing data is not luxury, it is context"
+          },
+          "body": {
+            "es": "Cuando mandas parámetros a una pantalla, no estás complicando el código: estás explicando de dónde sale su información. Eso vuelve el flujo más claro, más testeable y menos dependiente de valores quemados. La pantalla deja de ser genérica y se vuelve útil.",
+            "en": "When you send parameters to a screen, you are not overcomplicating the code: you are explaining where its information comes from. That makes the flow clearer, more testable, and less dependent on hardcoded values. The screen stops being generic and becomes useful."
+          },
+          "example": {
+            "es": "class DetailScreen extends StatelessWidget {\n  final String title;\n  const DetailScreen({super.key, required this.title});\n}",
+            "en": "class DetailScreen extends StatelessWidget {\n  final String title;\n  const DetailScreen({super.key, required this.title});\n}"
+          }
+        },
+        {
+          "id": "pass_data_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué valor tiene más sentido pasar a una pantalla de detalle?",
+            "en": "What value makes most sense to pass to a detail screen?"
+          },
+          "options": {
+            "es": [
+              "Un dato relacionado con el elemento que se quiere mostrar",
+              "El color favorito del teclado",
+              "Nada nunca, porque todas las pantallas deben inventar sus datos",
+              "Solo un bool llamado ok sin contexto"
+            ],
+            "en": [
+              "Data related to the item that should be shown",
+              "The keyboard favorite color",
+              "Nothing ever, because all screens should invent their data",
+              "Only a bool called ok without context"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Un dato relacionado con el elemento que se quiere mostrar",
+            "en": "Data related to the item that should be shown"
+          },
+          "correctExplanation": {
+            "es": "Una pantalla de detalle suele necesitar contexto real, como un id, un título o un modelo simple.",
+            "en": "A detail screen usually needs real context, such as an id, a title, or a simple model."
+          },
+          "incorrectExplanation": {
+            "es": "Una pantalla de detalle suele recibir datos del elemento que va a mostrar.",
+            "en": "A detail screen usually receives data from the item it is going to show."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "pass_data_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el parámetro faltante para enviar el título a DetailScreen.",
+            "en": "Fill in the missing parameter to send the title to DetailScreen."
+          },
+          "initialCode": {
+            "es": "MaterialPageRoute(\n  builder: (_) => DetailScreen(_____ : 'Perfil'),\n)",
+            "en": "MaterialPageRoute(\n  builder: (_) => DetailScreen(_____ : 'Profile'),\n)"
+          },
+          "expectedAnswer": {
+            "es": "title",
+            "en": "title"
+          },
+          "correctExplanation": {
+            "es": "El parámetro title permite mandar el dato que DetailScreen necesita.",
+            "en": "The title parameter lets you send the data DetailScreen needs."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es title, porque es el dato que se está enviando al constructor.",
+            "en": "The expected answer is title because it is the value being sent to the constructor."
+          },
+          "hint": {
+            "es": "Piensa en el nombre del dato visible.",
+            "en": "Think of the visible piece of data."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "pass_data_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el constructor para recibir el dato como requerido.",
+            "en": "Fix the constructor so the data is received as required."
+          },
+          "initialCode": {
+            "es": "class DetailScreen extends StatelessWidget {\n  final String title;\n  const DetailScreen({super.key});\n}",
+            "en": "class DetailScreen extends StatelessWidget {\n  final String title;\n  const DetailScreen({super.key});\n}"
+          },
+          "expectedAnswer": {
+            "es": "class DetailScreen extends StatelessWidget {\n  final String title;\n  const DetailScreen({super.key, required this.title});\n}",
+            "en": "class DetailScreen extends StatelessWidget {\n  final String title;\n  const DetailScreen({super.key, required this.title});\n}"
+          },
+          "correctExplanation": {
+            "es": "Si la pantalla depende de title, el constructor debe recibirlo y asignarlo.",
+            "en": "If the screen depends on title, the constructor must receive and assign it."
+          },
+          "incorrectExplanation": {
+            "es": "La pantalla declara title pero no lo recibe. Debes agregar required this.title al constructor.",
+            "en": "The screen declares title but does not receive it. You must add required this.title to the constructor."
+          },
+          "hint": {
+            "es": "Declaraste la propiedad, ahora toca inyectarla.",
+            "en": "You declared the property, now inject it."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "pass_data_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe el fragmento esencial para navegar a DetailScreen pasando un id llamado userId.",
+            "en": "Write the essential fragment to navigate to DetailScreen passing an id called userId."
+          },
+          "starterCode": {
+            "es": "Navigator.push(\n  context,\n  MaterialPageRoute(\n    builder: (_) => DetailScreen(\n      \n    ),\n  ),\n);",
+            "en": "Navigator.push(\n  context,\n  MaterialPageRoute(\n    builder: (_) => DetailScreen(\n      \n    ),\n  ),\n);"
+          },
+          "expectedFragments": {
+            "es": [
+              "userId:",
+              "DetailScreen",
+              "Navigator.push"
+            ],
+            "en": [
+              "userId:",
+              "DetailScreen",
+              "Navigator.push"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La idea clave es que la navegación incluya el dato que la pantalla necesita para construirse.",
+            "en": "The key idea is that navigation includes the data the screen needs to build itself."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir la navegación y un parámetro userId enviado a DetailScreen.",
+            "en": "Your answer must include navigation and a userId parameter sent to DetailScreen."
+          },
+          "hint": {
+            "es": "No solo abras la pantalla: dale contexto.",
+            "en": "Do not just open the screen: give it context."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "pass_data_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué ventaja principal tiene pasar un título al detalle desde la pantalla anterior?",
+            "en": "What is the main advantage of passing a title to the detail screen from the previous screen?"
+          },
+          "codeSnippet": {
+            "es": "DetailScreen(title: 'Curso Flutter')",
+            "en": "DetailScreen(title: 'Flutter Course')"
+          },
+          "options": {
+            "es": [
+              "La pantalla puede mostrar contenido dinámico según el contexto recibido",
+              "El Navigator desaparece",
+              "La app deja de usar widgets",
+              "El botón atrás deja de existir automáticamente"
+            ],
+            "en": [
+              "The screen can show dynamic content based on received context",
+              "Navigator disappears",
+              "The app stops using widgets",
+              "The back button automatically disappears"
+            ]
+          },
+          "correctAnswer": {
+            "es": "La pantalla puede mostrar contenido dinámico según el contexto recibido",
+            "en": "The screen can show dynamic content based on received context"
+          },
+          "correctExplanation": {
+            "es": "Al pasar datos, la siguiente pantalla puede construirse con información real del flujo.",
+            "en": "By passing data, the next screen can be built with real information from the flow."
+          },
+          "incorrectExplanation": {
+            "es": "Pasar datos sirve para que la pantalla no sea estática, sino contextual y dinámica.",
+            "en": "Passing data helps the screen become contextual and dynamic instead of static."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "returning_data_from_screen",
+      "title": {
+        "es": "Regresar datos desde una pantalla",
+        "en": "Returning data from a screen"
+      },
+      "shortDescription": {
+        "es": "Usa push + pop para devolver resultados útiles.",
+        "en": "Use push + pop to return useful results."
+      },
+      "icon": "reply",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "return_data_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Navegar también puede devolver cosas",
+            "en": "Navigation can also return things"
+          },
+          "body": {
+            "es": "A veces abres una pantalla no para ver algo, sino para elegir un resultado: una categoría, un filtro, una ciudad o una confirmación. En esos casos puedes esperar la navegación y recuperar un valor al volver. Eso convierte una pantalla en una especie de selector con regreso incluido.",
+            "en": "Sometimes you open a screen not to simply view something, but to choose a result: a category, a filter, a city, or a confirmation. In those cases you can await the navigation and recover a value when returning. That turns a screen into a kind of selector with a built-in return."
+          },
+          "example": {
+            "es": "final result = await Navigator.push(...);\n\n// Cuando la pantalla se cierra,\n// result puede traer información útil.",
+            "en": "final result = await Navigator.push(...);\n\n// When the screen closes,\n// result can carry useful information."
+          }
+        },
+        {
+          "id": "return_data_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "pop también puede enviar información",
+            "en": "pop can also send information"
+          },
+          "body": {
+            "es": "Navigator.pop no solo sirve para volver. También puede devolver un dato a la pantalla anterior. Esa idea es muy poderosa para selecciones y confirmaciones porque evita estados globales innecesarios para tareas simples.",
+            "en": "Navigator.pop is not just for going back. It can also return data to the previous screen. That idea is very powerful for selections and confirmations because it avoids unnecessary global state for simple tasks."
+          },
+          "example": {
+            "es": "Navigator.pop(context, 'Medellín');",
+            "en": "Navigator.pop(context, 'Medellín');"
+          }
+        },
+        {
+          "id": "return_data_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué palabra clave suele usarse para esperar el resultado de una navegación?",
+            "en": "Which keyword is usually used to wait for the result of a navigation?"
+          },
+          "options": {
+            "es": [
+              "await",
+              "yield",
+              "const",
+              "break"
+            ],
+            "en": [
+              "await",
+              "yield",
+              "const",
+              "break"
+            ]
+          },
+          "correctAnswer": {
+            "es": "await",
+            "en": "await"
+          },
+          "correctExplanation": {
+            "es": "Si quieres recibir el valor que la siguiente pantalla devolverá, normalmente esperas la navegación con await.",
+            "en": "If you want to receive the value returned by the next screen, you normally await the navigation."
+          },
+          "incorrectExplanation": {
+            "es": "La navegación que devuelve datos normalmente se espera con await.",
+            "en": "Navigation that returns data is typically awaited with await."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "return_data_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa la palabra clave para esperar el resultado de Navigator.push.",
+            "en": "Complete the keyword to wait for the result of Navigator.push."
+          },
+          "initialCode": {
+            "es": "final selectedCity = _____ Navigator.push(\n  context,\n  MaterialPageRoute(builder: (_) => const CityPickerScreen()),\n);",
+            "en": "final selectedCity = _____ Navigator.push(\n  context,\n  MaterialPageRoute(builder: (_) => const CityPickerScreen()),\n);"
+          },
+          "expectedAnswer": {
+            "es": "await",
+            "en": "await"
+          },
+          "correctExplanation": {
+            "es": "await permite pausar hasta que la pantalla devuelva un resultado.",
+            "en": "await allows execution to pause until the screen returns a result."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta correcta es await, porque aquí quieres recibir el valor al volver.",
+            "en": "The correct answer is await because you want to receive the value when returning."
+          },
+          "hint": {
+            "es": "Piensa en esperar un resultado futuro.",
+            "en": "Think about waiting for a future result."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "return_data_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para devolver una ciudad al cerrar la pantalla.",
+            "en": "Fix the code to return a city when closing the screen."
+          },
+          "initialCode": {
+            "es": "Navigator.pop(context);\n'Medellín';",
+            "en": "Navigator.pop(context);\n'Medellín';"
+          },
+          "expectedAnswer": {
+            "es": "Navigator.pop(context, 'Medellín');",
+            "en": "Navigator.pop(context, 'Medellín');"
+          },
+          "correctExplanation": {
+            "es": "Si quieres devolver un dato al cerrar la pantalla, debes pasarlo dentro de pop.",
+            "en": "If you want to return data when closing the screen, you must pass it inside pop."
+          },
+          "incorrectExplanation": {
+            "es": "No basta con escribir el valor aparte. Debes devolverlo con Navigator.pop(context, valor).",
+            "en": "Writing the value separately is not enough. You must return it with Navigator.pop(context, value)."
+          },
+          "hint": {
+            "es": "Devuelve el dato junto con el cierre.",
+            "en": "Return the data together with the close action."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "return_data_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada elemento con su rol en una navegación que devuelve datos.",
+            "en": "Match each element with its role in data-returning navigation."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "await Navigator.push",
+                "en": "await Navigator.push"
+              },
+              "right": {
+                "es": "Espera el resultado de la siguiente pantalla",
+                "en": "Waits for the next screen result"
+              }
+            },
+            {
+              "left": {
+                "es": "Navigator.pop(context, dato)",
+                "en": "Navigator.pop(context, data)"
+              },
+              "right": {
+                "es": "Cierra la pantalla y devuelve información",
+                "en": "Closes the screen and returns information"
+              }
+            },
+            {
+              "left": {
+                "es": "result",
+                "en": "result"
+              },
+              "right": {
+                "es": "Valor recibido al volver",
+                "en": "Received value when returning"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estos tres pasos forman el flujo base de abrir, esperar y recibir un valor.",
+            "en": "These three steps form the core flow of opening, waiting, and receiving a value."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa quién abre y espera, quién cierra devolviendo un dato y qué variable lo recibe.",
+            "en": "Review who opens and waits, who closes returning data, and which variable receives it."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "return_data_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué podría contener result si la siguiente pantalla ejecuta Navigator.pop(context, true)?",
+            "en": "What could result contain if the next screen executes Navigator.pop(context, true)?"
+          },
+          "codeSnippet": {
+            "es": "final result = await Navigator.push(...);",
+            "en": "final result = await Navigator.push(...);"
+          },
+          "options": {
+            "es": [
+              "true",
+              "context",
+              "Navigator",
+              "Una AppBar"
+            ],
+            "en": [
+              "true",
+              "context",
+              "Navigator",
+              "An AppBar"
+            ]
+          },
+          "correctAnswer": {
+            "es": "true",
+            "en": "true"
+          },
+          "correctExplanation": {
+            "es": "Si la pantalla cierra devolviendo true, ese valor puede llegar a result.",
+            "en": "If the screen closes returning true, that value can arrive in result."
+          },
+          "incorrectExplanation": {
+            "es": "result recibe el dato enviado desde Navigator.pop, en este caso true.",
+            "en": "result receives the data sent from Navigator.pop, in this case true."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "return_data_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe el fragmento esencial para cerrar una pantalla devolviendo la ciudad 'Bogotá'.",
+            "en": "Write the essential fragment to close a screen returning the city 'Bogotá'."
+          },
+          "starterCode": {
+            "es": "",
+            "en": ""
+          },
+          "expectedFragments": {
+            "es": [
+              "Navigator.pop",
+              "Bogotá"
+            ],
+            "en": [
+              "Navigator.pop",
+              "Bogotá"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La idea clave es usar pop y adjuntar el valor que quieres devolver.",
+            "en": "The key idea is to use pop and attach the value you want to return."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir Navigator.pop y el valor Bogotá como resultado.",
+            "en": "Your answer must include Navigator.pop and the value Bogotá as the result."
+          },
+          "hint": {
+            "es": "Cierra la pantalla y manda el dato en la misma llamada.",
+            "en": "Close the screen and send the data in the same call."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "named_routes",
+      "title": {
+        "es": "Rutas nombradas",
+        "en": "Named routes"
+      },
+      "shortDescription": {
+        "es": "Organiza la navegación con nombres reutilizables.",
+        "en": "Organize navigation with reusable route names."
+      },
+      "icon": "signpost",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "named_routes_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Ponerle nombre a las rutas también es diseño",
+            "en": "Naming routes is also design"
+          },
+          "body": {
+            "es": "Cuando una app empieza a crecer, crear rutas solo con MaterialPageRoute en cada botón puede volverse repetitivo. Las rutas nombradas permiten centralizar nombres y reutilizarlos. No resuelven todo, pero ayudan a que el flujo sea más fácil de leer y mantener.",
+            "en": "When an app starts growing, creating routes only with MaterialPageRoute in every button can become repetitive. Named routes let you centralize names and reuse them. They do not solve everything, but they help make the flow easier to read and maintain."
+          },
+          "example": {
+            "es": "Navigator.pushNamed(context, '/profile');",
+            "en": "Navigator.pushNamed(context, '/profile');"
+          }
+        },
+        {
+          "id": "named_routes_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Un nombre claro vale más que una ruta escondida",
+            "en": "A clear name is better than a hidden route"
+          },
+          "body": {
+            "es": "Ver '/profile' o '/settings' en una navegación comunica intención más rápido que repetir la construcción completa de la ruta en todas partes. La clave es usar nombres consistentes y una configuración clara.",
+            "en": "Seeing '/profile' or '/settings' in navigation communicates intent faster than repeating the full route construction everywhere. The key is using consistent names and clear configuration."
+          },
+          "example": {
+            "es": "routes: {\n  '/home': (_) => const HomeScreen(),\n  '/settings': (_) => const SettingsScreen(),\n}",
+            "en": "routes: {\n  '/home': (_) => const HomeScreen(),\n  '/settings': (_) => const SettingsScreen(),\n}"
+          }
+        },
+        {
+          "id": "named_routes_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método suele usarse para navegar usando el nombre de una ruta?",
+            "en": "Which method is typically used to navigate using a route name?"
+          },
+          "options": {
+            "es": [
+              "Navigator.pushNamed",
+              "Navigator.routeByText",
+              "Navigator.goName",
+              "Navigator.pathPush"
+            ],
+            "en": [
+              "Navigator.pushNamed",
+              "Navigator.routeByText",
+              "Navigator.goName",
+              "Navigator.pathPush"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Navigator.pushNamed",
+            "en": "Navigator.pushNamed"
+          },
+          "correctExplanation": {
+            "es": "pushNamed permite navegar usando un nombre registrado dentro de la app.",
+            "en": "pushNamed lets you navigate using a registered route name inside the app."
+          },
+          "incorrectExplanation": {
+            "es": "El método común para rutas nombradas con Navigator es pushNamed.",
+            "en": "The common Navigator method for named routes is pushNamed."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "named_routes_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método para abrir la ruta '/settings' por nombre.",
+            "en": "Fill in the method to open the '/settings' route by name."
+          },
+          "initialCode": {
+            "es": "Navigator._____(context, '/settings');",
+            "en": "Navigator._____(context, '/settings');"
+          },
+          "expectedAnswer": {
+            "es": "pushNamed",
+            "en": "pushNamed"
+          },
+          "correctExplanation": {
+            "es": "pushNamed abre una ruta registrada usando su nombre.",
+            "en": "pushNamed opens a registered route using its name."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es pushNamed.",
+            "en": "The expected answer is pushNamed."
+          },
+          "hint": {
+            "es": "Empuja la ruta por su nombre.",
+            "en": "Push the route by its name."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "named_routes_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige la configuración para declarar la ruta '/profile'.",
+            "en": "Fix the configuration to declare the '/profile' route."
+          },
+          "initialCode": {
+            "es": "routes: {\n  '/profile': const ProfileScreen(),\n}",
+            "en": "routes: {\n  '/profile': const ProfileScreen(),\n}"
+          },
+          "expectedAnswer": {
+            "es": "routes: {\n  '/profile': (_) => const ProfileScreen(),\n}",
+            "en": "routes: {\n  '/profile': (_) => const ProfileScreen(),\n}"
+          },
+          "correctExplanation": {
+            "es": "En el mapa de routes se espera una función que construya el widget.",
+            "en": "The routes map expects a function that builds the widget."
+          },
+          "incorrectExplanation": {
+            "es": "La ruta debe mapear a un builder, no al widget puesto directamente.",
+            "en": "The route should map to a builder, not directly to the widget."
+          },
+          "hint": {
+            "es": "Falta el builder.",
+            "en": "The builder is missing."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "named_routes_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena este fragmento para declarar una ruta nombrada válida.",
+            "en": "Order this snippet to declare a valid named route."
+          },
+          "blocks": {
+            "es": [
+              "routes: {",
+              "'/home': (_) => const HomeScreen(),",
+              "},"
+            ],
+            "en": [
+              "routes: {",
+              "'/home': (_) => const HomeScreen(),",
+              "},"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "routes: {",
+              "'/home': (_) => const HomeScreen(),",
+              "},"
+            ],
+            "en": [
+              "routes: {",
+              "'/home': (_) => const HomeScreen(),",
+              "},"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La estructura base del mapa de rutas usa un nombre y un builder asociado.",
+            "en": "The base routes map structure uses a name and an associated builder."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en abrir el mapa de rutas, asignar el nombre y cerrarlo correctamente.",
+            "en": "Think of opening the routes map, assigning the name, and closing it correctly."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "named_routes_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué ventaja principal tienen las rutas nombradas en una app mediana?",
+            "en": "What is the main advantage of named routes in a medium-sized app?"
+          },
+          "codeSnippet": {
+            "es": "Navigator.pushNamed(context, '/profile');",
+            "en": "Navigator.pushNamed(context, '/profile');"
+          },
+          "options": {
+            "es": [
+              "Centralizan y hacen más legible cierta navegación",
+              "Eliminan todos los widgets",
+              "Reemplazan cualquier estado global automáticamente",
+              "Hacen innecesario MaterialApp"
+            ],
+            "en": [
+              "They centralize and make some navigation more readable",
+              "They remove all widgets",
+              "They automatically replace any global state",
+              "They make MaterialApp unnecessary"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Centralizan y hacen más legible cierta navegación",
+            "en": "They centralize and make some navigation more readable"
+          },
+          "correctExplanation": {
+            "es": "Las rutas nombradas ayudan a organizar mejor la navegación repetida y a comunicar intención.",
+            "en": "Named routes help better organize repeated navigation and communicate intent."
+          },
+          "incorrectExplanation": {
+            "es": "La ventaja real está en organización y legibilidad, no en magia extraña.",
+            "en": "The real advantage is organization and readability, not strange magic."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "guards_and_protected_routes",
+      "title": {
+        "es": "Pantallas protegidas y guards mentales",
+        "en": "Protected screens and mental guards"
+      },
+      "shortDescription": {
+        "es": "Decide quién puede entrar, cuándo y por qué.",
+        "en": "Decide who can enter, when, and why."
+      },
+      "icon": "shield",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "guards_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "No toda pantalla debería estar disponible siempre",
+            "en": "Not every screen should always be available"
+          },
+          "body": {
+            "es": "Hay pantallas que solo deberían abrirse si se cumple una condición: haber iniciado sesión, haber completado onboarding o tener cierto permiso. Esa lógica se parece a un guardia en la puerta. Si la regla no se cumple, el usuario debe ser redirigido a otro lugar más lógico.",
+            "en": "Some screens should only open if a condition is met: being logged in, completing onboarding, or having a certain permission. That logic is like a guard at the door. If the rule is not met, the user should be redirected somewhere more logical."
+          },
+          "example": {
+            "es": "if (!isLoggedIn) {\n  // enviar a login\n}",
+            "en": "if (!isLoggedIn) {\n  // send to login\n}"
+          }
+        },
+        {
+          "id": "guards_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Un guard no castiga: organiza el flujo",
+            "en": "A guard does not punish: it organizes the flow"
+          },
+          "body": {
+            "es": "Proteger rutas no es ponerle trabas al usuario. Es evitar que llegue a pantallas sin contexto o sin permiso. Una app clara sabe cuándo mostrar login, cuándo mostrar home y cuándo mandar de vuelta a onboarding.",
+            "en": "Protecting routes is not about making things harder for the user. It is about preventing access to screens without context or permission. A clear app knows when to show login, when to show home, and when to send the user back to onboarding."
+          },
+          "example": {
+            "es": "if (!hasCompletedOnboarding) {\n  // enviar a onboarding\n}",
+            "en": "if (!hasCompletedOnboarding) {\n  // send to onboarding\n}"
+          }
+        },
+        {
+          "id": "guards_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada condición con la pantalla a la que tendría sentido enviarlo.",
+            "en": "Match each condition with the screen it makes sense to send the user to."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "No autenticado",
+                "en": "Not authenticated"
+              },
+              "right": {
+                "es": "Login",
+                "en": "Login"
+              }
+            },
+            {
+              "left": {
+                "es": "Onboarding incompleto",
+                "en": "Onboarding incomplete"
+              },
+              "right": {
+                "es": "Onboarding",
+                "en": "Onboarding"
+              }
+            },
+            {
+              "left": {
+                "es": "Autenticado y listo",
+                "en": "Authenticated and ready"
+              },
+              "right": {
+                "es": "Home",
+                "en": "Home"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Las reglas de acceso ayudan a que cada usuario vea la pantalla correcta según su estado.",
+            "en": "Access rules help each user see the correct screen according to their state."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué pantalla corresponde según autenticación y onboarding.",
+            "en": "Review which screen fits according to authentication and onboarding."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "guards_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si un usuario no autenticado intenta abrir ProfileScreen, ¿qué flujo suele tener más sentido?",
+            "en": "If an unauthenticated user tries to open ProfileScreen, what flow usually makes more sense?"
+          },
+          "codeSnippet": {
+            "es": "if (!isLoggedIn) {\n  // ¿qué debería pasar?\n}",
+            "en": "if (!isLoggedIn) {\n  // what should happen?\n}"
+          },
+          "options": {
+            "es": [
+              "Redirigir a login",
+              "Mostrar el perfil igual",
+              "Cerrar la app",
+              "Borrar el home"
+            ],
+            "en": [
+              "Redirect to login",
+              "Show the profile anyway",
+              "Close the app",
+              "Delete home"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Redirigir a login",
+            "en": "Redirect to login"
+          },
+          "correctExplanation": {
+            "es": "Si la pantalla requiere autenticación, el flujo lógico es pedir login primero.",
+            "en": "If the screen requires authentication, the logical flow is to ask for login first."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta coherente suele ser redirigir a login.",
+            "en": "The coherent answer is usually to redirect to login."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "guards_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige la condición para enviar a login cuando el usuario no está autenticado.",
+            "en": "Fix the condition to send the user to login when not authenticated."
+          },
+          "initialCode": {
+            "es": "if (isLoggedIn) {\n  Navigator.pushNamed(context, '/login');\n}",
+            "en": "if (isLoggedIn) {\n  Navigator.pushNamed(context, '/login');\n}"
+          },
+          "expectedAnswer": {
+            "es": "if (!isLoggedIn) {\n  Navigator.pushNamed(context, '/login');\n}",
+            "en": "if (!isLoggedIn) {\n  Navigator.pushNamed(context, '/login');\n}"
+          },
+          "correctExplanation": {
+            "es": "La redirección a login debería ocurrir cuando no hay sesión activa.",
+            "en": "The redirect to login should happen when there is no active session."
+          },
+          "incorrectExplanation": {
+            "es": "La lógica estaba invertida. Debe enviar a login cuando el usuario NO está autenticado.",
+            "en": "The logic was inverted. It should send to login when the user is NOT authenticated."
+          },
+          "hint": {
+            "es": "Falta negar la condición.",
+            "en": "You need to negate the condition."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "guards_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa la condición para redirigir a onboarding si el usuario no lo ha completado.",
+            "en": "Complete the condition to redirect to onboarding if the user has not completed it."
+          },
+          "initialCode": {
+            "es": "if (!hasCompleted_____) {\n  Navigator.pushNamed(context, '/onboarding');\n}",
+            "en": "if (!hasCompleted_____) {\n  Navigator.pushNamed(context, '/onboarding');\n}"
+          },
+          "expectedAnswer": {
+            "es": "Onboarding",
+            "en": "Onboarding"
+          },
+          "correctExplanation": {
+            "es": "La condición expresa claramente si el flujo inicial ya fue completado o no.",
+            "en": "The condition clearly expresses whether the initial flow was completed or not."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es Onboarding.",
+            "en": "The expected answer is Onboarding."
+          },
+          "hint": {
+            "es": "Piensa en el nombre del flujo inicial.",
+            "en": "Think of the initial flow name."
+          },
+          "xpReward": 12
+        }
+      ]
+    },
+    {
+      "id": "auth_flow_replacement",
+      "title": {
+        "es": "Flujo de autenticación y reemplazo",
+        "en": "Auth flow and replacement"
+      },
+      "shortDescription": {
+        "es": "Maneja splash, login, home y logout con mejor criterio.",
+        "en": "Handle splash, login, home, and logout with better judgment."
+      },
+      "icon": "login",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "auth_flow_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Hay pantallas que solo estorban después de cierto punto",
+            "en": "Some screens only get in the way after a certain point"
+          },
+          "body": {
+            "es": "Después de iniciar sesión, volver a login o splash normalmente ya no tiene sentido. En esos casos reemplazar o limpiar la pila mejora el flujo. El objetivo es que el botón atrás no te devuelva a estados obsoletos.",
+            "en": "After signing in, going back to login or splash usually no longer makes sense. In those cases replacing or clearing the stack improves the flow. The goal is to prevent the back button from returning to obsolete states."
+          },
+          "example": {
+            "es": "Login exitoso -> Home\n\n// El usuario no debería volver a Login con atrás.",
+            "en": "Successful login -> Home\n\n// The user should not return to Login with back."
+          }
+        },
+        {
+          "id": "auth_flow_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Cerrar sesión también redefine el flujo",
+            "en": "Logging out also redefines the flow"
+          },
+          "body": {
+            "es": "Cuando el usuario cierra sesión, el home deja de tener sentido como destino accesible. Ahí conviene limpiar la pila y enviar a login. Así evitas que el sistema se sienta incoherente o inseguro.",
+            "en": "When the user logs out, home no longer makes sense as an accessible destination. At that point it is often better to clear the stack and send the user to login. That prevents the system from feeling inconsistent or insecure."
+          },
+          "example": {
+            "es": "Logout -> Login\n\n// Y no deberías poder volver al Home anterior con atrás.",
+            "en": "Logout -> Login\n\n// And you should not be able to return to the previous Home with back."
+          }
+        },
+        {
+          "id": "auth_flow_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo lógico tras un login exitoso.",
+            "en": "Order the logical flow after a successful login."
+          },
+          "blocks": {
+            "es": [
+              "Validar credenciales",
+              "Reemplazar Login por Home",
+              "Mostrar Login"
+            ],
+            "en": [
+              "Validate credentials",
+              "Replace Login with Home",
+              "Show Login"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "Mostrar Login",
+              "Validar credenciales",
+              "Reemplazar Login por Home"
+            ],
+            "en": [
+              "Show Login",
+              "Validate credentials",
+              "Replace Login with Home"
+            ]
+          },
+          "correctExplanation": {
+            "es": "El usuario ve login, intenta entrar y, si sale bien, la navegación se reemplaza por home.",
+            "en": "The user sees login, tries to enter, and if it succeeds, navigation is replaced by home."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en el orden real de la experiencia: primero el login, luego la validación y después el destino final.",
+            "en": "Think about the real order of the experience: first login, then validation, then the final destination."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "auth_flow_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método para reemplazar Login por Home al autenticarse.",
+            "en": "Complete the method to replace Login with Home when authenticated."
+          },
+          "initialCode": {
+            "es": "Navigator._____(\n  context,\n  MaterialPageRoute(builder: (_) => const HomeScreen()),\n);",
+            "en": "Navigator._____(\n  context,\n  MaterialPageRoute(builder: (_) => const HomeScreen()),\n);"
+          },
+          "expectedAnswer": {
+            "es": "pushReplacement",
+            "en": "pushReplacement"
+          },
+          "correctExplanation": {
+            "es": "pushReplacement evita que Login permanezca como pantalla previa inmediata.",
+            "en": "pushReplacement prevents Login from remaining as the immediate previous screen."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta correcta es pushReplacement.",
+            "en": "The correct answer is pushReplacement."
+          },
+          "hint": {
+            "es": "No quieres apilar Login debajo del Home.",
+            "en": "You do not want Login stacked beneath Home."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "auth_flow_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué comportamiento suele ser deseable después de logout?",
+            "en": "What behavior is usually desirable after logout?"
+          },
+          "codeSnippet": {
+            "es": "Logout -> Login",
+            "en": "Logout -> Login"
+          },
+          "options": {
+            "es": [
+              "Que el usuario pueda volver al Home anterior con atrás",
+              "Que la pila quede limpia y el usuario permanezca fuera del Home",
+              "Que se dupliquen pantallas",
+              "Que el splash se muestre para siempre"
+            ],
+            "en": [
+              "The user should be able to go back to the previous Home with back",
+              "The stack should be cleaned and the user should stay out of Home",
+              "Screens should duplicate",
+              "Splash should show forever"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Que la pila quede limpia y el usuario permanezca fuera del Home",
+            "en": "The stack should be cleaned and the user should stay out of Home"
+          },
+          "correctExplanation": {
+            "es": "Cerrar sesión implica redefinir el acceso, así que normalmente conviene limpiar el historial sensible.",
+            "en": "Logging out redefines access, so it is usually best to clean sensitive history."
+          },
+          "incorrectExplanation": {
+            "es": "Tras logout, lo deseable suele ser limpiar la pila para impedir volver al Home protegido.",
+            "en": "After logout, it is usually desirable to clear the stack so protected Home cannot be reached again."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "auth_flow_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea va en contra del flujo esperado después de logout?",
+            "en": "Which line goes against the expected flow after logout?"
+          },
+          "codeLines": {
+            "es": [
+              "logout();",
+              "Navigator.pushNamed(context, '/login');",
+              "// El usuario aún puede volver al home con atrás"
+            ],
+            "en": [
+              "logout();",
+              "Navigator.pushNamed(context, '/login');",
+              "// The user can still go back to home with back"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "Usar pushNamed puede dejar el home en la pila. Aquí suele convenir reemplazar o limpiar el stack.",
+            "en": "Using pushNamed may leave Home in the stack. Here it is often better to replace or clear the stack."
+          },
+          "incorrectExplanation": {
+            "es": "La línea problemática es usar pushNamed si la intención es bloquear el regreso al home.",
+            "en": "The problematic line is using pushNamed when the intention is to block returning to home."
+          },
+          "xpReward": 14
+        }
+      ]
+    },
+    {
+      "id": "bottom_navigation_sections",
+      "title": {
+        "es": "Bottom navigation y secciones",
+        "en": "Bottom navigation and sections"
+      },
+      "shortDescription": {
+        "es": "Diferencia entre cambiar de sección y abrir rutas nuevas.",
+        "en": "Understand the difference between switching sections and opening new routes."
+      },
+      "icon": "space_dashboard",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "bottom_nav_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "No toda navegación es apilar pantallas",
+            "en": "Not all navigation is stacking screens"
+          },
+          "body": {
+            "es": "En muchas apps hay secciones principales como Home, Search y Profile. Cambiar entre ellas no siempre se siente como 'abrir una pantalla nueva' sino como moverse entre áreas principales de la app. Esa diferencia es importante para diseñar bien la experiencia.",
+            "en": "In many apps there are main sections such as Home, Search, and Profile. Switching between them does not always feel like 'opening a new screen' but rather moving between main areas of the app. That difference matters when designing the experience."
+          },
+          "example": {
+            "es": "Home | Search | Profile\n\n// Esto se siente distinto a abrir un detalle encima.",
+            "en": "Home | Search | Profile\n\n// This feels different from opening a detail on top."
+          }
+        },
+        {
+          "id": "bottom_nav_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Una sección principal no es lo mismo que un detalle",
+            "en": "A main section is not the same as a detail"
+          },
+          "body": {
+            "es": "La navegación por secciones suele vivir en elementos persistentes como un BottomNavigationBar. En cambio, un detalle o una edición suelen abrirse encima del contexto actual. Mezclar ambos conceptos sin criterio hace que la app se sienta desordenada.",
+            "en": "Section-based navigation often lives in persistent elements such as a BottomNavigationBar. In contrast, a detail or edit screen usually opens above the current context. Mixing both concepts without intention makes the app feel messy."
+          },
+          "example": {
+            "es": "Tap en Profile -> cambia de pestaña\nTap en un item -> abre detalle",
+            "en": "Tap on Profile -> switch tab\nTap on an item -> open detail"
+          }
+        },
+        {
+          "id": "bottom_nav_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada acción con el tipo de navegación más lógico.",
+            "en": "Match each action with the most logical navigation type."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Ir de Home a Search",
+                "en": "Go from Home to Search"
+              },
+              "right": {
+                "es": "Cambio de sección",
+                "en": "Section switch"
+              }
+            },
+            {
+              "left": {
+                "es": "Abrir detalle de producto",
+                "en": "Open product detail"
+              },
+              "right": {
+                "es": "Ruta apilada encima",
+                "en": "Route stacked on top"
+              }
+            },
+            {
+              "left": {
+                "es": "Volver desde detalle",
+                "en": "Return from detail"
+              },
+              "right": {
+                "es": "Regreso al contexto previo",
+                "en": "Return to previous context"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Distinguir secciones principales de rutas apiladas mejora mucho el diseño del flujo.",
+            "en": "Distinguishing main sections from stacked routes greatly improves flow design."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué se siente como cambio de área y qué se siente como profundidad dentro de una sección.",
+            "en": "Review what feels like a section change and what feels like depth inside a section."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "bottom_nav_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué patrón suele representar mejor Home, Search y Profile al mismo nivel?",
+            "en": "Which pattern usually best represents Home, Search, and Profile at the same level?"
+          },
+          "options": {
+            "es": [
+              "BottomNavigationBar o tabs principales",
+              "Solo push infinitos",
+              "Un print en consola",
+              "Un Scaffold sin body"
+            ],
+            "en": [
+              "BottomNavigationBar or main tabs",
+              "Only infinite pushes",
+              "A console print",
+              "A Scaffold without body"
+            ]
+          },
+          "correctAnswer": {
+            "es": "BottomNavigationBar o tabs principales",
+            "en": "BottomNavigationBar or main tabs"
+          },
+          "correctExplanation": {
+            "es": "Las secciones principales suelen representarse con tabs o navegación inferior.",
+            "en": "Main sections are usually represented with tabs or bottom navigation."
+          },
+          "incorrectExplanation": {
+            "es": "Cuando varias áreas están al mismo nivel, BottomNavigationBar o tabs suelen ser una mejor opción.",
+            "en": "When several areas live at the same level, BottomNavigationBar or tabs are usually a better choice."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "bottom_nav_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué se siente más coherente al tocar un item dentro de Home?",
+            "en": "What feels more coherent when tapping an item inside Home?"
+          },
+          "codeSnippet": {
+            "es": "Usuario toca un item dentro de Home",
+            "en": "User taps an item inside Home"
+          },
+          "options": {
+            "es": [
+              "Abrir una pantalla de detalle encima del Home",
+              "Cambiar automáticamente a Search",
+              "Cerrar la app",
+              "Reiniciar todo el bottom navigation"
+            ],
+            "en": [
+              "Open a detail screen above Home",
+              "Automatically switch to Search",
+              "Close the app",
+              "Restart the whole bottom navigation"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Abrir una pantalla de detalle encima del Home",
+            "en": "Open a detail screen above Home"
+          },
+          "correctExplanation": {
+            "es": "Ese gesto suele significar profundizar dentro de la misma sección, no cambiar de sección principal.",
+            "en": "That gesture usually means going deeper inside the same section, not switching main section."
+          },
+          "incorrectExplanation": {
+            "es": "Tocar un item dentro de Home suele abrir detalle, no cambiar la sección principal.",
+            "en": "Tapping an item inside Home usually opens detail, not change the main section."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "gorouter_why_and_basics",
+      "title": {
+        "es": "GoRouter: por qué existe",
+        "en": "GoRouter: why it exists"
+      },
+      "shortDescription": {
+        "es": "Entiende qué problema intenta resolver GoRouter.",
+        "en": "Understand what problem GoRouter tries to solve."
+      },
+      "icon": "route",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "gorouter_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Cuando la app crece, el mapa también",
+            "en": "As the app grows, the map grows too"
+          },
+          "body": {
+            "es": "Con Navigator puedes construir muchísimas cosas, pero cuando las rutas crecen, aparecen estados protegidos, enlaces profundos, secciones complejas y flujos grandes, manejar todo manualmente se vuelve más pesado. GoRouter aparece para hacer más declarativa y organizada esa navegación.",
+            "en": "Navigator can build many things, but when routes grow, protected states appear, deep links show up, sections become more complex, and big flows emerge, managing everything manually becomes heavier. GoRouter appears to make that navigation more declarative and organized."
+          },
+          "example": {
+            "es": "final router = GoRouter(\n  routes: [\n    GoRoute(path: '/', builder: ...),\n  ],\n);",
+            "en": "final router = GoRouter(\n  routes: [\n    GoRoute(path: '/', builder: ...),\n  ],\n);"
+          }
+        },
+        {
+          "id": "gorouter_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Declarar rutas ayuda a pensar mejor el flujo",
+            "en": "Declaring routes helps think better about the flow"
+          },
+          "body": {
+            "es": "Con GoRouter describes rutas, paths y reglas de forma más centralizada. Eso no reemplaza el diseño del flujo, pero sí ayuda a expresarlo mejor. La navegación deja de estar tan dispersa entre botones y empieza a verse como una estructura de app.",
+            "en": "With GoRouter, you describe routes, paths, and rules in a more centralized way. That does not replace flow design, but it helps express it more clearly. Navigation stops being so scattered across buttons and starts looking like an app structure."
+          },
+          "example": {
+            "es": "GoRoute(path: '/profile', builder: (_, __) => const ProfileScreen())",
+            "en": "GoRoute(path: '/profile', builder: (_, __) => const ProfileScreen())"
+          }
+        },
+        {
+          "id": "gorouter_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué ventaja general ofrece GoRouter frente a una navegación muy dispersa?",
+            "en": "What general advantage does GoRouter offer compared to very scattered navigation?"
+          },
+          "options": {
+            "es": [
+              "Una estructura más declarativa y centralizada",
+              "Eliminar todos los widgets",
+              "Evitar cualquier uso de contexto siempre",
+              "Hacer innecesarios los paths"
+            ],
+            "en": [
+              "A more declarative and centralized structure",
+              "Removing all widgets",
+              "Avoiding any use of context forever",
+              "Making paths unnecessary"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una estructura más declarativa y centralizada",
+            "en": "A more declarative and centralized structure"
+          },
+          "correctExplanation": {
+            "es": "GoRouter ayuda a describir mejor las rutas y su organización general.",
+            "en": "GoRouter helps describe routes and their overall organization more clearly."
+          },
+          "incorrectExplanation": {
+            "es": "La ventaja real está en centralizar y declarar mejor la estructura de navegación.",
+            "en": "The real advantage is centralizing and declaring navigation structure more clearly."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "gorouter_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada término con su idea principal.",
+            "en": "Match each term with its main idea."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "GoRouter",
+                "en": "GoRouter"
+              },
+              "right": {
+                "es": "Configurador central de rutas",
+                "en": "Central route configurator"
+              }
+            },
+            {
+              "left": {
+                "es": "GoRoute",
+                "en": "GoRoute"
+              },
+              "right": {
+                "es": "Definición de una ruta específica",
+                "en": "Definition of a specific route"
+              }
+            },
+            {
+              "left": {
+                "es": "path",
+                "en": "path"
+              },
+              "right": {
+                "es": "Dirección declarativa de una ruta",
+                "en": "Declarative address of a route"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estos conceptos forman la base mental inicial de GoRouter.",
+            "en": "These concepts form the initial mental foundation of GoRouter."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa quién configura, quién representa una ruta concreta y qué es el path.",
+            "en": "Review who configures, who represents a specific route, and what the path is."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "gorouter_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa la clase para declarar una ruta simple en GoRouter.",
+            "en": "Fill in the class used to declare a simple route in GoRouter."
+          },
+          "initialCode": {
+            "es": "_____(\n  path: '/home',\n  builder: (_, __) => const HomeScreen(),\n)",
+            "en": "_____(\n  path: '/home',\n  builder: (_, __) => const HomeScreen(),\n)"
+          },
+          "expectedAnswer": {
+            "es": "GoRoute",
+            "en": "GoRoute"
+          },
+          "correctExplanation": {
+            "es": "GoRoute define una ruta concreta dentro de la configuración de GoRouter.",
+            "en": "GoRoute defines a concrete route inside the GoRouter configuration."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es GoRoute.",
+            "en": "The expected answer is GoRoute."
+          },
+          "hint": {
+            "es": "Es el bloque que representa una ruta declarada.",
+            "en": "It is the block representing a declared route."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "gorouter_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué intención expresa mejor esta configuración?",
+            "en": "What intent does this configuration express best?"
+          },
+          "codeSnippet": {
+            "es": "GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen())",
+            "en": "GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen())"
+          },
+          "options": {
+            "es": [
+              "Declarar una pantalla accesible en '/settings'",
+              "Guardar datos en Firebase",
+              "Pintar un botón azul",
+              "Cerrar cualquier ruta abierta"
+            ],
+            "en": [
+              "Declare a screen accessible at '/settings'",
+              "Save data in Firebase",
+              "Paint a blue button",
+              "Close any open route"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Declarar una pantalla accesible en '/settings'",
+            "en": "Declare a screen accessible at '/settings'"
+          },
+          "correctExplanation": {
+            "es": "Ese fragmento define qué pantalla corresponde a ese path dentro del router.",
+            "en": "That fragment defines which screen corresponds to that path inside the router."
+          },
+          "incorrectExplanation": {
+            "es": "La configuración está declarando una ruta, no persistencia ni UI decorativa.",
+            "en": "The configuration is declaring a route, not persistence or decorative UI."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "gorouter_in_practice",
+      "title": {
+        "es": "GoRouter en práctica",
+        "en": "GoRouter in practice"
+      },
+      "shortDescription": {
+        "es": "Navega con context.go y context.push.",
+        "en": "Navigate with context.go and context.push."
+      },
+      "icon": "swap_horiz",
+      "nodeType": "lesson",
+      "xpReward": 75,
+      "steps": [
+        {
+          "id": "gorouter_practice_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "go y push no se sienten igual",
+            "en": "go and push do not feel the same"
+          },
+          "body": {
+            "es": "En GoRouter, context.go y context.push se usan para navegar, pero no expresan exactamente la misma intención. push suele apilar una nueva pantalla, mientras que go cambia de ubicación declarativa. Elegir bien uno u otro ayuda a que el flujo sea coherente con la experiencia esperada.",
+            "en": "In GoRouter, context.go and context.push are both used for navigation, but they do not express exactly the same intent. push usually stacks a new screen, while go changes location declaratively. Choosing well between them helps the flow stay coherent with the expected experience."
+          },
+          "example": {
+            "es": "context.go('/home');\ncontext.push('/detail/42');",
+            "en": "context.go('/home');\ncontext.push('/detail/42');"
+          }
+        },
+        {
+          "id": "gorouter_practice_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Navegar también comunica intención",
+            "en": "Navigation also communicates intent"
+          },
+          "body": {
+            "es": "Usar go para cambiar de área principal y push para profundizar en una ruta suele hacer que el flujo se lea mejor. No es una religión inflexible, pero sí una convención útil para mantener orden mental y técnico.",
+            "en": "Using go to move between main areas and push to go deeper into a route usually makes the flow read better. It is not an inflexible religion, but it is a useful convention for maintaining mental and technical order."
+          },
+          "example": {
+            "es": "Home -> context.go('/profile')\nProfile -> context.push('/profile/edit')",
+            "en": "Home -> context.go('/profile')\nProfile -> context.push('/profile/edit')"
+          }
+        },
+        {
+          "id": "gorouter_practice_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método para navegar declarativamente a '/home'.",
+            "en": "Complete the method to navigate declaratively to '/home'."
+          },
+          "initialCode": {
+            "es": "context._____('/home');",
+            "en": "context._____('/home');"
+          },
+          "expectedAnswer": {
+            "es": "go",
+            "en": "go"
+          },
+          "correctExplanation": {
+            "es": "go se usa comúnmente para cambiar de ubicación declarativa.",
+            "en": "go is commonly used to change location declaratively."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es go.",
+            "en": "The expected answer is go."
+          },
+          "hint": {
+            "es": "Piensa en ir a otra ubicación.",
+            "en": "Think about going to another location."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "gorouter_practice_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el método para apilar el detalle sobre la pantalla actual.",
+            "en": "Fix the method to stack detail above the current screen."
+          },
+          "initialCode": {
+            "es": "context.go('/detail/42');",
+            "en": "context.go('/detail/42');"
+          },
+          "expectedAnswer": {
+            "es": "context.push('/detail/42');",
+            "en": "context.push('/detail/42');"
+          },
+          "correctExplanation": {
+            "es": "Si quieres profundizar sobre el contexto actual, push suele expresar mejor esa intención.",
+            "en": "If you want to go deeper over the current context, push usually expresses that intention better."
+          },
+          "incorrectExplanation": {
+            "es": "Aquí no quieres cambiar de área principal, sino apilar un detalle con push.",
+            "en": "Here you do not want to switch main area, but to stack a detail with push."
+          },
+          "hint": {
+            "es": "Profundizar no siempre es lo mismo que cambiar de ubicación principal.",
+            "en": "Going deeper is not always the same as changing the main location."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "gorouter_practice_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe dos líneas: una para ir a '/home' con go y otra para abrir '/profile/edit' con push.",
+            "en": "Write two lines: one to go to '/home' with go and another to open '/profile/edit' with push."
+          },
+          "starterCode": {
+            "es": "",
+            "en": ""
+          },
+          "expectedFragments": {
+            "es": [
+              "context.go('/home')",
+              "context.push('/profile/edit')"
+            ],
+            "en": [
+              "context.go('/home')",
+              "context.push('/profile/edit')"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La idea es practicar ambas intenciones de navegación con GoRouter.",
+            "en": "The idea is to practice both navigation intentions with GoRouter."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir una línea con go y otra con push.",
+            "en": "Your answer must include one line with go and another with push."
+          },
+          "hint": {
+            "es": "Una cambia de ubicación principal; la otra profundiza.",
+            "en": "One changes the main location; the other goes deeper."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "gorouter_practice_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué suele expresar mejor context.push('/detail/5')?",
+            "en": "What does context.push('/detail/5') usually express better?"
+          },
+          "codeSnippet": {
+            "es": "context.push('/detail/5');",
+            "en": "context.push('/detail/5');"
+          },
+          "options": {
+            "es": [
+              "Profundizar sobre el contexto actual abriendo un detalle",
+              "Cerrar toda la app",
+              "Configurar el router",
+              "Eliminar el AppBar"
+            ],
+            "en": [
+              "Go deeper over the current context opening a detail",
+              "Close the whole app",
+              "Configure the router",
+              "Remove the AppBar"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Profundizar sobre el contexto actual abriendo un detalle",
+            "en": "Go deeper over the current context opening a detail"
+          },
+          "correctExplanation": {
+            "es": "push suele sentirse como una capa adicional dentro del flujo actual.",
+            "en": "push usually feels like an extra layer inside the current flow."
+          },
+          "incorrectExplanation": {
+            "es": "context.push suele usarse para apilar una ruta como detalle sobre el contexto actual.",
+            "en": "context.push is usually used to stack a route such as a detail above the current context."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "dynamic_routes_and_params",
+      "title": {
+        "es": "Parámetros y rutas dinámicas",
+        "en": "Parameters and dynamic routes"
+      },
+      "shortDescription": {
+        "es": "Construye pantallas que dependan del path o de datos extra.",
+        "en": "Build screens that depend on the path or extra data."
+      },
+      "icon": "tag",
+      "nodeType": "lesson",
+      "xpReward": 75,
+      "steps": [
+        {
+          "id": "dynamic_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una ruta puede cambiar según el dato",
+            "en": "A route can change according to data"
+          },
+          "body": {
+            "es": "En apps reales muchas rutas no son fijas, sino dinámicas. Un detalle de producto, un perfil de usuario o una pantalla de edición suelen depender de un id. Por eso aparecen rutas como '/detail/:id' y mecanismos para leer ese valor y construir la pantalla correcta.",
+            "en": "In real apps many routes are not fixed, but dynamic. A product detail, a user profile, or an edit screen usually depend on an id. That is why routes such as '/detail/:id' appear, along with mechanisms to read that value and build the correct screen."
+          },
+          "example": {
+            "es": "GoRoute(\n  path: '/detail/:id',\n  builder: (_, state) => DetailScreen(id: state.pathParameters['id']!),\n)",
+            "en": "GoRoute(\n  path: '/detail/:id',\n  builder: (_, state) => DetailScreen(id: state.pathParameters['id']!),\n)"
+          }
+        },
+        {
+          "id": "dynamic_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No todo dato viaja igual",
+            "en": "Not every piece of data travels the same way"
+          },
+          "body": {
+            "es": "A veces usarás parámetros en el path y otras veces extra data. Lo importante es distinguir cuándo un dato forma parte de la dirección de la pantalla y cuándo solo acompaña la navegación. Un id visible en la ruta no siempre cumple el mismo papel que un objeto temporal enviado como extra.",
+            "en": "Sometimes you will use path parameters and other times extra data. The important part is distinguishing when a piece of data is part of the screen address and when it only accompanies the navigation. An id visible in the route does not always play the same role as a temporary object sent as extra."
+          },
+          "example": {
+            "es": "/detail/42\n\n// El id hace parte del path.\n// Eso lo vuelve parte de la dirección.",
+            "en": "/detail/42\n\n// The id is part of the path.\n// That makes it part of the address."
+          }
+        },
+        {
+          "id": "dynamic_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el path dinámico para un detalle por id.",
+            "en": "Complete the dynamic path for a detail by id."
+          },
+          "initialCode": {
+            "es": "path: '/detail/_____'",
+            "en": "path: '/detail/_____'"
+          },
+          "expectedAnswer": {
+            "es": ":id",
+            "en": ":id"
+          },
+          "correctExplanation": {
+            "es": "En GoRouter, :id representa un parámetro dinámico dentro del path.",
+            "en": "In GoRouter, :id represents a dynamic parameter inside the path."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es :id.",
+            "en": "The expected answer is :id."
+          },
+          "hint": {
+            "es": "Usa la convención de parámetro dinámico.",
+            "en": "Use the dynamic parameter convention."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "dynamic_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué representa '/detail/:id' dentro de una configuración de rutas?",
+            "en": "What does '/detail/:id' represent inside a route configuration?"
+          },
+          "options": {
+            "es": [
+              "Una ruta dinámica con parámetro id",
+              "Un tema de colores",
+              "Una función async obligatoria",
+              "Un widget de padding"
+            ],
+            "en": [
+              "A dynamic route with an id parameter",
+              "A color theme",
+              "A mandatory async function",
+              "A padding widget"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una ruta dinámica con parámetro id",
+            "en": "A dynamic route with an id parameter"
+          },
+          "correctExplanation": {
+            "es": "Ese path indica que la ruta acepta un valor variable llamado id.",
+            "en": "That path indicates the route accepts a variable value called id."
+          },
+          "incorrectExplanation": {
+            "es": "La expresión '/detail/:id' se usa para definir una ruta dinámica con parámetro.",
+            "en": "The expression '/detail/:id' is used to define a dynamic route with a parameter."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "dynamic_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige la lectura del parámetro dinámico dentro del builder.",
+            "en": "Fix the reading of the dynamic parameter inside the builder."
+          },
+          "initialCode": {
+            "es": "builder: (_, state) => DetailScreen(id: state['id'])",
+            "en": "builder: (_, state) => DetailScreen(id: state['id'])"
+          },
+          "expectedAnswer": {
+            "es": "builder: (_, state) => DetailScreen(id: state.pathParameters['id']!)",
+            "en": "builder: (_, state) => DetailScreen(id: state.pathParameters['id']!)"
+          },
+          "correctExplanation": {
+            "es": "GoRouter expone los parámetros de path dentro de state.pathParameters.",
+            "en": "GoRouter exposes path parameters inside state.pathParameters."
+          },
+          "incorrectExplanation": {
+            "es": "Aquí debes leer el id desde state.pathParameters['id'].",
+            "en": "Here you must read the id from state.pathParameters['id']."
+          },
+          "hint": {
+            "es": "El parámetro vive dentro de state.pathParameters.",
+            "en": "The parameter lives inside state.pathParameters."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "dynamic_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si navegas a '/detail/42', ¿qué valor debería representar id en la pantalla?",
+            "en": "If you navigate to '/detail/42', what value should id represent in the screen?"
+          },
+          "codeSnippet": {
+            "es": "path: '/detail/:id'",
+            "en": "path: '/detail/:id'"
+          },
+          "options": {
+            "es": [
+              "42",
+              ":id",
+              "/detail",
+              "null siempre"
+            ],
+            "en": [
+              "42",
+              ":id",
+              "/detail",
+              "always null"
+            ]
+          },
+          "correctAnswer": {
+            "es": "42",
+            "en": "42"
+          },
+          "correctExplanation": {
+            "es": "El segmento real reemplaza al parámetro dinámico y llega como valor leído desde la ruta.",
+            "en": "The real segment replaces the dynamic parameter and arrives as a value read from the route."
+          },
+          "incorrectExplanation": {
+            "es": "Si la ruta visitada es '/detail/42', el valor dinámico esperado para id es 42.",
+            "en": "If the visited route is '/detail/42', the expected dynamic value for id is 42."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "shell_navigation_app_structure",
+      "title": {
+        "es": "Shell navigation y estructura real",
+        "en": "Shell navigation and real app structure"
+      },
+      "shortDescription": {
+        "es": "Aprende la idea de layout persistente con contenido cambiante.",
+        "en": "Learn the idea of a persistent layout with changing content."
+      },
+      "icon": "dashboard",
+      "nodeType": "lesson",
+      "xpReward": 75,
+      "steps": [
+        {
+          "id": "shell_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una app grande necesita un esqueleto estable",
+            "en": "A big app needs a stable skeleton"
+          },
+          "body": {
+            "es": "En muchas apps tienes una estructura persistente: un bottom bar, un menú lateral o un shell general que permanece, mientras el contenido interno cambia según la sección. Esa idea evita reconstruir toda la app mentalmente cada vez que cambias de área.",
+            "en": "In many apps you have a persistent structure: a bottom bar, a side menu, or a general shell that stays while the internal content changes according to the section. That idea avoids mentally rebuilding the whole app every time you change areas."
+          },
+          "example": {
+            "es": "[BottomNavigationBar fijo]\n[Contenido cambia: Home / Search / Profile]",
+            "en": "[Fixed BottomNavigationBar]\n[Content changes: Home / Search / Profile]"
+          }
+        },
+        {
+          "id": "shell_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Persistente por fuera, dinámico por dentro",
+            "en": "Persistent outside, dynamic inside"
+          },
+          "body": {
+            "es": "Pensar en shell navigation es separar estructura estable y contenido variable. Eso hace que la app sea más escalable y que ciertas piezas visuales no desaparezcan cada vez que navegas entre secciones principales.",
+            "en": "Thinking in shell navigation means separating stable structure and variable content. That makes the app more scalable and keeps some visual pieces from disappearing every time you navigate between main sections."
+          },
+          "example": {
+            "es": "Shell general\n  -> Home\n  -> Messages\n  -> Profile",
+            "en": "General shell\n  -> Home\n  -> Messages\n  -> Profile"
+          }
+        },
+        {
+          "id": "shell_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada pieza con su papel en una estructura tipo shell.",
+            "en": "Match each piece with its role in a shell-style structure."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Shell",
+                "en": "Shell"
+              },
+              "right": {
+                "es": "Contenedor persistente general",
+                "en": "General persistent container"
+              }
+            },
+            {
+              "left": {
+                "es": "Contenido interno",
+                "en": "Inner content"
+              },
+              "right": {
+                "es": "Zona que cambia según la sección",
+                "en": "Area that changes by section"
+              }
+            },
+            {
+              "left": {
+                "es": "Bottom bar",
+                "en": "Bottom bar"
+              },
+              "right": {
+                "es": "Navegación principal visible",
+                "en": "Visible main navigation"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Pensar en shell navigation ayuda a separar estructura y contenido de forma más limpia.",
+            "en": "Thinking in shell navigation helps separate structure and content more cleanly."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué permanece fijo, qué cambia y qué controla la navegación principal.",
+            "en": "Review what stays fixed, what changes, and what controls the main navigation."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "shell_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena la idea correcta de una app con shell.",
+            "en": "Order the correct idea of a shell-based app."
+          },
+          "blocks": {
+            "es": [
+              "Contenido interno cambia",
+              "Shell persistente",
+              "Sección seleccionada determina el child visible"
+            ],
+            "en": [
+              "Inner content changes",
+              "Persistent shell",
+              "Selected section determines the visible child"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "Shell persistente",
+              "Sección seleccionada determina el child visible",
+              "Contenido interno cambia"
+            ],
+            "en": [
+              "Persistent shell",
+              "Selected section determines the visible child",
+              "Inner content changes"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Primero está la estructura estable; luego la sección activa define qué contenido cambia dentro.",
+            "en": "First comes the stable structure; then the active section defines what content changes inside."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa primero en la estructura fija y luego en el contenido que cambia dentro de ella.",
+            "en": "Think first of the fixed structure and then of the content changing inside it."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "shell_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una descripción corta de una app con shell persistente y tres secciones: Home, Search y Profile.",
+            "en": "Write a short description of an app with a persistent shell and three sections: Home, Search, and Profile."
+          },
+          "starterCode": {
+            "es": "",
+            "en": ""
+          },
+          "expectedFragments": {
+            "es": [
+              "Shell",
+              "Home",
+              "Search",
+              "Profile"
+            ],
+            "en": [
+              "Shell",
+              "Home",
+              "Search",
+              "Profile"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Lo importante aquí es expresar la idea de estructura estable con contenido interno variable.",
+            "en": "The important thing here is to express the idea of a stable structure with variable inner content."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe mencionar el shell y las tres secciones principales.",
+            "en": "Your answer must mention the shell and the three main sections."
+          },
+          "hint": {
+            "es": "Piensa en un marco fijo con contenido intercambiable.",
+            "en": "Think of a fixed frame with swappable content."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "shell_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué ventaja suele dar una estructura shell en apps grandes?",
+            "en": "What advantage does a shell structure usually provide in large apps?"
+          },
+          "codeSnippet": {
+            "es": "Shell persistente + child cambiante",
+            "en": "Persistent shell + changing child"
+          },
+          "options": {
+            "es": [
+              "Una navegación principal más consistente y escalable",
+              "Eliminar toda navegación",
+              "Impedir cualquier layout flexible",
+              "Volver innecesario el state management"
+            ],
+            "en": [
+              "More consistent and scalable main navigation",
+              "Removing all navigation",
+              "Preventing any flexible layout",
+              "Making state management unnecessary"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una navegación principal más consistente y escalable",
+            "en": "More consistent and scalable main navigation"
+          },
+          "correctExplanation": {
+            "es": "El shell ayuda a mantener estructura estable y a escalar mejor varias secciones principales.",
+            "en": "The shell helps keep a stable structure and scale multiple main sections more cleanly."
+          },
+          "incorrectExplanation": {
+            "es": "La ventaja real está en consistencia y escalabilidad de la estructura general.",
+            "en": "The real advantage is consistency and scalability of the overall structure."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "flutter_navigation_final_exam",
+      "title": {
+        "es": "Examen Final Navegación",
+        "en": "Navigation Final Exam"
+      },
+      "shortDescription": {
+        "es": "Pon a prueba tu criterio sobre flujos, pila, datos y rutas modernas.",
+        "en": "Test your judgment on flows, stack, data passing, and modern routes."
+      },
+      "icon": "military_tech",
+      "nodeType": "exam",
+      "xpReward": 150,
+      "steps": [
+        {
+          "id": "nav_exam_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Hora de validar el mapa",
+            "en": "Time to validate the map"
+          },
+          "body": {
+            "es": "Este examen mezcla flujo, Navigator, paso y retorno de datos, rutas nombradas y GoRouter. La idea no es recitar métodos por memoria, sino demostrar que entiendes qué tipo de navegación conviene según el caso.",
+            "en": "This exam mixes flow, Navigator, data passing and returning, named routes, and GoRouter. The idea is not to recite methods by memory, but to show that you understand which kind of navigation fits each case."
+          },
+          "example": {
+            "es": "No gana quien más métodos memoriza.\nGana quien sabe cuándo usar cada uno.",
+            "en": "The winner is not the one who memorizes more methods.\nThe winner is the one who knows when to use each one."
+          }
+        },
+        {
+          "id": "nav_exam_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "Después de un login exitoso, ¿qué opción suele tener más sentido si no quieres volver al login con atrás?",
+            "en": "After a successful login, which option usually makes more sense if you do not want to return to login with back?"
+          },
+          "options": {
+            "es": [
+              "Navigator.push",
+              "Navigator.pushReplacement",
+              "Navigator.pop",
+              "ListView.builder"
+            ],
+            "en": [
+              "Navigator.push",
+              "Navigator.pushReplacement",
+              "Navigator.pop",
+              "ListView.builder"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Navigator.pushReplacement",
+            "en": "Navigator.pushReplacement"
+          },
+          "correctExplanation": {
+            "es": "pushReplacement ayuda a sacar Login del camino inmediato del botón atrás.",
+            "en": "pushReplacement helps remove Login from the immediate back path."
+          },
+          "incorrectExplanation": {
+            "es": "La opción más coherente aquí suele ser pushReplacement.",
+            "en": "The most coherent option here is usually pushReplacement."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "nav_exam_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada acción con la herramienta más apropiada.",
+            "en": "Match each action with the most appropriate tool."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Volver a la pantalla anterior",
+                "en": "Return to previous screen"
+              },
+              "right": {
+                "es": "Navigator.pop",
+                "en": "Navigator.pop"
+              }
+            },
+            {
+              "left": {
+                "es": "Cambiar a '/home' con GoRouter",
+                "en": "Change to '/home' with GoRouter"
+              },
+              "right": {
+                "es": "context.go",
+                "en": "context.go"
+              }
+            },
+            {
+              "left": {
+                "es": "Abrir detalle encima del contexto actual con GoRouter",
+                "en": "Open detail above current context with GoRouter"
+              },
+              "right": {
+                "es": "context.push",
+                "en": "context.push"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Aquí se valida si distingues bien las intenciones de navegación.",
+            "en": "This checks whether you clearly distinguish navigation intentions."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué sirve para volver, qué cambia ubicación principal y qué apila detalle.",
+            "en": "Review what is used to return, what changes main location, and what stacks detail."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "nav_exam_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para devolver true al cerrar la pantalla actual.",
+            "en": "Fix the code to return true when closing the current screen."
+          },
+          "initialCode": {
+            "es": "Navigator.pop(context);\ntrue;",
+            "en": "Navigator.pop(context);\ntrue;"
+          },
+          "expectedAnswer": {
+            "es": "Navigator.pop(context, true);",
+            "en": "Navigator.pop(context, true);"
+          },
+          "correctExplanation": {
+            "es": "El valor debe viajar dentro de Navigator.pop.",
+            "en": "The value must travel inside Navigator.pop."
+          },
+          "incorrectExplanation": {
+            "es": "No basta con escribir true aparte. Debe ir dentro del pop.",
+            "en": "Writing true separately is not enough. It must go inside pop."
+          },
+          "hint": {
+            "es": "Cierra y devuelve en la misma llamada.",
+            "en": "Close and return in the same call."
+          },
+          "xpReward": 20
+        },
+        {
+          "id": "nav_exam_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo correcto para seleccionar una ciudad y recibirla de vuelta.",
+            "en": "Order the correct flow to pick a city and receive it back."
+          },
+          "blocks": {
+            "es": [
+              "La pantalla de selección ejecuta Navigator.pop(context, 'Bogotá')",
+              "La pantalla actual espera con await Navigator.push(...)",
+              "result recibe la ciudad al volver"
+            ],
+            "en": [
+              "The picker screen executes Navigator.pop(context, 'Bogotá')",
+              "The current screen waits with await Navigator.push(...)",
+              "result receives the city on return"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "La pantalla actual espera con await Navigator.push(...)",
+              "La pantalla de selección ejecuta Navigator.pop(context, 'Bogotá')",
+              "result recibe la ciudad al volver"
+            ],
+            "en": [
+              "The current screen waits with await Navigator.push(...)",
+              "The picker screen executes Navigator.pop(context, 'Bogotá')",
+              "result receives the city on return"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Primero abres y esperas, luego la pantalla devuelve el dato y al final la variable lo recibe.",
+            "en": "First you open and wait, then the screen returns the data, and finally the variable receives it."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en el ciclo real: abrir, devolver, recibir.",
+            "en": "Think of the real cycle: open, return, receive."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "nav_exam_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué representa '/detail/:id'?",
+            "en": "What does '/detail/:id' represent?"
+          },
+          "codeSnippet": {
+            "es": "GoRoute(path: '/detail/:id', builder: ...)",
+            "en": "GoRoute(path: '/detail/:id', builder: ...)"
+          },
+          "options": {
+            "es": [
+              "Una ruta dinámica con un parámetro id",
+              "Un widget para formularios",
+              "Una forma de cerrar el router",
+              "Una lista de tabs"
+            ],
+            "en": [
+              "A dynamic route with an id parameter",
+              "A widget for forms",
+              "A way to close the router",
+              "A list of tabs"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una ruta dinámica con un parámetro id",
+            "en": "A dynamic route with an id parameter"
+          },
+          "correctExplanation": {
+            "es": "Ese path indica que la ruta acepta un valor variable llamado id.",
+            "en": "That path indicates the route accepts a variable value called id."
+          },
+          "incorrectExplanation": {
+            "es": "La expresión indica una ruta dinámica, no un widget ni una acción de cierre.",
+            "en": "The expression indicates a dynamic route, not a widget or a closing action."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "nav_exam_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un mini flujo con tres líneas: ir a '/home' con go, abrir '/detail/7' con push y luego volver con pop.",
+            "en": "Write a mini flow with three lines: go to '/home' with go, open '/detail/7' with push, and then return with pop."
+          },
+          "starterCode": {
+            "es": "",
+            "en": ""
+          },
+          "expectedFragments": {
+            "es": [
+              "context.go('/home')",
+              "context.push('/detail/7')",
+              "Navigator.pop"
+            ],
+            "en": [
+              "context.go('/home')",
+              "context.push('/detail/7')",
+              "Navigator.pop"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Aquí estás combinando varios niveles de intención: ir, profundizar y volver.",
+            "en": "Here you are combining several levels of intent: go, go deeper, and return."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir una línea con go, otra con push y una con pop.",
+            "en": "Your answer must include one line with go, one with push, and one with pop."
+          },
+          "hint": {
+            "es": "Primero cambia de área, luego profundiza y finalmente vuelve.",
+            "en": "First switch area, then go deeper, and finally return."
+          },
+          "xpReward": 24
+        }
+      ]
+    }
+  ]
+}

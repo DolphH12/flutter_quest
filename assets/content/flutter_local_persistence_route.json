@@ -1,0 +1,2403 @@
+{
+  "routeId": "flutter_local_persistence_route",
+  "title": {
+    "es": "Persistencia local",
+    "en": "Local persistence"
+  },
+  "description": {
+    "es": "Aprende a guardar y recuperar datos en Flutter usando persistencia local con criterio, continuidad y buen diseño.",
+    "en": "Learn to save and restore data in Flutter using local persistence with clarity, continuity, and sound design."
+  },
+  "icon": "save",
+  "themeColor": "#2E7D32",
+  "version": 1,
+  "estimatedMinutes": 260,
+  "examNodeId": "local_persistence_final_exam",
+  "nodes": [
+    {
+      "id": "local_persistence_intro",
+      "title": {
+        "es": "¿Qué es persistencia local?",
+        "en": "What is local persistence?"
+      },
+      "shortDescription": {
+        "es": "Entiende por qué una app necesita recordar cosas entre aperturas.",
+        "en": "Understand why an app needs to remember things between launches."
+      },
+      "icon": "storage",
+      "nodeType": "lesson",
+      "xpReward": 55,
+      "steps": [
+        {
+          "id": "lp_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "La app no debería sufrir amnesia",
+            "en": "Your app should not suffer from amnesia"
+          },
+          "body": {
+            "es": "Si el usuario cierra la app y todo desaparece, la experiencia se siente frágil. La persistencia local permite guardar datos en el dispositivo para recuperarlos después.",
+            "en": "If the user closes the app and everything disappears, the experience feels fragile. Local persistence lets you store data on the device and restore it later."
+          },
+          "example": {
+            "es": "contador = 7\nmodoOscuro = true\nnombre = 'Lina'",
+            "en": "counter = 7\ndarkMode = true\nname = 'Lina'"
+          }
+        },
+        {
+          "id": "lp_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Guardar no siempre significa base de datos",
+            "en": "Saving does not always mean database"
+          },
+          "body": {
+            "es": "No todo problema requiere una base de datos grande. A veces solo necesitas recordar una preferencia, un onboarding completado o la última pestaña visitada.",
+            "en": "Not every problem needs a large database. Sometimes you only need to remember a preference, a completed onboarding, or the last visited tab."
+          },
+          "example": {
+            "es": "bool hasSeenOnboarding = true;",
+            "en": "bool hasSeenOnboarding = true;"
+          }
+        },
+        {
+          "id": "lp_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál es un caso típico de persistencia local simple?",
+            "en": "Which is a typical simple local persistence use case?"
+          },
+          "options": {
+            "es": [
+              "Guardar si el usuario ya vio el onboarding",
+              "Renderizar un botón",
+              "Compilar la app",
+              "Cambiar de lenguaje de programación"
+            ],
+            "en": [
+              "Saving whether the user already saw onboarding",
+              "Rendering a button",
+              "Compiling the app",
+              "Changing programming language"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Guardar si el usuario ya vio el onboarding",
+            "en": "Saving whether the user already saw onboarding"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Ese tipo de dato pequeño y duradero encaja perfecto en persistencia local.",
+            "en": "Exactly. That kind of small durable data fits local persistence very well."
+          },
+          "incorrectExplanation": {
+            "es": "Persistencia local sirve para recordar datos entre sesiones, no para tareas de compilación o render puro.",
+            "en": "Local persistence is for remembering data between sessions, not for compilation tasks or pure rendering."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "lp_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su intención.",
+            "en": "Match each concept with its purpose."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Persistencia local",
+                "en": "Local persistence"
+              },
+              "right": {
+                "es": "Recordar datos entre aperturas",
+                "en": "Remember data between launches"
+              }
+            },
+            {
+              "left": {
+                "es": "Estado temporal",
+                "en": "Temporary state"
+              },
+              "right": {
+                "es": "Vive mientras la pantalla está activa",
+                "en": "Lives while the screen is active"
+              }
+            },
+            {
+              "left": {
+                "es": "Preferencia",
+                "en": "Preference"
+              },
+              "right": {
+                "es": "Configuración que el usuario espera conservar",
+                "en": "Configuration the user expects to keep"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Bien. Ya diferencias lo que vive en memoria de lo que debe sobrevivir al cierre.",
+            "en": "Good. You now distinguish what lives in memory from what should survive app closure."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué dura solo en pantalla y qué debe mantenerse entre sesiones.",
+            "en": "Review what lasts only on screen and what should persist between sessions."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "lp_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué debería pasar si una app guarda el tema seleccionado localmente?",
+            "en": "What should happen if an app saves the selected theme locally?"
+          },
+          "codeSnippet": {
+            "es": "// El usuario eligió modo oscuro ayer",
+            "en": "// The user chose dark mode yesterday"
+          },
+          "options": {
+            "es": [
+              "La app debería recordar modo oscuro al abrirse de nuevo",
+              "La app debería olvidar todo siempre",
+              "La app debería cerrarse",
+              "Nada cambia porque guardar no sirve"
+            ],
+            "en": [
+              "The app should remember dark mode when reopened",
+              "The app should always forget everything",
+              "The app should close",
+              "Nothing changes because saving is useless"
+            ]
+          },
+          "correctAnswer": {
+            "es": "La app debería recordar modo oscuro al abrirse de nuevo",
+            "en": "The app should remember dark mode when reopened"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Esa continuidad es una de las razones más valiosas para persistir datos localmente.",
+            "en": "Exactly. That continuity is one of the most valuable reasons to persist data locally."
+          },
+          "incorrectExplanation": {
+            "es": "La idea de persistir es recuperar el valor guardado después, no perderlo al salir.",
+            "en": "The point of persisting is to recover the saved value later, not lose it when exiting."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "shared_preferences_basics",
+      "title": {
+        "es": "SharedPreferences básico",
+        "en": "SharedPreferences basics"
+      },
+      "shortDescription": {
+        "es": "Guarda valores pequeños como bool, int, double y String.",
+        "en": "Store small values like bool, int, double, and String."
+      },
+      "icon": "tune",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "sp_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Pequeño, rápido y útil",
+            "en": "Small, fast, and useful"
+          },
+          "body": {
+            "es": "SharedPreferences es ideal para valores simples: banderas, contadores, nombres, tema, idioma o la hora elegida por el usuario.",
+            "en": "SharedPreferences is ideal for simple values: flags, counters, names, theme, language, or a user-selected time."
+          },
+          "example": {
+            "es": "await prefs.setBool('isDarkMode', true);",
+            "en": "await prefs.setBool('isDarkMode', true);"
+          }
+        },
+        {
+          "id": "sp_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No es para todo",
+            "en": "It is not for everything"
+          },
+          "body": {
+            "es": "Sirve para datos simples y pequeños. Si intentas meter estructuras complejas enormes, terminarás peleando con una herramienta que no fue diseñada para eso.",
+            "en": "It works for small simple data. If you try to shove huge complex structures into it, you'll end up fighting a tool that was not designed for that."
+          },
+          "example": {
+            "es": "setString, setInt, setBool, getString...",
+            "en": "setString, setInt, setBool, getString..."
+          }
+        },
+        {
+          "id": "sp_fic_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método para guardar un booleano.",
+            "en": "Complete the method to save a boolean."
+          },
+          "initialCode": {
+            "es": "await prefs._____('notificationsEnabled', true);",
+            "en": "await prefs._____('notificationsEnabled', true);"
+          },
+          "expectedAnswer": {
+            "es": "setBool",
+            "en": "setBool"
+          },
+          "correctExplanation": {
+            "es": "Correcto. setBool guarda valores booleanos.",
+            "en": "Correct. setBool stores boolean values."
+          },
+          "incorrectExplanation": {
+            "es": "Para guardar true o false debes usar setBool.",
+            "en": "To store true or false you should use setBool."
+          },
+          "hint": {
+            "es": "Piensa en el tipo del valor: true/false.",
+            "en": "Think about the value type: true/false."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "sp_cs_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método para recuperar un string guardado.",
+            "en": "Complete the method to recover a saved string."
+          },
+          "initialCode": {
+            "es": "final userName = prefs._____('userName');",
+            "en": "final userName = prefs._____('userName');"
+          },
+          "expectedAnswer": {
+            "es": "getString",
+            "en": "getString"
+          },
+          "correctExplanation": {
+            "es": "Bien. getString recupera un texto guardado con esa clave.",
+            "en": "Good. getString retrieves a text saved under that key."
+          },
+          "incorrectExplanation": {
+            "es": "La pareja de setString suele ser getString.",
+            "en": "The pair for setString is usually getString."
+          },
+          "hint": {
+            "es": "Es el getter del tipo String.",
+            "en": "It is the getter for String type."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "sp_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el tipo del guardado para que coincida con el valor.",
+            "en": "Fix the save type so it matches the value."
+          },
+          "initialCode": {
+            "es": "await prefs.setInt('theme', 'dark');",
+            "en": "await prefs.setInt('theme', 'dark');"
+          },
+          "expectedAnswer": {
+            "es": "await prefs.setString('theme', 'dark');",
+            "en": "await prefs.setString('theme', 'dark');"
+          },
+          "correctExplanation": {
+            "es": "Exacto. 'dark' es texto, no entero.",
+            "en": "Exactly. 'dark' is text, not an integer."
+          },
+          "incorrectExplanation": {
+            "es": "El error está en el método: el valor es String.",
+            "en": "The error is in the method: the value is a String."
+          },
+          "hint": {
+            "es": "Mira el tipo del valor entre comillas.",
+            "en": "Look at the value type inside quotes."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "sp_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué tipo de dato guarda mejor SharedPreferences?",
+            "en": "What kind of data does SharedPreferences store best?"
+          },
+          "options": {
+            "es": [
+              "Preferencias simples y valores pequeños",
+              "Videos largos en HD",
+              "Árboles enormes de objetos complejos sin procesar",
+              "Shaders gráficos"
+            ],
+            "en": [
+              "Simple preferences and small values",
+              "Long HD videos",
+              "Huge trees of raw complex objects",
+              "Graphics shaders"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Preferencias simples y valores pequeños",
+            "en": "Simple preferences and small values"
+          },
+          "correctExplanation": {
+            "es": "Exacto. SharedPreferences destaca en configuraciones y valores simples.",
+            "en": "Exactly. SharedPreferences shines for simple settings and values."
+          },
+          "incorrectExplanation": {
+            "es": "No fue pensado para guardar recursos pesados o estructuras grandes sin una estrategia clara.",
+            "en": "It was not meant to store heavy resources or large structures without a clear strategy."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "sp_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea está mal en este guardado?",
+            "en": "Which line is wrong in this save snippet?"
+          },
+          "codeLines": {
+            "es": [
+              "final prefs = await SharedPreferences.getInstance();",
+              "await prefs.setBool('counter', 5);",
+              "print('ok');"
+            ],
+            "en": [
+              "final prefs = await SharedPreferences.getInstance();",
+              "await prefs.setBool('counter', 5);",
+              "print('ok');"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "setBool espera true o false. El valor 5 no corresponde a ese tipo.",
+            "en": "setBool expects true or false. The value 5 does not match that type."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que mezcla setBool con un entero.",
+            "en": "The wrong line is the one mixing setBool with an integer."
+          },
+          "xpReward": 12
+        }
+      ]
+    },
+    {
+      "id": "restore_state_on_launch",
+      "title": {
+        "es": "Restaurar estado al abrir la app",
+        "en": "Restore state when the app launches"
+      },
+      "shortDescription": {
+        "es": "Recupera valores guardados y refléjalos en la UI.",
+        "en": "Recover saved values and reflect them in the UI."
+      },
+      "icon": "restart_alt",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "restore_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Guardar sin leer es media historia",
+            "en": "Saving without reading is half the story"
+          },
+          "body": {
+            "es": "Persistir tiene sentido cuando luego restauras esos datos y actualizas la experiencia del usuario. No basta con guardar: debes recuperar y aplicar.",
+            "en": "Persistence matters when you later restore that data and update the user experience. Saving alone is not enough: you must recover and apply."
+          },
+          "example": {
+            "es": "final isDark = prefs.getBool('isDarkMode') ?? false;",
+            "en": "final isDark = prefs.getBool('isDarkMode') ?? false;"
+          }
+        },
+        {
+          "id": "restore_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "El valor por defecto importa muchísimo",
+            "en": "Default values matter a lot"
+          },
+          "body": {
+            "es": "A veces la clave no existe todavía. Por eso conviene usar fallback con ?? para evitar null innecesarios y definir un comportamiento inicial claro.",
+            "en": "Sometimes the key does not exist yet. That is why using a fallback with ?? helps avoid unnecessary nulls and defines a clear initial behavior."
+          },
+          "example": {
+            "es": "final count = prefs.getInt('count') ?? 0;",
+            "en": "final count = prefs.getInt('count') ?? 0;"
+          }
+        },
+        {
+          "id": "restore_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué valor tomará count si la clave no existe aún?",
+            "en": "What value will count take if the key does not exist yet?"
+          },
+          "codeSnippet": {
+            "es": "final count = prefs.getInt('count') ?? 0;",
+            "en": "final count = prefs.getInt('count') ?? 0;"
+          },
+          "options": {
+            "es": [
+              "0",
+              "null",
+              "true",
+              "Lanza error siempre"
+            ],
+            "en": [
+              "0",
+              "null",
+              "true",
+              "Always throws an error"
+            ]
+          },
+          "correctAnswer": {
+            "es": "0",
+            "en": "0"
+          },
+          "correctExplanation": {
+            "es": "Correcto. El operador ?? usa 0 como valor por defecto.",
+            "en": "Correct. The ?? operator uses 0 as the fallback value."
+          },
+          "incorrectExplanation": {
+            "es": "Si getInt devuelve null, entra el fallback 0.",
+            "en": "If getInt returns null, the fallback 0 is used."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "restore_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un fragmento para leer el nombre del usuario con un valor por defecto 'Invitado'.",
+            "en": "Write a snippet to read the user's name with a fallback value of 'Guest'."
+          },
+          "starterCode": {
+            "es": "final userName = _____;",
+            "en": "final userName = _____;"
+          },
+          "expectedFragments": {
+            "es": [
+              "prefs.getString('userName')",
+              "??",
+              "'Invitado'"
+            ],
+            "en": [
+              "prefs.getString('userName')",
+              "??",
+              "'Guest'"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Leer con fallback evita UI rota y hace el comportamiento más predecible.",
+            "en": "Good. Reading with a fallback prevents broken UI and makes behavior more predictable."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe leer la clave y usar un valor por defecto.",
+            "en": "Your answer must read the key and use a fallback value."
+          },
+          "hint": {
+            "es": "Piensa en getString + ??.",
+            "en": "Think of getString + ??."
+          },
+          "xpReward": 18
+        },
+        {
+          "id": "restore_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo correcto para restaurar una preferencia y aplicarla.",
+            "en": "Order the correct flow to restore a preference and apply it."
+          },
+          "blocks": {
+            "es": [
+              "setState(() => isDarkMode = saved);",
+              "final saved = prefs.getBool('isDarkMode') ?? false;",
+              "final prefs = await SharedPreferences.getInstance();"
+            ],
+            "en": [
+              "setState(() => isDarkMode = saved);",
+              "final saved = prefs.getBool('isDarkMode') ?? false;",
+              "final prefs = await SharedPreferences.getInstance();"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "final prefs = await SharedPreferences.getInstance();",
+              "final saved = prefs.getBool('isDarkMode') ?? false;",
+              "setState(() => isDarkMode = saved);"
+            ],
+            "en": [
+              "final prefs = await SharedPreferences.getInstance();",
+              "final saved = prefs.getBool('isDarkMode') ?? false;",
+              "setState(() => isDarkMode = saved);"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Exacto. Primero obtienes prefs, luego lees y al final reflejas el valor en UI.",
+            "en": "Exactly. First obtain prefs, then read, and finally reflect the value in the UI."
+          },
+          "incorrectExplanation": {
+            "es": "El orden lógico es obtener la instancia, leer el dato y actualizar la UI.",
+            "en": "The logical order is obtain the instance, read the value, and update the UI."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        },
+        {
+          "id": "restore_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada pieza con su rol.",
+            "en": "Match each piece with its role."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "getBool",
+                "en": "getBool"
+              },
+              "right": {
+                "es": "Leer un booleano",
+                "en": "Read a boolean"
+              }
+            },
+            {
+              "left": {
+                "es": "?? false",
+                "en": "?? false"
+              },
+              "right": {
+                "es": "Definir valor por defecto",
+                "en": "Define fallback value"
+              }
+            },
+            {
+              "left": {
+                "es": "setState",
+                "en": "setState"
+              },
+              "right": {
+                "es": "Actualizar la UI con el dato leído",
+                "en": "Update UI with the loaded data"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Ya estás viendo la persistencia como flujo completo, no solo como guardado.",
+            "en": "Very good. You are now seeing persistence as a full flow, not just saving."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué lee, qué define fallback y qué actualiza pantalla.",
+            "en": "Review what reads, what defines fallback, and what updates the screen."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "user_preferences_route",
+      "title": {
+        "es": "Preferencias del usuario",
+        "en": "User preferences"
+      },
+      "shortDescription": {
+        "es": "Guarda tema, idioma, onboarding, notificaciones y opciones similares.",
+        "en": "Store theme, language, onboarding, notifications, and similar options."
+      },
+      "icon": "settings",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "prefs_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Las preferencias construyen continuidad",
+            "en": "Preferences build continuity"
+          },
+          "body": {
+            "es": "Tema, idioma, recordatorios y tutoriales vistos son ejemplos clásicos de preferencias. Son pequeñas, pero cambian mucho la percepción de calidad de una app.",
+            "en": "Theme, language, reminders, and seen tutorials are classic examples of preferences. They are small, but they change the perceived quality of an app a lot."
+          },
+          "example": {
+            "es": "theme=dark, locale=es, onboarding=true",
+            "en": "theme=dark, locale=es, onboarding=true"
+          }
+        },
+        {
+          "id": "prefs_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál de estos datos encaja mejor como preferencia local?",
+            "en": "Which of these fits best as a local preference?"
+          },
+          "options": {
+            "es": [
+              "Idioma seleccionado por el usuario",
+              "Un video de 2 GB",
+              "Toda la galería del dispositivo",
+              "La instalación de Flutter"
+            ],
+            "en": [
+              "Language selected by the user",
+              "A 2 GB video",
+              "The whole device gallery",
+              "The Flutter installation"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Idioma seleccionado por el usuario",
+            "en": "Language selected by the user"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Es una configuración pequeña y muy natural de persistir localmente.",
+            "en": "Exactly. It is a small setting and very natural to persist locally."
+          },
+          "incorrectExplanation": {
+            "es": "Una preferencia suele ser pequeña, directa y útil entre sesiones.",
+            "en": "A preference is usually small, direct, and useful across sessions."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "prefs_fic_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa la clave booleana para marcar onboarding visto.",
+            "en": "Complete the boolean save method for marking onboarding as seen."
+          },
+          "initialCode": {
+            "es": "await prefs._____('hasSeenOnboarding', true);",
+            "en": "await prefs._____('hasSeenOnboarding', true);"
+          },
+          "expectedAnswer": {
+            "es": "setBool",
+            "en": "setBool"
+          },
+          "correctExplanation": {
+            "es": "Correcto. Es una bandera booleana.",
+            "en": "Correct. It is a boolean flag."
+          },
+          "incorrectExplanation": {
+            "es": "Para guardar una bandera true/false usa setBool.",
+            "en": "To save a true/false flag use setBool."
+          },
+          "hint": {
+            "es": "Es el setter para booleanos.",
+            "en": "It is the setter for booleans."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "prefs_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige la lectura de idioma para que use el getter correcto.",
+            "en": "Fix the language read so it uses the correct getter."
+          },
+          "initialCode": {
+            "es": "final locale = prefs.getBool('locale');",
+            "en": "final locale = prefs.getBool('locale');"
+          },
+          "expectedAnswer": {
+            "es": "final locale = prefs.getString('locale');",
+            "en": "final locale = prefs.getString('locale');"
+          },
+          "correctExplanation": {
+            "es": "Bien. El idioma suele representarse como texto: 'es', 'en', etc.",
+            "en": "Good. A locale is usually represented as text: 'es', 'en', etc."
+          },
+          "incorrectExplanation": {
+            "es": "El problema está en el getter: locale aquí es un String, no un bool.",
+            "en": "The issue is in the getter: locale here is a String, not a bool."
+          },
+          "hint": {
+            "es": "Piensa en 'es' y 'en'.",
+            "en": "Think of 'es' and 'en'."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "prefs_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué beneficio da guardar hasSeenOnboarding localmente?",
+            "en": "What benefit comes from saving hasSeenOnboarding locally?"
+          },
+          "codeSnippet": {
+            "es": "final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;",
+            "en": "final hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;"
+          },
+          "options": {
+            "es": [
+              "Evitar mostrar el tutorial inicial cada vez",
+              "Compilar más rápido la app",
+              "Aumentar el tamaño de fuente automáticamente siempre",
+              "Guardar imágenes pesadas"
+            ],
+            "en": [
+              "Avoid showing the initial tutorial every time",
+              "Compile the app faster",
+              "Always increase font size automatically",
+              "Store heavy images"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Evitar mostrar el tutorial inicial cada vez",
+            "en": "Avoid showing the initial tutorial every time"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Esa bandera permite adaptar el arranque de la app a la historia del usuario.",
+            "en": "Exactly. That flag lets the app start adapt to the user's history."
+          },
+          "incorrectExplanation": {
+            "es": "Una preferencia así ayuda a tomar decisiones de flujo, no a compilar ni a guardar archivos pesados.",
+            "en": "A preference like this helps flow decisions, not compilation or heavy file storage."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "prefs_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un fragmento para guardar el idioma 'es' usando la clave 'locale'.",
+            "en": "Write a snippet to save the locale 'es' using the key 'locale'."
+          },
+          "starterCode": {
+            "es": "_____",
+            "en": "_____"
+          },
+          "expectedFragments": {
+            "es": [
+              "prefs.setString",
+              "'locale'",
+              "'es'"
+            ],
+            "en": [
+              "prefs.setString",
+              "'locale'",
+              "'es'"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ese tipo de valor encaja perfecto como preferencia local.",
+            "en": "Good. That kind of value fits local preferences perfectly."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe usar setString con la clave locale y el valor 'es'.",
+            "en": "Your answer must use setString with key locale and value 'es'."
+          },
+          "hint": {
+            "es": "Piensa en texto corto y persistente.",
+            "en": "Think of short persistent text."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "serialize_simple_models",
+      "title": {
+        "es": "Serializar modelos simples",
+        "en": "Serialize simple models"
+      },
+      "shortDescription": {
+        "es": "Convierte objetos sencillos a String para guardarlos localmente.",
+        "en": "Convert simple objects to String to store them locally."
+      },
+      "icon": "code",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "ser_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Cuando un bool ya no alcanza",
+            "en": "When a bool is no longer enough"
+          },
+          "body": {
+            "es": "A veces un valor simple no basta y necesitas guardar un pequeño modelo: usuario, filtro, configuración o progreso básico. Allí aparece la serialización.",
+            "en": "Sometimes a simple value is not enough and you need to store a small model: user, filter, configuration, or basic progress. That is where serialization appears."
+          },
+          "example": {
+            "es": "User -> Map -> JSON String",
+            "en": "User -> Map -> JSON String"
+          }
+        },
+        {
+          "id": "ser_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Guardar objetos directo no suele funcionar",
+            "en": "Saving objects directly usually does not work"
+          },
+          "body": {
+            "es": "SharedPreferences guarda tipos básicos. Para un modelo simple, normalmente conviertes el objeto a JSON String y luego lo reconstruyes al leerlo.",
+            "en": "SharedPreferences stores basic types. For a simple model, you usually convert the object into a JSON String and reconstruct it when reading."
+          },
+          "example": {
+            "es": "jsonEncode(user.toMap())",
+            "en": "jsonEncode(user.toMap())"
+          }
+        },
+        {
+          "id": "ser_cs_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método que suele usarse para convertir un Map a JSON String.",
+            "en": "Complete the method often used to convert a Map into a JSON String."
+          },
+          "initialCode": {
+            "es": "final raw = _____(user.toMap());",
+            "en": "final raw = _____(user.toMap());"
+          },
+          "expectedAnswer": {
+            "es": "jsonEncode",
+            "en": "jsonEncode"
+          },
+          "correctExplanation": {
+            "es": "Correcto. jsonEncode convierte estructuras serializables a texto JSON.",
+            "en": "Correct. jsonEncode converts serializable structures into JSON text."
+          },
+          "incorrectExplanation": {
+            "es": "El método esperado para esto es jsonEncode.",
+            "en": "The expected method for this is jsonEncode."
+          },
+          "hint": {
+            "es": "Piensa en encode, no decode.",
+            "en": "Think encode, not decode."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "ser_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el flujo para reconstruir un modelo desde texto JSON.",
+            "en": "Fix the flow to rebuild a model from JSON text."
+          },
+          "initialCode": {
+            "es": "final userMap = jsonEncode(raw);\nfinal user = User.fromMap(userMap);",
+            "en": "final userMap = jsonEncode(raw);\nfinal user = User.fromMap(userMap);"
+          },
+          "expectedAnswer": {
+            "es": "final userMap = jsonDecode(raw);\nfinal user = User.fromMap(userMap);",
+            "en": "final userMap = jsonDecode(raw);\nfinal user = User.fromMap(userMap);"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Si raw ya es texto JSON, debes decodificarlo para volver a un Map.",
+            "en": "Exactly. If raw is already JSON text, you must decode it to get a Map again."
+          },
+          "incorrectExplanation": {
+            "es": "El error es usar jsonEncode cuando en realidad quieres reconstruir el mapa.",
+            "en": "The error is using jsonEncode when you actually want to reconstruct the map."
+          },
+          "hint": {
+            "es": "Ya tienes texto. Ahora debes leerlo de vuelta.",
+            "en": "You already have text. Now read it back."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "ser_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada paso con su propósito.",
+            "en": "Match each step with its purpose."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "toMap()",
+                "en": "toMap()"
+              },
+              "right": {
+                "es": "Convertir modelo a estructura serializable",
+                "en": "Convert model to serializable structure"
+              }
+            },
+            {
+              "left": {
+                "es": "jsonEncode",
+                "en": "jsonEncode"
+              },
+              "right": {
+                "es": "Convertir estructura a texto",
+                "en": "Convert structure to text"
+              }
+            },
+            {
+              "left": {
+                "es": "fromMap()",
+                "en": "fromMap()"
+              },
+              "right": {
+                "es": "Reconstruir el modelo",
+                "en": "Rebuild the model"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Bien. Esa secuencia mental te salva de muchos bugs silenciosos.",
+            "en": "Good. That mental sequence saves you from many silent bugs."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa el camino: modelo -> mapa -> string -> mapa -> modelo.",
+            "en": "Review the path: model -> map -> string -> map -> model."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "ser_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué tipo de valor suele guardarse finalmente en SharedPreferences al serializar un modelo simple?",
+            "en": "What type of value is usually finally stored in SharedPreferences when serializing a simple model?"
+          },
+          "codeSnippet": {
+            "es": "final raw = jsonEncode(user.toMap());",
+            "en": "final raw = jsonEncode(user.toMap());"
+          },
+          "options": {
+            "es": [
+              "String",
+              "Widget",
+              "BuildContext",
+              "ColorScheme"
+            ],
+            "en": [
+              "String",
+              "Widget",
+              "BuildContext",
+              "ColorScheme"
+            ]
+          },
+          "correctAnswer": {
+            "es": "String",
+            "en": "String"
+          },
+          "correctExplanation": {
+            "es": "Correcto. El resultado final de jsonEncode es texto JSON.",
+            "en": "Correct. The final result of jsonEncode is JSON text."
+          },
+          "incorrectExplanation": {
+            "es": "Aunque el modelo empiece como objeto, lo habitual es persistirlo como String JSON.",
+            "en": "Even if the model starts as an object, it is usually persisted as a JSON String."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "ser_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe los fragmentos clave de una función toMap para un modelo con name y age.",
+            "en": "Write the key fragments of a toMap function for a model with name and age."
+          },
+          "starterCode": {
+            "es": "Map<String, dynamic> toMap() {\n  return _____;\n}",
+            "en": "Map<String, dynamic> toMap() {\n  return _____;\n}"
+          },
+          "expectedFragments": {
+            "es": [
+              "{",
+              "'name': name",
+              "'age': age",
+              "}"
+            ],
+            "en": [
+              "{",
+              "'name': name",
+              "'age': age",
+              "}"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Excelente. Eso deja el modelo listo para serializar a JSON.",
+            "en": "Excellent. That leaves the model ready to serialize to JSON."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe devolver un mapa con las propiedades clave del modelo.",
+            "en": "Your answer must return a map with the model's key properties."
+          },
+          "hint": {
+            "es": "Piensa en un literal Map.",
+            "en": "Think of a Map literal."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "persist_lists_locally",
+      "title": {
+        "es": "Persistir listas localmente",
+        "en": "Persist lists locally"
+      },
+      "shortDescription": {
+        "es": "Guarda colecciones pequeñas y entiende sus límites.",
+        "en": "Store small collections and understand their limits."
+      },
+      "icon": "list",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "list_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una lista pequeña sí cabe",
+            "en": "A small list can fit"
+          },
+          "body": {
+            "es": "Para cosas simples, SharedPreferences puede guardar listas de strings. También puedes serializar una lista de modelos a una lista de JSON Strings, aunque con criterio.",
+            "en": "For simple cases, SharedPreferences can store lists of strings. You can also serialize a list of models into a list of JSON Strings, if done thoughtfully."
+          },
+          "example": {
+            "es": "await prefs.setStringList('tags', ['flutter', 'dart']);",
+            "en": "await prefs.setStringList('tags', ['flutter', 'dart']);"
+          }
+        },
+        {
+          "id": "list_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método sirve para guardar una lista de textos?",
+            "en": "Which method is used to save a list of strings?"
+          },
+          "options": {
+            "es": [
+              "setStringList",
+              "setList",
+              "saveTexts",
+              "setArrayWidget"
+            ],
+            "en": [
+              "setStringList",
+              "setList",
+              "saveTexts",
+              "setArrayWidget"
+            ]
+          },
+          "correctAnswer": {
+            "es": "setStringList",
+            "en": "setStringList"
+          },
+          "correctExplanation": {
+            "es": "Correcto. Ese es el método específico para una lista de strings.",
+            "en": "Correct. That is the specific method for a list of strings."
+          },
+          "incorrectExplanation": {
+            "es": "SharedPreferences no expone un setList genérico para cualquier tipo.",
+            "en": "SharedPreferences does not expose a generic setList for any type."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "list_fic_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el getter para leer una lista de textos.",
+            "en": "Complete the getter to read a list of strings."
+          },
+          "initialCode": {
+            "es": "final tags = prefs._____('tags') ?? [];",
+            "en": "final tags = prefs._____('tags') ?? [];"
+          },
+          "expectedAnswer": {
+            "es": "getStringList",
+            "en": "getStringList"
+          },
+          "correctExplanation": {
+            "es": "Bien. getStringList lee una lista de strings.",
+            "en": "Good. getStringList reads a list of strings."
+          },
+          "incorrectExplanation": {
+            "es": "La pareja de setStringList es getStringList.",
+            "en": "The pair for setStringList is getStringList."
+          },
+          "hint": {
+            "es": "Es el getter de listas de texto.",
+            "en": "It is the getter for text lists."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "list_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el guardado para que use el método correcto de listas.",
+            "en": "Fix the save so it uses the correct list method."
+          },
+          "initialCode": {
+            "es": "await prefs.setString('tags', ['flutter', 'dart']);",
+            "en": "await prefs.setString('tags', ['flutter', 'dart']);"
+          },
+          "expectedAnswer": {
+            "es": "await prefs.setStringList('tags', ['flutter', 'dart']);",
+            "en": "await prefs.setStringList('tags', ['flutter', 'dart']);"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Estás guardando una colección de strings, no un solo string.",
+            "en": "Exactly. You are storing a collection of strings, not a single string."
+          },
+          "incorrectExplanation": {
+            "es": "El error es tratar una lista como si fuera un texto único.",
+            "en": "The error is treating a list like a single string."
+          },
+          "hint": {
+            "es": "Mira el tipo real del valor.",
+            "en": "Look at the actual value type."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "list_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea está mal en este flujo?",
+            "en": "Which line is wrong in this flow?"
+          },
+          "codeLines": {
+            "es": [
+              "final saved = prefs.getStringList('tags') ?? [];",
+              "saved.add(3);",
+              "print(saved);"
+            ],
+            "en": [
+              "final saved = prefs.getStringList('tags') ?? [];",
+              "saved.add(3);",
+              "print(saved);"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "La lista esperada es de strings. Agregar un entero rompe esa consistencia.",
+            "en": "The expected list is strings. Adding an integer breaks that consistency."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta agrega un tipo que no corresponde a la lista.",
+            "en": "The wrong line adds a type that does not belong in the list."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "list_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Cuándo empieza a sentirse incómodo usar SharedPreferences para listas?",
+            "en": "When does using SharedPreferences for lists start to feel awkward?"
+          },
+          "codeSnippet": {
+            "es": "// Piensa en una lista de modelos grandes con muchos campos",
+            "en": "// Think about a list of large models with many fields"
+          },
+          "options": {
+            "es": [
+              "Cuando la estructura crece mucho y pide una solución más robusta",
+              "Cuando la lista tiene 2 strings",
+              "Nunca, siempre es la mejor opción",
+              "Solo cuando hay internet"
+            ],
+            "en": [
+              "When the structure grows a lot and asks for a more robust solution",
+              "When the list has 2 strings",
+              "Never, it is always the best option",
+              "Only when there is internet"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Cuando la estructura crece mucho y pide una solución más robusta",
+            "en": "When the structure grows a lot and asks for a more robust solution"
+          },
+          "correctExplanation": {
+            "es": "Correcto. Allí suele convenir otra estrategia, como almacenamiento más estructurado.",
+            "en": "Correct. At that point another strategy, such as more structured storage, is often better."
+          },
+          "incorrectExplanation": {
+            "es": "SharedPreferences sirve, pero no para absolutamente todo.",
+            "en": "SharedPreferences works, but not for absolutely everything."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "choose_right_strategy",
+      "title": {
+        "es": "Elegir la estrategia correcta",
+        "en": "Choose the right strategy"
+      },
+      "shortDescription": {
+        "es": "Aprende cuándo usar SharedPreferences y cuándo no.",
+        "en": "Learn when to use SharedPreferences and when not to."
+      },
+      "icon": "fact_check",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "strategy_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "No todo problema se resuelve con la misma caja",
+            "en": "Not every problem is solved with the same box"
+          },
+          "body": {
+            "es": "Una preferencia simple no necesita el mismo tratamiento que un historial grande, un caché complejo o datos relacionales. Elegir bien evita deuda técnica temprana.",
+            "en": "A simple preference does not need the same treatment as a large history, complex cache, or relational data. Choosing well avoids early technical debt."
+          },
+          "example": {
+            "es": "Tema -> SharedPreferences\nCatálogo offline grande -> otra estrategia",
+            "en": "Theme -> SharedPreferences\nLarge offline catalog -> another strategy"
+          }
+        },
+        {
+          "id": "strategy_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona el caso con la estrategia más razonable.",
+            "en": "Match the case with the most reasonable strategy."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Tema de la app",
+                "en": "App theme"
+              },
+              "right": {
+                "es": "SharedPreferences",
+                "en": "SharedPreferences"
+              }
+            },
+            {
+              "left": {
+                "es": "Onboarding completado",
+                "en": "Completed onboarding"
+              },
+              "right": {
+                "es": "SharedPreferences",
+                "en": "SharedPreferences"
+              }
+            },
+            {
+              "left": {
+                "es": "Miles de registros estructurados offline",
+                "en": "Thousands of structured offline records"
+              },
+              "right": {
+                "es": "Otra solución más robusta",
+                "en": "Another more robust solution"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Bien. Elegir herramienta según el problema es parte del criterio profesional.",
+            "en": "Good. Choosing the tool according to the problem is part of professional judgement."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué casos son livianos y cuáles ya piden algo más serio.",
+            "en": "Review which cases are light and which already need something more serious."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "strategy_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál caso sugiere que SharedPreferences puede quedarse corto?",
+            "en": "Which case suggests SharedPreferences may fall short?"
+          },
+          "options": {
+            "es": [
+              "Guardar una configuración de idioma",
+              "Guardar miles de objetos complejos consultables offline",
+              "Marcar si el usuario activó notificaciones",
+              "Recordar una pestaña seleccionada"
+            ],
+            "en": [
+              "Saving a locale setting",
+              "Saving thousands of complex objects queryable offline",
+              "Marking if the user enabled notifications",
+              "Remembering a selected tab"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Guardar miles de objetos complejos consultables offline",
+            "en": "Saving thousands of complex objects queryable offline"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Ahí suele hacer falta una solución más estructurada.",
+            "en": "Exactly. There a more structured solution is usually needed."
+          },
+          "incorrectExplanation": {
+            "es": "Los casos pequeños encajan mejor con preferencias; el caso masivo pide otra herramienta.",
+            "en": "Small cases fit preferences better; the massive case asks for another tool."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "strategy_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué decisión muestra mejor criterio?",
+            "en": "Which decision shows better judgement?"
+          },
+          "codeSnippet": {
+            "es": "// Caso: guardar si el usuario ya aceptó un tutorial",
+            "en": "// Case: save whether the user already accepted a tutorial"
+          },
+          "options": {
+            "es": [
+              "Usar SharedPreferences",
+              "Montar una base de datos compleja sin necesidad",
+              "Guardar el valor en una variable y perderlo al cerrar",
+              "No guardar nada nunca"
+            ],
+            "en": [
+              "Use SharedPreferences",
+              "Set up a complex database without need",
+              "Keep the value in a variable and lose it on close",
+              "Never save anything"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Usar SharedPreferences",
+            "en": "Use SharedPreferences"
+          },
+          "correctExplanation": {
+            "es": "Correcto. Es una solución simple y suficiente para ese contexto.",
+            "en": "Correct. It is a simple and sufficient solution for that context."
+          },
+          "incorrectExplanation": {
+            "es": "La gracia está en no sobrediseñar un problema pequeño.",
+            "en": "The point is not to over-engineer a small problem."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "strategy_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe dos fragmentos que representen buenas decisiones: una para tema local y otra para datos masivos que requieren otra solución.",
+            "en": "Write two fragments that represent good decisions: one for local theme and one for massive data requiring another solution."
+          },
+          "starterCode": {
+            "es": "1) _____\n2) _____",
+            "en": "1) _____\n2) _____"
+          },
+          "expectedFragments": {
+            "es": [
+              "SharedPreferences",
+              "otra solución más robusta"
+            ],
+            "en": [
+              "SharedPreferences",
+              "another more robust solution"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. El objetivo no es casarse con una herramienta, sino entender su lugar.",
+            "en": "Good. The goal is not to marry a tool, but to understand its place."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe mostrar un caso pequeño y otro que ya no encaja con preferencias.",
+            "en": "Your answer should show a small case and another that no longer fits preferences."
+          },
+          "hint": {
+            "es": "Piensa en simple vs pesado.",
+            "en": "Think simple vs heavy."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "persistence_with_repository",
+      "title": {
+        "es": "Persistencia con repositorio",
+        "en": "Persistence with repository"
+      },
+      "shortDescription": {
+        "es": "Separa la lógica de guardado de la UI para mantener el código limpio.",
+        "en": "Separate storage logic from UI to keep code clean."
+      },
+      "icon": "inventory_2",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "repo_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "La pantalla no debería saberlo todo",
+            "en": "The screen should not know everything"
+          },
+          "body": {
+            "es": "Si tu widget guarda y lee directamente cada preferencia, el código se ensucia rápido. Un repositorio ayuda a encapsular la lógica de persistencia y mejora mantenimiento.",
+            "en": "If your widget directly saves and reads every preference, the code gets messy quickly. A repository helps encapsulate persistence logic and improves maintainability."
+          },
+          "example": {
+            "es": "SettingsRepository.saveTheme()\nSettingsRepository.loadTheme()",
+            "en": "SettingsRepository.saveTheme()\nSettingsRepository.loadTheme()"
+          }
+        },
+        {
+          "id": "repo_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "La UI pide, el repositorio resuelve",
+            "en": "UI asks, repository resolves"
+          },
+          "body": {
+            "es": "Una pantalla puede enfocarse en mostrar y reaccionar. El repositorio se encarga de cómo se guardan y recuperan los datos.",
+            "en": "A screen can focus on showing and reacting. The repository handles how the data is saved and restored."
+          },
+          "example": {
+            "es": "final isDark = await settingsRepository.loadTheme();",
+            "en": "final isDark = await settingsRepository.loadTheme();"
+          }
+        },
+        {
+          "id": "repo_cs_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el nombre del método para cargar el tema desde el repositorio.",
+            "en": "Complete the method name to load theme from the repository."
+          },
+          "initialCode": {
+            "es": "final isDark = await settingsRepository._____();",
+            "en": "final isDark = await settingsRepository._____();"
+          },
+          "expectedAnswer": {
+            "es": "loadTheme",
+            "en": "loadTheme"
+          },
+          "correctExplanation": {
+            "es": "Bien. El nombre expresa intención y evita detalle técnico en la UI.",
+            "en": "Good. The name expresses intent and avoids technical detail in the UI."
+          },
+          "incorrectExplanation": {
+            "es": "La idea es que la pantalla lea algo semántico, no una implementación.",
+            "en": "The idea is for the screen to read something semantic, not an implementation detail."
+          },
+          "hint": {
+            "es": "Piensa en leer tema.",
+            "en": "Think of loading theme."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "repo_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige este enfoque para mover la persistencia fuera del widget.",
+            "en": "Fix this approach to move persistence out of the widget."
+          },
+          "initialCode": {
+            "es": "onPressed: () async {\n  final prefs = await SharedPreferences.getInstance();\n  await prefs.setBool('isDarkMode', true);\n}",
+            "en": "onPressed: () async {\n  final prefs = await SharedPreferences.getInstance();\n  await prefs.setBool('isDarkMode', true);\n}"
+          },
+          "expectedAnswer": {
+            "es": "onPressed: () async {\n  await settingsRepository.saveTheme(true);\n}",
+            "en": "onPressed: () async {\n  await settingsRepository.saveTheme(true);\n}"
+          },
+          "correctExplanation": {
+            "es": "Exacto. La UI queda más limpia y la persistencia más centralizada.",
+            "en": "Exactly. The UI stays cleaner and persistence more centralized."
+          },
+          "incorrectExplanation": {
+            "es": "La corrección busca separar responsabilidades, no solo cambiar sintaxis.",
+            "en": "The fix aims to separate responsibilities, not just change syntax."
+          },
+          "hint": {
+            "es": "La pantalla debería pedir una acción de negocio, no orquestar todo el guardado.",
+            "en": "The screen should request a business action, not orchestrate all the saving."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "repo_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada pieza con su responsabilidad.",
+            "en": "Match each piece with its responsibility."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Widget/UI",
+                "en": "Widget/UI"
+              },
+              "right": {
+                "es": "Mostrar y reaccionar",
+                "en": "Display and react"
+              }
+            },
+            {
+              "left": {
+                "es": "Repositorio",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Guardar y leer datos",
+                "en": "Save and read data"
+              }
+            },
+            {
+              "left": {
+                "es": "SharedPreferences",
+                "en": "SharedPreferences"
+              },
+              "right": {
+                "es": "Mecanismo concreto de almacenamiento",
+                "en": "Concrete storage mechanism"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Esa separación te ayuda a escalar sin desorden.",
+            "en": "Very good. That separation helps you scale without chaos."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa quién muestra, quién decide persistir y quién almacena realmente.",
+            "en": "Review who shows, who decides persistence, and who actually stores."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "repo_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo correcto usando repositorio.",
+            "en": "Order the correct flow using repository."
+          },
+          "blocks": {
+            "es": [
+              "setState(() => isDarkMode = value);",
+              "await settingsRepository.saveTheme(value);",
+              "final value = !isDarkMode;"
+            ],
+            "en": [
+              "setState(() => isDarkMode = value);",
+              "await settingsRepository.saveTheme(value);",
+              "final value = !isDarkMode;"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "final value = !isDarkMode;",
+              "await settingsRepository.saveTheme(value);",
+              "setState(() => isDarkMode = value);"
+            ],
+            "en": [
+              "final value = !isDarkMode;",
+              "await settingsRepository.saveTheme(value);",
+              "setState(() => isDarkMode = value);"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. El flujo queda expresivo: calcular, persistir y reflejar.",
+            "en": "Good. The flow becomes expressive: compute, persist, reflect."
+          },
+          "incorrectExplanation": {
+            "es": "Primero se calcula el valor, luego se guarda y al final se actualiza la UI.",
+            "en": "First compute the value, then save it, and finally update the UI."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "defaults_errors_compatibility",
+      "title": {
+        "es": "Defaults, errores y compatibilidad",
+        "en": "Defaults, errors, and compatibility"
+      },
+      "shortDescription": {
+        "es": "Haz persistencia más robusta con fallbacks y manejo sensato de cambios.",
+        "en": "Make persistence more robust with fallbacks and sensible change handling."
+      },
+      "icon": "health_and_safety",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "robust_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Persistir también implica defenderse",
+            "en": "Persistence also means defending yourself"
+          },
+          "body": {
+            "es": "Una clave puede no existir, un valor puede venir vacío o el modelo puede evolucionar. Tu código debe ser amable con esos escenarios.",
+            "en": "A key may not exist, a value may come empty, or the model may evolve. Your code should be kind to those scenarios."
+          },
+          "example": {
+            "es": "prefs.getInt('streak') ?? 0",
+            "en": "prefs.getInt('streak') ?? 0"
+          }
+        },
+        {
+          "id": "robust_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Compatibilidad no es glamour, pero salva apps",
+            "en": "Compatibility is not glamorous, but it saves apps"
+          },
+          "body": {
+            "es": "Cuando cambias cómo guardas datos, piensa en usuarios que ya tienen información persistida. Defaults claros y migraciones simples evitan experiencias rotas.",
+            "en": "When you change how you store data, think of users who already have persisted information. Clear defaults and simple migrations prevent broken experiences."
+          },
+          "example": {
+            "es": "schemaVersion = 2",
+            "en": "schemaVersion = 2"
+          }
+        },
+        {
+          "id": "robust_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea es más frágil en este ejemplo?",
+            "en": "Which line is the most fragile in this example?"
+          },
+          "codeLines": {
+            "es": [
+              "final name = prefs.getString('userName')!;",
+              "print(name);",
+              "return name;"
+            ],
+            "en": [
+              "final name = prefs.getString('userName')!;",
+              "print(name);",
+              "return name;"
+            ]
+          },
+          "wrongLineIndex": 0,
+          "correctExplanation": {
+            "es": "Forzar ! puede romper si la clave aún no existe. Un fallback es más seguro.",
+            "en": "Forcing ! can break if the key does not exist yet. A fallback is safer."
+          },
+          "incorrectExplanation": {
+            "es": "La línea frágil es la que asume que el valor jamás será null.",
+            "en": "The fragile line is the one that assumes the value can never be null."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "robust_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige esta lectura para que sea más segura.",
+            "en": "Fix this read to make it safer."
+          },
+          "initialCode": {
+            "es": "final streak = prefs.getInt('streak')!;",
+            "en": "final streak = prefs.getInt('streak')!;"
+          },
+          "expectedAnswer": {
+            "es": "final streak = prefs.getInt('streak') ?? 0;",
+            "en": "final streak = prefs.getInt('streak') ?? 0;"
+          },
+          "correctExplanation": {
+            "es": "Exacto. El fallback protege cuando la clave aún no existe.",
+            "en": "Exactly. The fallback protects when the key does not exist yet."
+          },
+          "incorrectExplanation": {
+            "es": "La corrección busca evitar null inesperado.",
+            "en": "The fix aims to avoid unexpected null."
+          },
+          "hint": {
+            "es": "Piensa en un valor inicial razonable.",
+            "en": "Think of a sensible initial value."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "robust_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué práctica mejora la robustez al leer persistencia local?",
+            "en": "Which practice improves robustness when reading local persistence?"
+          },
+          "options": {
+            "es": [
+              "Usar valores por defecto cuando una clave no existe",
+              "Forzar ! en todos los getters",
+              "Asumir que todo siempre estará guardado",
+              "Eliminar todas las comprobaciones"
+            ],
+            "en": [
+              "Use fallback values when a key does not exist",
+              "Force ! on every getter",
+              "Assume everything will always be saved",
+              "Remove all checks"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Usar valores por defecto cuando una clave no existe",
+            "en": "Use fallback values when a key does not exist"
+          },
+          "correctExplanation": {
+            "es": "Correcto. Eso reduce nulls inesperados y mejora continuidad.",
+            "en": "Correct. That reduces unexpected nulls and improves continuity."
+          },
+          "incorrectExplanation": {
+            "es": "La persistencia real exige defensas básicas, no optimismo ciego.",
+            "en": "Real persistence requires basic defenses, not blind optimism."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "robust_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué comunica mejor una app robusta si cambió su modelo de datos?",
+            "en": "What best reflects a robust app when its data model changed?"
+          },
+          "codeSnippet": {
+            "es": "// Antes guardabas solo name, ahora guardas name y avatarUrl",
+            "en": "// Before you saved only name, now you save name and avatarUrl"
+          },
+          "options": {
+            "es": [
+              "Usa defaults o migración simple para campos nuevos",
+              "Rompe al abrir y espera que el usuario reinstale",
+              "Ignora el problema",
+              "Borra datos sin avisar siempre"
+            ],
+            "en": [
+              "Use defaults or simple migration for new fields",
+              "Break on open and hope the user reinstalls",
+              "Ignore the problem",
+              "Always wipe data without warning"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Usa defaults o migración simple para campos nuevos",
+            "en": "Use defaults or simple migration for new fields"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Eso protege la experiencia del usuario cuando el esquema evoluciona.",
+            "en": "Exactly. That protects the user experience when the schema evolves."
+          },
+          "incorrectExplanation": {
+            "es": "Una app madura piensa en compatibilidad hacia atrás.",
+            "en": "A mature app thinks about backward compatibility."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "robust_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una lectura segura para un avatarUrl que puede no existir aún.",
+            "en": "Write a safe read for an avatarUrl that may not exist yet."
+          },
+          "starterCode": {
+            "es": "final avatarUrl = _____;",
+            "en": "final avatarUrl = _____;"
+          },
+          "expectedFragments": {
+            "es": [
+              "prefs.getString('avatarUrl')",
+              "??",
+              "''"
+            ],
+            "en": [
+              "prefs.getString('avatarUrl')",
+              "??",
+              "''"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ese fallback evita null y mantiene el flujo estable.",
+            "en": "Good. That fallback avoids null and keeps the flow stable."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe usar getString y un valor por defecto vacío o equivalente.",
+            "en": "Your answer should use getString and an empty or equivalent fallback value."
+          },
+          "hint": {
+            "es": "Piensa en una cadena vacía como plan B.",
+            "en": "Think of an empty string as plan B."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "offline_continuity_mindset",
+      "title": {
+        "es": "Mentalidad de continuidad offline",
+        "en": "Offline continuity mindset"
+      },
+      "shortDescription": {
+        "es": "Usa persistencia local para que la app se sienta continua incluso sin red.",
+        "en": "Use local persistence so the app feels continuous even without network."
+      },
+      "icon": "offline_pin",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "offline_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "La continuidad también se siente",
+            "en": "Continuity is something users feel"
+          },
+          "body": {
+            "es": "Persistencia local no solo guarda cosas: hace que una app se sienta estable, personalizada y respetuosa con el tiempo del usuario.",
+            "en": "Local persistence does not just save things: it makes an app feel stable, personalized, and respectful of the user's time."
+          },
+          "example": {
+            "es": "Última pestaña, tema, nombre, progreso local...",
+            "en": "Last tab, theme, name, local progress..."
+          }
+        },
+        {
+          "id": "offline_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No todo necesita internet para ser útil",
+            "en": "Not everything needs internet to be useful"
+          },
+          "body": {
+            "es": "Aunque luego exista backend, muchas decisiones de experiencia pueden apoyarse en persistencia local para arrancar mejor y responder más rápido.",
+            "en": "Even if there is a backend later, many experience decisions can lean on local persistence to start better and respond faster."
+          },
+          "example": {
+            "es": "Leer cache local -> mostrar UI -> sincronizar después",
+            "en": "Read local cache -> show UI -> sync later"
+          }
+        },
+        {
+          "id": "offline_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada caso con el beneficio principal de persistencia local.",
+            "en": "Match each case with the main benefit of local persistence."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Recordar el tema",
+                "en": "Remember theme"
+              },
+              "right": {
+                "es": "Experiencia consistente",
+                "en": "Consistent experience"
+              }
+            },
+            {
+              "left": {
+                "es": "Guardar última pestaña",
+                "en": "Save last tab"
+              },
+              "right": {
+                "es": "Reingreso más natural",
+                "en": "More natural re-entry"
+              }
+            },
+            {
+              "left": {
+                "es": "Guardar progreso simple",
+                "en": "Save simple progress"
+              },
+              "right": {
+                "es": "Sensación de continuidad",
+                "en": "Sense of continuity"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Persistencia local también es UX.",
+            "en": "Very good. Local persistence is also UX."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cómo cada dato guardado mejora la continuidad del uso.",
+            "en": "Review how each saved datum improves continuity of use."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "offline_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué idea resume mejor el valor de la persistencia local?",
+            "en": "Which idea best summarizes the value of local persistence?"
+          },
+          "options": {
+            "es": [
+              "La app recuerda y continúa mejor la experiencia",
+              "Sirve solo para hacer código más largo",
+              "Elimina la necesidad de diseño",
+              "Solo importa en apps gigantes"
+            ],
+            "en": [
+              "The app remembers and continues the experience better",
+              "It only makes code longer",
+              "It removes the need for design",
+              "It only matters in giant apps"
+            ]
+          },
+          "correctAnswer": {
+            "es": "La app recuerda y continúa mejor la experiencia",
+            "en": "The app remembers and continues the experience better"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Persistir bien hace que la app se sienta pensada y consistente.",
+            "en": "Exactly. Good persistence makes the app feel intentional and consistent."
+          },
+          "incorrectExplanation": {
+            "es": "No depende de que la app sea gigante; incluso detalles simples pueden cambiar mucho la experiencia.",
+            "en": "It does not depend on the app being huge; even simple details can change the experience a lot."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "offline_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué flujo se siente mejor para el usuario?",
+            "en": "Which flow feels better for the user?"
+          },
+          "codeSnippet": {
+            "es": "// Caso: el usuario ya había elegido modo oscuro y una pestaña favorita",
+            "en": "// Case: the user had already chosen dark mode and a favorite tab"
+          },
+          "options": {
+            "es": [
+              "Abrir la app recordando ambos valores",
+              "Reiniciar todo cada vez",
+              "Preguntar todo otra vez siempre",
+              "Cerrar la app si no hay internet"
+            ],
+            "en": [
+              "Open the app remembering both values",
+              "Reset everything every time",
+              "Ask everything again every time",
+              "Close the app if there is no internet"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Abrir la app recordando ambos valores",
+            "en": "Open the app remembering both values"
+          },
+          "correctExplanation": {
+            "es": "Sí. Esa continuidad da sensación de producto cuidado.",
+            "en": "Yes. That continuity gives a sense of a polished product."
+          },
+          "incorrectExplanation": {
+            "es": "Persistencia local justamente ayuda a evitar la sensación de empezar de cero cada vez.",
+            "en": "Local persistence helps avoid the feeling of starting from zero every time."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "offline_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe dos fragmentos de datos que valga la pena persistir para mejorar reingreso.",
+            "en": "Write two data fragments worth persisting to improve re-entry."
+          },
+          "starterCode": {
+            "es": "1) _____\n2) _____",
+            "en": "1) _____\n2) _____"
+          },
+          "expectedFragments": {
+            "es": [
+              "theme",
+              "lastTab"
+            ],
+            "en": [
+              "theme",
+              "lastTab"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Son ejemplos pequeños pero muy valiosos para continuidad.",
+            "en": "Good. They are small but very valuable continuity examples."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe mostrar datos simples y útiles para recordar entre sesiones.",
+            "en": "Your answer should show simple and useful data to remember between sessions."
+          },
+          "hint": {
+            "es": "Piensa en personalización y regreso rápido.",
+            "en": "Think personalization and quick return."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "local_persistence_final_exam",
+      "title": {
+        "es": "Examen Final Persistencia local",
+        "en": "Local persistence final exam"
+      },
+      "shortDescription": {
+        "es": "Valida tu criterio sobre guardado local, restauración, serialización y robustez.",
+        "en": "Validate your judgement about local storage, restoration, serialization, and robustness."
+      },
+      "icon": "workspace_premium",
+      "nodeType": "exam",
+      "xpReward": 150,
+      "steps": [
+        {
+          "id": "exam_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Cierre con memoria de verdad",
+            "en": "Closing with actual memory"
+          },
+          "body": {
+            "es": "Este examen junta preferencias, restauración, serialización, listas, repositorio y robustez. La idea no es memorizar nombres sueltos, sino decidir bien.",
+            "en": "This exam combines preferences, restoration, serialization, lists, repository, and robustness. The point is not to memorize isolated names, but to decide well."
+          },
+          "example": {
+            "es": "Guardar bien es útil.\nRestaurar bien es experiencia.",
+            "en": "Saving well is useful.\nRestoring well is experience."
+          }
+        },
+        {
+          "id": "exam_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método usarías para guardar una lista de textos?",
+            "en": "Which method would you use to save a list of strings?"
+          },
+          "options": {
+            "es": [
+              "setStringList",
+              "setList",
+              "setTexts",
+              "setJsonList"
+            ],
+            "en": [
+              "setStringList",
+              "setList",
+              "setTexts",
+              "setJsonList"
+            ]
+          },
+          "correctAnswer": {
+            "es": "setStringList",
+            "en": "setStringList"
+          },
+          "correctExplanation": {
+            "es": "Correcto. Es el método específico para listas de strings.",
+            "en": "Correct. It is the specific method for string lists."
+          },
+          "incorrectExplanation": {
+            "es": "SharedPreferences ofrece setStringList para ese caso.",
+            "en": "SharedPreferences offers setStringList for that case."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "exam_cs_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa la lectura segura del contador.",
+            "en": "Complete the safe counter read."
+          },
+          "initialCode": {
+            "es": "final counter = prefs.getInt('counter') ?? ____;",
+            "en": "final counter = prefs.getInt('counter') ?? ____;"
+          },
+          "expectedAnswer": {
+            "es": "0",
+            "en": "0"
+          },
+          "correctExplanation": {
+            "es": "Bien. Un contador suele arrancar en 0 si no existe aún.",
+            "en": "Good. A counter usually starts at 0 if it does not exist yet."
+          },
+          "incorrectExplanation": {
+            "es": "El fallback razonable aquí es 0.",
+            "en": "The sensible fallback here is 0."
+          },
+          "hint": {
+            "es": "Piensa en el valor inicial natural de un contador.",
+            "en": "Think of the natural initial value of a counter."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "exam_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige este guardado para que el tipo coincida.",
+            "en": "Fix this save so the type matches."
+          },
+          "initialCode": {
+            "es": "await prefs.setBool('locale', 'es');",
+            "en": "await prefs.setBool('locale', 'es');"
+          },
+          "expectedAnswer": {
+            "es": "await prefs.setString('locale', 'es');",
+            "en": "await prefs.setString('locale', 'es');"
+          },
+          "correctExplanation": {
+            "es": "Exacto. 'es' es texto, así que se guarda con setString.",
+            "en": "Exactly. 'es' is text, so it is saved with setString."
+          },
+          "incorrectExplanation": {
+            "es": "El error estaba en usar un setter booleano para texto.",
+            "en": "The error was using a boolean setter for text."
+          },
+          "hint": {
+            "es": "Mira el tipo real del valor.",
+            "en": "Look at the actual value type."
+          },
+          "xpReward": 18
+        },
+        {
+          "id": "exam_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea está mal en este flujo de serialización?",
+            "en": "Which line is wrong in this serialization flow?"
+          },
+          "codeLines": {
+            "es": [
+              "final raw = jsonEncode(user.toMap());",
+              "await prefs.setString('user', raw);",
+              "final restored = jsonEncode(raw);"
+            ],
+            "en": [
+              "final raw = jsonEncode(user.toMap());",
+              "await prefs.setString('user', raw);",
+              "final restored = jsonEncode(raw);"
+            ]
+          },
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "Si raw ya es String JSON, volver a encode no reconstruye nada útil. Allí necesitarías decode si fueras a leer.",
+            "en": "If raw is already a JSON String, encoding again does not rebuild anything useful. You would need decode there if you were reading."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la última: vuelve a encode un texto ya serializado.",
+            "en": "The last line is wrong: it encodes again an already serialized string."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "exam_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su rol.",
+            "en": "Match each concept with its role."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "SharedPreferences",
+                "en": "SharedPreferences"
+              },
+              "right": {
+                "es": "Guardar valores simples",
+                "en": "Store simple values"
+              }
+            },
+            {
+              "left": {
+                "es": "jsonEncode",
+                "en": "jsonEncode"
+              },
+              "right": {
+                "es": "Convertir un mapa a texto JSON",
+                "en": "Convert a map to JSON text"
+              }
+            },
+            {
+              "left": {
+                "es": "Repositorio",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Encapsular la lógica de persistencia",
+                "en": "Encapsulate persistence logic"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Ese mapa mental evita mezclar responsabilidades.",
+            "en": "Very good. That mental map prevents mixing responsibilities."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué almacena simple, qué serializa y qué abstrae la lógica.",
+            "en": "Review what stores simple data, what serializes, and what abstracts logic."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "exam_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo correcto para restaurar un valor y aplicarlo a la UI.",
+            "en": "Order the correct flow to restore a value and apply it to the UI."
+          },
+          "blocks": {
+            "es": [
+              "setState(() => locale = saved);",
+              "final saved = prefs.getString('locale') ?? 'es';",
+              "final prefs = await SharedPreferences.getInstance();"
+            ],
+            "en": [
+              "setState(() => locale = saved);",
+              "final saved = prefs.getString('locale') ?? 'es';",
+              "final prefs = await SharedPreferences.getInstance();"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "final prefs = await SharedPreferences.getInstance();",
+              "final saved = prefs.getString('locale') ?? 'es';",
+              "setState(() => locale = saved);"
+            ],
+            "en": [
+              "final prefs = await SharedPreferences.getInstance();",
+              "final saved = prefs.getString('locale') ?? 'es';",
+              "setState(() => locale = saved);"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Correcto. Obtienes instancia, lees con fallback y actualizas UI.",
+            "en": "Correct. You get the instance, read with fallback, and update the UI."
+          },
+          "incorrectExplanation": {
+            "es": "Ese orden cuida claridad y continuidad.",
+            "en": "That order preserves clarity and continuity."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "exam_po_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué decisión muestra mejor criterio profesional?",
+            "en": "Which decision shows better professional judgement?"
+          },
+          "codeSnippet": {
+            "es": "// Caso: guardar tema, idioma y onboarding",
+            "en": "// Case: save theme, locale, and onboarding"
+          },
+          "options": {
+            "es": [
+              "Usar SharedPreferences con fallbacks claros",
+              "Guardar todo en variables temporales solamente",
+              "Usar una solución gigantesca sin necesidad",
+              "No persistir nada nunca"
+            ],
+            "en": [
+              "Use SharedPreferences with clear fallbacks",
+              "Store everything only in temporary variables",
+              "Use a giant solution without need",
+              "Never persist anything"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Usar SharedPreferences con fallbacks claros",
+            "en": "Use SharedPreferences with clear fallbacks"
+          },
+          "correctExplanation": {
+            "es": "Exacto. Es suficiente, clara y estable para ese contexto.",
+            "en": "Exactly. It is sufficient, clear, and stable for that context."
+          },
+          "incorrectExplanation": {
+            "es": "El criterio está en elegir una solución proporcional al problema.",
+            "en": "The judgement lies in choosing a solution proportional to the problem."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "exam_gw_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe los fragmentos esenciales para guardar el tema oscuro con una capa de repositorio.",
+            "en": "Write the essential fragments to save dark theme through a repository layer."
+          },
+          "starterCode": {
+            "es": "await settingsRepository._____(_____);",
+            "en": "await settingsRepository._____(_____);"
+          },
+          "expectedFragments": {
+            "es": [
+              "saveTheme",
+              "true"
+            ],
+            "en": [
+              "saveTheme",
+              "true"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. La intención queda clara y la UI no se acopla al mecanismo concreto.",
+            "en": "Good. The intent is clear and the UI does not couple to the concrete mechanism."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe invocar el método semántico del repositorio con el valor correcto.",
+            "en": "Your answer must call the semantic repository method with the correct value."
+          },
+          "hint": {
+            "es": "Piensa en intención, no en prefs directos.",
+            "en": "Think intention, not direct prefs."
+          },
+          "xpReward": 20
+        },
+        {
+          "id": "exam_summary",
+          "type": "intro",
+          "title": {
+            "es": "Persistencia cerrada",
+            "en": "Persistence complete"
+          },
+          "body": {
+            "es": "Si llegaste aquí, ya no ves la persistencia local como un truco suelto, sino como parte de la experiencia, la arquitectura y la continuidad de una app bien pensada.",
+            "en": "If you made it here, you no longer see local persistence as an isolated trick, but as part of the experience, architecture, and continuity of a well-thought-out app."
+          },
+          "example": {
+            "es": "Guardar bien es técnica.\nRecuperar bien es producto.",
+            "en": "Saving well is technique.\nRestoring well is product."
+          }
+        }
+      ]
+    }
+  ]
+}

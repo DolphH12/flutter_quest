@@ -35,4 +35,11 @@ class ProgressRepository {
   }) {
     return _store.resetAll(routes: routes);
   }
+
+  Future<LearningProgressState> importProgress({
+    required LearningProgressState imported,
+    required List<DartRouteContent> routes,
+  }) {
+    return _store.importProgress(imported: imported, routes: routes);
+  }
 }

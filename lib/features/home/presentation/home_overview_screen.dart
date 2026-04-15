@@ -10,6 +10,7 @@ import '../../../core/theme/fq_tokens.dart';
 import '../../../core/widgets/fq_chips.dart';
 import '../../../core/widgets/fq_page_container.dart';
 import '../../../core/widgets/fq_progress_bar.dart';
+import '../../../core/widgets/fq_state_views.dart';
 import '../../../core/widgets/fq_surface_card.dart';
 import '../../learning/models/learning_models.dart';
 import '../../learning/state/app_state_providers.dart';
@@ -34,7 +35,14 @@ class HomeOverviewScreen extends ConsumerWidget {
     if (routesAsync.hasError || progressAsync.hasError) {
       return FQPageContainer(
         child: Center(
-          child: Text(l10n.loadRoutesError, textAlign: TextAlign.center),
+          child: FQErrorState(
+            title: l10n.loadRoutesError,
+            message: '${routesAsync.error ?? ''} ${progressAsync.error ?? ''}'
+                .trim(),
+            primaryActionLabel: l10n.continueButton,
+            onPrimaryAction: () =>
+                ref.read(appProgressNotifierProvider.notifier).loadProgress(),
+          ),
         ),
       );
     }
@@ -44,11 +52,15 @@ class HomeOverviewScreen extends ConsumerWidget {
     if (routes == null || routes.isEmpty || progress == null) {
       return FQPageContainer(
         child: Center(
-          child: Text(
-            routeLoadErrors.isEmpty
+          child: FQEmptyState(
+            title: l10n.routesAvailable,
+            message: routeLoadErrors.isEmpty
                 ? l10n.loadRoutesError
-                : _buildLoadErrorMessage(routeLoadErrors),
-            textAlign: TextAlign.center,
+                : _buildLoadErrorMessage(routeLoadErrors, l10n: l10n),
+            icon: Icons.route_rounded,
+            actionLabel: l10n.continueButton,
+            onAction: () =>
+                ref.read(appProgressNotifierProvider.notifier).loadProgress(),
           ),
         ),
       );
@@ -102,6 +114,7 @@ class HomeOverviewScreen extends ConsumerWidget {
                         routes,
                         progress,
                         unlockRequirements,
+                        l10n,
                       ),
                       onTap: () => context.go('/home/route/${route.routeId}'),
                     );
@@ -122,6 +135,7 @@ class HomeOverviewScreen extends ConsumerWidget {
                     routes,
                     progress,
                     unlockRequirements,
+                    l10n,
                   ),
                   onTap: () => context.go('/home/route/${route.routeId}'),
                 ),
@@ -146,20 +160,24 @@ class HomeOverviewScreen extends ConsumerWidget {
     List<DartRouteContent> routes,
     LearningProgressState progress,
     Map<String, String?> unlockRequirements,
+    AppLocalizations l10n,
   ) {
     final requirement = unlockRequirements[route.routeId];
     if (requirement == null) return null;
     if (progress.completedRouteIds.contains(requirement)) return null;
     for (final item in routes) {
       if (item.routeId == requirement) {
-        return 'Completa ${item.title} para desbloquear';
+        return l10n.completeRouteToUnlock(item.title);
       }
     }
-    return 'Completa la ruta requerida para desbloquear';
+    return l10n.completeRequiredRouteToUnlock;
   }
 
-  String _buildLoadErrorMessage(Map<String, String> errors) {
-    final lines = <String>['No se pudieron cargar algunas rutas:'];
+  String _buildLoadErrorMessage(
+    Map<String, String> errors, {
+    required AppLocalizations l10n,
+  }) {
+    final lines = <String>[l10n.loadPartialRoutesErrorWithColon];
     errors.forEach((routeId, message) {
       lines.add('- $routeId: $message');
     });

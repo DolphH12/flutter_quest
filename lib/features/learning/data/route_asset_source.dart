@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 
+import '../../../core/errors/app_failures.dart';
 import '../models/learning_models.dart';
 import 'route_content_validator.dart';
 
@@ -26,7 +28,11 @@ class RouteAssetSource {
   }) async {
     try {
       final raw = await rootBundle.loadString(assetPath);
-      final json = jsonDecode(raw) as Map<String, dynamic>;
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map<String, dynamic>) {
+        throw const FormatException('root JSON must be an object');
+      }
+      final json = decoded;
       final localizedJson = _resolveLocalizedJson(
         json,
         languageCode: languageCode,
@@ -35,8 +41,15 @@ class RouteAssetSource {
       RouteContentValidator.validate(route);
       return route;
     } on FormatException catch (error) {
-      throw FormatException(
-        'Invalid route JSON in $assetPath: ${error.message}',
+      final message = 'Invalid route JSON in $assetPath: ${error.message}';
+      debugPrint(message);
+      throw ContentFailure('Route content is invalid.', debugDetails: message);
+    } catch (error) {
+      final message = 'Unexpected route load error in $assetPath: $error';
+      debugPrint(message);
+      throw ContentFailure(
+        'Could not load route content.',
+        debugDetails: message,
       );
     }
   }

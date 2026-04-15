@@ -26,12 +26,9 @@ class FlutterQuestApp extends ConsumerWidget {
       final progress = next.valueOrNull;
       if (progress == null) return;
       final languageCode = ref.read(effectiveLanguageCodeProvider);
-      final notifier = ref.read(habitNotificationsProvider.notifier);
-      notifier.bootstrapOnFirstAppOpen(
-        progress: progress,
-        languageCode: languageCode,
-      );
-      notifier.syncWithProgress(progress: progress, languageCode: languageCode);
+      ref
+          .read(habitNotificationsProvider.notifier)
+          .syncWithProgress(progress: progress, languageCode: languageCode);
     });
 
     ref.listen<String>(effectiveLanguageCodeProvider, (_, languageCode) {

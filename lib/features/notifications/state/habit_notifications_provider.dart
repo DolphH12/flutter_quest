@@ -123,6 +123,44 @@ class HabitNotificationsNotifier
     return NotificationToggleResult.enabled;
   }
 
+  Future<void> setReminderTime({
+    required int hour,
+    required int minute,
+    required LearningProgressState progress,
+    required String languageCode,
+  }) async {
+    final current = state.valueOrNull ?? HabitNotificationSettings.defaults;
+    final next = current.copyWith(hour: hour, minute: minute);
+    await _preferences.save(next);
+    state = AsyncData(next);
+    if (!next.enabled) return;
+    await _notifications.scheduleHabitReminder(
+      studiedToday: _studiedToday(progress.lastStudyDate),
+      hour: next.hour,
+      minute: next.minute,
+      languageCode: languageCode,
+    );
+  }
+
+  Future<void> applyImportedSettings({
+    required HabitNotificationSettings settings,
+    required LearningProgressState progress,
+    required String languageCode,
+  }) async {
+    await _preferences.save(settings);
+    state = AsyncData(settings);
+    if (!settings.enabled) {
+      await _notifications.cancelHabitReminder();
+      return;
+    }
+    await _notifications.scheduleHabitReminder(
+      studiedToday: _studiedToday(progress.lastStudyDate),
+      hour: settings.hour,
+      minute: settings.minute,
+      languageCode: languageCode,
+    );
+  }
+
   Future<void> syncWithProgress({
     required LearningProgressState progress,
     required String languageCode,

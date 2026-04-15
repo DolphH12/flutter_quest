@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
+import '../../../core/errors/app_failures.dart';
 import '../models/learning_models.dart';
 import 'route_asset_source.dart';
 
@@ -34,6 +36,7 @@ class RouteContentRepository {
         _cacheById[cacheKey] = route;
         result.add(route);
       } catch (error) {
+        debugPrint('Route load failed (${manifest.routeId}): $error');
         _loadErrorsByRouteId[manifest.routeId] = '$error';
       }
     }
@@ -50,7 +53,19 @@ class RouteContentRepository {
     if (!forceRefresh && _cacheById.containsKey(cacheKey)) {
       return _cacheById[cacheKey]!;
     }
-    final manifest = manifests.firstWhere((item) => item.routeId == routeId);
+    RouteAssetManifest? manifest;
+    for (final item in manifests) {
+      if (item.routeId == routeId) {
+        manifest = item;
+        break;
+      }
+    }
+    if (manifest == null) {
+      throw ContentFailure(
+        'Route not found.',
+        debugDetails: 'No manifest found for routeId=$routeId',
+      );
+    }
     final route = await _assetSource.loadRoute(
       manifest.assetPath,
       languageCode: languageCode,

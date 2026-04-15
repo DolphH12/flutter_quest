@@ -47,9 +47,15 @@ class FQPrimaryButton extends StatelessWidget {
 }
 
 class FQSecondaryButton extends StatelessWidget {
-  const FQSecondaryButton({super.key, required this.label, this.onPressed});
+  const FQSecondaryButton({
+    super.key,
+    required this.label,
+    this.icon,
+    this.onPressed,
+  });
 
   final String label;
+  final IconData? icon;
   final VoidCallback? onPressed;
 
   @override
@@ -69,7 +75,16 @@ class FQSecondaryButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           foregroundColor: FQColors.primary,
         ),
-        child: Text(label),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (icon != null) ...[
+              Icon(icon, size: 18, color: FQColors.primary),
+              const SizedBox(width: 8),
+            ],
+            Text(label),
+          ],
+        ),
       ),
     );
   }

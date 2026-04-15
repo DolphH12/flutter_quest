@@ -1,0 +1,2728 @@
+{
+  "routeId": "firebase_essentials_route",
+  "title": {
+    "es": "Firebase Essentials",
+    "en": "Firebase Essentials"
+  },
+  "description": {
+    "es": "Aprende las bases de Firebase en Flutter: autenticación, Firestore, lecturas en tiempo real, Storage y criterios prácticos para construir apps reales.",
+    "en": "Learn Firebase basics in Flutter: authentication, Firestore, realtime reads, Storage, and practical judgement for building real apps."
+  },
+  "icon": "cloud_done",
+  "themeColor": "#FF8F00",
+  "version": 1,
+  "estimatedMinutes": 320,
+  "examNodeId": "firebase_essentials_final_exam",
+  "nodes": [
+    {
+      "id": "firebase_intro",
+      "title": {
+        "es": "Introducción a Firebase",
+        "en": "Introducción a Firebase"
+      },
+      "shortDescription": {
+        "es": "Qué es Firebase y cómo se divide mentalmente en servicios útiles.",
+        "en": "Qué es Firebase y cómo se divide mentalmente en servicios útiles."
+      },
+      "icon": "cloud_done",
+      "nodeType": "lesson",
+      "xpReward": 55,
+      "steps": [
+        {
+          "id": "fe_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "¿Qué resuelve Firebase?",
+            "en": "¿Qué resuelve Firebase?"
+          },
+          "body": {
+            "es": "Firebase es un conjunto de servicios listos para usar que te ayuda a construir apps sin montar todo un backend desde cero. En Flutter suele usarse para autenticación, base de datos, archivos, notificaciones y analítica. En esta ruta nos enfocaremos en lo esencial para que entiendas el flujo, no para que copies recetas sin criterio.",
+            "en": "Firebase es un conjunto de servicios listos para usar que te ayuda a construir apps sin montar todo un backend desde cero. En Flutter suele usarse para autenticación, base de datos, archivos, notificaciones y analítica. En esta ruta nos enfocaremos en lo esencial para que entiendas el flujo, no para que copies recetas sin criterio."
+          },
+          "example": {
+            "es": "App móvil + Login + Base de datos + Archivos\n=\nFirebase puede cubrir varias piezas sin que tú tengas que levantar tu propio servidor desde cero.",
+            "en": "App móvil + Login + Base de datos + Archivos\n=\nFirebase puede cubrir varias piezas sin que tú tengas que levantar tu propio servidor desde cero."
+          }
+        },
+        {
+          "id": "fe_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No es magia, es infraestructura empaquetada",
+            "en": "No es magia, es infraestructura empaquetada"
+          },
+          "body": {
+            "es": "Firebase no reemplaza tu criterio de arquitectura. Te da servicios, SDKs y una integración rápida, pero igual debes decidir qué guardar, cuándo leer, cómo proteger datos y cómo estructurar la app. La idea no es volverte dependiente del tutorial eterno, sino entender el modelo mental.",
+            "en": "Firebase no reemplaza tu criterio de arquitectura. Te da servicios, SDKs y una integración rápida, pero igual debes decidir qué guardar, cuándo leer, cómo proteger datos y cómo estructurar la app. La idea no es volverte dependiente del tutorial eterno, sino entender el modelo mental."
+          },
+          "example": {
+            "es": "Auth -> identifica usuarios\nFirestore -> guarda datos\nStorage -> guarda archivos\nCada servicio cumple un rol distinto.",
+            "en": "Auth -> identifica usuarios\nFirestore -> guarda datos\nStorage -> guarda archivos\nCada servicio cumple un rol distinto."
+          }
+        },
+        {
+          "id": "fe_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué describe mejor a Firebase en el contexto de Flutter?",
+            "en": "¿Qué describe mejor a Firebase en el contexto de Flutter?"
+          },
+          "options": {
+            "es": [
+              "Un lenguaje para móviles",
+              "Un conjunto de servicios backend y herramientas integradas",
+              "Un motor gráfico para animaciones",
+              "Una librería exclusiva para layouts"
+            ],
+            "en": [
+              "Un lenguaje para móviles",
+              "Un conjunto de servicios backend y herramientas integradas",
+              "Un motor gráfico para animaciones",
+              "Una librería exclusiva para layouts"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Un conjunto de servicios backend y herramientas integradas",
+            "en": "Un conjunto de servicios backend y herramientas integradas"
+          },
+          "correctExplanation": {
+            "es": "Firebase ofrece servicios como Auth, Firestore y Storage que se integran fácilmente con Flutter.",
+            "en": "Firebase ofrece servicios como Auth, Firestore y Storage que se integran fácilmente con Flutter."
+          },
+          "incorrectExplanation": {
+            "es": "Firebase no es un lenguaje ni un motor visual. Es un conjunto de servicios backend y herramientas integradas.",
+            "en": "Firebase no es un lenguaje ni un motor visual. Es un conjunto de servicios backend y herramientas integradas."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "fe_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada servicio con su función principal.",
+            "en": "Relaciona cada servicio con su función principal."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Firebase Auth",
+                "en": "Firebase Auth"
+              },
+              "right": {
+                "es": "Gestionar usuarios e inicio de sesión",
+                "en": "Gestionar usuarios e inicio de sesión"
+              }
+            },
+            {
+              "left": {
+                "es": "Cloud Firestore",
+                "en": "Cloud Firestore"
+              },
+              "right": {
+                "es": "Guardar datos estructurados en documentos",
+                "en": "Guardar datos estructurados en documentos"
+              }
+            },
+            {
+              "left": {
+                "es": "Firebase Storage",
+                "en": "Firebase Storage"
+              },
+              "right": {
+                "es": "Guardar archivos como imágenes o PDFs",
+                "en": "Guardar archivos como imágenes o PDFs"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Cada servicio tiene un rol distinto dentro del ecosistema Firebase.",
+            "en": "Cada servicio tiene un rol distinto dentro del ecosistema Firebase."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cuál autentica usuarios, cuál guarda documentos y cuál almacena archivos.",
+            "en": "Revisa cuál autentica usuarios, cuál guarda documentos y cuál almacena archivos."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "fe_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si una app necesita login, perfiles y fotos subidas por el usuario, ¿qué combinación suena más lógica?",
+            "en": "Si una app necesita login, perfiles y fotos subidas por el usuario, ¿qué combinación suena más lógica?"
+          },
+          "codeSnippet": {
+            "es": "// Piensa en servicios, no en widgets",
+            "en": "// Piensa en servicios, no en widgets"
+          },
+          "options": {
+            "es": [
+              "Auth + Firestore + Storage",
+              "Storage + TextField + Scaffold",
+              "Navigator + Auth + Padding",
+              "ListView + Firestore + Icon"
+            ],
+            "en": [
+              "Auth + Firestore + Storage",
+              "Storage + TextField + Scaffold",
+              "Navigator + Auth + Padding",
+              "ListView + Firestore + Icon"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Auth + Firestore + Storage",
+            "en": "Auth + Firestore + Storage"
+          },
+          "correctExplanation": {
+            "es": "Auth resuelve login, Firestore datos de perfil y Storage archivos como fotos.",
+            "en": "Auth resuelve login, Firestore datos de perfil y Storage archivos como fotos."
+          },
+          "incorrectExplanation": {
+            "es": "La combinación correcta es Auth + Firestore + Storage porque cubre identidad, datos y archivos.",
+            "en": "La combinación correcta es Auth + Firestore + Storage porque cubre identidad, datos y archivos."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "fe_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una explicación corta que incluya al menos estos tres conceptos: Auth, Firestore y Storage.",
+            "en": "Escribe una explicación corta que incluya al menos estos tres conceptos: Auth, Firestore y Storage."
+          },
+          "starterCode": {
+            "es": "Firebase sirve para...\n",
+            "en": "Firebase sirve para...\n"
+          },
+          "expectedFragments": {
+            "es": [
+              "Auth",
+              "Firestore",
+              "Storage"
+            ],
+            "en": [
+              "Auth",
+              "Firestore",
+              "Storage"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ya estás conectando los servicios principales de Firebase con casos reales.",
+            "en": "Bien. Ya estás conectando los servicios principales de Firebase con casos reales."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe mencionar Auth, Firestore y Storage.",
+            "en": "Tu respuesta debe mencionar Auth, Firestore y Storage."
+          },
+          "hint": {
+            "es": "Piensa en usuarios, datos y archivos.",
+            "en": "Piensa en usuarios, datos y archivos."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "firebase_setup",
+      "title": {
+        "es": "Configuración inicial",
+        "en": "Configuración inicial"
+      },
+      "shortDescription": {
+        "es": "Conectar Flutter con Firebase y arrancar la app correctamente.",
+        "en": "Conectar Flutter con Firebase y arrancar la app correctamente."
+      },
+      "icon": "settings_applications",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "fes_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Antes de usar Firebase, toca configurarlo bien",
+            "en": "Antes de usar Firebase, toca configurarlo bien"
+          },
+          "body": {
+            "es": "Conectar Flutter con Firebase implica registrar la app en un proyecto, instalar paquetes y generar la configuración correcta. Esta parte no es la más glamorosa, pero evita muchos errores raros después. La moraleja: una base mal configurada hace que todo falle con actitud.",
+            "en": "Conectar Flutter con Firebase implica registrar la app en un proyecto, instalar paquetes y generar la configuración correcta. Esta parte no es la más glamorosa, pero evita muchos errores raros después. La moraleja: una base mal configurada hace que todo falle con actitud."
+          },
+          "example": {
+            "es": "flutterfire configure\n+\nFirebase.initializeApp()\n=\nBase lista para empezar a trabajar.",
+            "en": "flutterfire configure\n+\nFirebase.initializeApp()\n=\nBase lista para empezar a trabajar."
+          }
+        },
+        {
+          "id": "fes_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "initializeApp no es adorno",
+            "en": "initializeApp no es adorno"
+          },
+          "body": {
+            "es": "Firebase necesita inicializarse antes de que uses servicios como Auth o Firestore. Si intentas leer o escribir sin esa inicialización, el proyecto te recuerda rápidamente que la paciencia también es una habilidad técnica.",
+            "en": "Firebase necesita inicializarse antes de que uses servicios como Auth o Firestore. Si intentas leer o escribir sin esa inicialización, el proyecto te recuerda rápidamente que la paciencia también es una habilidad técnica."
+          },
+          "example": {
+            "es": "await Firebase.initializeApp(\n  options: DefaultFirebaseOptions.currentPlatform,\n);",
+            "en": "await Firebase.initializeApp(\n  options: DefaultFirebaseOptions.currentPlatform,\n);"
+          }
+        },
+        {
+          "id": "fes_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa la llamada que inicializa Firebase.",
+            "en": "Completa la llamada que inicializa Firebase."
+          },
+          "initialCode": {
+            "es": "await Firebase._____();",
+            "en": "await Firebase._____();"
+          },
+          "expectedAnswer": {
+            "es": "initializeApp",
+            "en": "initializeApp"
+          },
+          "correctExplanation": {
+            "es": "initializeApp prepara la conexión de la app con Firebase.",
+            "en": "initializeApp prepara la conexión de la app con Firebase."
+          },
+          "incorrectExplanation": {
+            "es": "La función esperada es initializeApp.",
+            "en": "La función esperada es initializeApp."
+          },
+          "hint": {
+            "es": "Es la función de arranque principal.",
+            "en": "Es la función de arranque principal."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "fes_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para esperar correctamente la inicialización de Firebase.",
+            "en": "Corrige el código para esperar correctamente la inicialización de Firebase."
+          },
+          "initialCode": {
+            "es": "void main() {\n  Firebase.initializeApp();\n  runApp(const MyApp());\n}",
+            "en": "void main() {\n  Firebase.initializeApp();\n  runApp(const MyApp());\n}"
+          },
+          "expectedAnswer": {
+            "es": "void main() async {\n  await Firebase.initializeApp();\n  runApp(const MyApp());\n}",
+            "en": "void main() async {\n  await Firebase.initializeApp();\n  runApp(const MyApp());\n}"
+          },
+          "correctExplanation": {
+            "es": "La inicialización debe esperarse antes de usar los servicios.",
+            "en": "La inicialización debe esperarse antes de usar los servicios."
+          },
+          "incorrectExplanation": {
+            "es": "Falta convertir main en async y usar await en initializeApp.",
+            "en": "Falta convertir main en async y usar await en initializeApp."
+          },
+          "hint": {
+            "es": "Si algo tarda, no lo trates como instantáneo.",
+            "en": "Si algo tarda, no lo trates como instantáneo."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "fes_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea es la más problemática en este arranque?",
+            "en": "¿Qué línea es la más problemática en este arranque?"
+          },
+          "codeLines": {
+            "es": [
+              "void main() {",
+              "  runApp(const MyApp());",
+              "  await Firebase.initializeApp();",
+              "}"
+            ],
+            "en": [
+              "void main() {",
+              "  runApp(const MyApp());",
+              "  await Firebase.initializeApp();",
+              "}"
+            ]
+          },
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "No puedes usar await dentro de una función que no fue declarada async, y además esa inicialización debería ocurrir antes de runApp.",
+            "en": "No puedes usar await dentro de una función que no fue declarada async, y además esa inicialización debería ocurrir antes de runApp."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que usa await sin que main sea async.",
+            "en": "La línea incorrecta es la que usa await sin que main sea async."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "fes_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena los pasos lógicos para arrancar Firebase en la app.",
+            "en": "Ordena los pasos lógicos para arrancar Firebase en la app."
+          },
+          "blocks": {
+            "es": [
+              "runApp(const MyApp());",
+              "void main() async {",
+              "await Firebase.initializeApp();",
+              "}"
+            ],
+            "en": [
+              "runApp(const MyApp());",
+              "void main() async {",
+              "await Firebase.initializeApp();",
+              "}"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "void main() async {",
+              "await Firebase.initializeApp();",
+              "runApp(const MyApp());",
+              "}"
+            ],
+            "en": [
+              "void main() async {",
+              "await Firebase.initializeApp();",
+              "runApp(const MyApp());",
+              "}"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Primero declaras main async, luego inicializas y por último lanzas la app.",
+            "en": "Primero declaras main async, luego inicializas y por último lanzas la app."
+          },
+          "incorrectExplanation": {
+            "es": "El orden correcto es: main async, initializeApp, runApp.",
+            "en": "El orden correcto es: main async, initializeApp, runApp."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "firebase_auth",
+      "title": {
+        "es": "Autenticación con Firebase Auth",
+        "en": "Autenticación con Firebase Auth"
+      },
+      "shortDescription": {
+        "es": "Registro, login, logout y el rol real de Auth.",
+        "en": "Registro, login, logout y el rol real de Auth."
+      },
+      "icon": "lock_person",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "fa_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Autenticación: identidad antes que datos",
+            "en": "Autenticación: identidad antes que datos"
+          },
+          "body": {
+            "es": "Firebase Auth resuelve el problema de identificar usuarios. Puedes registrar, iniciar sesión, cerrar sesión y escuchar cambios de sesión sin construir todo el sistema de autenticación desde cero.",
+            "en": "Firebase Auth resuelve el problema de identificar usuarios. Puedes registrar, iniciar sesión, cerrar sesión y escuchar cambios de sesión sin construir todo el sistema de autenticación desde cero."
+          },
+          "example": {
+            "es": "createUserWithEmailAndPassword\nsignInWithEmailAndPassword\nsignOut",
+            "en": "createUserWithEmailAndPassword\nsignInWithEmailAndPassword\nsignOut"
+          }
+        },
+        {
+          "id": "fa_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Autenticar no es lo mismo que guardar perfil",
+            "en": "Autenticar no es lo mismo que guardar perfil"
+          },
+          "body": {
+            "es": "Auth maneja la identidad del usuario, pero no guarda automáticamente todos sus datos de negocio. Muy a menudo autenticas con Auth y luego guardas perfil adicional en Firestore. Esa separación evita confundir credenciales con información del usuario.",
+            "en": "Auth maneja la identidad del usuario, pero no guarda automáticamente todos sus datos de negocio. Muy a menudo autenticas con Auth y luego guardas perfil adicional en Firestore. Esa separación evita confundir credenciales con información del usuario."
+          },
+          "example": {
+            "es": "Auth -> email, uid, sesión\nFirestore -> nombre, avatar, preferencias",
+            "en": "Auth -> email, uid, sesión\nFirestore -> nombre, avatar, preferencias"
+          }
+        },
+        {
+          "id": "fa_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál es una responsabilidad típica de Firebase Auth?",
+            "en": "¿Cuál es una responsabilidad típica de Firebase Auth?"
+          },
+          "options": {
+            "es": [
+              "Guardar imágenes en carpetas",
+              "Autenticar usuarios y manejar sesiones",
+              "Pintar formularios automáticamente",
+              "Crear colecciones en Firestore sin código"
+            ],
+            "en": [
+              "Guardar imágenes en carpetas",
+              "Autenticar usuarios y manejar sesiones",
+              "Pintar formularios automáticamente",
+              "Crear colecciones en Firestore sin código"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Autenticar usuarios y manejar sesiones",
+            "en": "Autenticar usuarios y manejar sesiones"
+          },
+          "correctExplanation": {
+            "es": "Firebase Auth se encarga de identidad y sesión.",
+            "en": "Firebase Auth se encarga de identidad y sesión."
+          },
+          "incorrectExplanation": {
+            "es": "Auth resuelve el inicio de sesión y la sesión del usuario, no el almacenamiento de archivos.",
+            "en": "Auth resuelve el inicio de sesión y la sesión del usuario, no el almacenamiento de archivos."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "fa_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método para iniciar sesión con email y contraseña.",
+            "en": "Completa el método para iniciar sesión con email y contraseña."
+          },
+          "initialCode": {
+            "es": "await FirebaseAuth.instance._____(\n  email: email,\n  password: password,\n);",
+            "en": "await FirebaseAuth.instance._____(\n  email: email,\n  password: password,\n);"
+          },
+          "expectedAnswer": {
+            "es": "signInWithEmailAndPassword",
+            "en": "signInWithEmailAndPassword"
+          },
+          "correctExplanation": {
+            "es": "Ese es el método estándar para login con email y password.",
+            "en": "Ese es el método estándar para login con email y password."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta correcta es signInWithEmailAndPassword.",
+            "en": "La respuesta correcta es signInWithEmailAndPassword."
+          },
+          "hint": {
+            "es": "No crea usuario, inicia sesión.",
+            "en": "No crea usuario, inicia sesión."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "fa_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para cerrar la sesión usando el servicio correcto.",
+            "en": "Corrige el código para cerrar la sesión usando el servicio correcto."
+          },
+          "initialCode": {
+            "es": "await FirebaseFirestore.instance.signOut();",
+            "en": "await FirebaseFirestore.instance.signOut();"
+          },
+          "expectedAnswer": {
+            "es": "await FirebaseAuth.instance.signOut();",
+            "en": "await FirebaseAuth.instance.signOut();"
+          },
+          "correctExplanation": {
+            "es": "Cerrar sesión corresponde a FirebaseAuth, no a Firestore.",
+            "en": "Cerrar sesión corresponde a FirebaseAuth, no a Firestore."
+          },
+          "incorrectExplanation": {
+            "es": "El servicio correcto es FirebaseAuth.instance.signOut().",
+            "en": "El servicio correcto es FirebaseAuth.instance.signOut()."
+          },
+          "hint": {
+            "es": "Piensa en quién maneja la sesión.",
+            "en": "Piensa en quién maneja la sesión."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "fa_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada acción con el servicio o resultado más lógico.",
+            "en": "Relaciona cada acción con el servicio o resultado más lógico."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "createUserWithEmailAndPassword",
+                "en": "createUserWithEmailAndPassword"
+              },
+              "right": {
+                "es": "Registrar un usuario nuevo",
+                "en": "Registrar un usuario nuevo"
+              }
+            },
+            {
+              "left": {
+                "es": "signInWithEmailAndPassword",
+                "en": "signInWithEmailAndPassword"
+              },
+              "right": {
+                "es": "Iniciar sesión",
+                "en": "Iniciar sesión"
+              }
+            },
+            {
+              "left": {
+                "es": "signOut",
+                "en": "signOut"
+              },
+              "right": {
+                "es": "Cerrar sesión actual",
+                "en": "Cerrar sesión actual"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estas son operaciones básicas del flujo de autenticación.",
+            "en": "Estas son operaciones básicas del flujo de autenticación."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cuál método registra, cuál inicia y cuál cierra sesión.",
+            "en": "Revisa cuál método registra, cuál inicia y cuál cierra sesión."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "fa_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si autenticas a un usuario y luego quieres guardar su nombre visible, ¿qué enfoque tiene más sentido?",
+            "en": "Si autenticas a un usuario y luego quieres guardar su nombre visible, ¿qué enfoque tiene más sentido?"
+          },
+          "codeSnippet": {
+            "es": "// Auth ya te dio el uid",
+            "en": "// Auth ya te dio el uid"
+          },
+          "options": {
+            "es": [
+              "Guardar nombre en Firestore usando el uid",
+              "Guardar nombre en runApp",
+              "Guardar nombre dentro de Scaffold",
+              "No guardar nada porque Auth ya lo hace todo"
+            ],
+            "en": [
+              "Guardar nombre en Firestore usando el uid",
+              "Guardar nombre en runApp",
+              "Guardar nombre dentro de Scaffold",
+              "No guardar nada porque Auth ya lo hace todo"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Guardar nombre en Firestore usando el uid",
+            "en": "Guardar nombre en Firestore usando el uid"
+          },
+          "correctExplanation": {
+            "es": "Es común usar Auth para identidad y Firestore para datos adicionales del perfil.",
+            "en": "Es común usar Auth para identidad y Firestore para datos adicionales del perfil."
+          },
+          "incorrectExplanation": {
+            "es": "Auth no reemplaza a Firestore para datos de perfil más ricos.",
+            "en": "Auth no reemplaza a Firestore para datos de perfil más ricos."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "firebase_auth_session",
+      "title": {
+        "es": "Sesión y cambios de autenticación",
+        "en": "Sesión y cambios de autenticación"
+      },
+      "shortDescription": {
+        "es": "Usar streams de Auth para decidir qué mostrar.",
+        "en": "Usar streams de Auth para decidir qué mostrar."
+      },
+      "icon": "manage_accounts",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "fses_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "La sesión cambia, la UI debe enterarse",
+            "en": "La sesión cambia, la UI debe enterarse"
+          },
+          "body": {
+            "es": "No basta con iniciar sesión una vez. La app debe reaccionar cuando el usuario entra, sale o la sesión cambia. Por eso es común escuchar cambios de autenticación con un stream y decidir qué pantalla mostrar.",
+            "en": "No basta con iniciar sesión una vez. La app debe reaccionar cuando el usuario entra, sale o la sesión cambia. Por eso es común escuchar cambios de autenticación con un stream y decidir qué pantalla mostrar."
+          },
+          "example": {
+            "es": "authStateChanges().listen((user) {\n  // Si user es null -> login\n  // Si no -> home\n});",
+            "en": "authStateChanges().listen((user) {\n  // Si user es null -> login\n  // Si no -> home\n});"
+          }
+        },
+        {
+          "id": "fses_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Streams en Auth tienen sentido real",
+            "en": "Streams en Auth tienen sentido real"
+          },
+          "body": {
+            "es": "Aquí los streams no son teoría de museo. Son útiles porque la UI necesita responder en tiempo real al estado de sesión. Splash, login y home suelen depender de esto.",
+            "en": "Aquí los streams no son teoría de museo. Son útiles porque la UI necesita responder en tiempo real al estado de sesión. Splash, login y home suelen depender de esto."
+          },
+          "example": {
+            "es": "StreamBuilder<User?>(\n  stream: FirebaseAuth.instance.authStateChanges(),\n  builder: ...\n)",
+            "en": "StreamBuilder<User?>(\n  stream: FirebaseAuth.instance.authStateChanges(),\n  builder: ...\n)"
+          }
+        },
+        {
+          "id": "fses_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método suele usarse para escuchar cambios del usuario autenticado?",
+            "en": "¿Qué método suele usarse para escuchar cambios del usuario autenticado?"
+          },
+          "options": {
+            "es": [
+              "authStateChanges()",
+              "initSessionWidget()",
+              "observeLoginPage()",
+              "watchScaffold()"
+            ],
+            "en": [
+              "authStateChanges()",
+              "initSessionWidget()",
+              "observeLoginPage()",
+              "watchScaffold()"
+            ]
+          },
+          "correctAnswer": {
+            "es": "authStateChanges()",
+            "en": "authStateChanges()"
+          },
+          "correctExplanation": {
+            "es": "authStateChanges() emite cambios del usuario autenticado.",
+            "en": "authStateChanges() emite cambios del usuario autenticado."
+          },
+          "incorrectExplanation": {
+            "es": "El método correcto es authStateChanges().",
+            "en": "El método correcto es authStateChanges()."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "fses_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método del stream de autenticación.",
+            "en": "Completa el método del stream de autenticación."
+          },
+          "initialCode": {
+            "es": "FirebaseAuth.instance._____()",
+            "en": "FirebaseAuth.instance._____()"
+          },
+          "expectedAnswer": {
+            "es": "authStateChanges",
+            "en": "authStateChanges"
+          },
+          "correctExplanation": {
+            "es": "Ese método devuelve un stream del estado de autenticación.",
+            "en": "Ese método devuelve un stream del estado de autenticación."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta es authStateChanges.",
+            "en": "La respuesta es authStateChanges."
+          },
+          "hint": {
+            "es": "Piensa en cambios de estado de auth.",
+            "en": "Piensa en cambios de estado de auth."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "fses_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el tipo esperado por el builder del stream.",
+            "en": "Corrige el tipo esperado por el builder del stream."
+          },
+          "initialCode": {
+            "es": "StreamBuilder<String>(\n  stream: FirebaseAuth.instance.authStateChanges(),\n  builder: ...,\n)",
+            "en": "StreamBuilder<String>(\n  stream: FirebaseAuth.instance.authStateChanges(),\n  builder: ...,\n)"
+          },
+          "expectedAnswer": {
+            "es": "StreamBuilder<User?>(\n  stream: FirebaseAuth.instance.authStateChanges(),\n  builder: ...,\n)",
+            "en": "StreamBuilder<User?>(\n  stream: FirebaseAuth.instance.authStateChanges(),\n  builder: ...,\n)"
+          },
+          "correctExplanation": {
+            "es": "El stream de Auth emite un User? y no un String.",
+            "en": "El stream de Auth emite un User? y no un String."
+          },
+          "incorrectExplanation": {
+            "es": "Debes usar el tipo User? para ese stream.",
+            "en": "Debes usar el tipo User? para ese stream."
+          },
+          "hint": {
+            "es": "No emite texto, emite usuario o null.",
+            "en": "No emite texto, emite usuario o null."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "fses_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si el stream emite null, ¿qué significa normalmente?",
+            "en": "Si el stream emite null, ¿qué significa normalmente?"
+          },
+          "codeSnippet": {
+            "es": "stream: FirebaseAuth.instance.authStateChanges()",
+            "en": "stream: FirebaseAuth.instance.authStateChanges()"
+          },
+          "options": {
+            "es": [
+              "Que el usuario no ha iniciado sesión",
+              "Que Firestore está lleno",
+              "Que Storage falló",
+              "Que Navigator hizo pop"
+            ],
+            "en": [
+              "Que el usuario no ha iniciado sesión",
+              "Que Firestore está lleno",
+              "Que Storage falló",
+              "Que Navigator hizo pop"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Que el usuario no ha iniciado sesión",
+            "en": "Que el usuario no ha iniciado sesión"
+          },
+          "correctExplanation": {
+            "es": "null suele indicar ausencia de usuario autenticado.",
+            "en": "null suele indicar ausencia de usuario autenticado."
+          },
+          "incorrectExplanation": {
+            "es": "En Auth, null normalmente significa que no hay sesión activa.",
+            "en": "En Auth, null normalmente significa que no hay sesión activa."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "fses_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una condición simple que decida entre mostrar LoginScreen o HomeScreen según si user es null.",
+            "en": "Escribe una condición simple que decida entre mostrar LoginScreen o HomeScreen según si user es null."
+          },
+          "starterCode": {
+            "es": "if (...) {\n  return ...;\n} else {\n  return ...;\n}",
+            "en": "if (...) {\n  return ...;\n} else {\n  return ...;\n}"
+          },
+          "expectedFragments": {
+            "es": [
+              "user == null",
+              "LoginScreen",
+              "HomeScreen"
+            ],
+            "en": [
+              "user == null",
+              "LoginScreen",
+              "HomeScreen"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ya estás modelando el flujo clásico de sesión en la UI.",
+            "en": "Bien. Ya estás modelando el flujo clásico de sesión en la UI."
+          },
+          "incorrectExplanation": {
+            "es": "Incluye la condición user == null y ambas pantallas.",
+            "en": "Incluye la condición user == null y ambas pantallas."
+          },
+          "hint": {
+            "es": "Sin usuario, toca login.",
+            "en": "Sin usuario, toca login."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "firebase_firestore_basics",
+      "title": {
+        "es": "Firestore básico",
+        "en": "Firestore básico"
+      },
+      "shortDescription": {
+        "es": "Colecciones, documentos y modelo mental de datos.",
+        "en": "Colecciones, documentos y modelo mental de datos."
+      },
+      "icon": "database",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "ffb_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Firestore piensa en colecciones y documentos",
+            "en": "Firestore piensa en colecciones y documentos"
+          },
+          "body": {
+            "es": "Cloud Firestore organiza datos en colecciones y documentos. Un documento puede tener campos simples o más complejos. Es una base flexible, pensada para apps cliente con sincronización muy cómoda.",
+            "en": "Cloud Firestore organiza datos en colecciones y documentos. Un documento puede tener campos simples o más complejos. Es una base flexible, pensada para apps cliente con sincronización muy cómoda."
+          },
+          "example": {
+            "es": "users/\n  uid_123 -> { name: 'Ana', age: 24 }",
+            "en": "users/\n  uid_123 -> { name: 'Ana', age: 24 }"
+          }
+        },
+        {
+          "id": "ffb_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No es SQL, cambia tu modelo mental",
+            "en": "No es SQL, cambia tu modelo mental"
+          },
+          "body": {
+            "es": "Firestore no se usa como una base relacional tradicional. Aquí piensas más en documentos y estructuras orientadas al acceso que en joins por todas partes. Diseñar bien la lectura importa mucho.",
+            "en": "Firestore no se usa como una base relacional tradicional. Aquí piensas más en documentos y estructuras orientadas al acceso que en joins por todas partes. Diseñar bien la lectura importa mucho."
+          },
+          "example": {
+            "es": "CollectionReference users = FirebaseFirestore.instance.collection('users');",
+            "en": "CollectionReference users = FirebaseFirestore.instance.collection('users');"
+          }
+        },
+        {
+          "id": "ffb_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál estructura representa mejor a Firestore?",
+            "en": "¿Cuál estructura representa mejor a Firestore?"
+          },
+          "options": {
+            "es": [
+              "Tablas y joins obligatorios",
+              "Colecciones y documentos",
+              "Solo archivos binarios",
+              "Pantallas y widgets"
+            ],
+            "en": [
+              "Tablas y joins obligatorios",
+              "Colecciones y documentos",
+              "Solo archivos binarios",
+              "Pantallas y widgets"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Colecciones y documentos",
+            "en": "Colecciones y documentos"
+          },
+          "correctExplanation": {
+            "es": "Firestore organiza la información en colecciones y documentos.",
+            "en": "Firestore organiza la información en colecciones y documentos."
+          },
+          "incorrectExplanation": {
+            "es": "La idea principal en Firestore es colecciones y documentos.",
+            "en": "La idea principal en Firestore es colecciones y documentos."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "ffb_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa la llamada para obtener una colección llamada users.",
+            "en": "Completa la llamada para obtener una colección llamada users."
+          },
+          "initialCode": {
+            "es": "FirebaseFirestore.instance._____('users')",
+            "en": "FirebaseFirestore.instance._____('users')"
+          },
+          "expectedAnswer": {
+            "es": "collection",
+            "en": "collection"
+          },
+          "correctExplanation": {
+            "es": "collection('users') apunta a esa colección.",
+            "en": "collection('users') apunta a esa colección."
+          },
+          "incorrectExplanation": {
+            "es": "El método correcto es collection.",
+            "en": "El método correcto es collection."
+          },
+          "hint": {
+            "es": "No es doc, es el nivel superior.",
+            "en": "No es doc, es el nivel superior."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "ffb_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada pieza con su significado.",
+            "en": "Relaciona cada pieza con su significado."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "collection",
+                "en": "collection"
+              },
+              "right": {
+                "es": "Grupo de documentos",
+                "en": "Grupo de documentos"
+              }
+            },
+            {
+              "left": {
+                "es": "document",
+                "en": "document"
+              },
+              "right": {
+                "es": "Registro individual con campos",
+                "en": "Registro individual con campos"
+              }
+            },
+            {
+              "left": {
+                "es": "field",
+                "en": "field"
+              },
+              "right": {
+                "es": "Dato específico dentro de un documento",
+                "en": "Dato específico dentro de un documento"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estas tres ideas son la base del modelo de Firestore.",
+            "en": "Estas tres ideas son la base del modelo de Firestore."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué agrupa documentos, cuál representa un registro y qué es un campo.",
+            "en": "Revisa qué agrupa documentos, cuál representa un registro y qué es un campo."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "ffb_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea tiene más cara de estar mal en este acceso?",
+            "en": "¿Qué línea tiene más cara de estar mal en este acceso?"
+          },
+          "codeLines": {
+            "es": [
+              "final db = FirebaseFirestore.instance;",
+              "final users = db.document('users');",
+              "final userDoc = users.doc('abc');"
+            ],
+            "en": [
+              "final db = FirebaseFirestore.instance;",
+              "final users = db.document('users');",
+              "final userDoc = users.doc('abc');"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "Para apuntar a una colección debes usar collection('users'), no document('users').",
+            "en": "Para apuntar a una colección debes usar collection('users'), no document('users')."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta usa document donde debería usarse collection.",
+            "en": "La línea incorrecta usa document donde debería usarse collection."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "ffb_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si quieres guardar perfiles individuales por uid, ¿qué forma suena más razonable?",
+            "en": "Si quieres guardar perfiles individuales por uid, ¿qué forma suena más razonable?"
+          },
+          "codeSnippet": {
+            "es": "// users collection",
+            "en": "// users collection"
+          },
+          "options": {
+            "es": [
+              "users/{uid}",
+              "profile/list/all",
+              "storage://users",
+              "main.dart/users"
+            ],
+            "en": [
+              "users/{uid}",
+              "profile/list/all",
+              "storage://users",
+              "main.dart/users"
+            ]
+          },
+          "correctAnswer": {
+            "es": "users/{uid}",
+            "en": "users/{uid}"
+          },
+          "correctExplanation": {
+            "es": "Una colección users con documentos por uid es un patrón muy común.",
+            "en": "Una colección users con documentos por uid es un patrón muy común."
+          },
+          "incorrectExplanation": {
+            "es": "El enfoque típico es users/{uid}.",
+            "en": "El enfoque típico es users/{uid}."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "firebase_firestore_crud",
+      "title": {
+        "es": "Lectura y escritura en Firestore",
+        "en": "Lectura y escritura en Firestore"
+      },
+      "shortDescription": {
+        "es": "Leer, crear y actualizar documentos con criterio.",
+        "en": "Leer, crear y actualizar documentos con criterio."
+      },
+      "icon": "edit_note",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "frw_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Leer y escribir es el pan diario",
+            "en": "Leer y escribir es el pan diario"
+          },
+          "body": {
+            "es": "Una app real necesita crear, consultar y actualizar información. En Firestore eso suele implicar métodos como set, add, get y update, cada uno con una intención distinta.",
+            "en": "Una app real necesita crear, consultar y actualizar información. En Firestore eso suele implicar métodos como set, add, get y update, cada uno con una intención distinta."
+          },
+          "example": {
+            "es": "await db.collection('users').doc(uid).set({'name': 'Lina'});",
+            "en": "await db.collection('users').doc(uid).set({'name': 'Lina'});"
+          }
+        },
+        {
+          "id": "frw_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "No todo se guarda igual",
+            "en": "No todo se guarda igual"
+          },
+          "body": {
+            "es": "add crea un documento con id automático. doc(id).set(...) escribe en un documento específico. update modifica campos existentes. Elegir mal el método puede traerte datos duplicados o sobrescrituras dolorosas.",
+            "en": "add crea un documento con id automático. doc(id).set(...) escribe en un documento específico. update modifica campos existentes. Elegir mal el método puede traerte datos duplicados o sobrescrituras dolorosas."
+          },
+          "example": {
+            "es": "add -> id automático\nset -> documento específico\nupdate -> modifica existente",
+            "en": "add -> id automático\nset -> documento específico\nupdate -> modifica existente"
+          }
+        },
+        {
+          "id": "frw_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método tiene más sentido si quieres escribir datos en un documento con uid conocido?",
+            "en": "¿Qué método tiene más sentido si quieres escribir datos en un documento con uid conocido?"
+          },
+          "options": {
+            "es": [
+              "add()",
+              "doc(uid).set()",
+              "updateRandom()",
+              "pushDocument()"
+            ],
+            "en": [
+              "add()",
+              "doc(uid).set()",
+              "updateRandom()",
+              "pushDocument()"
+            ]
+          },
+          "correctAnswer": {
+            "es": "doc(uid).set()",
+            "en": "doc(uid).set()"
+          },
+          "correctExplanation": {
+            "es": "Si ya conoces el id del documento, doc(uid).set() es una opción clara.",
+            "en": "Si ya conoces el id del documento, doc(uid).set() es una opción clara."
+          },
+          "incorrectExplanation": {
+            "es": "Con un uid conocido, lo habitual es doc(uid).set().",
+            "en": "Con un uid conocido, lo habitual es doc(uid).set()."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "frw_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método para actualizar un campo existente.",
+            "en": "Completa el método para actualizar un campo existente."
+          },
+          "initialCode": {
+            "es": "await userRef._____({'name': 'Ana'});",
+            "en": "await userRef._____({'name': 'Ana'});"
+          },
+          "expectedAnswer": {
+            "es": "update",
+            "en": "update"
+          },
+          "correctExplanation": {
+            "es": "update modifica campos de un documento existente.",
+            "en": "update modifica campos de un documento existente."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta correcta es update.",
+            "en": "La respuesta correcta es update."
+          },
+          "hint": {
+            "es": "No crea, modifica.",
+            "en": "No crea, modifica."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "frw_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el método para leer una vez el documento.",
+            "en": "Corrige el método para leer una vez el documento."
+          },
+          "initialCode": {
+            "es": "final snapshot = await userRef.read();",
+            "en": "final snapshot = await userRef.read();"
+          },
+          "expectedAnswer": {
+            "es": "final snapshot = await userRef.get();",
+            "en": "final snapshot = await userRef.get();"
+          },
+          "correctExplanation": {
+            "es": "get() obtiene una lectura puntual del documento.",
+            "en": "get() obtiene una lectura puntual del documento."
+          },
+          "incorrectExplanation": {
+            "es": "En Firestore se usa get() para una lectura puntual.",
+            "en": "En Firestore se usa get() para una lectura puntual."
+          },
+          "hint": {
+            "es": "Método cortico y clásico.",
+            "en": "Método cortico y clásico."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "frw_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena el flujo para obtener una referencia y escribir un documento.",
+            "en": "Ordena el flujo para obtener una referencia y escribir un documento."
+          },
+          "blocks": {
+            "es": [
+              "await userRef.set({'name': 'Lina'});",
+              "final userRef = FirebaseFirestore.instance.collection('users').doc(uid);",
+              "final uid = '123';"
+            ],
+            "en": [
+              "await userRef.set({'name': 'Lina'});",
+              "final userRef = FirebaseFirestore.instance.collection('users').doc(uid);",
+              "final uid = '123';"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "final uid = '123';",
+              "final userRef = FirebaseFirestore.instance.collection('users').doc(uid);",
+              "await userRef.set({'name': 'Lina'});"
+            ],
+            "en": [
+              "final uid = '123';",
+              "final userRef = FirebaseFirestore.instance.collection('users').doc(uid);",
+              "await userRef.set({'name': 'Lina'});"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Primero defines el id, luego la referencia y por último escribes.",
+            "en": "Primero defines el id, luego la referencia y por último escribes."
+          },
+          "incorrectExplanation": {
+            "es": "Necesitas primero el uid y la referencia antes de hacer set.",
+            "en": "Necesitas primero el uid y la referencia antes de hacer set."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "frw_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Cuál caso encaja mejor con add()?",
+            "en": "¿Cuál caso encaja mejor con add()?"
+          },
+          "codeSnippet": {
+            "es": "// Quieres crear registros con id automático",
+            "en": "// Quieres crear registros con id automático"
+          },
+          "options": {
+            "es": [
+              "Mensajes nuevos en un chat",
+              "Perfil principal por uid",
+              "Config global única",
+              "Documento settings fijo"
+            ],
+            "en": [
+              "Mensajes nuevos en un chat",
+              "Perfil principal por uid",
+              "Config global única",
+              "Documento settings fijo"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Mensajes nuevos en un chat",
+            "en": "Mensajes nuevos en un chat"
+          },
+          "correctExplanation": {
+            "es": "Para elementos repetibles como mensajes, add() con id automático suele encajar bien.",
+            "en": "Para elementos repetibles como mensajes, add() con id automático suele encajar bien."
+          },
+          "incorrectExplanation": {
+            "es": "El caso más natural para add() es crear registros múltiples como mensajes.",
+            "en": "El caso más natural para add() es crear registros múltiples como mensajes."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "frw_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un fragmento que use collection('users'), doc(uid) y set para guardar un nombre.",
+            "en": "Escribe un fragmento que use collection('users'), doc(uid) y set para guardar un nombre."
+          },
+          "starterCode": {
+            "es": "final uid = '123';\n",
+            "en": "final uid = '123';\n"
+          },
+          "expectedFragments": {
+            "es": [
+              "collection('users')",
+              "doc(uid)",
+              "set",
+              "'name'"
+            ],
+            "en": [
+              "collection('users')",
+              "doc(uid)",
+              "set",
+              "'name'"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ya estás modelando una escritura típica de perfil.",
+            "en": "Bien. Ya estás modelando una escritura típica de perfil."
+          },
+          "incorrectExplanation": {
+            "es": "Incluye collection('users'), doc(uid), set y el campo 'name'.",
+            "en": "Incluye collection('users'), doc(uid), set y el campo 'name'."
+          },
+          "hint": {
+            "es": "Piensa en un perfil por uid.",
+            "en": "Piensa en un perfil por uid."
+          },
+          "xpReward": 18
+        }
+      ]
+    },
+    {
+      "id": "firebase_realtime",
+      "title": {
+        "es": "Tiempo real con Firestore",
+        "en": "Tiempo real con Firestore"
+      },
+      "shortDescription": {
+        "es": "Streams, snapshots y UIs que reaccionan solas.",
+        "en": "Streams, snapshots y UIs que reaccionan solas."
+      },
+      "icon": "sync",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "frt_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Una de las joyas: tiempo real",
+            "en": "Una de las joyas: tiempo real"
+          },
+          "body": {
+            "es": "Firestore puede emitir cambios en tiempo real. Eso hace que muchas UIs se actualicen solas sin que tú tengas que refrescar manualmente todo. Chats, listas colaborativas y paneles vivos aman este enfoque.",
+            "en": "Firestore puede emitir cambios en tiempo real. Eso hace que muchas UIs se actualicen solas sin que tú tengas que refrescar manualmente todo. Chats, listas colaborativas y paneles vivos aman este enfoque."
+          },
+          "example": {
+            "es": "collection('messages').snapshots()",
+            "en": "collection('messages').snapshots()"
+          }
+        },
+        {
+          "id": "frt_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "get no es stream",
+            "en": "get no es stream"
+          },
+          "body": {
+            "es": "get te trae una lectura puntual. snapshots te suscribe a cambios. Si mezclas ambos conceptos sin intención, terminas con interfaces que parecen vivas pero en realidad se quedaron dormidas hace rato.",
+            "en": "get te trae una lectura puntual. snapshots te suscribe a cambios. Si mezclas ambos conceptos sin intención, terminas con interfaces que parecen vivas pero en realidad se quedaron dormidas hace rato."
+          },
+          "example": {
+            "es": "get() -> una vez\nsnapshots() -> flujo continuo",
+            "en": "get() -> una vez\nsnapshots() -> flujo continuo"
+          }
+        },
+        {
+          "id": "frt_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué método se usa típicamente para escuchar cambios en tiempo real?",
+            "en": "¿Qué método se usa típicamente para escuchar cambios en tiempo real?"
+          },
+          "options": {
+            "es": [
+              "snapshots()",
+              "getOnceForever()",
+              "liveRead()",
+              "watchUi()"
+            ],
+            "en": [
+              "snapshots()",
+              "getOnceForever()",
+              "liveRead()",
+              "watchUi()"
+            ]
+          },
+          "correctAnswer": {
+            "es": "snapshots()",
+            "en": "snapshots()"
+          },
+          "correctExplanation": {
+            "es": "snapshots() devuelve un stream con cambios en tiempo real.",
+            "en": "snapshots() devuelve un stream con cambios en tiempo real."
+          },
+          "incorrectExplanation": {
+            "es": "Para tiempo real en Firestore se usa snapshots().",
+            "en": "Para tiempo real en Firestore se usa snapshots()."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "frt_complete_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el método para escuchar una colección en tiempo real.",
+            "en": "Completa el método para escuchar una colección en tiempo real."
+          },
+          "initialCode": {
+            "es": "FirebaseFirestore.instance.collection('messages')._____()",
+            "en": "FirebaseFirestore.instance.collection('messages')._____()"
+          },
+          "expectedAnswer": {
+            "es": "snapshots",
+            "en": "snapshots"
+          },
+          "correctExplanation": {
+            "es": "snapshots() crea un stream de cambios.",
+            "en": "snapshots() crea un stream de cambios."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es snapshots.",
+            "en": "La respuesta esperada es snapshots."
+          },
+          "hint": {
+            "es": "No trae una sola vez.",
+            "en": "No trae una sola vez."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "frt_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el código para usar un stream y no una lectura única.",
+            "en": "Corrige el código para usar un stream y no una lectura única."
+          },
+          "initialCode": {
+            "es": "stream: FirebaseFirestore.instance.collection('messages').get(),",
+            "en": "stream: FirebaseFirestore.instance.collection('messages').get(),"
+          },
+          "expectedAnswer": {
+            "es": "stream: FirebaseFirestore.instance.collection('messages').snapshots(),",
+            "en": "stream: FirebaseFirestore.instance.collection('messages').snapshots(),"
+          },
+          "correctExplanation": {
+            "es": "StreamBuilder espera un stream, no un Future puntual.",
+            "en": "StreamBuilder espera un stream, no un Future puntual."
+          },
+          "incorrectExplanation": {
+            "es": "Debes usar snapshots() para un stream en tiempo real.",
+            "en": "Debes usar snapshots() para un stream en tiempo real."
+          },
+          "hint": {
+            "es": "Future no es stream.",
+            "en": "Future no es stream."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "frt_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada término con su comportamiento.",
+            "en": "Relaciona cada término con su comportamiento."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "get()",
+                "en": "get()"
+              },
+              "right": {
+                "es": "Lectura puntual",
+                "en": "Lectura puntual"
+              }
+            },
+            {
+              "left": {
+                "es": "snapshots()",
+                "en": "snapshots()"
+              },
+              "right": {
+                "es": "Actualización en tiempo real",
+                "en": "Actualización en tiempo real"
+              }
+            },
+            {
+              "left": {
+                "es": "StreamBuilder",
+                "en": "StreamBuilder"
+              },
+              "right": {
+                "es": "Construir UI desde un stream",
+                "en": "Construir UI desde un stream"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estas piezas suelen aparecer juntas en UI conectada a Firestore.",
+            "en": "Estas piezas suelen aparecer juntas en UI conectada a Firestore."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué lee una vez, qué escucha cambios y qué widget consume streams.",
+            "en": "Revisa qué lee una vez, qué escucha cambios y qué widget consume streams."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "frt_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Cuál caso se beneficia especialmente de snapshots()?",
+            "en": "¿Cuál caso se beneficia especialmente de snapshots()?"
+          },
+          "codeSnippet": {
+            "es": "// Piensa en una UI que debe reaccionar sola",
+            "en": "// Piensa en una UI que debe reaccionar sola"
+          },
+          "options": {
+            "es": [
+              "Un chat en vivo",
+              "Una constante en código",
+              "Un color estático del tema",
+              "Un icono fijo"
+            ],
+            "en": [
+              "Un chat en vivo",
+              "Una constante en código",
+              "Un color estático del tema",
+              "Un icono fijo"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Un chat en vivo",
+            "en": "Un chat en vivo"
+          },
+          "correctExplanation": {
+            "es": "Los chats se benefician mucho del tiempo real.",
+            "en": "Los chats se benefician mucho del tiempo real."
+          },
+          "incorrectExplanation": {
+            "es": "La mejor opción aquí es un chat en vivo.",
+            "en": "La mejor opción aquí es un chat en vivo."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "frt_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea choca más con la idea de tiempo real?",
+            "en": "¿Qué línea choca más con la idea de tiempo real?"
+          },
+          "codeLines": {
+            "es": [
+              "StreamBuilder(",
+              "  stream: FirebaseFirestore.instance.collection('messages').get(),",
+              "  builder: (context, snapshot) => Container(),",
+              ")"
+            ],
+            "en": [
+              "StreamBuilder(",
+              "  stream: FirebaseFirestore.instance.collection('messages').get(),",
+              "  builder: (context, snapshot) => Container(),",
+              ")"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "get() devuelve un Future, pero StreamBuilder necesita un stream.",
+            "en": "get() devuelve un Future, pero StreamBuilder necesita un stream."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es la que usa get() donde debería ir snapshots().",
+            "en": "La línea incorrecta es la que usa get() donde debería ir snapshots()."
+          },
+          "xpReward": 14
+        }
+      ]
+    },
+    {
+      "id": "firebase_storage",
+      "title": {
+        "es": "Storage y archivos",
+        "en": "Storage y archivos"
+      },
+      "shortDescription": {
+        "es": "Subir archivos y conectarlos con Firestore.",
+        "en": "Subir archivos y conectarlos con Firestore."
+      },
+      "icon": "upload_file",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "fst_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Firestore no es para guardar archivos pesados",
+            "en": "Firestore no es para guardar archivos pesados"
+          },
+          "body": {
+            "es": "Para imágenes, audios o PDFs normalmente usas Firebase Storage. Luego guardas la URL o metadatos en Firestore si lo necesitas. Separar archivo y documento evita inventos raros.",
+            "en": "Para imágenes, audios o PDFs normalmente usas Firebase Storage. Luego guardas la URL o metadatos en Firestore si lo necesitas. Separar archivo y documento evita inventos raros."
+          },
+          "example": {
+            "es": "Storage -> foto\nFirestore -> photoUrl",
+            "en": "Storage -> foto\nFirestore -> photoUrl"
+          }
+        },
+        {
+          "id": "fst_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Storage guarda bytes, Firestore contexto",
+            "en": "Storage guarda bytes, Firestore contexto"
+          },
+          "body": {
+            "es": "Storage es ideal para contenido binario. Firestore es ideal para datos estructurados. Juntos funcionan muy bien: subes un archivo, obtienes URL y la asocias al documento del usuario o del recurso.",
+            "en": "Storage es ideal para contenido binario. Firestore es ideal para datos estructurados. Juntos funcionan muy bien: subes un archivo, obtienes URL y la asocias al documento del usuario o del recurso."
+          },
+          "example": {
+            "es": "final ref = FirebaseStorage.instance.ref('avatars/user_1.jpg');",
+            "en": "final ref = FirebaseStorage.instance.ref('avatars/user_1.jpg');"
+          }
+        },
+        {
+          "id": "fst_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué servicio usarías normalmente para subir una imagen de perfil?",
+            "en": "¿Qué servicio usarías normalmente para subir una imagen de perfil?"
+          },
+          "options": {
+            "es": [
+              "Firebase Storage",
+              "Firebase Auth",
+              "Scaffold Storage",
+              "Cloud Padding"
+            ],
+            "en": [
+              "Firebase Storage",
+              "Firebase Auth",
+              "Scaffold Storage",
+              "Cloud Padding"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Firebase Storage",
+            "en": "Firebase Storage"
+          },
+          "correctExplanation": {
+            "es": "Firebase Storage está pensado para archivos como imágenes.",
+            "en": "Firebase Storage está pensado para archivos como imágenes."
+          },
+          "incorrectExplanation": {
+            "es": "El servicio correcto para archivos es Firebase Storage.",
+            "en": "El servicio correcto para archivos es Firebase Storage."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "fst_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el servicio correcto para crear una referencia de archivo.",
+            "en": "Completa el servicio correcto para crear una referencia de archivo."
+          },
+          "initialCode": {
+            "es": "final ref = _____.instance.ref('avatars/user.jpg');",
+            "en": "final ref = _____.instance.ref('avatars/user.jpg');"
+          },
+          "expectedAnswer": {
+            "es": "FirebaseStorage",
+            "en": "FirebaseStorage"
+          },
+          "correctExplanation": {
+            "es": "FirebaseStorage es el servicio de archivos.",
+            "en": "FirebaseStorage es el servicio de archivos."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta correcta es FirebaseStorage.",
+            "en": "La respuesta correcta es FirebaseStorage."
+          },
+          "hint": {
+            "es": "Piensa en archivos, no en documentos.",
+            "en": "Piensa en archivos, no en documentos."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "fst_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el servicio usado para subir un archivo.",
+            "en": "Corrige el servicio usado para subir un archivo."
+          },
+          "initialCode": {
+            "es": "await FirebaseFirestore.instance.ref('avatars/user.jpg').putFile(file);",
+            "en": "await FirebaseFirestore.instance.ref('avatars/user.jpg').putFile(file);"
+          },
+          "expectedAnswer": {
+            "es": "await FirebaseStorage.instance.ref('avatars/user.jpg').putFile(file);",
+            "en": "await FirebaseStorage.instance.ref('avatars/user.jpg').putFile(file);"
+          },
+          "correctExplanation": {
+            "es": "Subir archivos corresponde a FirebaseStorage.",
+            "en": "Subir archivos corresponde a FirebaseStorage."
+          },
+          "incorrectExplanation": {
+            "es": "Firestore no usa putFile; ese trabajo es de FirebaseStorage.",
+            "en": "Firestore no usa putFile; ese trabajo es de FirebaseStorage."
+          },
+          "hint": {
+            "es": "Documentos no son archivos.",
+            "en": "Documentos no son archivos."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "fst_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada acción con el servicio más lógico.",
+            "en": "Relaciona cada acción con el servicio más lógico."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Guardar una foto",
+                "en": "Guardar una foto"
+              },
+              "right": {
+                "es": "Firebase Storage",
+                "en": "Firebase Storage"
+              }
+            },
+            {
+              "left": {
+                "es": "Guardar el nombre visible del usuario",
+                "en": "Guardar el nombre visible del usuario"
+              },
+              "right": {
+                "es": "Cloud Firestore",
+                "en": "Cloud Firestore"
+              }
+            },
+            {
+              "left": {
+                "es": "Iniciar sesión",
+                "en": "Iniciar sesión"
+              },
+              "right": {
+                "es": "Firebase Auth",
+                "en": "Firebase Auth"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Cada servicio tiene una especialidad clara.",
+            "en": "Cada servicio tiene una especialidad clara."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué resuelve archivos, qué resuelve datos y qué resuelve sesión.",
+            "en": "Revisa qué resuelve archivos, qué resuelve datos y qué resuelve sesión."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "fst_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Después de subir una imagen a Storage, ¿qué suele pasar en una app real?",
+            "en": "Después de subir una imagen a Storage, ¿qué suele pasar en una app real?"
+          },
+          "codeSnippet": {
+            "es": "// Quieres mostrar la imagen luego",
+            "en": "// Quieres mostrar la imagen luego"
+          },
+          "options": {
+            "es": [
+              "Guardar o usar la URL del archivo",
+              "Reiniciar Firebase",
+              "Eliminar Auth",
+              "Convertir la imagen en Scaffold"
+            ],
+            "en": [
+              "Guardar o usar la URL del archivo",
+              "Reiniciar Firebase",
+              "Eliminar Auth",
+              "Convertir la imagen en Scaffold"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Guardar o usar la URL del archivo",
+            "en": "Guardar o usar la URL del archivo"
+          },
+          "correctExplanation": {
+            "es": "Lo normal es obtener la URL y asociarla al perfil o al recurso correspondiente.",
+            "en": "Lo normal es obtener la URL y asociarla al perfil o al recurso correspondiente."
+          },
+          "incorrectExplanation": {
+            "es": "En apps reales suele usarse la URL resultante del archivo subido.",
+            "en": "En apps reales suele usarse la URL resultante del archivo subido."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "firebase_security_rules",
+      "title": {
+        "es": "Reglas y seguridad básica",
+        "en": "Reglas y seguridad básica"
+      },
+      "shortDescription": {
+        "es": "Pensar acceso, propiedad y protección de datos.",
+        "en": "Pensar acceso, propiedad y protección de datos."
+      },
+      "icon": "security",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "fsr_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Sin reglas, el desastre también escala",
+            "en": "Sin reglas, el desastre también escala"
+          },
+          "body": {
+            "es": "Firebase es muy rápido de integrar, pero eso no significa abrirlo todo. Las reglas de seguridad deciden quién puede leer o escribir datos. Ignorarlas es como poner cerradura... pero dejar la llave pegada afuera.",
+            "en": "Firebase es muy rápido de integrar, pero eso no significa abrirlo todo. Las reglas de seguridad deciden quién puede leer o escribir datos. Ignorarlas es como poner cerradura... pero dejar la llave pegada afuera."
+          },
+          "example": {
+            "es": "match /users/{userId} {\n  allow read, write: if request.auth != null && request.auth.uid == userId;\n}",
+            "en": "match /users/{userId} {\n  allow read, write: if request.auth != null && request.auth.uid == userId;\n}"
+          }
+        },
+        {
+          "id": "fsr_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Las reglas son parte del sistema, no un detalle",
+            "en": "Las reglas son parte del sistema, no un detalle"
+          },
+          "body": {
+            "es": "No basta con esconder botones en la UI. Las reglas viven del lado del servicio y protegen realmente los datos. La UI puede mentir; la seguridad no debería hacerlo.",
+            "en": "No basta con esconder botones en la UI. Las reglas viven del lado del servicio y protegen realmente los datos. La UI puede mentir; la seguridad no debería hacerlo."
+          },
+          "example": {
+            "es": "// La app puede ocultar algo.\n// La regla decide de verdad si se puede o no.",
+            "en": "// La app puede ocultar algo.\n// La regla decide de verdad si se puede o no."
+          }
+        },
+        {
+          "id": "fsr_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué protege realmente el acceso a datos en Firebase?",
+            "en": "¿Qué protege realmente el acceso a datos en Firebase?"
+          },
+          "options": {
+            "es": [
+              "Los colores del botón",
+              "Las reglas de seguridad",
+              "El nombre del widget",
+              "El ícono del AppBar"
+            ],
+            "en": [
+              "Los colores del botón",
+              "Las reglas de seguridad",
+              "El nombre del widget",
+              "El ícono del AppBar"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Las reglas de seguridad",
+            "en": "Las reglas de seguridad"
+          },
+          "correctExplanation": {
+            "es": "Las reglas deciden quién puede leer y escribir.",
+            "en": "Las reglas deciden quién puede leer y escribir."
+          },
+          "incorrectExplanation": {
+            "es": "La protección real de acceso la hacen las reglas de seguridad.",
+            "en": "La protección real de acceso la hacen las reglas de seguridad."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "fsr_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada idea con su intención.",
+            "en": "Relaciona cada idea con su intención."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "request.auth != null",
+                "en": "request.auth != null"
+              },
+              "right": {
+                "es": "El usuario debe estar autenticado",
+                "en": "El usuario debe estar autenticado"
+              }
+            },
+            {
+              "left": {
+                "es": "request.auth.uid == userId",
+                "en": "request.auth.uid == userId"
+              },
+              "right": {
+                "es": "Solo el dueño del documento accede",
+                "en": "Solo el dueño del documento accede"
+              }
+            },
+            {
+              "left": {
+                "es": "UI oculta un botón",
+                "en": "UI oculta un botón"
+              },
+              "right": {
+                "es": "No reemplaza la seguridad real",
+                "en": "No reemplaza la seguridad real"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Buena lectura. Aquí ya estás pensando en seguridad con criterio.",
+            "en": "Buena lectura. Aquí ya estás pensando en seguridad con criterio."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa autenticación, pertenencia y la diferencia entre UI y seguridad real.",
+            "en": "Revisa autenticación, pertenencia y la diferencia entre UI y seguridad real."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "fsr_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea suena más peligrosa para producción?",
+            "en": "¿Qué línea suena más peligrosa para producción?"
+          },
+          "codeLines": {
+            "es": [
+              "match /users/{userId} {",
+              "  allow read, write: if true;",
+              "}"
+            ],
+            "en": [
+              "match /users/{userId} {",
+              "  allow read, write: if true;",
+              "}"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "if true abre el acceso sin restricción y es una mala idea para producción.",
+            "en": "if true abre el acceso sin restricción y es una mala idea para producción."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta es allow read, write: if true; porque deja todo abierto.",
+            "en": "La línea incorrecta es allow read, write: if true; porque deja todo abierto."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "fsr_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si una regla exige request.auth != null y el usuario no inició sesión, ¿qué debe ocurrir?",
+            "en": "Si una regla exige request.auth != null y el usuario no inició sesión, ¿qué debe ocurrir?"
+          },
+          "codeSnippet": {
+            "es": "allow read: if request.auth != null;",
+            "en": "allow read: if request.auth != null;"
+          },
+          "options": {
+            "es": [
+              "Se niega el acceso",
+              "Se crea una cuenta automáticamente",
+              "Se abre Firestore en modo invitado",
+              "Se borra el documento"
+            ],
+            "en": [
+              "Se niega el acceso",
+              "Se crea una cuenta automáticamente",
+              "Se abre Firestore en modo invitado",
+              "Se borra el documento"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Se niega el acceso",
+            "en": "Se niega el acceso"
+          },
+          "correctExplanation": {
+            "es": "Si no hay usuario autenticado, la condición falla.",
+            "en": "Si no hay usuario autenticado, la condición falla."
+          },
+          "incorrectExplanation": {
+            "es": "La regla negaría el acceso porque request.auth sería null.",
+            "en": "La regla negaría el acceso porque request.auth sería null."
+          },
+          "xpReward": 11,
+          "shuffle": true
+        },
+        {
+          "id": "fsr_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una regla mental breve que mencione autenticación y propiedad del recurso.",
+            "en": "Escribe una regla mental breve que mencione autenticación y propiedad del recurso."
+          },
+          "starterCode": {
+            "es": "Una buena regla podría exigir que...\n",
+            "en": "Una buena regla podría exigir que...\n"
+          },
+          "expectedFragments": {
+            "es": [
+              "autenticado",
+              "dueño"
+            ],
+            "en": [
+              "authenticated",
+              "owner"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ya estás pensando como alguien que protege acceso, no solo como quien pinta pantallas.",
+            "en": "Bien. Ya estás pensando como alguien que protege acceso, no solo como quien pinta pantallas."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe mencionar autenticación y propiedad del recurso.",
+            "en": "Tu respuesta debe mencionar autenticación y propiedad del recurso."
+          },
+          "hint": {
+            "es": "No todo usuario debería tocar todo.",
+            "en": "No todo usuario debería tocar todo."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "firebase_architecture",
+      "title": {
+        "es": "Arquitectura con Firebase",
+        "en": "Arquitectura con Firebase"
+      },
+      "shortDescription": {
+        "es": "Separar UI, estado y acceso a servicios.",
+        "en": "Separar UI, estado y acceso a servicios."
+      },
+      "icon": "account_tree",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "farc_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Firebase no debería invadir toda tu UI",
+            "en": "Firebase no debería invadir toda tu UI"
+          },
+          "body": {
+            "es": "Aunque Firebase sea fácil de usar, no conviene dejar llamadas dispersas por toda la interfaz. Separar repositorios, servicios o capas de acceso te ayuda a mantener el proyecto limpio y más fácil de escalar.",
+            "en": "Aunque Firebase sea fácil de usar, no conviene dejar llamadas dispersas por toda la interfaz. Separar repositorios, servicios o capas de acceso te ayuda a mantener el proyecto limpio y más fácil de escalar."
+          },
+          "example": {
+            "es": "UI -> ViewModel/Notifier -> Repository -> Firebase",
+            "en": "UI -> ViewModel/Notifier -> Repository -> Firebase"
+          }
+        },
+        {
+          "id": "farc_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "La rapidez inicial no debe cobrarte caro después",
+            "en": "La rapidez inicial no debe cobrarte caro después"
+          },
+          "body": {
+            "es": "Meter Firebase directo en cada botón funciona... hasta que deja de funcionar. Cuando necesitas cambiar lógica, manejar errores o testear, agradeces tener una capa intermedia con intención clara.",
+            "en": "Meter Firebase directo en cada botón funciona... hasta que deja de funcionar. Cuando necesitas cambiar lógica, manejar errores o testear, agradeces tener una capa intermedia con intención clara."
+          },
+          "example": {
+            "es": "class UserRepository {\n  Future<void> saveProfile(...) async { ... }\n}",
+            "en": "class UserRepository {\n  Future<void> saveProfile(...) async { ... }\n}"
+          }
+        },
+        {
+          "id": "farc_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué enfoque suele ser más sano en una app que crecerá?",
+            "en": "¿Qué enfoque suele ser más sano en una app que crecerá?"
+          },
+          "options": {
+            "es": [
+              "Llamar Firebase directo desde cualquier widget",
+              "Encapsular el acceso en repositorios o servicios",
+              "Poner todo en main.dart",
+              "Escribir reglas dentro del TextField"
+            ],
+            "en": [
+              "Llamar Firebase directo desde cualquier widget",
+              "Encapsular el acceso en repositorios o servicios",
+              "Poner todo en main.dart",
+              "Escribir reglas dentro del TextField"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Encapsular el acceso en repositorios o servicios",
+            "en": "Encapsular el acceso en repositorios o servicios"
+          },
+          "correctExplanation": {
+            "es": "Separar responsabilidades mejora mantenimiento y escalabilidad.",
+            "en": "Separar responsabilidades mejora mantenimiento y escalabilidad."
+          },
+          "incorrectExplanation": {
+            "es": "El enfoque más sano es encapsular Firebase en repositorios o servicios.",
+            "en": "El enfoque más sano es encapsular Firebase en repositorios o servicios."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "farc_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena esta arquitectura desde UI hasta servicio remoto.",
+            "en": "Ordena esta arquitectura desde UI hasta servicio remoto."
+          },
+          "blocks": {
+            "es": [
+              "Firebase",
+              "Repository",
+              "UI",
+              "Notifier"
+            ],
+            "en": [
+              "Firebase",
+              "Repository",
+              "UI",
+              "Notifier"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "UI",
+              "Notifier",
+              "Repository",
+              "Firebase"
+            ],
+            "en": [
+              "UI",
+              "Notifier",
+              "Repository",
+              "Firebase"
+            ]
+          },
+          "correctExplanation": {
+            "es": "La UI delega en estado/lógica, luego repositorio y al final infraestructura.",
+            "en": "La UI delega en estado/lógica, luego repositorio y al final infraestructura."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa desde lo visible hacia lo remoto.",
+            "en": "Piensa desde lo visible hacia lo remoto."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "farc_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige este enfoque para que la UI no dependa directamente de Firestore.",
+            "en": "Corrige este enfoque para que la UI no dependa directamente de Firestore."
+          },
+          "initialCode": {
+            "es": "onPressed: () async {\n  await FirebaseFirestore.instance.collection('users').doc(uid).set(data);\n}",
+            "en": "onPressed: () async {\n  await FirebaseFirestore.instance.collection('users').doc(uid).set(data);\n}"
+          },
+          "expectedAnswer": {
+            "es": "onPressed: () async {\n  await userRepository.saveProfile(uid, data);\n}",
+            "en": "onPressed: () async {\n  await userRepository.saveProfile(uid, data);\n}"
+          },
+          "correctExplanation": {
+            "es": "La UI queda más limpia cuando delega en un repositorio.",
+            "en": "La UI queda más limpia cuando delega en un repositorio."
+          },
+          "incorrectExplanation": {
+            "es": "La corrección esperada es delegar la operación en una capa como userRepository.",
+            "en": "La corrección esperada es delegar la operación en una capa como userRepository."
+          },
+          "hint": {
+            "es": "La UI debería pedir, no ejecutar toda la infraestructura.",
+            "en": "La UI debería pedir, no ejecutar toda la infraestructura."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "farc_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada capa con su responsabilidad.",
+            "en": "Relaciona cada capa con su responsabilidad."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "UI",
+                "en": "UI"
+              },
+              "right": {
+                "es": "Mostrar estado e interactuar con el usuario",
+                "en": "Mostrar estado e interactuar con el usuario"
+              }
+            },
+            {
+              "left": {
+                "es": "Repository",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Encapsular acceso a datos",
+                "en": "Encapsular acceso a datos"
+              }
+            },
+            {
+              "left": {
+                "es": "Firebase",
+                "en": "Firebase"
+              },
+              "right": {
+                "es": "Infraestructura y servicios remotos",
+                "en": "Infraestructura y servicios remotos"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Esta separación ayuda a que el proyecto no se vuelva una maraña con internet.",
+            "en": "Esta separación ayuda a que el proyecto no se vuelva una maraña con internet."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué muestra, qué abstrae datos y qué provee la infraestructura.",
+            "en": "Revisa qué muestra, qué abstrae datos y qué provee la infraestructura."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "farc_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué mejora aporta mover el acceso a Firebase a un repositorio?",
+            "en": "¿Qué mejora aporta mover el acceso a Firebase a un repositorio?"
+          },
+          "codeSnippet": {
+            "es": "// userRepository.saveProfile(...)",
+            "en": "// userRepository.saveProfile(...)"
+          },
+          "options": {
+            "es": [
+              "Más claridad y menos acoplamiento",
+              "Más widgets en el árbol",
+              "Menos uso de await",
+              "Más colores automáticos"
+            ],
+            "en": [
+              "Más claridad y menos acoplamiento",
+              "Más widgets en el árbol",
+              "Menos uso de await",
+              "Más colores automáticos"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Más claridad y menos acoplamiento",
+            "en": "Más claridad y menos acoplamiento"
+          },
+          "correctExplanation": {
+            "es": "La separación de responsabilidades reduce el acoplamiento entre UI e infraestructura.",
+            "en": "La separación de responsabilidades reduce el acoplamiento entre UI e infraestructura."
+          },
+          "incorrectExplanation": {
+            "es": "El beneficio principal es claridad y menos acoplamiento.",
+            "en": "El beneficio principal es claridad y menos acoplamiento."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "farc_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una mini secuencia que mencione UI, Repository y Firebase en ese orden lógico.",
+            "en": "Escribe una mini secuencia que mencione UI, Repository y Firebase en ese orden lógico."
+          },
+          "starterCode": {
+            "es": "Flujo:\n",
+            "en": "Flujo:\n"
+          },
+          "expectedFragments": {
+            "es": [
+              "UI",
+              "Repository",
+              "Firebase"
+            ],
+            "en": [
+              "UI",
+              "Repository",
+              "Firebase"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Bien. Ya estás viendo Firebase como infraestructura, no como el centro del universo.",
+            "en": "Bien. Ya estás viendo Firebase como infraestructura, no como el centro del universo."
+          },
+          "incorrectExplanation": {
+            "es": "Incluye UI, Repository y Firebase en el flujo.",
+            "en": "Incluye UI, Repository y Firebase en el flujo."
+          },
+          "hint": {
+            "es": "Empieza por lo que ve el usuario.",
+            "en": "Empieza por lo que ve el usuario."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "firebase_essentials_final_exam",
+      "title": {
+        "es": "Examen Final Firebase Essentials",
+        "en": "Examen Final Firebase Essentials"
+      },
+      "shortDescription": {
+        "es": "Valida tu criterio sobre Auth, Firestore, Storage, reglas y arquitectura.",
+        "en": "Valida tu criterio sobre Auth, Firestore, Storage, reglas y arquitectura."
+      },
+      "icon": "workspace_premium",
+      "nodeType": "exam",
+      "xpReward": 150,
+      "steps": [
+        {
+          "id": "fexam_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Examen final de Firebase Essentials",
+            "en": "Examen final de Firebase Essentials"
+          },
+          "body": {
+            "es": "Aquí mezclas configuración, Auth, Firestore, tiempo real, Storage, reglas y arquitectura. No se trata de recordar nombres como loro premium, sino de conectar decisiones técnicas con problemas reales.",
+            "en": "Aquí mezclas configuración, Auth, Firestore, tiempo real, Storage, reglas y arquitectura. No se trata de recordar nombres como loro premium, sino de conectar decisiones técnicas con problemas reales."
+          },
+          "example": {
+            "es": "Usuario inicia sesión -> app escucha sesión -> lee perfil -> muestra datos -> protege acceso",
+            "en": "Usuario inicia sesión -> app escucha sesión -> lee perfil -> muestra datos -> protege acceso"
+          }
+        },
+        {
+          "id": "fexam_mc_1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué servicio encaja mejor para autenticar usuarios?",
+            "en": "¿Qué servicio encaja mejor para autenticar usuarios?"
+          },
+          "options": {
+            "es": [
+              "Firebase Auth",
+              "Cloud Firestore",
+              "Firebase Storage",
+              "MaterialApp"
+            ],
+            "en": [
+              "Firebase Auth",
+              "Cloud Firestore",
+              "Firebase Storage",
+              "MaterialApp"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Firebase Auth",
+            "en": "Firebase Auth"
+          },
+          "correctExplanation": {
+            "es": "Auth resuelve identidad y sesión.",
+            "en": "Auth resuelve identidad y sesión."
+          },
+          "incorrectExplanation": {
+            "es": "El servicio correcto para autenticación es Firebase Auth.",
+            "en": "El servicio correcto para autenticación es Firebase Auth."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "fexam_fill_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método para escuchar cambios de sesión.",
+            "en": "Completa el método para escuchar cambios de sesión."
+          },
+          "initialCode": {
+            "es": "FirebaseAuth.instance._____()",
+            "en": "FirebaseAuth.instance._____()"
+          },
+          "expectedAnswer": {
+            "es": "authStateChanges",
+            "en": "authStateChanges"
+          },
+          "correctExplanation": {
+            "es": "Ese stream es clave para reaccionar al estado de autenticación.",
+            "en": "Ese stream es clave para reaccionar al estado de autenticación."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta correcta es authStateChanges.",
+            "en": "La respuesta correcta es authStateChanges."
+          },
+          "hint": {
+            "es": "Piensa en cambios de auth.",
+            "en": "Piensa en cambios de auth."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "fexam_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el servicio usado para subir una imagen.",
+            "en": "Corrige el servicio usado para subir una imagen."
+          },
+          "initialCode": {
+            "es": "await FirebaseFirestore.instance.ref('avatars/a.jpg').putFile(file);",
+            "en": "await FirebaseFirestore.instance.ref('avatars/a.jpg').putFile(file);"
+          },
+          "expectedAnswer": {
+            "es": "await FirebaseStorage.instance.ref('avatars/a.jpg').putFile(file);",
+            "en": "await FirebaseStorage.instance.ref('avatars/a.jpg').putFile(file);"
+          },
+          "correctExplanation": {
+            "es": "Subir archivos corresponde a FirebaseStorage.",
+            "en": "Subir archivos corresponde a FirebaseStorage."
+          },
+          "incorrectExplanation": {
+            "es": "Firestore no sube archivos; debes usar FirebaseStorage.",
+            "en": "Firestore no sube archivos; debes usar FirebaseStorage."
+          },
+          "hint": {
+            "es": "Archivo no es documento.",
+            "en": "Archivo no es documento."
+          },
+          "xpReward": 18
+        },
+        {
+          "id": "fexam_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena este flujo típico de perfil autenticado.",
+            "en": "Ordena este flujo típico de perfil autenticado."
+          },
+          "blocks": {
+            "es": [
+              "Guardar perfil en Firestore",
+              "Usuario inicia sesión",
+              "Escuchar sesión y entrar a Home",
+              "Subir avatar a Storage"
+            ],
+            "en": [
+              "Guardar perfil en Firestore",
+              "Usuario inicia sesión",
+              "Escuchar sesión y entrar a Home",
+              "Subir avatar a Storage"
+            ]
+          },
+          "correctOrder": {
+            "es": [
+              "Usuario inicia sesión",
+              "Escuchar sesión y entrar a Home",
+              "Subir avatar a Storage",
+              "Guardar perfil en Firestore"
+            ],
+            "en": [
+              "Usuario inicia sesión",
+              "Escuchar sesión y entrar a Home",
+              "Subir avatar a Storage",
+              "Guardar perfil en Firestore"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Primero la identidad, luego el flujo de sesión, después archivo y finalmente datos asociados.",
+            "en": "Primero la identidad, luego el flujo de sesión, después archivo y finalmente datos asociados."
+          },
+          "incorrectExplanation": {
+            "es": "Debes ordenar el flujo desde autenticación hasta persistencia de datos.",
+            "en": "Debes ordenar el flujo desde autenticación hasta persistencia de datos."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "fexam_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea rompe más el concepto de seguridad?",
+            "en": "¿Qué línea rompe más el concepto de seguridad?"
+          },
+          "codeLines": {
+            "es": [
+              "match /users/{userId} {",
+              "  allow read, write: if true;",
+              "}"
+            ],
+            "en": [
+              "match /users/{userId} {",
+              "  allow read, write: if true;",
+              "}"
+            ]
+          },
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "Abrir todo con if true es una mala práctica seria.",
+            "en": "Abrir todo con if true es una mala práctica seria."
+          },
+          "incorrectExplanation": {
+            "es": "La línea incorrecta deja el acceso totalmente abierto.",
+            "en": "La línea incorrecta deja el acceso totalmente abierto."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "fexam_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada necesidad con el servicio adecuado.",
+            "en": "Relaciona cada necesidad con el servicio adecuado."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Inicio de sesión",
+                "en": "Inicio de sesión"
+              },
+              "right": {
+                "es": "Firebase Auth",
+                "en": "Firebase Auth"
+              }
+            },
+            {
+              "left": {
+                "es": "Perfil del usuario",
+                "en": "Perfil del usuario"
+              },
+              "right": {
+                "es": "Cloud Firestore",
+                "en": "Cloud Firestore"
+              }
+            },
+            {
+              "left": {
+                "es": "Foto del avatar",
+                "en": "Foto del avatar"
+              },
+              "right": {
+                "es": "Firebase Storage",
+                "en": "Firebase Storage"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Excelente. Ya estás pensando en responsabilidades correctas.",
+            "en": "Excelente. Ya estás pensando en responsabilidades correctas."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué resuelve sesión, qué resuelve datos y qué resuelve archivos.",
+            "en": "Revisa qué resuelve sesión, qué resuelve datos y qué resuelve archivos."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        },
+        {
+          "id": "fexam_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si usas snapshots() en mensajes de un chat, ¿qué comportamiento esperas?",
+            "en": "Si usas snapshots() en mensajes de un chat, ¿qué comportamiento esperas?"
+          },
+          "codeSnippet": {
+            "es": "collection('messages').snapshots()",
+            "en": "collection('messages').snapshots()"
+          },
+          "options": {
+            "es": [
+              "Actualización en tiempo real",
+              "Una sola lectura y nada más",
+              "Subida automática de archivos",
+              "Reglas de seguridad más abiertas"
+            ],
+            "en": [
+              "Actualización en tiempo real",
+              "Una sola lectura y nada más",
+              "Subida automática de archivos",
+              "Reglas de seguridad más abiertas"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Actualización en tiempo real",
+            "en": "Actualización en tiempo real"
+          },
+          "correctExplanation": {
+            "es": "snapshots() mantiene a la UI enterada de cambios.",
+            "en": "snapshots() mantiene a la UI enterada de cambios."
+          },
+          "incorrectExplanation": {
+            "es": "La expectativa correcta es actualización en tiempo real.",
+            "en": "La expectativa correcta es actualización en tiempo real."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "fexam_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un mini flujo que mencione Auth, Firestore, Storage y reglas de seguridad.",
+            "en": "Escribe un mini flujo que mencione Auth, Firestore, Storage y reglas de seguridad."
+          },
+          "starterCode": {
+            "es": "Mi app con Firebase podría funcionar así:\n",
+            "en": "Mi app con Firebase podría funcionar así:\n"
+          },
+          "expectedFragments": {
+            "es": [
+              "Auth",
+              "Firestore",
+              "Storage",
+              "reglas"
+            ],
+            "en": [
+              "Auth",
+              "Firestore",
+              "Storage",
+              "rules"
+            ]
+          },
+          "correctExplanation": {
+            "es": "Muy bien. Ya integras servicios y seguridad en una misma historia técnica.",
+            "en": "Muy bien. Ya integras servicios y seguridad en una misma historia técnica."
+          },
+          "incorrectExplanation": {
+            "es": "Tu respuesta debe incluir Auth, Firestore, Storage y reglas.",
+            "en": "Tu respuesta debe incluir Auth, Firestore, Storage y reglas."
+          },
+          "hint": {
+            "es": "Piensa en usuario, datos, archivos y protección.",
+            "en": "Piensa en usuario, datos, archivos y protección."
+          },
+          "xpReward": 22
+        },
+        {
+          "id": "fexam_summary",
+          "type": "intro",
+          "title": {
+            "es": "Cierre de la ruta",
+            "en": "Cierre de la ruta"
+          },
+          "body": {
+            "es": "Si llegaste hasta aquí, ya tienes una base real para trabajar con Firebase en Flutter sin usarlo como caja negra misteriosa. Todavía queda mucho por profundizar, pero ya sabes qué servicio resuelve qué y cómo se conectan entre sí.",
+            "en": "Si llegaste hasta aquí, ya tienes una base real para trabajar con Firebase en Flutter sin usarlo como caja negra misteriosa. Todavía queda mucho por profundizar, pero ya sabes qué servicio resuelve qué y cómo se conectan entre sí."
+          },
+          "example": {
+            "es": "Siguiente nivel: usar Firebase con arquitectura más sólida, offline, funciones y flujos de producto más completos.",
+            "en": "Siguiente nivel: usar Firebase con arquitectura más sólida, offline, funciones y flujos de producto más completos."
+          }
+        }
+      ]
+    }
+  ]
+}

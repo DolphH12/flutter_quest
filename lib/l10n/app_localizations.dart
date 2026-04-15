@@ -131,14 +131,20 @@ abstract class AppLocalizations {
   /// No description provided for @loadRoutesError.
   ///
   /// In en, this message translates to:
-  /// **'Could not load route content.'**
+  /// **'We couldn\'t load route content. Please try again.'**
   String get loadRoutesError;
 
   /// No description provided for @loadPartialRoutesError.
   ///
   /// In en, this message translates to:
-  /// **'Some routes could not be loaded'**
+  /// **'We couldn\'t load some routes'**
   String get loadPartialRoutesError;
+
+  /// No description provided for @loadPartialRoutesErrorWithColon.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load some routes:'**
+  String get loadPartialRoutesErrorWithColon;
 
   /// No description provided for @routeLoadWarningTitle.
   ///
@@ -182,6 +188,30 @@ abstract class AppLocalizations {
   /// **'Locked route'**
   String get lockedRouteTitle;
 
+  /// No description provided for @routeOpenErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t open this route right now. Please try again.'**
+  String get routeOpenErrorMessage;
+
+  /// No description provided for @completeRouteToUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete {routeTitle} to unlock it'**
+  String completeRouteToUnlock(String routeTitle);
+
+  /// No description provided for @completeRequiredRouteToUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the required route to unlock this one'**
+  String get completeRequiredRouteToUnlock;
+
+  /// No description provided for @completeRouteIdToUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete {routeId} to unlock this route.'**
+  String completeRouteIdToUnlock(String routeId);
+
   /// No description provided for @backToHome.
   ///
   /// In en, this message translates to:
@@ -215,7 +245,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Your journey to master Dart and Flutter starts here.'**
+  /// **'Your Dart and Flutter journey starts now. One step at a time, no stress, all momentum.'**
   String get welcomeSubtitle;
 
   /// No description provided for @nameInputLabel.
@@ -229,6 +259,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your name here...'**
   String get nameInputHint;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Flutter Quest'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn Dart and Flutter with short missions, clear feedback, and real progress.'**
+  String get onboardingWelcomeBody;
+
+  /// No description provided for @onboardingRoutesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Routes'**
+  String get onboardingRoutesTitle;
+
+  /// No description provided for @onboardingRoutesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each route is a guided learning path. Start with Dart, then unlock Flutter Foundations.'**
+  String get onboardingRoutesBody;
+
+  /// No description provided for @onboardingRoutesBodyGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore themed routes and level up step by step. Foundations first, wizard moves next.'**
+  String get onboardingRoutesBodyGeneral;
+
+  /// No description provided for @onboardingNodesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nodes'**
+  String get onboardingNodesTitle;
+
+  /// No description provided for @onboardingNodesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Each node is a mini mission. Clear one, unlock the next, and keep your streak alive.'**
+  String get onboardingNodesBody;
+
+  /// No description provided for @onboardingNodeCompletedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get onboardingNodeCompletedLabel;
+
+  /// No description provided for @onboardingNodeNextLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNodeNextLabel;
+
+  /// No description provided for @onboardingRewardsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get onboardingRewardsTitle;
+
+  /// No description provided for @onboardingRewardsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Every finished lesson gives XP, badges, and real progress. Your profile starts looking elite.'**
+  String get onboardingRewardsBody;
+
+  /// No description provided for @onboardingStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get onboardingStreakTitle;
+
+  /// No description provided for @onboardingStreakBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Study daily to grow your streak. Skip a day and it resets, but your comeback can be legendary.'**
+  String get onboardingStreakBody;
+
+  /// No description provided for @onboardingAllSetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'All set'**
+  String get onboardingAllSetTitle;
+
+  /// No description provided for @onboardingAllSetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all set. Jump in, clear nodes, and make Dart and Flutter work for you.'**
+  String get onboardingAllSetBody;
+
+  /// No description provided for @onboardingBackButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingBackButton;
+
+  /// No description provided for @onboardingLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose language'**
+  String get onboardingLanguageTitle;
+
+  /// No description provided for @languageAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get languageAuto;
+
+  /// No description provided for @languageSpanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get languageSpanish;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @onboardingRemindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminders'**
+  String get onboardingRemindersTitle;
+
+  /// No description provided for @onboardingRemindersBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on reminders to protect your streak and keep your learning rhythm.'**
+  String get onboardingRemindersBody;
+
+  /// No description provided for @onboardingEnableReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable reminders'**
+  String get onboardingEnableReminders;
+
+  /// No description provided for @onboardingSkipButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onboardingSkipButton;
 
   /// No description provided for @nameRequiredError.
   ///
@@ -497,8 +671,14 @@ abstract class AppLocalizations {
   /// No description provided for @notificationPermissionDenied.
   ///
   /// In en, this message translates to:
-  /// **'Notification permission is required to enable reminders.'**
+  /// **'We couldn\'t enable reminders without notification permission.'**
   String get notificationPermissionDenied;
+
+  /// No description provided for @reminderTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time: {hour}:{minute}'**
+  String reminderTimeLabel(int hour, int minute);
 
   /// No description provided for @resetDialogTitle.
   ///
@@ -524,6 +704,18 @@ abstract class AppLocalizations {
   /// **'Delete all'**
   String get deleteAllButton;
 
+  /// No description provided for @initializationErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t start the app'**
+  String get initializationErrorTitle;
+
+  /// No description provided for @retryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
+
   /// No description provided for @nodeLockedBack.
   ///
   /// In en, this message translates to:
@@ -541,6 +733,83 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New badge unlocked'**
   String get badgeUnlockedTitle;
+
+  /// No description provided for @languageMenuTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageMenuTooltip;
+
+  /// No description provided for @backupSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress backup'**
+  String get backupSectionTitle;
+
+  /// No description provided for @backupSectionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export or import your local progress to keep your learning safe.'**
+  String get backupSectionSubtitle;
+
+  /// No description provided for @backupExportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get backupExportButton;
+
+  /// No description provided for @backupImportButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get backupImportButton;
+
+  /// No description provided for @backupExportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress exported successfully'**
+  String get backupExportSuccess;
+
+  /// No description provided for @backupExportError.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t export your progress: {error}'**
+  String backupExportError(String error);
+
+  /// No description provided for @backupImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import progress'**
+  String get backupImportTitle;
+
+  /// No description provided for @backupUnknownUser.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get backupUnknownUser;
+
+  /// No description provided for @backupImportPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'User: {user}\\nXP: {xp}\\nCompleted routes: {routes}\\nBackup: {backupDate}\\n\\nThis action will overwrite your local data.'**
+  String backupImportPreview(
+    String user,
+    int xp,
+    int routes,
+    String backupDate,
+  );
+
+  /// No description provided for @backupImportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress imported successfully'**
+  String get backupImportSuccess;
+
+  /// No description provided for @backupImportError.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t import the backup: {error}'**
+  String backupImportError(String error);
 
   /// No description provided for @streakLostToast.
   ///

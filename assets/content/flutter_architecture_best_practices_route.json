@@ -1,0 +1,2534 @@
+{
+  "routeId": "flutter_architecture_best_practices_route",
+  "title": {
+    "es": "Arquitectura y buenas prácticas",
+    "en": "Architecture and best practices"
+  },
+  "description": {
+    "es": "Aprende a organizar proyectos Flutter con criterio, separando responsabilidades, evitando anti-patrones y construyendo bases más mantenibles.",
+    "en": "Learn to organize Flutter projects with judgement, separating responsibilities, avoiding anti-patterns, and building more maintainable foundations."
+  },
+  "icon": "account_tree",
+  "themeColor": "#005E9E",
+  "version": 1,
+  "estimatedMinutes": 340,
+  "examNodeId": "architecture_final_exam",
+  "nodes": [
+    {
+      "id": "arch_intro_mindset",
+      "title": {
+        "es": "Pensar en arquitectura",
+        "en": "Thinking in architecture"
+      },
+      "shortDescription": {
+        "es": "Entiende por qué organizar un proyecto importa antes de que el código se convierta en una novela de terror.",
+        "en": "Understand why organizing a project matters before the code turns into a horror novel."
+      },
+      "icon": "foundation",
+      "nodeType": "lesson",
+      "xpReward": 60,
+      "steps": [
+        {
+          "id": "arch_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Arquitectura no es decorar carpetas",
+            "en": "Architecture is not decorating folders"
+          },
+          "body": {
+            "es": "Arquitectura no significa crear muchas capas solo para sentirte importante. Significa tomar decisiones sobre cómo separar responsabilidades para que el código sea entendible, modificable y menos frágil. La meta no es impresionar con diagramas: es evitar sufrir cuando la app crece.",
+            "en": "Architecture does not mean creating many layers just to feel important. It means making decisions about how to separate responsibilities so the code stays understandable, changeable, and less fragile. The goal is not to impress with diagrams: it is to avoid suffering when the app grows."
+          },
+          "example": {
+            "es": "// La idea no es complejidad por deporte.\n// La idea es orden con propósito.",
+            "en": "// The idea is not complexity as a sport.\n// The idea is order with purpose."
+          }
+        },
+        {
+          "id": "arch_intro_2",
+          "type": "intro",
+          "title": {
+            "es": "Las apps pequeñas también necesitan criterio",
+            "en": "Small apps also need judgement"
+          },
+          "body": {
+            "es": "Aunque una app sea pequeña, igual necesita claridad. Si mezclas UI, lógica, acceso a datos y navegación en un solo archivo, avanzar al inicio parece rápido, pero luego cada cambio duele. Una buena base ahorra problemas incluso antes de volverte gigante.",
+            "en": "Even if an app is small, it still needs clarity. If you mix UI, logic, data access, and navigation in one file, moving fast at the beginning may feel nice, but later every change hurts. A good foundation saves trouble even before you become huge."
+          },
+          "example": {
+            "es": "class HomeScreen extends StatelessWidget {\n  // Si aquí metes UI + lógica + red + persistencia...\n  // la pantalla termina cargando más drama que widgets.\n}",
+            "en": "class HomeScreen extends StatelessWidget {\n  // If you put UI + logic + network + persistence here...\n  // the screen ends up carrying more drama than widgets.\n}"
+          }
+        },
+        {
+          "id": "arch_intro_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué describe mejor una buena decisión de arquitectura?",
+            "en": "What best describes a good architectural decision?"
+          },
+          "options": {
+            "es": [
+              "Agregar capas porque suena profesional",
+              "Separar responsabilidades para facilitar cambios y lectura",
+              "Evitar carpetas porque confunden",
+              "Poner todo en una sola pantalla para ir más rápido"
+            ],
+            "en": [
+              "Add layers because it sounds professional",
+              "Separate responsibilities to ease changes and reading",
+              "Avoid folders because they confuse",
+              "Put everything in one screen to go faster"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Separar responsabilidades para facilitar cambios y lectura",
+            "en": "Separate responsibilities to ease changes and reading"
+          },
+          "correctExplanation": {
+            "es": "La arquitectura útil busca claridad, mantenimiento y evolución sana del proyecto.",
+            "en": "Useful architecture aims for clarity, maintainability, and healthy project evolution."
+          },
+          "incorrectExplanation": {
+            "es": "Arquitectura no es maquillaje. Su valor está en cómo facilita cambiar, leer y sostener el proyecto.",
+            "en": "Architecture is not makeup. Its value lies in making the project easier to change, read, and sustain."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_intro_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada idea con su intención principal.",
+            "en": "Match each idea with its main intention."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Arquitectura",
+                "en": "Architecture"
+              },
+              "right": {
+                "es": "Organizar responsabilidades con intención",
+                "en": "Organize responsibilities with intention"
+              }
+            },
+            {
+              "left": {
+                "es": "Acoplamiento",
+                "en": "Coupling"
+              },
+              "right": {
+                "es": "Dependencias innecesariamente pegadas entre sí",
+                "en": "Dependencies unnecessarily glued together"
+              }
+            },
+            {
+              "left": {
+                "es": "Mantenibilidad",
+                "en": "Maintainability"
+              },
+              "right": {
+                "es": "Facilidad para cambiar y entender el código",
+                "en": "Ease of changing and understanding code"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estas ideas forman la base mental para diseñar proyectos más sanos.",
+            "en": "These ideas form the mental basis for designing healthier projects."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cuál concepto organiza, cuál pega demasiado las piezas y cuál facilita evolucionar el código.",
+            "en": "Review which concept organizes, which one sticks pieces too tightly, and which one makes code easier to evolve."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_intro_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué problema suele aparecer cuando una pantalla maneja UI, red, almacenamiento y navegación al mismo tiempo?",
+            "en": "What problem usually appears when a screen handles UI, network, storage, and navigation all at once?"
+          },
+          "codeSnippet": {
+            "es": "// Todo mezclado en un mismo widget principal",
+            "en": "// Everything mixed in the same main widget"
+          },
+          "options": {
+            "es": [
+              "Mayor claridad",
+              "Menor acoplamiento",
+              "Código difícil de cambiar y probar mentalmente",
+              "Arquitectura más simple"
+            ],
+            "en": [
+              "More clarity",
+              "Lower coupling",
+              "Code that is harder to change and mentally test",
+              "Simpler architecture"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Código difícil de cambiar y probar mentalmente",
+            "en": "Code that is harder to change and mentally test"
+          },
+          "correctExplanation": {
+            "es": "Cuando una sola pieza hace demasiado, el código se vuelve frágil y difícil de evolucionar.",
+            "en": "When one piece does too much, the code becomes fragile and hard to evolve."
+          },
+          "incorrectExplanation": {
+            "es": "La mezcla excesiva de responsabilidades normalmente empeora el mantenimiento.",
+            "en": "Excessive mixing of responsibilities usually hurts maintainability."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "arch_separation_responsibilities",
+      "title": {
+        "es": "Separación de responsabilidades",
+        "en": "Separation of responsibilities"
+      },
+      "shortDescription": {
+        "es": "Aprende a distinguir UI, lógica, acceso a datos y coordinación.",
+        "en": "Learn to distinguish UI, logic, data access, and coordination."
+      },
+      "icon": "call_split",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "arch_sep_1",
+          "type": "intro",
+          "title": {
+            "es": "Cada pieza debería tener un trabajo claro",
+            "en": "Each piece should have a clear job"
+          },
+          "body": {
+            "es": "Una pantalla no debería conocer todos los detalles del mundo. Lo ideal es que la UI pinte, una capa de estado coordine, los casos de uso resuelvan reglas y un repositorio hable con fuentes de datos. No siempre necesitas todas las capas, pero sí necesitas roles claros.",
+            "en": "A screen should not know every detail of the world. Ideally, UI paints, a state layer coordinates, use cases solve rules, and a repository talks to data sources. You do not always need every layer, but you do need clear roles."
+          },
+          "example": {
+            "es": "UI -> estado -> caso de uso -> repositorio -> datasource",
+            "en": "UI -> state -> use case -> repository -> datasource"
+          }
+        },
+        {
+          "id": "arch_sep_2",
+          "type": "intro",
+          "title": {
+            "es": "Separar no es duplicar",
+            "en": "Separating is not duplicating"
+          },
+          "body": {
+            "es": "Separar responsabilidades no significa mover el mismo código a cinco archivos sin motivo. Significa que cada parte responda a una pregunta distinta: quién pinta, quién decide, quién obtiene datos y quién los transforma.",
+            "en": "Separating responsibilities does not mean moving the same code to five files for no reason. It means each part answers a different question: who paints, who decides, who gets data, and who transforms it."
+          },
+          "example": {
+            "es": "// Una capa por responsabilidad.\n// No cinco capas para mostrar un texto triste.",
+            "en": "// One layer per responsibility.\n// Not five layers just to show a sad text."
+          }
+        },
+        {
+          "id": "arch_sep_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué responsabilidad encaja mejor en un repositorio?",
+            "en": "Which responsibility fits best in a repository?"
+          },
+          "options": {
+            "es": [
+              "Renderizar botones",
+              "Coordinar navegación del usuario",
+              "Obtener y guardar datos desde una fuente",
+              "Definir colores del tema"
+            ],
+            "en": [
+              "Render buttons",
+              "Coordinate user navigation",
+              "Fetch and save data from a source",
+              "Define theme colors"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Obtener y guardar datos desde una fuente",
+            "en": "Fetch and save data from a source"
+          },
+          "correctExplanation": {
+            "es": "El repositorio suele encargarse de conversar con la fuente de datos y exponer una API más limpia al resto de la app.",
+            "en": "A repository usually talks to the data source and exposes a cleaner API to the rest of the app."
+          },
+          "incorrectExplanation": {
+            "es": "La UI pinta, el tema define estilos y la navegación mueve pantallas. El repositorio se enfoca en datos.",
+            "en": "UI paints, theme styles, and navigation moves screens. The repository focuses on data."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_sep_code_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa la capa que normalmente se encarga de obtener datos.",
+            "en": "Complete the layer that usually fetches data."
+          },
+          "initialCode": {
+            "es": "final user = await _____ .getUserProfile();",
+            "en": "final user = await _____ .getUserProfile();"
+          },
+          "expectedAnswer": {
+            "es": "repository",
+            "en": "repository"
+          },
+          "correctExplanation": {
+            "es": "El repositorio es una capa típica para consultar datos sin ensuciar la UI.",
+            "en": "The repository is a typical layer for querying data without dirtying the UI."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es repository, porque esa capa suele abstraer el acceso a datos.",
+            "en": "The expected answer is repository, because that layer usually abstracts data access."
+          },
+          "hint": {
+            "es": "Piensa en la pieza que habla con la fuente de datos, no con la interfaz.",
+            "en": "Think about the piece that talks to the data source, not the interface."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "arch_sep_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el fragmento para que la UI no consulte la API directamente.",
+            "en": "Fix the fragment so UI does not call the API directly."
+          },
+          "initialCode": {
+            "es": "class HomeScreen extends StatelessWidget {\n  Future<void> load() async {\n    final data = await http.get(Uri.parse(url));\n  }\n}",
+            "en": "class HomeScreen extends StatelessWidget {\n  Future<void> load() async {\n    final data = await http.get(Uri.parse(url));\n  }\n}"
+          },
+          "expectedAnswer": {
+            "es": "class HomeScreen extends StatelessWidget {\n  Future<void> load() async {\n    final data = await repository.fetchHomeData();\n  }\n}",
+            "en": "class HomeScreen extends StatelessWidget {\n  Future<void> load() async {\n    final data = await repository.fetchHomeData();\n  }\n}"
+          },
+          "correctExplanation": {
+            "es": "La idea es que la pantalla hable con una capa más limpia, no directo con la infraestructura.",
+            "en": "The idea is that the screen talks to a cleaner layer, not directly to infrastructure."
+          },
+          "incorrectExplanation": {
+            "es": "El problema no es solo sintaxis: es de responsabilidad. La pantalla no debería golpear la red directamente.",
+            "en": "The problem is not just syntax: it is responsibility. The screen should not hit the network directly."
+          },
+          "hint": {
+            "es": "Saca el acceso directo a la red fuera de la pantalla.",
+            "en": "Move direct network access out of the screen."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "arch_sep_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea rompe más fuerte la separación de responsabilidades?",
+            "en": "Which line breaks separation of responsibilities the most?"
+          },
+          "codeLines": [
+            {
+              "es": "class ProfileScreen extends ConsumerWidget {",
+              "en": "class ProfileScreen extends ConsumerWidget {"
+            },
+            {
+              "es": "  final user = ref.watch(profileProvider);",
+              "en": "  final user = ref.watch(profileProvider);"
+            },
+            {
+              "es": "  final rawJson = await prefs.getString('user_cache');",
+              "en": "  final rawJson = await prefs.getString('user_cache');"
+            },
+            {
+              "es": "}",
+              "en": "}"
+            }
+          ],
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "La UI está entrando directamente a persistencia local, algo que conviene abstraer detrás de otra capa.",
+            "en": "UI is entering local persistence directly, which is better abstracted behind another layer."
+          },
+          "incorrectExplanation": {
+            "es": "La línea más problemática es la que mete acceso directo a almacenamiento dentro de la pantalla.",
+            "en": "The most problematic line is the one that puts direct storage access inside the screen."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "arch_sep_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada capa con su rol más natural.",
+            "en": "Match each layer with its most natural role."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "UI",
+                "en": "UI"
+              },
+              "right": {
+                "es": "Mostrar información e interactuar con el usuario",
+                "en": "Show information and interact with the user"
+              }
+            },
+            {
+              "left": {
+                "es": "Repositorio",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Abstraer acceso a datos",
+                "en": "Abstract data access"
+              }
+            },
+            {
+              "left": {
+                "es": "Caso de uso",
+                "en": "Use case"
+              },
+              "right": {
+                "es": "Aplicar reglas o flujo de negocio",
+                "en": "Apply rules or business flow"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Cuando cada capa tiene un rol claro, el proyecto respira mejor.",
+            "en": "When each layer has a clear role, the project breathes better."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué parte pinta, cuál trae datos y cuál contiene reglas.",
+            "en": "Review which part paints, which brings data, and which contains rules."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "arch_folder_structure",
+      "title": {
+        "es": "Estructura de carpetas con sentido",
+        "en": "Meaningful folder structure"
+      },
+      "shortDescription": {
+        "es": "Organiza archivos sin convertir el árbol del proyecto en un bosque oscuro.",
+        "en": "Organize files without turning the project tree into a dark forest."
+      },
+      "icon": "folder_open",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "arch_folder_1",
+          "type": "intro",
+          "title": {
+            "es": "La estructura debe ayudar, no presumir",
+            "en": "Structure should help, not show off"
+          },
+          "body": {
+            "es": "Una estructura de carpetas buena hace que encontrar cosas sea más fácil. No existe una única estructura perfecta, pero sí patrones más sanos que otros. Lo importante es que el orden ayude al equipo a leer y mantener el proyecto.",
+            "en": "A good folder structure makes things easier to find. There is no single perfect structure, but there are healthier patterns than others. What matters is that the organization helps the team read and maintain the project."
+          },
+          "example": {
+            "es": "features/\n  auth/\n  profile/\ncore/\nshared/",
+            "en": "features/\n  auth/\n  profile/\ncore/\nshared/"
+          }
+        },
+        {
+          "id": "arch_folder_2",
+          "type": "intro",
+          "title": {
+            "es": "Agrupar por feature suele escalar mejor",
+            "en": "Grouping by feature often scales better"
+          },
+          "body": {
+            "es": "En Flutter suele funcionar muy bien agrupar por feature y dentro de cada feature separar data, domain y presentation cuando la complejidad lo justifica. Esto ayuda a que cada módulo viva más junto y evita perseguir archivos por todo el proyecto.",
+            "en": "In Flutter it often works very well to group by feature and inside each feature separate data, domain, and presentation when complexity justifies it. This helps each module live closer together and avoids chasing files throughout the project."
+          },
+          "example": {
+            "es": "features/\n  auth/\n    data/\n    domain/\n    presentation/",
+            "en": "features/\n  auth/\n    data/\n    domain/\n    presentation/"
+          }
+        },
+        {
+          "id": "arch_folder_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena una estructura simple basada en feature.",
+            "en": "Order a simple feature-based structure."
+          },
+          "blocks": [
+            {
+              "es": "presentation/",
+              "en": "presentation/"
+            },
+            {
+              "es": "features/",
+              "en": "features/"
+            },
+            {
+              "es": "auth/",
+              "en": "auth/"
+            },
+            {
+              "es": "data/",
+              "en": "data/"
+            },
+            {
+              "es": "domain/",
+              "en": "domain/"
+            }
+          ],
+          "correctOrder": [
+            {
+              "es": "features/",
+              "en": "features/"
+            },
+            {
+              "es": "auth/",
+              "en": "auth/"
+            },
+            {
+              "es": "presentation/",
+              "en": "presentation/"
+            },
+            {
+              "es": "domain/",
+              "en": "domain/"
+            },
+            {
+              "es": "data/",
+              "en": "data/"
+            }
+          ],
+          "correctExplanation": {
+            "es": "La estructura basada en feature agrupa lo relacionado dentro del mismo módulo.",
+            "en": "Feature-based structure groups related pieces inside the same module."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa primero en el módulo y luego en sus subcapas.",
+            "en": "Think first about the module and then its sublayers."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "arch_folder_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué ventaja suele tener agrupar por feature?",
+            "en": "What advantage does grouping by feature usually have?"
+          },
+          "options": {
+            "es": [
+              "Repetir más archivos",
+              "Tener cada módulo más cerca y fácil de navegar",
+              "Eliminar la necesidad de arquitectura",
+              "Evitar cualquier carpeta compartida"
+            ],
+            "en": [
+              "Repeat more files",
+              "Keep each module closer and easier to navigate",
+              "Eliminate the need for architecture",
+              "Avoid any shared folder"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Tener cada módulo más cerca y fácil de navegar",
+            "en": "Keep each module closer and easier to navigate"
+          },
+          "correctExplanation": {
+            "es": "Agrupar por feature suele mejorar el foco y reduce la sensación de archivos regados por todo lado.",
+            "en": "Grouping by feature usually improves focus and reduces the feeling of files scattered everywhere."
+          },
+          "incorrectExplanation": {
+            "es": "La principal ventaja es la cohesión del módulo, no la magia ni la eliminación de problemas.",
+            "en": "The main advantage is module cohesion, not magic or problem elimination."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_folder_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea se ve más sospechosa en esta estructura?",
+            "en": "Which line looks most suspicious in this structure?"
+          },
+          "codeLines": [
+            {
+              "es": "features/auth/presentation/login_screen.dart",
+              "en": "features/auth/presentation/login_screen.dart"
+            },
+            {
+              "es": "features/profile/data/profile_repository.dart",
+              "en": "features/profile/data/profile_repository.dart"
+            },
+            {
+              "es": "everything/random_stuff/final_version_v2_ok.dart",
+              "en": "everything/random_stuff/final_version_v2_ok.dart"
+            },
+            {
+              "es": "core/network/api_client.dart",
+              "en": "core/network/api_client.dart"
+            }
+          ],
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "Ese archivo suena a caos acumulado, no a una estructura mantenible.",
+            "en": "That file path sounds like accumulated chaos, not a maintainable structure."
+          },
+          "incorrectExplanation": {
+            "es": "La línea problemática es la que rompe el criterio de organización y huele a carpeta de pánico.",
+            "en": "The problematic line is the one that breaks organization criteria and smells like a panic folder."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "arch_folder_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una estructura mínima para un feature `tasks` con `data`, `domain` y `presentation`.",
+            "en": "Write a minimal structure for a `tasks` feature with `data`, `domain`, and `presentation`."
+          },
+          "starterCode": {
+            "es": "features/\n  tasks/\n    \n",
+            "en": "features/\n  tasks/\n    \n"
+          },
+          "expectedFragments": [
+            {
+              "es": "data/",
+              "en": "data/"
+            },
+            {
+              "es": "domain/",
+              "en": "domain/"
+            },
+            {
+              "es": "presentation/",
+              "en": "presentation/"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Esa estructura da una base clara para el módulo tasks.",
+            "en": "That structure gives a clear base for the tasks module."
+          },
+          "incorrectExplanation": {
+            "es": "Incluye las tres carpetas base dentro del feature tasks.",
+            "en": "Include the three base folders inside the tasks feature."
+          },
+          "hint": {
+            "es": "Piensa en separar datos, reglas y UI.",
+            "en": "Think about separating data, rules, and UI."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "arch_clean_layers",
+      "title": {
+        "es": "Capas limpias sin exagerar",
+        "en": "Clean layers without overdoing it"
+      },
+      "shortDescription": {
+        "es": "Entiende data, domain y presentation con un enfoque práctico.",
+        "en": "Understand data, domain, and presentation with a practical mindset."
+      },
+      "icon": "layers",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "arch_layers_1",
+          "type": "intro",
+          "title": {
+            "es": "Presentation, domain y data",
+            "en": "Presentation, domain, and data"
+          },
+          "body": {
+            "es": "Presentation se encarga de la UI y el estado visible. Domain representa reglas y contratos más puros. Data se ocupa de la implementación concreta para obtener o guardar información. No todas las apps requieren el mismo nivel de separación, pero este mapa mental ayuda mucho.",
+            "en": "Presentation handles UI and visible state. Domain represents purer rules and contracts. Data handles concrete implementations to fetch or save information. Not every app needs the same level of separation, but this mental map helps a lot."
+          },
+          "example": {
+            "es": "presentation -> domain -> data",
+            "en": "presentation -> domain -> data"
+          }
+        },
+        {
+          "id": "arch_layers_2",
+          "type": "intro",
+          "title": {
+            "es": "Domain no debería oler a framework",
+            "en": "Domain should not smell like framework"
+          },
+          "body": {
+            "es": "La capa de dominio idealmente no depende de detalles de Flutter, HTTP, Firebase o SharedPreferences. Esa independencia la vuelve más estable y más fácil de entender. Es la capa que debería expresar intención, no infraestructura.",
+            "en": "The domain layer ideally should not depend on Flutter, HTTP, Firebase, or SharedPreferences details. That independence makes it more stable and easier to understand. It is the layer that should express intent, not infrastructure."
+          },
+          "example": {
+            "es": "abstract class UserRepository {\n  Future<User> getProfile();\n}",
+            "en": "abstract class UserRepository {\n  Future<User> getProfile();\n}"
+          }
+        },
+        {
+          "id": "arch_layers_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada capa con su mejor descripción.",
+            "en": "Match each layer with its best description."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "presentation",
+                "en": "presentation"
+              },
+              "right": {
+                "es": "Widgets, estado visible y acciones de UI",
+                "en": "Widgets, visible state, and UI actions"
+              }
+            },
+            {
+              "left": {
+                "es": "domain",
+                "en": "domain"
+              },
+              "right": {
+                "es": "Reglas, contratos y casos de uso",
+                "en": "Rules, contracts, and use cases"
+              }
+            },
+            {
+              "left": {
+                "es": "data",
+                "en": "data"
+              },
+              "right": {
+                "es": "Implementaciones concretas de acceso a datos",
+                "en": "Concrete implementations of data access"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Esta separación ayuda a reducir mezcla innecesaria de responsabilidades.",
+            "en": "This separation helps reduce unnecessary mixing of responsibilities."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué capa pinta, cuál decide y cuál implementa acceso a datos.",
+            "en": "Review which layer paints, which decides, and which implements data access."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_layers_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "¿Qué fragmento encaja mejor en domain?",
+            "en": "Which fragment fits best in domain?"
+          },
+          "codeSnippet": {
+            "es": "Opciones conceptuales de ubicación",
+            "en": "Conceptual location options"
+          },
+          "options": {
+            "es": [
+              "Widget de pantalla",
+              "Interfaz de repositorio",
+              "Cliente HTTP concreto",
+              "Tema visual global"
+            ],
+            "en": [
+              "Screen widget",
+              "Repository interface",
+              "Concrete HTTP client",
+              "Global visual theme"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Interfaz de repositorio",
+            "en": "Repository interface"
+          },
+          "correctExplanation": {
+            "es": "Los contratos como interfaces suelen vivir muy bien en domain porque expresan intención sin atarse a implementación.",
+            "en": "Contracts like interfaces often live well in domain because they express intent without tying to implementation."
+          },
+          "incorrectExplanation": {
+            "es": "UI y detalles técnicos suelen pertenecer a otras capas. Un contrato puro encaja mejor en domain.",
+            "en": "UI and technical details usually belong to other layers. A pure contract fits better in domain."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_layers_code_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el nombre de la capa donde viviría una implementación concreta de FirestoreUserRepository.",
+            "en": "Complete the name of the layer where a concrete FirestoreUserRepository implementation would live."
+          },
+          "initialCode": {
+            "es": "features/auth/_____/firestore_user_repository.dart",
+            "en": "features/auth/_____/firestore_user_repository.dart"
+          },
+          "expectedAnswer": {
+            "es": "data",
+            "en": "data"
+          },
+          "correctExplanation": {
+            "es": "Una implementación concreta de acceso a datos encaja naturalmente en data.",
+            "en": "A concrete data access implementation naturally fits in data."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es data, porque allí viven implementaciones concretas.",
+            "en": "The expected answer is data, because concrete implementations live there."
+          },
+          "hint": {
+            "es": "Piensa en la capa que sí conoce detalles técnicos.",
+            "en": "Think about the layer that does know technical details."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "arch_layers_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige el contrato para que no dependa de SharedPreferences dentro de domain.",
+            "en": "Fix the contract so it does not depend on SharedPreferences inside domain."
+          },
+          "initialCode": {
+            "es": "abstract class SettingsRepository {\n  final SharedPreferences prefs;\n  Future<void> saveTheme(String value);\n}",
+            "en": "abstract class SettingsRepository {\n  final SharedPreferences prefs;\n  Future<void> saveTheme(String value);\n}"
+          },
+          "expectedAnswer": {
+            "es": "abstract class SettingsRepository {\n  Future<void> saveTheme(String value);\n}",
+            "en": "abstract class SettingsRepository {\n  Future<void> saveTheme(String value);\n}"
+          },
+          "correctExplanation": {
+            "es": "El contrato de dominio no necesita cargar infraestructura concreta dentro de sí.",
+            "en": "A domain contract does not need to carry concrete infrastructure inside itself."
+          },
+          "incorrectExplanation": {
+            "es": "El problema es que el contrato quedó contaminado con un detalle técnico.",
+            "en": "The problem is that the contract got contaminated with a technical detail."
+          },
+          "hint": {
+            "es": "Quita el detalle concreto y deja la intención pura.",
+            "en": "Remove the concrete detail and leave the pure intention."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "arch_state_management_choice",
+      "title": {
+        "es": "Elegir manejo de estado con criterio",
+        "en": "Choosing state management with judgement"
+      },
+      "shortDescription": {
+        "es": "Aprende a decidir entre estado local, global o derivado sin fanatismos.",
+        "en": "Learn to decide between local, global, or derived state without fanaticism."
+      },
+      "icon": "tune",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "arch_state_1",
+          "type": "intro",
+          "title": {
+            "es": "No todo estado merece un provider",
+            "en": "Not every state deserves a provider"
+          },
+          "body": {
+            "es": "Hay estado local que vive perfecto en un widget, estado compartido que sí merece otra solución y estado derivado que ni siquiera deberías guardar explícitamente. Elegir bien evita complejidad gratuita.",
+            "en": "There is local state that lives perfectly inside a widget, shared state that does deserve another solution, and derived state that you should not even store explicitly. Choosing well avoids gratuitous complexity."
+          },
+          "example": {
+            "es": "bool isExpanded = false; // quizá local\nfinal user = ref.watch(userProvider); // quizá compartido",
+            "en": "bool isExpanded = false; // maybe local\nfinal user = ref.watch(userProvider); // maybe shared"
+          }
+        },
+        {
+          "id": "arch_state_2",
+          "type": "intro",
+          "title": {
+            "es": "La mejor herramienta depende del problema",
+            "en": "The best tool depends on the problem"
+          },
+          "body": {
+            "es": "No todo necesita Riverpod, y tampoco todo cabe en setState. El criterio está en el alcance, la duración y quién necesita conocer ese dato. Esa lectura del problema vale más que seguir una moda.",
+            "en": "Not everything needs Riverpod, and not everything fits in setState either. The judgement lies in scope, duration, and who needs to know that data. That reading of the problem is worth more than following a trend."
+          },
+          "example": {
+            "es": "// Estado del switch de una card\n// quizá local.\n// Sesión de usuario global\n// definitivamente no tan local.",
+            "en": "// State of a card switch\n// maybe local.\n// Global user session\n// definitely not that local."
+          }
+        },
+        {
+          "id": "arch_state_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál caso suele justificar mejor un estado global o compartido?",
+            "en": "Which case usually better justifies global or shared state?"
+          },
+          "options": {
+            "es": [
+              "Si un tooltip está abierto",
+              "La sesión del usuario usada en varias pantallas",
+              "El color temporal de un ícono aislado",
+              "Si un botón fue presionado una vez"
+            ],
+            "en": [
+              "If a tooltip is open",
+              "The user session used across multiple screens",
+              "The temporary color of an isolated icon",
+              "If a button was pressed once"
+            ]
+          },
+          "correctAnswer": {
+            "es": "La sesión del usuario usada en varias pantallas",
+            "en": "The user session used across multiple screens"
+          },
+          "correctExplanation": {
+            "es": "Cuando muchas pantallas dependen del mismo dato, una solución compartida suele tener más sentido.",
+            "en": "When many screens depend on the same data, a shared solution usually makes more sense."
+          },
+          "incorrectExplanation": {
+            "es": "Los otros ejemplos suelen ser más locales y no justifican una solución global tan fácilmente.",
+            "en": "The other examples tend to be more local and do not justify a global solution as easily."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_state_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada tipo de estado con su mejor caso.",
+            "en": "Match each type of state with its best case."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Estado local",
+                "en": "Local state"
+              },
+              "right": {
+                "es": "Solo interesa a un widget o pantalla concreta",
+                "en": "Only matters to one concrete widget or screen"
+              }
+            },
+            {
+              "left": {
+                "es": "Estado global",
+                "en": "Global state"
+              },
+              "right": {
+                "es": "Se comparte entre muchas áreas de la app",
+                "en": "Shared across many areas of the app"
+              }
+            },
+            {
+              "left": {
+                "es": "Estado derivado",
+                "en": "Derived state"
+              },
+              "right": {
+                "es": "Se calcula a partir de otros datos",
+                "en": "Calculated from other data"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Distinguir estos tipos ayuda a no sobrediseñar el proyecto.",
+            "en": "Distinguishing these types helps avoid overdesigning the project."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué estado vive aislado, cuál se comparte y cuál realmente puede calcularse.",
+            "en": "Review which state lives isolated, which is shared, and which can actually be calculated."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_state_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si guardas `itemCount` y también guardas una lista `items`, ¿qué riesgo aparece si no se sincronizan bien?",
+            "en": "If you store `itemCount` and also store a list `items`, what risk appears if they are not synchronized well?"
+          },
+          "codeSnippet": {
+            "es": "final items = ['a', 'b'];\nint itemCount = 5;",
+            "en": "final items = ['a', 'b'];\nint itemCount = 5;"
+          },
+          "options": {
+            "es": [
+              "Mayor claridad",
+              "Inconsistencia entre datos",
+              "Menor acoplamiento",
+              "Mejor rendimiento siempre"
+            ],
+            "en": [
+              "More clarity",
+              "Inconsistency between data",
+              "Lower coupling",
+              "Always better performance"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Inconsistencia entre datos",
+            "en": "Inconsistency between data"
+          },
+          "correctExplanation": {
+            "es": "Cuando guardas de forma separada algo que puede derivarse, aumentas el riesgo de que los valores diverjan.",
+            "en": "When you store separately something that could be derived, you increase the risk of values diverging."
+          },
+          "incorrectExplanation": {
+            "es": "En muchos casos sería más sano derivar `itemCount` desde `items.length`.",
+            "en": "In many cases it would be healthier to derive `itemCount` from `items.length`."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_state_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe la expresión más simple para derivar la cantidad de elementos desde una lista `items`.",
+            "en": "Write the simplest expression to derive the number of items from a list `items`."
+          },
+          "starterCode": {
+            "es": "final itemCount = _____;",
+            "en": "final itemCount = _____;"
+          },
+          "expectedFragments": [
+            {
+              "es": "items.length",
+              "en": "items.length"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Derivar el conteo desde la lista evita duplicar estado innecesario.",
+            "en": "Deriving the count from the list avoids duplicating unnecessary state."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es items.length.",
+            "en": "The expected answer is items.length."
+          },
+          "hint": {
+            "es": "No guardes lo que ya puedes calcular fácilmente.",
+            "en": "Do not store what you can already calculate easily."
+          },
+          "xpReward": 14
+        }
+      ]
+    },
+    {
+      "id": "arch_models_entities_dto",
+      "title": {
+        "es": "Modelos, entidades y DTOs",
+        "en": "Models, entities, and DTOs"
+      },
+      "shortDescription": {
+        "es": "Distingue entre el dato del dominio y el formato de transporte o almacenamiento.",
+        "en": "Distinguish between domain data and transport or storage format."
+      },
+      "icon": "schema",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "arch_model_1",
+          "type": "intro",
+          "title": {
+            "es": "No todo objeto debería ser el mismo en todas partes",
+            "en": "Not every object should be the same everywhere"
+          },
+          "body": {
+            "es": "Una entidad de dominio expresa lo que importa al negocio. Un DTO o model de data puede incluir campos y formatos pensados para red, base de datos o serialización. Separarlos evita contaminar el dominio con detalles técnicos.",
+            "en": "A domain entity expresses what matters to the business. A DTO or data model may include fields and formats meant for network, database, or serialization. Separating them prevents contaminating the domain with technical details."
+          },
+          "example": {
+            "es": "UserEntity(name, email)\nUserDto(name, email, createdAt, toJson())",
+            "en": "UserEntity(name, email)\nUserDto(name, email, createdAt, toJson())"
+          }
+        },
+        {
+          "id": "arch_model_2",
+          "type": "intro",
+          "title": {
+            "es": "Mapear no es perder tiempo",
+            "en": "Mapping is not wasting time"
+          },
+          "body": {
+            "es": "Convertir de DTO a entidad parece trabajo extra, pero muchas veces te da control, claridad y estabilidad. Así puedes cambiar una fuente externa sin romper toda la app desde la raíz.",
+            "en": "Converting from DTO to entity may look like extra work, but it often gives you control, clarity, and stability. This way you can change an external source without breaking the whole app from the root."
+          },
+          "example": {
+            "es": "final user = dto.toEntity();",
+            "en": "final user = dto.toEntity();"
+          }
+        },
+        {
+          "id": "arch_model_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué suele pertenecer más naturalmente a un DTO que a una entidad pura de dominio?",
+            "en": "What usually belongs more naturally to a DTO than to a pure domain entity?"
+          },
+          "options": {
+            "es": [
+              "Una regla de negocio",
+              "Un método toJson()",
+              "La intención del caso de uso",
+              "Una validación conceptual del dominio"
+            ],
+            "en": [
+              "A business rule",
+              "A toJson() method",
+              "Use-case intent",
+              "A conceptual domain validation"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Un método toJson()",
+            "en": "A toJson() method"
+          },
+          "correctExplanation": {
+            "es": "toJson suele responder a necesidades de transporte o almacenamiento, más propias de data.",
+            "en": "toJson usually responds to transport or storage needs, more typical of data."
+          },
+          "incorrectExplanation": {
+            "es": "Las entidades de dominio buscan expresar intención, no detalles de serialización.",
+            "en": "Domain entities aim to express intention, not serialization details."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_model_code_1",
+          "type": "fillInTheCode",
+          "prompt": {
+            "es": "Completa el método típico de mapeo desde DTO a entidad.",
+            "en": "Complete the typical mapping method from DTO to entity."
+          },
+          "initialCode": {
+            "es": "final entity = dto._____();",
+            "en": "final entity = dto._____();"
+          },
+          "expectedAnswer": {
+            "es": "toEntity",
+            "en": "toEntity"
+          },
+          "correctExplanation": {
+            "es": "Un nombre como toEntity comunica bien la conversión hacia el dominio.",
+            "en": "A name like toEntity communicates the conversion toward domain well."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es toEntity.",
+            "en": "The expected answer is toEntity."
+          },
+          "hint": {
+            "es": "Piensa en convertir hacia una entidad de dominio.",
+            "en": "Think about converting to a domain entity."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "arch_model_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige la entidad para que no cargue serialización de infraestructura.",
+            "en": "Fix the entity so it does not carry infrastructure serialization."
+          },
+          "initialCode": {
+            "es": "class UserEntity {\n  final String name;\n  Map<String, dynamic> toJson() => {'name': name};\n}",
+            "en": "class UserEntity {\n  final String name;\n  Map<String, dynamic> toJson() => {'name': name};\n}"
+          },
+          "expectedAnswer": {
+            "es": "class UserEntity {\n  final String name;\n  UserEntity(this.name);\n}",
+            "en": "class UserEntity {\n  final String name;\n  UserEntity(this.name);\n}"
+          },
+          "correctExplanation": {
+            "es": "La entidad queda más limpia cuando no arrastra detalles de serialización.",
+            "en": "The entity stays cleaner when it does not carry serialization details."
+          },
+          "incorrectExplanation": {
+            "es": "El problema es mezclar intención de dominio con detalles técnicos.",
+            "en": "The problem is mixing domain intent with technical details."
+          },
+          "hint": {
+            "es": "Quita el detalle de serialización y deja la entidad enfocada.",
+            "en": "Remove the serialization detail and keep the entity focused."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "arch_model_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su función más natural.",
+            "en": "Match each concept with its most natural function."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Entidad",
+                "en": "Entity"
+              },
+              "right": {
+                "es": "Representar el dominio con intención",
+                "en": "Represent the domain with intention"
+              }
+            },
+            {
+              "left": {
+                "es": "DTO",
+                "en": "DTO"
+              },
+              "right": {
+                "es": "Transportar o serializar datos",
+                "en": "Transport or serialize data"
+              }
+            },
+            {
+              "left": {
+                "es": "Mapper",
+                "en": "Mapper"
+              },
+              "right": {
+                "es": "Convertir entre representaciones",
+                "en": "Convert between representations"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Esta distinción ayuda mucho cuando una app empieza a integrarse con varias fuentes de datos.",
+            "en": "This distinction helps a lot when an app starts integrating with multiple data sources."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa cuál vive más cerca del dominio, cuál del transporte y cuál conecta ambos mundos.",
+            "en": "Review which one lives closer to domain, which to transport, and which connects both worlds."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "arch_repositories_usecases",
+      "title": {
+        "es": "Repositorios y casos de uso",
+        "en": "Repositories and use cases"
+      },
+      "shortDescription": {
+        "es": "Aprende cuándo tiene sentido abstraer acceso a datos y reglas de negocio.",
+        "en": "Learn when it makes sense to abstract data access and business rules."
+      },
+      "icon": "inventory_2",
+      "nodeType": "lesson",
+      "xpReward": 75,
+      "steps": [
+        {
+          "id": "arch_repo_1",
+          "type": "intro",
+          "title": {
+            "es": "Repositorio: menos ruido para el resto de la app",
+            "en": "Repository: less noise for the rest of the app"
+          },
+          "body": {
+            "es": "El repositorio sirve para esconder detalles de cómo obtienes o guardas datos. La pantalla no necesita saber si la información vino de red, cache o base local. Le basta pedir algo más claro.",
+            "en": "The repository hides details about how you fetch or save data. The screen does not need to know whether information came from network, cache, or local database. It only needs to ask for something clearer."
+          },
+          "example": {
+            "es": "final profile = await repository.getProfile();",
+            "en": "final profile = await repository.getProfile();"
+          }
+        },
+        {
+          "id": "arch_repo_2",
+          "type": "intro",
+          "title": {
+            "es": "Caso de uso: una acción con sentido de negocio",
+            "en": "Use case: an action with business meaning"
+          },
+          "body": {
+            "es": "Un caso de uso modela una intención del sistema: iniciar sesión, calcular un total, reservar un cupo, actualizar un perfil. Es útil cuando hay reglas que no pertenecen ni a la UI ni al acceso a datos crudo.",
+            "en": "A use case models a system intention: sign in, calculate a total, reserve a slot, update a profile. It is useful when there are rules that do not belong to UI nor to raw data access."
+          },
+          "example": {
+            "es": "final result = await loginUseCase(email, password);",
+            "en": "final result = await loginUseCase(email, password);"
+          }
+        },
+        {
+          "id": "arch_repo_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál ejemplo suena más a caso de uso que a repositorio?",
+            "en": "Which example sounds more like a use case than a repository?"
+          },
+          "options": {
+            "es": [
+              "saveUserJson",
+              "fetchRemoteData",
+              "CalculateCartTotal",
+              "readPrefsKey"
+            ],
+            "en": [
+              "saveUserJson",
+              "fetchRemoteData",
+              "CalculateCartTotal",
+              "readPrefsKey"
+            ]
+          },
+          "correctAnswer": {
+            "es": "CalculateCartTotal",
+            "en": "CalculateCartTotal"
+          },
+          "correctExplanation": {
+            "es": "Ese nombre expresa una intención o regla del sistema, no solo una operación técnica.",
+            "en": "That name expresses a system intention or rule, not just a technical operation."
+          },
+          "incorrectExplanation": {
+            "es": "Repositorio suele sonar más a acceso a datos. Caso de uso suena más a acción del negocio.",
+            "en": "Repository tends to sound more like data access. Use case sounds more like a business action."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_repo_code_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa el nombre de la dependencia que normalmente recibe un caso de uso.",
+            "en": "Complete the name of the dependency a use case usually receives."
+          },
+          "initialCode": {
+            "es": "class GetProfileUseCase {\n  final User_____ repository;\n}",
+            "en": "class GetProfileUseCase {\n  final User_____ repository;\n}"
+          },
+          "expectedAnswer": {
+            "es": "Repository",
+            "en": "Repository"
+          },
+          "correctExplanation": {
+            "es": "Los casos de uso suelen depender de contratos de repositorio para ejecutar su flujo.",
+            "en": "Use cases usually depend on repository contracts to execute their flow."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es Repository.",
+            "en": "The expected answer is Repository."
+          },
+          "hint": {
+            "es": "Piensa en el contrato de acceso a datos que el caso de uso usa.",
+            "en": "Think about the data-access contract the use case uses."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "arch_repo_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena un flujo típico entre UI, caso de uso y repositorio.",
+            "en": "Order a typical flow between UI, use case, and repository."
+          },
+          "blocks": [
+            {
+              "es": "UI solicita la acción",
+              "en": "UI requests the action"
+            },
+            {
+              "es": "Repositorio obtiene datos",
+              "en": "Repository fetches data"
+            },
+            {
+              "es": "Caso de uso aplica reglas",
+              "en": "Use case applies rules"
+            }
+          ],
+          "correctOrder": [
+            {
+              "es": "UI solicita la acción",
+              "en": "UI requests the action"
+            },
+            {
+              "es": "Caso de uso aplica reglas",
+              "en": "Use case applies rules"
+            },
+            {
+              "es": "Repositorio obtiene datos",
+              "en": "Repository fetches data"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Ese orden representa una cadena típica de responsabilidad.",
+            "en": "That order represents a typical responsibility chain."
+          },
+          "incorrectExplanation": {
+            "es": "Piensa en quién pide, quién decide y quién obtiene datos.",
+            "en": "Think about who asks, who decides, and who fetches data."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "arch_repo_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si la UI llama directo a Firebase, ¿qué beneficio de un repositorio se pierde con más facilidad?",
+            "en": "If UI calls Firebase directly, which repository benefit is more easily lost?"
+          },
+          "codeSnippet": {
+            "es": "final doc = await FirebaseFirestore.instance.collection('users').doc(id).get();",
+            "en": "final doc = await FirebaseFirestore.instance.collection('users').doc(id).get();"
+          },
+          "options": {
+            "es": [
+              "Desacoplamiento",
+              "Color del tema",
+              "Hot reload",
+              "Compatibilidad con widgets const"
+            ],
+            "en": [
+              "Decoupling",
+              "Theme color",
+              "Hot reload",
+              "Compatibility with const widgets"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Desacoplamiento",
+            "en": "Decoupling"
+          },
+          "correctExplanation": {
+            "es": "El repositorio ayuda a desacoplar la UI de la tecnología concreta de datos.",
+            "en": "The repository helps decouple UI from concrete data technology."
+          },
+          "incorrectExplanation": {
+            "es": "Cuando la UI conoce demasiado la infraestructura, el acoplamiento sube.",
+            "en": "When UI knows too much about infrastructure, coupling goes up."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "arch_dependency_injection",
+      "title": {
+        "es": "Inyección de dependencias",
+        "en": "Dependency injection"
+      },
+      "shortDescription": {
+        "es": "Conecta piezas del sistema sin crear un nudo de dependencias directas.",
+        "en": "Connect system pieces without creating a knot of direct dependencies."
+      },
+      "icon": "input",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "arch_di_1",
+          "type": "intro",
+          "title": {
+            "es": "Inyectar dependencias es pasar piezas, no invocarlas por magia",
+            "en": "Injecting dependencies is passing pieces, not summoning them by magic"
+          },
+          "body": {
+            "es": "La inyección de dependencias consiste en entregar a una clase lo que necesita, en lugar de que esa clase cree todo por dentro. Esto mejora claridad, reemplazo y control del flujo.",
+            "en": "Dependency injection means giving a class what it needs instead of making that class create everything inside. This improves clarity, replacement, and control of the flow."
+          },
+          "example": {
+            "es": "final controller = LoginController(authRepository);",
+            "en": "final controller = LoginController(authRepository);"
+          }
+        },
+        {
+          "id": "arch_di_2",
+          "type": "intro",
+          "title": {
+            "es": "Crear dependencias dentro de la clase suele pegar demasiado las piezas",
+            "en": "Creating dependencies inside the class often glues pieces too tightly"
+          },
+          "body": {
+            "es": "Si una clase instancia directamente un cliente HTTP, un repositorio o un datasource, queda más difícil cambiar o reutilizar ese comportamiento. Inyectar permite sustituir una implementación sin reescribir toda la pieza.",
+            "en": "If a class directly instantiates an HTTP client, repository, or datasource, it becomes harder to change or reuse that behavior. Injecting lets you swap an implementation without rewriting the whole piece."
+          },
+          "example": {
+            "es": "class LoginController {\n  final AuthRepository repository;\n  LoginController(this.repository);\n}",
+            "en": "class LoginController {\n  final AuthRepository repository;\n  LoginController(this.repository);\n}"
+          }
+        },
+        {
+          "id": "arch_di_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué práctica refleja mejor inyección de dependencias?",
+            "en": "Which practice best reflects dependency injection?"
+          },
+          "options": {
+            "es": [
+              "Crear FirebaseFirestore dentro de cada pantalla",
+              "Pasar el repositorio al constructor de la clase",
+              "Poner variables globales por todo el proyecto",
+              "Copiar el mismo cliente HTTP en varias clases"
+            ],
+            "en": [
+              "Create FirebaseFirestore inside every screen",
+              "Pass the repository into the class constructor",
+              "Put globals all over the project",
+              "Copy the same HTTP client into several classes"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Pasar el repositorio al constructor de la clase",
+            "en": "Pass the repository into the class constructor"
+          },
+          "correctExplanation": {
+            "es": "Pasar dependencias desde afuera es una señal clásica de inyección de dependencias.",
+            "en": "Passing dependencies from outside is a classic sign of dependency injection."
+          },
+          "incorrectExplanation": {
+            "es": "La clave es no fabricar todo adentro cuando puedes recibirlo desde fuera.",
+            "en": "The key is not to build everything inside when you can receive it from outside."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_di_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige la clase para recibir la dependencia por constructor.",
+            "en": "Fix the class so it receives the dependency through the constructor."
+          },
+          "initialCode": {
+            "es": "class ProfileController {\n  final repository = ProfileRepository();\n}",
+            "en": "class ProfileController {\n  final repository = ProfileRepository();\n}"
+          },
+          "expectedAnswer": {
+            "es": "class ProfileController {\n  final ProfileRepository repository;\n  ProfileController(this.repository);\n}",
+            "en": "class ProfileController {\n  final ProfileRepository repository;\n  ProfileController(this.repository);\n}"
+          },
+          "correctExplanation": {
+            "es": "Así la dependencia llega desde afuera y la clase queda menos acoplada.",
+            "en": "This way the dependency comes from outside and the class becomes less coupled."
+          },
+          "incorrectExplanation": {
+            "es": "El problema es crear la dependencia directamente dentro de la clase.",
+            "en": "The problem is creating the dependency directly inside the class."
+          },
+          "hint": {
+            "es": "Recibe la dependencia, no la fabriques ahí mismo.",
+            "en": "Receive the dependency, do not manufacture it right there."
+          },
+          "xpReward": 15
+        },
+        {
+          "id": "arch_di_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada idea con su efecto principal.",
+            "en": "Match each idea with its main effect."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Constructor injection",
+                "en": "Constructor injection"
+              },
+              "right": {
+                "es": "La dependencia llega desde fuera",
+                "en": "The dependency comes from outside"
+              }
+            },
+            {
+              "left": {
+                "es": "Acoplamiento alto",
+                "en": "High coupling"
+              },
+              "right": {
+                "es": "La clase depende demasiado de detalles concretos",
+                "en": "The class depends too much on concrete details"
+              }
+            },
+            {
+              "left": {
+                "es": "Sustituibilidad",
+                "en": "Substitutability"
+              },
+              "right": {
+                "es": "Cambiar una implementación es más fácil",
+                "en": "Changing an implementation is easier"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Estas ideas ayudan a que la arquitectura sea más flexible.",
+            "en": "These ideas help make architecture more flexible."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué viene desde afuera, qué pega demasiado y qué facilita reemplazar implementaciones.",
+            "en": "Review what comes from outside, what sticks too much, and what facilitates replacing implementations."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_di_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe el constructor mínimo de `SettingsController` que recibe `SettingsRepository repository`.",
+            "en": "Write the minimal constructor for `SettingsController` receiving `SettingsRepository repository`."
+          },
+          "starterCode": {
+            "es": "class SettingsController {\n  final SettingsRepository repository;\n  _____\n}",
+            "en": "class SettingsController {\n  final SettingsRepository repository;\n  _____\n}"
+          },
+          "expectedFragments": [
+            {
+              "es": "SettingsController(this.repository);",
+              "en": "SettingsController(this.repository);"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Ese constructor refleja una inyección simple y clara.",
+            "en": "That constructor reflects a simple and clear injection."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta debe recibir repository desde el constructor.",
+            "en": "The answer must receive repository through the constructor."
+          },
+          "hint": {
+            "es": "Usa el campo ya declarado en la clase.",
+            "en": "Use the field already declared in the class."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "arch_error_handling_boundaries",
+      "title": {
+        "es": "Errores y límites entre capas",
+        "en": "Errors and boundaries between layers"
+      },
+      "shortDescription": {
+        "es": "Maneja fallos con intención sin filtrar detalles técnicos a toda la app.",
+        "en": "Handle failures intentionally without leaking technical details throughout the app."
+      },
+      "icon": "warning",
+      "nodeType": "lesson",
+      "xpReward": 70,
+      "steps": [
+        {
+          "id": "arch_error_1",
+          "type": "intro",
+          "title": {
+            "es": "No todo error debería llegar crudo a la UI",
+            "en": "Not every error should reach UI raw"
+          },
+          "body": {
+            "es": "Una excepción técnica puede existir en data, pero la UI no siempre necesita conocer ese detalle exacto. Muchas veces conviene traducir el fallo a algo más útil para el resto del sistema.",
+            "en": "A technical exception may exist in data, but UI does not always need to know that exact detail. Many times it is better to translate failure into something more useful for the rest of the system."
+          },
+          "example": {
+            "es": "SocketException -> NetworkFailure",
+            "en": "SocketException -> NetworkFailure"
+          }
+        },
+        {
+          "id": "arch_error_2",
+          "type": "intro",
+          "title": {
+            "es": "Los límites también protegen el manejo de errores",
+            "en": "Boundaries also protect error handling"
+          },
+          "body": {
+            "es": "Cuando cada capa conoce demasiado, los errores saltan por todas partes sin forma clara. Si mantienes límites sanos, puedes decidir mejor dónde capturar, traducir y exponer un fallo.",
+            "en": "When every layer knows too much, errors jump everywhere without clear shape. If you maintain healthy boundaries, you can better decide where to catch, translate, and expose a failure."
+          },
+          "example": {
+            "es": "try/catch en data\nFailure en domain\nmensaje claro en UI",
+            "en": "try/catch in data\nFailure in domain\nclear message in UI"
+          }
+        },
+        {
+          "id": "arch_error_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué práctica suele ser más sana?",
+            "en": "Which practice is usually healthier?"
+          },
+          "options": {
+            "es": [
+              "Mostrar StackTrace completo al usuario final",
+              "Traducir errores técnicos a fallos más útiles",
+              "Ignorar excepciones silenciosamente",
+              "Capturar errores solo en el widget visual"
+            ],
+            "en": [
+              "Show complete StackTrace to the end user",
+              "Translate technical errors into more useful failures",
+              "Silently ignore exceptions",
+              "Catch errors only in the visual widget"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Traducir errores técnicos a fallos más útiles",
+            "en": "Translate technical errors into more useful failures"
+          },
+          "correctExplanation": {
+            "es": "Eso ayuda a que la app comunique mejor y acople menos la UI a detalles técnicos.",
+            "en": "That helps the app communicate better and couple UI less to technical details."
+          },
+          "incorrectExplanation": {
+            "es": "El usuario final no necesita tragarse detalles internos de infraestructura.",
+            "en": "The end user does not need to swallow infrastructure internals."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_error_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea se ve peor para exponer a la UI?",
+            "en": "Which line looks worst to expose to UI?"
+          },
+          "codeLines": [
+            {
+              "es": "return const Text('No se pudo cargar el perfil');",
+              "en": "return const Text('No se pudo cargar el perfil');"
+            },
+            {
+              "es": "throw Exception('SocketException: Connection reset by peer at api.example.com line 88');",
+              "en": "throw Exception('SocketException: Connection reset by peer at api.example.com line 88');"
+            },
+            {
+              "es": "return AppFailure.network();",
+              "en": "return AppFailure.network();"
+            }
+          ],
+          "wrongLineIndex": 1,
+          "correctExplanation": {
+            "es": "Ese detalle técnico crudo no suele ser apropiado para salir directo a la UI.",
+            "en": "That raw technical detail is usually not appropriate to leak directly to UI."
+          },
+          "incorrectExplanation": {
+            "es": "La línea más problemática es la que expone información técnica sin traducir.",
+            "en": "The most problematic line is the one exposing technical information untranslated."
+          },
+          "xpReward": 14
+        },
+        {
+          "id": "arch_error_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada capa con una forma razonable de tratar errores.",
+            "en": "Match each layer with a reasonable way to handle errors."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "data",
+                "en": "data"
+              },
+              "right": {
+                "es": "Capturar excepciones técnicas y traducirlas",
+                "en": "Catch technical exceptions and translate them"
+              }
+            },
+            {
+              "left": {
+                "es": "domain",
+                "en": "domain"
+              },
+              "right": {
+                "es": "Representar fallos de forma más estable",
+                "en": "Represent failures in a more stable way"
+              }
+            },
+            {
+              "left": {
+                "es": "UI",
+                "en": "UI"
+              },
+              "right": {
+                "es": "Mostrar feedback claro al usuario",
+                "en": "Show clear feedback to the user"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Así cada capa trata el error desde su responsabilidad natural.",
+            "en": "This way each layer handles the error from its natural responsibility."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué capa captura detalles técnicos, cuál estabiliza el fallo y cuál comunica al usuario.",
+            "en": "Review which layer captures technical details, which stabilizes failure, and which communicates to the user."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_error_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si la capa data traduce un `SocketException` a `NetworkFailure`, ¿qué gana el resto del sistema?",
+            "en": "If the data layer translates a `SocketException` into `NetworkFailure`, what does the rest of the system gain?"
+          },
+          "codeSnippet": {
+            "es": "catch (e) { return NetworkFailure(); }",
+            "en": "catch (e) { return NetworkFailure(); }"
+          },
+          "options": {
+            "es": [
+              "Más acoplamiento a la infraestructura",
+              "Una interfaz de fallo más estable",
+              "Menos claridad semántica",
+              "Más excepciones crudas"
+            ],
+            "en": [
+              "More infrastructure coupling",
+              "A more stable failure interface",
+              "Less semantic clarity",
+              "More raw exceptions"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Una interfaz de fallo más estable",
+            "en": "A more stable failure interface"
+          },
+          "correctExplanation": {
+            "es": "El resto del sistema puede trabajar con un concepto más claro y menos dependiente del detalle técnico.",
+            "en": "The rest of the system can work with a clearer concept less dependent on technical detail."
+          },
+          "incorrectExplanation": {
+            "es": "Traducir errores reduce el goteo de detalles internos.",
+            "en": "Translating errors reduces leakage of internal details."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        }
+      ]
+    },
+    {
+      "id": "arch_scaling_refactoring",
+      "title": {
+        "es": "Escalar y refactorizar sin llorar",
+        "en": "Scaling and refactoring without crying"
+      },
+      "shortDescription": {
+        "es": "Aprende a detectar deuda técnica y mejorar el diseño paso a paso.",
+        "en": "Learn to detect technical debt and improve design step by step."
+      },
+      "icon": "build_circle",
+      "nodeType": "lesson",
+      "xpReward": 75,
+      "steps": [
+        {
+          "id": "arch_scale_1",
+          "type": "intro",
+          "title": {
+            "es": "La buena arquitectura también se refactoriza",
+            "en": "Good architecture also gets refactored"
+          },
+          "body": {
+            "es": "No existe una estructura eterna e intocable. A medida que la app crece, puede necesitar ajustes. La clave es refactorizar con intención y no esperar a que todo sea imposible de mover.",
+            "en": "There is no eternal, untouchable structure. As the app grows, it may need adjustments. The key is refactoring intentionally and not waiting until everything is impossible to move."
+          },
+          "example": {
+            "es": "// Hoy quizá basta con simple.\n// Mañana quizá pida más separación.",
+            "en": "// Today maybe simple is enough.\n// Tomorrow maybe it asks for more separation."
+          }
+        },
+        {
+          "id": "arch_scale_2",
+          "type": "intro",
+          "title": {
+            "es": "La deuda técnica no siempre grita, a veces susurra",
+            "en": "Technical debt does not always scream; sometimes it whispers"
+          },
+          "body": {
+            "es": "Duplicación rara, archivos enormes, widgets que hacen demasiado y nombres confusos son señales tempranas. No hace falta incendiar el proyecto para notar que algo ya pide una mejora.",
+            "en": "Weird duplication, huge files, widgets doing too much, and confusing names are early signals. You do not need the project on fire to notice something is already asking for improvement."
+          },
+          "example": {
+            "es": "home_screen.dart (1400 líneas)\n// probablemente quiere ayuda.",
+            "en": "home_screen.dart (1400 lines)\n// probably wants help."
+          }
+        },
+        {
+          "id": "arch_scale_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Cuál señal suele indicar mejor que un módulo necesita refactorización?",
+            "en": "Which signal usually better indicates that a module needs refactoring?"
+          },
+          "options": {
+            "es": [
+              "Nombres claros y cortos",
+              "Archivos gigantes con muchas responsabilidades",
+              "Pocas dependencias bien separadas",
+              "Funciones pequeñas y enfocadas"
+            ],
+            "en": [
+              "Clear short names",
+              "Huge files with many responsibilities",
+              "Few well-separated dependencies",
+              "Small focused functions"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Archivos gigantes con muchas responsabilidades",
+            "en": "Huge files with many responsibilities"
+          },
+          "correctExplanation": {
+            "es": "Cuando una pieza hace demasiado, suele ser una señal fuerte de deuda técnica.",
+            "en": "When one piece does too much, it is usually a strong sign of technical debt."
+          },
+          "incorrectExplanation": {
+            "es": "El problema suele aparecer cuando se acumulan responsabilidades, no cuando el código está claro y enfocado.",
+            "en": "The problem usually appears when responsibilities accumulate, not when code is clear and focused."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_scale_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si extraes una sección repetida de UI a un widget reutilizable, ¿qué beneficio es más probable?",
+            "en": "If you extract a repeated UI section into a reusable widget, which benefit is more likely?"
+          },
+          "codeSnippet": {
+            "es": "// Antes: la misma card copiada 4 veces\n// Después: ProfileStatCard(...)",
+            "en": "// Before: same card copied 4 times\n// After: ProfileStatCard(...)"
+          },
+          "options": {
+            "es": [
+              "Más duplicación",
+              "Menor mantenibilidad",
+              "Más reutilización y claridad",
+              "Más acoplamiento siempre"
+            ],
+            "en": [
+              "More duplication",
+              "Lower maintainability",
+              "More reuse and clarity",
+              "Always more coupling"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Más reutilización y claridad",
+            "en": "More reuse and clarity"
+          },
+          "correctExplanation": {
+            "es": "Extraer piezas repetidas suele mejorar lectura y facilitar cambios futuros.",
+            "en": "Extracting repeated pieces usually improves readability and eases future changes."
+          },
+          "incorrectExplanation": {
+            "es": "La reutilización bien hecha reduce ruido y repeticiones innecesarias.",
+            "en": "Well-done reuse reduces noise and unnecessary repetition."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_scale_order_1",
+          "type": "orderCodeBlocks",
+          "prompt": {
+            "es": "Ordena un mini proceso sano de refactorización.",
+            "en": "Order a healthy mini refactoring process."
+          },
+          "blocks": [
+            {
+              "es": "Identificar el dolor real",
+              "en": "Identify the real pain"
+            },
+            {
+              "es": "Extraer o reorganizar con intención",
+              "en": "Extract or reorganize intentionally"
+            },
+            {
+              "es": "Verificar que el comportamiento siga claro",
+              "en": "Verify behavior remains clear"
+            }
+          ],
+          "correctOrder": [
+            {
+              "es": "Identificar el dolor real",
+              "en": "Identify the real pain"
+            },
+            {
+              "es": "Extraer o reorganizar con intención",
+              "en": "Extract or reorganize intentionally"
+            },
+            {
+              "es": "Verificar que el comportamiento siga claro",
+              "en": "Verify behavior remains clear"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Refactorizar con criterio empieza por entender el problema, no por mover archivos al azar.",
+            "en": "Refactoring with judgement starts by understanding the problem, not by moving files randomly."
+          },
+          "incorrectExplanation": {
+            "es": "No empieces reordenando por ansiedad; primero entiende qué duele.",
+            "en": "Do not start rearranging out of anxiety; first understand what hurts."
+          },
+          "xpReward": 14,
+          "shuffle": true
+        },
+        {
+          "id": "arch_scale_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe una propuesta breve de nombre reutilizable para una card de estadística de perfil.",
+            "en": "Write a brief reusable name proposal for a profile statistics card."
+          },
+          "starterCode": {
+            "es": "class _____ extends StatelessWidget {}",
+            "en": "class _____ extends StatelessWidget {}"
+          },
+          "expectedFragments": [
+            {
+              "es": "ProfileStatCard",
+              "en": "ProfileStatCard"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Ese nombre comunica bien intención y reutilización.",
+            "en": "That name communicates intention and reuse well."
+          },
+          "incorrectExplanation": {
+            "es": "La idea es usar un nombre claro y específico para un widget reutilizable.",
+            "en": "The idea is to use a clear, specific name for a reusable widget."
+          },
+          "hint": {
+            "es": "Piensa en un nombre semántico, no genérico como Box1.",
+            "en": "Think of a semantic name, not a generic one like Box1."
+          },
+          "xpReward": 16
+        }
+      ]
+    },
+    {
+      "id": "arch_naming_consistency",
+      "title": {
+        "es": "Nombres, consistencia y legibilidad",
+        "en": "Naming, consistency, and readability"
+      },
+      "shortDescription": {
+        "es": "Haz que el código se entienda mejor incluso antes de ejecutarlo.",
+        "en": "Make code easier to understand even before running it."
+      },
+      "icon": "edit_note",
+      "nodeType": "lesson",
+      "xpReward": 65,
+      "steps": [
+        {
+          "id": "arch_name_1",
+          "type": "intro",
+          "title": {
+            "es": "Un buen nombre evita muchas explicaciones",
+            "en": "A good name avoids many explanations"
+          },
+          "body": {
+            "es": "Nombrar bien archivos, clases, variables y métodos mejora la legibilidad y reduce el costo mental del proyecto. Un nombre bueno no necesita ser poético; necesita ser claro.",
+            "en": "Naming files, classes, variables, and methods well improves readability and reduces the mental cost of the project. A good name does not need to be poetic; it needs to be clear."
+          },
+          "example": {
+            "es": "getProfileUseCase\n// comunica más que\n// processThing",
+            "en": "getProfileUseCase\n// communicates more than\n// processThing"
+          }
+        },
+        {
+          "id": "arch_name_2",
+          "type": "intro",
+          "title": {
+            "es": "La consistencia también es arquitectura",
+            "en": "Consistency is architecture too"
+          },
+          "body": {
+            "es": "Si un módulo usa `repository`, otro `repo`, otro `dataProvider` y otro `handler` para lo mismo, el proyecto pierde ritmo mental. La consistencia ayuda a que el equipo piense más en el problema y menos en descifrar nombres.",
+            "en": "If one module uses `repository`, another `repo`, another `dataProvider`, and another `handler` for the same thing, the project loses mental rhythm. Consistency helps the team think more about the problem and less about deciphering names."
+          },
+          "example": {
+            "es": "// Escoge una convención.\n// Luego sosténla.",
+            "en": "// Pick a convention.\n// Then keep it."
+          }
+        },
+        {
+          "id": "arch_name_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué nombre comunica mejor intención para una clase que inicia sesión?",
+            "en": "Which name better communicates intent for a class that signs in?"
+          },
+          "options": {
+            "es": [
+              "ThingManager",
+              "DoStuff",
+              "LoginUseCase",
+              "DataBox"
+            ],
+            "en": [
+              "ThingManager",
+              "DoStuff",
+              "LoginUseCase",
+              "DataBox"
+            ]
+          },
+          "correctAnswer": {
+            "es": "LoginUseCase",
+            "en": "LoginUseCase"
+          },
+          "correctExplanation": {
+            "es": "Ese nombre dice bastante mejor qué hace la pieza.",
+            "en": "That name says much more clearly what the piece does."
+          },
+          "incorrectExplanation": {
+            "es": "Los nombres vagos aumentan el costo de lectura. Un nombre semántico ayuda más.",
+            "en": "Vague names increase reading cost. A semantic name helps more."
+          },
+          "xpReward": 10,
+          "shuffle": true
+        },
+        {
+          "id": "arch_name_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada mal patrón con su problema principal.",
+            "en": "Match each bad pattern with its main problem."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Nombres vagos",
+                "en": "Vague names"
+              },
+              "right": {
+                "es": "No comunican intención clara",
+                "en": "Do not communicate clear intent"
+              }
+            },
+            {
+              "left": {
+                "es": "Convenciones mezcladas",
+                "en": "Mixed conventions"
+              },
+              "right": {
+                "es": "Dificultan la lectura uniforme del proyecto",
+                "en": "Make consistent project reading harder"
+              }
+            },
+            {
+              "left": {
+                "es": "Clases gigantes",
+                "en": "Huge classes"
+              },
+              "right": {
+                "es": "Suelen acumular demasiadas responsabilidades",
+                "en": "Often accumulate too many responsibilities"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Legibilidad y consistencia también forman parte de la salud arquitectónica.",
+            "en": "Readability and consistency are also part of architectural health."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué problema nace de nombres vagos, convenciones mezcladas y clases gigantes.",
+            "en": "Review what problem comes from vague names, mixed conventions, and huge classes."
+          },
+          "xpReward": 12,
+          "shuffle": true
+        },
+        {
+          "id": "arch_name_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué nombre de archivo se ve menos consistente?",
+            "en": "Which file name looks least consistent?"
+          },
+          "codeLines": [
+            {
+              "es": "user_repository.dart",
+              "en": "user_repository.dart"
+            },
+            {
+              "es": "get_profile_use_case.dart",
+              "en": "get_profile_use_case.dart"
+            },
+            {
+              "es": "MyFinalUltimateManager2.dart",
+              "en": "MyFinalUltimateManager2.dart"
+            },
+            {
+              "es": "profile_screen.dart",
+              "en": "profile_screen.dart"
+            }
+          ],
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "Ese nombre se ve poco semántico, poco consistente y con energía de archivo improvisado.",
+            "en": "That name looks unsemantic, inconsistent, and radiates improvised-file energy."
+          },
+          "incorrectExplanation": {
+            "es": "La línea problemática es la del archivo con nombre exagerado y poco claro.",
+            "en": "The problematic line is the one with the exaggerated unclear file name."
+          },
+          "xpReward": 12
+        },
+        {
+          "id": "arch_name_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un nombre más claro para una función que carga el perfil del usuario.",
+            "en": "Write a clearer name for a function that loads the user profile."
+          },
+          "starterCode": {
+            "es": "Future<void> _____() async {}",
+            "en": "Future<void> _____() async {}"
+          },
+          "expectedFragments": [
+            {
+              "es": "loadUserProfile",
+              "en": "loadUserProfile"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Ese nombre comunica bien qué hace la función.",
+            "en": "That name communicates well what the function does."
+          },
+          "incorrectExplanation": {
+            "es": "La idea es usar un nombre explícito y fácil de entender.",
+            "en": "The idea is to use an explicit, easy-to-understand name."
+          },
+          "hint": {
+            "es": "Piensa en verbo + objetivo.",
+            "en": "Think verb + target."
+          },
+          "xpReward": 14
+        }
+      ]
+    },
+    {
+      "id": "architecture_final_exam",
+      "title": {
+        "es": "Examen final de arquitectura",
+        "en": "Architecture final exam"
+      },
+      "shortDescription": {
+        "es": "Valida criterio para organizar proyectos, separar responsabilidades y elegir buenas prácticas.",
+        "en": "Validate judgement to organize projects, separate responsibilities, and choose good practices."
+      },
+      "icon": "military_tech",
+      "nodeType": "exam",
+      "xpReward": 150,
+      "steps": [
+        {
+          "id": "arch_exam_intro_1",
+          "type": "intro",
+          "title": {
+            "es": "Hora de ordenar el caos con criterio",
+            "en": "Time to organize chaos with judgement"
+          },
+          "body": {
+            "es": "Este examen no busca que memorices palabras bonitas. Busca validar si ya entiendes por qué separar responsabilidades, nombrar bien y elegir capas con intención mejora una app Flutter de verdad.",
+            "en": "This exam is not about memorizing pretty words. It aims to validate whether you already understand why separating responsibilities, naming well, and choosing layers intentionally improves a real Flutter app."
+          },
+          "example": {
+            "es": "No gana quien crea más carpetas.\nGana quien entiende por qué existen.",
+            "en": "The winner is not the one who creates the most folders.\nThe winner is the one who understands why they exist."
+          }
+        },
+        {
+          "id": "arch_exam_q1",
+          "type": "multipleChoice",
+          "question": {
+            "es": "¿Qué responsabilidad suena más propia de presentation?",
+            "en": "Which responsibility sounds most like presentation?"
+          },
+          "options": {
+            "es": [
+              "Serializar a JSON",
+              "Mostrar el estado de carga en pantalla",
+              "Guardar en SharedPreferences",
+              "Abrir una conexión HTTP"
+            ],
+            "en": [
+              "Serialize to JSON",
+              "Display loading state on screen",
+              "Save in SharedPreferences",
+              "Open an HTTP connection"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Mostrar el estado de carga en pantalla",
+            "en": "Display loading state on screen"
+          },
+          "correctExplanation": {
+            "es": "Presentation se enfoca en UI y en cómo se muestra el estado al usuario.",
+            "en": "Presentation focuses on UI and how state is shown to the user."
+          },
+          "incorrectExplanation": {
+            "es": "Los otros ejemplos huelen más a infraestructura o datos.",
+            "en": "The other examples smell more like infrastructure or data."
+          },
+          "xpReward": 15,
+          "shuffle": true
+        },
+        {
+          "id": "arch_exam_match_1",
+          "type": "matchConcept",
+          "prompt": {
+            "es": "Relaciona cada concepto con su idea correcta.",
+            "en": "Match each concept with its correct idea."
+          },
+          "pairs": [
+            {
+              "left": {
+                "es": "Repositorio",
+                "en": "Repository"
+              },
+              "right": {
+                "es": "Abstraer acceso a datos",
+                "en": "Abstract data access"
+              }
+            },
+            {
+              "left": {
+                "es": "Caso de uso",
+                "en": "Use case"
+              },
+              "right": {
+                "es": "Expresar una acción o regla de negocio",
+                "en": "Express an action or business rule"
+              }
+            },
+            {
+              "left": {
+                "es": "Inyección de dependencias",
+                "en": "Dependency injection"
+              },
+              "right": {
+                "es": "Recibir piezas desde fuera en lugar de crearlas adentro",
+                "en": "Receive pieces from outside instead of creating them inside"
+              }
+            }
+          ],
+          "correctExplanation": {
+            "es": "Muy bien. Estos conceptos son piezas centrales de una arquitectura más sana.",
+            "en": "Very good. These concepts are central pieces of a healthier architecture."
+          },
+          "incorrectExplanation": {
+            "es": "Revisa qué abstrae datos, qué expresa intención y qué desacopla piezas.",
+            "en": "Review what abstracts data, what expresses intent, and what decouples pieces."
+          },
+          "xpReward": 18,
+          "shuffle": true
+        },
+        {
+          "id": "arch_exam_code_1",
+          "type": "completeSnippet",
+          "prompt": {
+            "es": "Completa la carpeta más natural para una implementación concreta de `UserRemoteDataSource`.",
+            "en": "Complete the most natural folder for a concrete `UserRemoteDataSource` implementation."
+          },
+          "initialCode": {
+            "es": "features/profile/_____/user_remote_data_source.dart",
+            "en": "features/profile/_____/user_remote_data_source.dart"
+          },
+          "expectedAnswer": {
+            "es": "data",
+            "en": "data"
+          },
+          "correctExplanation": {
+            "es": "Una implementación concreta de datasource encaja bien en data.",
+            "en": "A concrete datasource implementation fits well in data."
+          },
+          "incorrectExplanation": {
+            "es": "La respuesta esperada es data.",
+            "en": "The expected answer is data."
+          },
+          "hint": {
+            "es": "Piensa en implementación concreta, no en contrato puro.",
+            "en": "Think concrete implementation, not pure contract."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "arch_exam_bug_1",
+          "type": "fixTheBug",
+          "prompt": {
+            "es": "Corrige este controlador para que no cree el repositorio internamente.",
+            "en": "Fix this controller so it does not create the repository internally."
+          },
+          "initialCode": {
+            "es": "class CartController {\n  final repository = CartRepository();\n}",
+            "en": "class CartController {\n  final repository = CartRepository();\n}"
+          },
+          "expectedAnswer": {
+            "es": "class CartController {\n  final CartRepository repository;\n  CartController(this.repository);\n}",
+            "en": "class CartController {\n  final CartRepository repository;\n  CartController(this.repository);\n}"
+          },
+          "correctExplanation": {
+            "es": "Eso reduce acoplamiento y refleja mejor inyección de dependencias.",
+            "en": "That reduces coupling and better reflects dependency injection."
+          },
+          "incorrectExplanation": {
+            "es": "El error está en construir la dependencia dentro de la clase.",
+            "en": "The error is creating the dependency inside the class."
+          },
+          "hint": {
+            "es": "Recibe la dependencia por constructor.",
+            "en": "Receive the dependency through the constructor."
+          },
+          "xpReward": 18
+        },
+        {
+          "id": "arch_exam_find_1",
+          "type": "findTheWrongLine",
+          "prompt": {
+            "es": "¿Qué línea es la más problemática arquitectónicamente?",
+            "en": "Which line is the most architecturally problematic?"
+          },
+          "codeLines": [
+            {
+              "es": "final user = ref.watch(userProvider);",
+              "en": "final user = ref.watch(userProvider);"
+            },
+            {
+              "es": "final profile = await repository.getProfile();",
+              "en": "final profile = await repository.getProfile();"
+            },
+            {
+              "es": "final raw = await http.get(Uri.parse(url)); // dentro de un widget visual",
+              "en": "final raw = await http.get(Uri.parse(url)); // inside a visual widget"
+            },
+            {
+              "es": "final itemCount = items.length;",
+              "en": "final itemCount = items.length;"
+            }
+          ],
+          "wrongLineIndex": 2,
+          "correctExplanation": {
+            "es": "La UI golpeando red directamente rompe más fuerte la separación de responsabilidades.",
+            "en": "UI hitting the network directly breaks separation of responsibilities more strongly."
+          },
+          "incorrectExplanation": {
+            "es": "La línea más problemática es la que mete acceso directo a infraestructura en la UI.",
+            "en": "The most problematic line is the one that puts direct infrastructure access into UI."
+          },
+          "xpReward": 16
+        },
+        {
+          "id": "arch_exam_predict_1",
+          "type": "predictOutput",
+          "question": {
+            "es": "Si decides derivar `totalItems` desde `items.length` en lugar de guardarlo aparte, ¿qué ganas?",
+            "en": "If you decide to derive `totalItems` from `items.length` instead of storing it separately, what do you gain?"
+          },
+          "codeSnippet": {
+            "es": "final totalItems = items.length;",
+            "en": "final totalItems = items.length;"
+          },
+          "options": {
+            "es": [
+              "Más duplicación",
+              "Menos consistencia",
+              "Menor riesgo de datos desincronizados",
+              "Más acoplamiento al dominio"
+            ],
+            "en": [
+              "More duplication",
+              "Less consistency",
+              "Lower risk of out-of-sync data",
+              "More coupling to domain"
+            ]
+          },
+          "correctAnswer": {
+            "es": "Menor riesgo de datos desincronizados",
+            "en": "Lower risk of out-of-sync data"
+          },
+          "correctExplanation": {
+            "es": "Derivar evita guardar dos fuentes de verdad para lo mismo.",
+            "en": "Deriving avoids storing two sources of truth for the same thing."
+          },
+          "incorrectExplanation": {
+            "es": "Guardar ambos valores por separado aumenta la posibilidad de inconsistencias.",
+            "en": "Storing both values separately increases the possibility of inconsistency."
+          },
+          "xpReward": 16,
+          "shuffle": true
+        },
+        {
+          "id": "arch_exam_guided_1",
+          "type": "guidedWriting",
+          "instructions": {
+            "es": "Escribe un nombre claro para un caso de uso que actualiza el perfil del usuario.",
+            "en": "Write a clear name for a use case that updates the user profile."
+          },
+          "starterCode": {
+            "es": "class _____ {",
+            "en": "class _____ {"
+          },
+          "expectedFragments": [
+            {
+              "es": "UpdateUserProfileUseCase",
+              "en": "UpdateUserProfileUseCase"
+            }
+          ],
+          "correctExplanation": {
+            "es": "Ese nombre comunica muy bien intención y responsabilidad.",
+            "en": "That name communicates intent and responsibility very well."
+          },
+          "incorrectExplanation": {
+            "es": "La idea es nombrar con claridad la acción del sistema.",
+            "en": "The idea is to name the system action clearly."
+          },
+          "hint": {
+            "es": "Piensa en verbo + objetivo + contexto.",
+            "en": "Think verb + target + context."
+          },
+          "xpReward": 18
+        },
+        {
+          "id": "arch_exam_summary",
+          "type": "intro",
+          "title": {
+            "es": "Cierre de la ruta",
+            "en": "Route closing"
+          },
+          "body": {
+            "es": "Si llegaste hasta aquí, ya no estás viendo la arquitectura como un adorno raro. Ya la estás usando para pensar mejor, separar mejor y construir mejor. Ese cambio de criterio vale muchísimo más que memorizar nombres elegantes.",
+            "en": "If you made it this far, you are no longer seeing architecture as a strange ornament. You are already using it to think better, separate better, and build better. That change in judgement is worth far more than memorizing elegant names."
+          },
+          "example": {
+            "es": "Siguiente nivel: aplicar esto mientras la app crece sin volverse una telenovela técnica.",
+            "en": "Next level: apply this while the app grows without becoming a technical soap opera."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -24,10 +24,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeSubtitle => 'Pick a route and keep moving forward';
 
   @override
-  String get loadRoutesError => 'Could not load route content.';
+  String get loadRoutesError =>
+      'We couldn\'t load route content. Please try again.';
 
   @override
-  String get loadPartialRoutesError => 'Some routes could not be loaded';
+  String get loadPartialRoutesError => 'We couldn\'t load some routes';
+
+  @override
+  String get loadPartialRoutesErrorWithColon =>
+      'We couldn\'t load some routes:';
 
   @override
   String get routeLoadWarningTitle => 'Some routes failed to load';
@@ -51,6 +56,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lockedRouteTitle => 'Locked route';
 
   @override
+  String get routeOpenErrorMessage =>
+      'We couldn\'t open this route right now. Please try again.';
+
+  @override
+  String completeRouteToUnlock(String routeTitle) {
+    return 'Complete $routeTitle to unlock it';
+  }
+
+  @override
+  String get completeRequiredRouteToUnlock =>
+      'Complete the required route to unlock this one';
+
+  @override
+  String completeRouteIdToUnlock(String routeId) {
+    return 'Complete $routeId to unlock this route.';
+  }
+
+  @override
   String get backToHome => 'Back to Home';
 
   @override
@@ -67,13 +90,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeSubtitle =>
-      'Your journey to master Dart and Flutter starts here.';
+      'Your Dart and Flutter journey starts now. One step at a time, no stress, all momentum.';
 
   @override
   String get nameInputLabel => 'YOUR NAME';
 
   @override
   String get nameInputHint => 'Your name here...';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Flutter Quest';
+
+  @override
+  String get onboardingWelcomeBody =>
+      'Learn Dart and Flutter with short missions, clear feedback, and real progress.';
+
+  @override
+  String get onboardingRoutesTitle => 'Routes';
+
+  @override
+  String get onboardingRoutesBody =>
+      'Each route is a guided learning path. Start with Dart, then unlock Flutter Foundations.';
+
+  @override
+  String get onboardingRoutesBodyGeneral =>
+      'Explore themed routes and level up step by step. Foundations first, wizard moves next.';
+
+  @override
+  String get onboardingNodesTitle => 'Nodes';
+
+  @override
+  String get onboardingNodesBody =>
+      'Each node is a mini mission. Clear one, unlock the next, and keep your streak alive.';
+
+  @override
+  String get onboardingNodeCompletedLabel => 'Completed';
+
+  @override
+  String get onboardingNodeNextLabel => 'Next';
+
+  @override
+  String get onboardingRewardsTitle => 'Rewards';
+
+  @override
+  String get onboardingRewardsBody =>
+      'Every finished lesson gives XP, badges, and real progress. Your profile starts looking elite.';
+
+  @override
+  String get onboardingStreakTitle => 'Streak';
+
+  @override
+  String get onboardingStreakBody =>
+      'Study daily to grow your streak. Skip a day and it resets, but your comeback can be legendary.';
+
+  @override
+  String get onboardingAllSetTitle => 'All set';
+
+  @override
+  String get onboardingAllSetBody =>
+      'You\'re all set. Jump in, clear nodes, and make Dart and Flutter work for you.';
+
+  @override
+  String get onboardingBackButton => 'Back';
+
+  @override
+  String get onboardingLanguageTitle => 'Choose language';
+
+  @override
+  String get languageAuto => 'Auto';
+
+  @override
+  String get languageSpanish => 'Español';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get onboardingRemindersTitle => 'Daily reminders';
+
+  @override
+  String get onboardingRemindersBody =>
+      'Turn on reminders to protect your streak and keep your learning rhythm.';
+
+  @override
+  String get onboardingEnableReminders => 'Enable reminders';
+
+  @override
+  String get onboardingSkipButton => 'Skip';
 
   @override
   String get nameRequiredError => 'Enter a name to continue.';
@@ -218,7 +321,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationPermissionDenied =>
-      'Notification permission is required to enable reminders.';
+      'We couldn\'t enable reminders without notification permission.';
+
+  @override
+  String reminderTimeLabel(int hour, int minute) {
+    return 'Time: $hour:$minute';
+  }
 
   @override
   String get resetDialogTitle => 'Reset progress';
@@ -234,6 +342,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteAllButton => 'Delete all';
 
   @override
+  String get initializationErrorTitle => 'We couldn\'t start the app';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
   String get nodeLockedBack => 'Locked node · Back';
 
   @override
@@ -241,6 +355,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get badgeUnlockedTitle => 'New badge unlocked';
+
+  @override
+  String get languageMenuTooltip => 'Language';
+
+  @override
+  String get backupSectionTitle => 'Progress backup';
+
+  @override
+  String get backupSectionSubtitle =>
+      'Export or import your local progress to keep your learning safe.';
+
+  @override
+  String get backupExportButton => 'Export';
+
+  @override
+  String get backupImportButton => 'Import';
+
+  @override
+  String get backupExportSuccess => 'Progress exported successfully';
+
+  @override
+  String backupExportError(String error) {
+    return 'We couldn\'t export your progress: $error';
+  }
+
+  @override
+  String get backupImportTitle => 'Import progress';
+
+  @override
+  String get backupUnknownUser => 'N/A';
+
+  @override
+  String backupImportPreview(
+    String user,
+    int xp,
+    int routes,
+    String backupDate,
+  ) {
+    return 'User: $user\\nXP: $xp\\nCompleted routes: $routes\\nBackup: $backupDate\\n\\nThis action will overwrite your local data.';
+  }
+
+  @override
+  String get backupImportSuccess => 'Progress imported successfully';
+
+  @override
+  String backupImportError(String error) {
+    return 'We couldn\'t import the backup: $error';
+  }
 
   @override
   String get streakLostToast => 'You lost your streak 😢';

@@ -4,14 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/badge_catalog.dart';
+import '../data/app_preferences_repository.dart';
 import '../data/local_progress_store.dart';
 import '../data/progress_repository.dart';
+import '../data/progress_backup_service.dart';
 import '../data/route_asset_source.dart';
 import '../data/route_content_repository.dart';
 import '../data/route_progress_mapper.dart';
+import '../models/app_preferences.dart';
 import '../models/learning_models.dart';
+import '../models/progress_backup_model.dart';
 import '../models/progress_view_models.dart';
 import '../../notifications/state/habit_notifications_provider.dart';
+import '../../notifications/models/habit_notification_settings.dart';
 
 final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
   return const [
@@ -47,6 +52,16 @@ final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   return ProgressRepository(LocalProgressStore());
 });
 
+final appPreferencesRepositoryProvider = Provider<AppPreferencesRepository>((
+  ref,
+) {
+  return AppPreferencesRepository();
+});
+
+final progressBackupServiceProvider = Provider<ProgressBackupService>((ref) {
+  return ProgressBackupService();
+});
+
 final systemLanguageCodeProvider = Provider<String>((ref) {
   final locale = WidgetsBinding.instance.platformDispatcher.locale;
   return locale.languageCode.toLowerCase();
@@ -71,6 +86,19 @@ final appLocaleProvider = Provider<Locale?>((ref) {
   final preferred = ref.watch(preferredLanguageCodeProvider);
   if (preferred == null || preferred.isEmpty) return null;
   return Locale(preferred);
+});
+
+final appPreferencesProvider =
+    AsyncNotifierProvider<AppPreferencesNotifier, AppPreferences>(
+      AppPreferencesNotifier.new,
+    );
+
+final hasCompletedOnboardingProvider = Provider<bool>((ref) {
+  return ref
+          .watch(appPreferencesProvider)
+          .valueOrNull
+          ?.hasCompletedOnboarding ??
+      false;
 });
 
 final allRoutesProvider = FutureProvider<List<DartRouteContent>>((ref) async {
@@ -354,6 +382,66 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     await ref
         .read(languagePreferenceProvider.notifier)
         .setLanguage(languageCode);
+  }
+
+  Future<ProgressBackupModel?> buildBackupModel() async {
+    final progress = state.valueOrNull;
+    if (progress == null) return null;
+    final languageCode = ref.read(preferredLanguageCodeProvider);
+    final notificationPrefs = await ref
+        .read(notificationPreferencesRepositoryProvider)
+        .load();
+    return ProgressBackupModel(
+      schemaVersion: ProgressBackupModel.currentSchemaVersion,
+      exportedAt: DateTime.now().toIso8601String(),
+      progress: progress,
+      preferredLanguageCode: languageCode,
+      notificationsEnabled: notificationPrefs.enabled,
+      notificationHour: notificationPrefs.hour,
+      notificationMinute: notificationPrefs.minute,
+    );
+  }
+
+  Future<void> exportBackup() async {
+    final backup = await buildBackupModel();
+    if (backup == null) return;
+    await ref.read(progressBackupServiceProvider).exportBackup(backup);
+  }
+
+  Future<ProgressBackupModel?> pickBackupPreview() async {
+    return ref.read(progressBackupServiceProvider).pickAndParseBackup();
+  }
+
+  Future<void> importBackup(ProgressBackupModel backup) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final routes = await ref.read(allRoutesProvider.future);
+      final imported = await _progressRepository.importProgress(
+        imported: backup.progress,
+        routes: routes,
+      );
+      return imported;
+    });
+
+    await ref
+        .read(languagePreferenceProvider.notifier)
+        .setLanguage(backup.preferredLanguageCode);
+    final importedNotificationSettings = HabitNotificationSettings(
+      enabled: backup.notificationsEnabled,
+      hour: backup.notificationHour,
+      minute: backup.notificationMinute,
+    );
+    final currentProgress = state.valueOrNull;
+    if (currentProgress != null) {
+      await ref
+          .read(habitNotificationsProvider.notifier)
+          .applyImportedSettings(
+            settings: importedNotificationSettings,
+            progress: currentProgress,
+            languageCode: ref.read(effectiveLanguageCodeProvider),
+          );
+    }
+
     ref.invalidate(allRoutesProvider);
   }
 
@@ -363,6 +451,7 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
       final routes = await ref.read(allRoutesProvider.future);
       return _progressRepository.resetAll(routes: routes);
     });
+    await ref.read(appPreferencesProvider.notifier).resetOnboarding();
     await ref.read(languagePreferenceProvider.notifier).setLanguage(null);
     await ref.read(habitNotificationsProvider.notifier).clearAll();
     ref.invalidate(allRoutesProvider);
@@ -481,6 +570,30 @@ final streakUiEventQueueProvider =
       StreakUiEventQueueNotifier.new,
     );
 
+class AppPreferencesNotifier extends AsyncNotifier<AppPreferences> {
+  AppPreferencesRepository get _repository =>
+      ref.read(appPreferencesRepositoryProvider);
+
+  @override
+  Future<AppPreferences> build() async {
+    return _repository.load();
+  }
+
+  Future<void> completeOnboarding() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => _repository.setOnboardingCompleted(true),
+    );
+  }
+
+  Future<void> resetOnboarding() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => _repository.setOnboardingCompleted(false),
+    );
+  }
+}
+
 class LanguagePreferenceNotifier extends AsyncNotifier<String?> {
   static const _key = 'preferred_language_code';
 
@@ -493,6 +606,8 @@ class LanguagePreferenceNotifier extends AsyncNotifier<String?> {
   }
 
   Future<void> setLanguage(String? code) async {
+    // Prevent race with initial build() result overriding a just-selected language.
+    await future;
     final prefs = await SharedPreferences.getInstance();
     if (code == null || code.trim().isEmpty) {
       await prefs.remove(_key);

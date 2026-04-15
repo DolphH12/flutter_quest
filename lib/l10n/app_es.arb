@@ -1,12 +1,13 @@
 {
   "@@locale": "es",
   "appTitle": "Flutter Quest",
-  "homeTab": "Home",
-  "profileTab": "Profile",
+  "homeTab": "Inicio",
+  "profileTab": "Perfil",
   "routesAvailable": "Rutas disponibles",
   "homeSubtitle": "Elige una ruta y sigue avanzando",
-  "loadRoutesError": "No se pudo cargar el contenido de las rutas.",
-  "loadPartialRoutesError": "No se pudieron cargar algunas rutas",
+  "loadRoutesError": "No pudimos cargar el contenido de las rutas. Inténtalo de nuevo.",
+  "loadPartialRoutesError": "No pudimos cargar algunas rutas",
+  "loadPartialRoutesErrorWithColon": "No pudimos cargar algunas rutas:",
   "routeLoadWarningTitle": "Algunas rutas no cargaron",
   "completionLabel": "Completado",
   "progressLabel": "Progreso",
@@ -14,14 +15,56 @@
   "examUnlocked": "Examen desbloqueado",
   "examLocked": "Examen bloqueado",
   "lockedRouteTitle": "Ruta bloqueada",
+  "routeOpenErrorMessage": "No pudimos abrir esta ruta ahora. Inténtalo de nuevo.",
+  "completeRouteToUnlock": "Completa {routeTitle} para desbloquear",
+  "@completeRouteToUnlock": {
+    "placeholders": {
+      "routeTitle": {
+        "type": "String"
+      }
+    }
+  },
+  "completeRequiredRouteToUnlock": "Completa la ruta requerida para desbloquear",
+  "completeRouteIdToUnlock": "Completa {routeId} para desbloquear esta ruta.",
+  "@completeRouteIdToUnlock": {
+    "placeholders": {
+      "routeId": {
+        "type": "String"
+      }
+    }
+  },
   "backToHome": "Volver al Home",
   "continueLearning": "Seguir aprendiendo",
   "routeCompleted": "Ruta completada",
   "currentPathFallback": "Aún no has comenzado",
   "welcomeTitle": "¡Bienvenido a Flutter Quest!",
-  "welcomeSubtitle": "Tu viaje para dominar Dart y Flutter comienza aquí.",
+  "welcomeSubtitle": "Tu viaje para dominar Dart y Flutter arranca aquí. Vamos paso a paso, sin drama y con mucho power.",
   "nameInputLabel": "DANOS TU NOMBRE",
   "nameInputHint": "Tu nombre aquí...",
+  "onboardingWelcomeTitle": "Bienvenido a Flutter Quest",
+  "onboardingWelcomeBody": "Aprende Dart y Flutter con misiones cortas, feedback claro y progreso real.",
+  "onboardingRoutesTitle": "Rutas",
+  "onboardingRoutesBody": "Cada ruta es un camino guiado. Empieza por Dart y luego desbloquea Flutter Foundations.",
+  "onboardingRoutesBodyGeneral": "Explora rutas temáticas y sube de nivel paso a paso. Hoy fundamentos, mañana builds legendarios.",
+  "onboardingNodesTitle": "Nodos",
+  "onboardingNodesBody": "Cada nodo es una mini misión. Ganas una, desbloqueas la siguiente y mantienes el combo activo.",
+  "onboardingNodeCompletedLabel": "Completado",
+  "onboardingNodeNextLabel": "Siguiente",
+  "onboardingRewardsTitle": "Recompensas",
+  "onboardingRewardsBody": "Cada lección completada te da XP, insignias y progreso real. Tu perfil se pone cada vez más pro.",
+  "onboardingStreakTitle": "Racha",
+  "onboardingStreakBody": "Tu racha crece cada día que estudias. Si te saltas uno, vuelve a cero... pero siempre puedes volver más fuerte.",
+  "onboardingAllSetTitle": "Todo listo",
+  "onboardingAllSetBody": "Todo listo. Entra, completa nodos y haz que Dart y Flutter jueguen a tu favor.",
+  "onboardingBackButton": "Atrás",
+  "onboardingLanguageTitle": "Elige idioma",
+  "languageAuto": "Auto",
+  "languageSpanish": "Español",
+  "languageEnglish": "English",
+  "onboardingRemindersTitle": "Recordatorios diarios",
+  "onboardingRemindersBody": "Activa recordatorios para proteger tu racha y mantener tu ritmo de aprendizaje.",
+  "onboardingEnableReminders": "Activar recordatorios",
+  "onboardingSkipButton": "Saltar",
   "nameRequiredError": "Escribe un nombre para continuar.",
   "startButton": "Empezar",
   "saveInProgress": "Guardando...",
@@ -30,8 +73,8 @@
   "continueButton": "Continuar",
   "finishButton": "Finalizar",
   "lessonFallbackTitle": "Lección",
-  "feedbackFallbackTitle": "Feedback",
-  "retryFeedback": "Revisa tu respuesta e intenta de nuevo.",
+  "feedbackFallbackTitle": "Retroalimentación",
+  "retryFeedback": "Revisa tu respuesta e inténtalo de nuevo.",
   "excellentWork": "¡Excelente trabajo!",
   "keepTrying": "Sigue intentando",
   "lessonSuccessSubtitle": "Has completado la lección con éxito.",
@@ -57,30 +100,85 @@
   "bestLabel": "Mejor",
   "completedLessons": "Lecciones completadas",
   "completedRoutes": "Rutas completadas",
-  "unlockedBadges": "Badges desbloqueados",
+  "unlockedBadges": "Insignias desbloqueadas",
   "currentNode": "Nodo actual",
   "finalExamPassed": "Examen final aprobado",
   "finalExamUnlocked": "Examen final desbloqueado",
   "finalExamLocked": "Examen final bloqueado",
-  "badgesTitle": "Badges",
-  "badgesEmpty": "Aún no hay badges desbloqueados. Completa nodos para ganar logros.",
+  "badgesTitle": "Insignias",
+  "badgesEmpty": "Aún no hay insignias desbloqueadas. Completa nodos para ganar logros.",
   "recentActivityTitle": "Actividad reciente",
   "noRecentActivity": "Todavía no tienes actividad registrada.",
   "passedStatus": "Aprobado",
   "retryStatus": "Reintentar",
   "devToolsTitle": "Herramientas de desarrollo",
   "devToolsSubtitle": "Botón temporal para pruebas locales.",
-  "resetProgressButton": "Resetear progreso",
+  "resetProgressButton": "Reiniciar progreso",
   "habitReminderTitle": "Recordatorios diarios",
   "habitReminderSubtitle": "Recibe un recordatorio a las 10:00 AM si hoy no has estudiado.",
-  "notificationPermissionDenied": "Se requiere permiso de notificaciones para activar los recordatorios.",
-  "resetDialogTitle": "Resetear progreso",
+  "notificationPermissionDenied": "No pudimos activar los recordatorios sin permiso de notificaciones.",
+  "reminderTimeLabel": "Hora: {hour}:{minute}",
+  "@reminderTimeLabel": {
+    "placeholders": {
+      "hour": {
+        "type": "int"
+      },
+      "minute": {
+        "type": "int"
+      }
+    }
+  },
+  "resetDialogTitle": "Reiniciar progreso",
   "resetDialogBody": "Se borrarán todos los datos locales: progreso, XP, racha, badges y nombre. Esta acción no se puede deshacer.",
   "cancelButton": "Cancelar",
   "deleteAllButton": "Borrar todo",
+  "initializationErrorTitle": "No pudimos iniciar la app",
+  "retryButton": "Reintentar",
   "nodeLockedBack": "Nodo bloqueado · Volver",
   "backToRoute": "Volver a la ruta",
   "badgeUnlockedTitle": "Nueva insignia desbloqueada",
+  "languageMenuTooltip": "Idioma",
+  "backupSectionTitle": "Respaldo del progreso",
+  "backupSectionSubtitle": "Exporta o importa tu progreso local para recuperar tu avance.",
+  "backupExportButton": "Exportar",
+  "backupImportButton": "Importar",
+  "backupExportSuccess": "Progreso exportado correctamente",
+  "backupExportError": "No pudimos exportar el progreso: {error}",
+  "@backupExportError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "backupImportTitle": "Importar progreso",
+  "backupUnknownUser": "N/A",
+  "backupImportPreview": "Usuario: {user}\\nXP: {xp}\\nRutas completadas: {routes}\\nBackup: {backupDate}\\n\\nEsta acción sobrescribirá tus datos locales.",
+  "@backupImportPreview": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      },
+      "xp": {
+        "type": "int"
+      },
+      "routes": {
+        "type": "int"
+      },
+      "backupDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupImportSuccess": "Progreso importado correctamente",
+  "backupImportError": "No pudimos importar el respaldo: {error}",
+  "@backupImportError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "streakLostToast": "Perdiste la racha 😢",
   "quizSelectOptionError": "Selecciona una opción para verificar.",
   "quizSelectWrongLineError": "Selecciona la línea que consideras incorrecta.",

@@ -4,6 +4,7 @@ import 'package:flutter_quest/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/fq_page_container.dart';
+import '../../../core/widgets/fq_state_views.dart';
 import '../../learning/data/route_progress_mapper.dart';
 import '../../learning/models/learning_models.dart';
 import '../../learning/state/app_state_providers.dart';
@@ -25,8 +26,15 @@ class LessonRouteScreen extends ConsumerWidget {
     final route = ref.watch(routeByIdProvider(routeId));
     final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
     if (route == null || progress == null) {
-      return const FQPageContainer(
-        child: Center(child: CircularProgressIndicator()),
+      return FQPageContainer(
+        child: Center(
+          child: FQErrorState(
+            title: l10n.loadRoutesError,
+            message: 'No pudimos cargar la lección solicitada.',
+            primaryActionLabel: l10n.backToHome,
+            onPrimaryAction: () => context.go('/home'),
+          ),
+        ),
       );
     }
 

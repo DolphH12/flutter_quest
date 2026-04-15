@@ -7,8 +7,10 @@ import '../features/home/presentation/route_completion_screen.dart';
 import '../features/home/presentation/route_detail_screen.dart';
 import '../features/home/presentation/lesson_route_screen.dart';
 import '../features/lesson_flow/presentation/lesson_flow_screen.dart';
+import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import 'quest_shell.dart';
+import 'startup_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
@@ -20,8 +22,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: '/startup',
     routes: [
+      GoRoute(
+        path: '/startup',
+        name: 'startup',
+        pageBuilder: (context, state) =>
+            _noTransitionPage(state: state, child: const StartupScreen()),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        name: 'onboarding',
+        pageBuilder: (context, state) =>
+            _noTransitionPage(state: state, child: const OnboardingScreen()),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return QuestShell(
@@ -111,7 +125,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 name: 'profile',
                 pageBuilder: (context, state) => _noTransitionPage(
                   state: state,
-                  child: ProfileScreen(onAfterReset: () => context.go('/home')),
+                  child: ProfileScreen(
+                    onAfterReset: () => context.go('/onboarding'),
+                  ),
                 ),
               ),
             ],
