@@ -152,6 +152,36 @@ abstract class AppLocalizations {
   /// **'Some routes failed to load'**
   String get routeLoadWarningTitle;
 
+  /// No description provided for @routeContentErrorBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Content error'**
+  String get routeContentErrorBadge;
+
+  /// No description provided for @routeContentErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This route is temporarily under maintenance. You can retry or mark it as pending to continue.'**
+  String get routeContentErrorMessage;
+
+  /// No description provided for @routePendingBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get routePendingBadge;
+
+  /// No description provided for @markPendingButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as pending'**
+  String get markPendingButton;
+
+  /// No description provided for @pendingRouteNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Route marked as pending. You can continue now.'**
+  String get pendingRouteNotice;
+
   /// No description provided for @completionLabel.
   ///
   /// In en, this message translates to:
@@ -641,13 +671,13 @@ abstract class AppLocalizations {
   /// No description provided for @devToolsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Developer Tools'**
+  /// **'Reset your progress'**
   String get devToolsTitle;
 
   /// No description provided for @devToolsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Temporary button for local testing.'**
+  /// **'Clear your local progress and start from scratch.'**
   String get devToolsSubtitle;
 
   /// No description provided for @resetProgressButton.

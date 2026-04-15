@@ -729,11 +729,13 @@ class LessonStep {
         'instructions',
         'guidedWriting requires instructions',
       ),
-      starterCode: _requiredString(
-        json,
-        'starterCode',
-        'guidedWriting requires starterCode and expectedFragments',
-      ),
+      // starterCode must exist for contract consistency, but it can be empty
+      // when the exercise expects writing from scratch.
+      starterCode: json.containsKey('starterCode')
+          ? _asString(json['starterCode'])
+          : (throw const FormatException(
+              'guidedWriting requires starterCode and expectedFragments',
+            )),
       expectedFragments: expectedFragments,
       correctExplanation: _requiredString(
         json,
@@ -864,6 +866,7 @@ class LearningProgressState {
     required this.completedNodeIds,
     required this.activeNodeId,
     required this.completedRouteIds,
+    required this.pendingRouteIds,
     required this.unlockedExamIds,
     required this.routeProgressPercentById,
     required this.totalXp,
@@ -880,6 +883,7 @@ class LearningProgressState {
   final Set<String> completedNodeIds;
   final String? activeNodeId;
   final Set<String> completedRouteIds;
+  final Set<String> pendingRouteIds;
   final Set<String> unlockedExamIds;
   final Map<String, double> routeProgressPercentById;
   final int totalXp;
@@ -904,6 +908,7 @@ class LearningProgressState {
       completedNodeIds: {},
       activeNodeId: null,
       completedRouteIds: {},
+      pendingRouteIds: {},
       unlockedExamIds: {},
       routeProgressPercentById: {'dart_route': 0},
       totalXp: 0,
@@ -923,6 +928,7 @@ class LearningProgressState {
     String? activeNodeId,
     bool clearActiveNodeId = false,
     Set<String>? completedRouteIds,
+    Set<String>? pendingRouteIds,
     Set<String>? unlockedExamIds,
     Map<String, double>? routeProgressPercentById,
     int? totalXp,
@@ -944,6 +950,7 @@ class LearningProgressState {
           ? null
           : (activeNodeId ?? this.activeNodeId),
       completedRouteIds: completedRouteIds ?? this.completedRouteIds,
+      pendingRouteIds: pendingRouteIds ?? this.pendingRouteIds,
       unlockedExamIds: unlockedExamIds ?? this.unlockedExamIds,
       routeProgressPercentById:
           routeProgressPercentById ?? this.routeProgressPercentById,
@@ -995,6 +1002,7 @@ class LearningProgressState {
           ? null
           : _asString(json['activeNodeId']),
       completedRouteIds: completedRoutes,
+      pendingRouteIds: _asStringSet(json['pendingRouteIds']),
       unlockedExamIds: unlockedExams,
       routeProgressPercentById: routeProgressMap,
       totalXp: _asInt(json['totalXp']),
@@ -1020,6 +1028,7 @@ class LearningProgressState {
       'completedNodeIds': completedNodeIds.toList(),
       'activeNodeId': activeNodeId,
       'completedRouteIds': completedRouteIds.toList(),
+      'pendingRouteIds': pendingRouteIds.toList(),
       'unlockedExamIds': unlockedExamIds.toList(),
       'routeProgressPercentById': routeProgressPercentById,
       'totalXp': totalXp,

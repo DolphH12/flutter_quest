@@ -42,4 +42,8 @@ class ProgressRepository {
   }) {
     return _store.importProgress(imported: imported, routes: routes);
   }
+
+  Future<LearningProgressState> markRoutePending(String routeId) {
+    return _store.markRoutePending(routeId);
+  }
 }

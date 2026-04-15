@@ -38,6 +38,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get routeLoadWarningTitle => 'Some routes failed to load';
 
   @override
+  String get routeContentErrorBadge => 'Content error';
+
+  @override
+  String get routeContentErrorMessage =>
+      'This route is temporarily under maintenance. You can retry or mark it as pending to continue.';
+
+  @override
+  String get routePendingBadge => 'Pending';
+
+  @override
+  String get markPendingButton => 'Mark as pending';
+
+  @override
+  String get pendingRouteNotice =>
+      'Route marked as pending. You can continue now.';
+
+  @override
   String get completionLabel => 'Completion';
 
   @override
@@ -304,10 +321,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retryStatus => 'Retry';
 
   @override
-  String get devToolsTitle => 'Developer Tools';
+  String get devToolsTitle => 'Reset your progress';
 
   @override
-  String get devToolsSubtitle => 'Temporary button for local testing.';
+  String get devToolsSubtitle =>
+      'Clear your local progress and start from scratch.';
 
   @override
   String get resetProgressButton => 'Reset progress';

@@ -193,11 +193,11 @@ class ProfileScreen extends ConsumerWidget {
               onImport: () => _importBackup(context, ref),
             ),
             const SizedBox(height: FQSpacing.lg),
-            _DevResetSection(onReset: () => _confirmReset(context, ref)),
+            _ResetProgressSection(onReset: () => _confirmReset(context, ref)),
           ],
           if (isDesktop) ...[
             const SizedBox(height: FQSpacing.lg),
-            _DevResetSection(onReset: () => _confirmReset(context, ref)),
+            _ResetProgressSection(onReset: () => _confirmReset(context, ref)),
           ],
           const SizedBox(height: FQSpacing.xl),
         ],
@@ -735,8 +735,8 @@ class _RecentActivity extends StatelessWidget {
   }
 }
 
-class _DevResetSection extends StatelessWidget {
-  const _DevResetSection({required this.onReset});
+class _ResetProgressSection extends StatelessWidget {
+  const _ResetProgressSection({required this.onReset});
 
   final VoidCallback onReset;
 
@@ -765,8 +765,9 @@ class _DevResetSection extends StatelessWidget {
           const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
-            child: FQSecondaryButton(
+            child: FQPrimaryButton(
               label: l10n.resetProgressButton,
+              icon: Icons.restart_alt_rounded,
               onPressed: onReset,
             ),
           ),

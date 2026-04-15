@@ -43,3 +43,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Internal docs and local exported artifacts
+*.textClipping
+docs/**
+!docs/content/
+!docs/content/activity_contracts.md
+!docs/estructura_json_nueva_ruta.md

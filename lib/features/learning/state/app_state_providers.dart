@@ -29,6 +29,36 @@ final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
       assetPath: 'assets/content/flutter_foundations_route.json',
       requiredCompletedRouteId: 'dart_route',
     ),
+    RouteAssetManifest(
+      routeId: 'flutter_ui_route',
+      assetPath: 'assets/content/flutter_ui_route.json',
+      requiredCompletedRouteId: 'flutter_foundations_route',
+    ),
+    RouteAssetManifest(
+      routeId: 'flutter_navigation_route',
+      assetPath: 'assets/content/flutter_navigation_route.json',
+      requiredCompletedRouteId: 'flutter_ui_route',
+    ),
+    RouteAssetManifest(
+      routeId: 'flutter_local_persistence_route',
+      assetPath: 'assets/content/flutter_local_persistence_route.json',
+      requiredCompletedRouteId: 'flutter_navigation_route',
+    ),
+    RouteAssetManifest(
+      routeId: 'flutter_api_consumption_route',
+      assetPath: 'assets/content/flutter_api_consumption_route.json',
+      requiredCompletedRouteId: 'flutter_local_persistence_route',
+    ),
+    RouteAssetManifest(
+      routeId: 'firebase_essentials_route',
+      assetPath: 'assets/content/firebase_essentials_route.json',
+      requiredCompletedRouteId: 'flutter_api_consumption_route',
+    ),
+    RouteAssetManifest(
+      routeId: 'flutter_architecture_best_practices_route',
+      assetPath: 'assets/content/flutter_architecture_best_practices_route.json',
+      requiredCompletedRouteId: 'firebase_essentials_route',
+    ),
   ];
 });
 
@@ -168,7 +198,8 @@ final routeUnlockedProvider = Provider.family<bool, String>((ref, routeId) {
   if (requirement == null) return true;
   final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
   if (progress == null) return false;
-  return progress.completedRouteIds.contains(requirement);
+  return progress.completedRouteIds.contains(requirement) ||
+      progress.pendingRouteIds.contains(requirement);
 });
 
 final currentNodeProvider = Provider.family<CurrentNodeInfo, String>((
@@ -443,6 +474,15 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     }
 
     ref.invalidate(allRoutesProvider);
+  }
+
+  Future<void> markRoutePending(String routeId) async {
+    final current = state.valueOrNull;
+    if (current == null) return;
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => _progressRepository.markRoutePending(routeId),
+    );
   }
 
   Future<void> resetAllProgress() async {

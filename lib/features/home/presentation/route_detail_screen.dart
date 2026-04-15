@@ -7,11 +7,13 @@ import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_gradients.dart';
 import '../../../core/theme/fq_tokens.dart';
+import '../../../core/widgets/fq_buttons.dart';
 import '../../../core/widgets/fq_chips.dart';
 import '../../../core/widgets/fq_page_container.dart';
 import '../../../core/widgets/fq_progress_bar.dart';
 import '../../../core/widgets/fq_state_views.dart';
 import '../../../core/widgets/fq_surface_card.dart';
+import '../../learning/data/route_asset_source.dart';
 import '../../learning/data/route_progress_mapper.dart';
 import '../../learning/models/learning_models.dart';
 import '../../learning/state/app_state_providers.dart';
@@ -28,8 +30,94 @@ class RouteDetailScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final route = ref.watch(routeByIdProvider(routeId));
     final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
+    final routeLoadErrors = ref.watch(routeLoadErrorsProvider);
+    final manifests = ref.watch(routeManifestsProvider);
     final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
-    if (route == null || progress == null) {
+    if (progress == null) {
+      return FQPageContainer(
+        child: Center(
+          child: FQErrorState(
+            title: l10n.loadRoutesError,
+            message: l10n.routeOpenErrorMessage,
+            primaryActionLabel: l10n.backToHome,
+            onPrimaryAction: () => context.go('/home'),
+          ),
+        ),
+      );
+    }
+
+    if (route == null) {
+      final routeError = routeLoadErrors[routeId];
+      if (routeError != null) {
+        final nextRouteId = _nextRoutePath(manifests, routeId);
+        return FQPageContainer(
+          child: Center(
+            child: FQSurfaceCard(
+              radius: FQRadius.large,
+              color: const Color(0xFFFFF0EE),
+              border: Border.all(color: const Color(0xFFFFC9C2), width: 1.2),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.routeLoadWarningTitle,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: const Color(0xFF8F2B1D),
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    l10n.routeContentErrorMessage,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: const Color(0xFF8F2B1D),
+                    ),
+                  ),
+                  if (FQBreakpoints.isDesktop(context)) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      routeError,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: const Color(0xFF8F2B1D).withValues(alpha: 0.65),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FQSecondaryButton(
+                          label: l10n.retryButton,
+                          icon: Icons.refresh_rounded,
+                          onPressed: () => ref.invalidate(allRoutesProvider),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: FQPrimaryButton(
+                          label: l10n.markPendingButton,
+                          icon: Icons.arrow_forward_rounded,
+                          onPressed: () async {
+                            await ref
+                                .read(appProgressNotifierProvider.notifier)
+                                .markRoutePending(routeId);
+                            if (!context.mounted) return;
+                            final target = nextRouteId ?? '/home';
+                            context.go(target);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
       return FQPageContainer(
         child: Center(
           child: FQErrorState(
@@ -44,7 +132,8 @@ class RouteDetailScreen extends ConsumerWidget {
 
     final requirement = unlockRequirements[route.routeId];
     if (requirement != null &&
-        !progress.completedRouteIds.contains(requirement)) {
+        !progress.completedRouteIds.contains(requirement) &&
+        !progress.pendingRouteIds.contains(requirement)) {
       return FQPageContainer(
         child: Center(
           child: FQSurfaceCard(
@@ -149,6 +238,7 @@ class RouteDetailScreen extends ConsumerWidget {
       ),
     );
   }
+
 }
 
 class _CurrentPathCard extends StatelessWidget {
@@ -192,6 +282,14 @@ class _CurrentPathCard extends StatelessWidget {
       ),
     );
   }
+
+}
+
+String? _nextRoutePath(List<RouteAssetManifest> manifests, String currentId) {
+  final index = manifests.indexWhere((item) => item.routeId == currentId);
+  if (index < 0) return null;
+  if (index + 1 >= manifests.length) return null;
+  return '/home/route/${manifests[index + 1].routeId}';
 }
 
 class _PathBoard extends StatefulWidget {

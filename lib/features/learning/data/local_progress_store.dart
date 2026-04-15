@@ -91,6 +91,15 @@ class LocalProgressStore {
     return ensureRoutesInitialized(routes);
   }
 
+  Future<LearningProgressState> markRoutePending(String routeId) async {
+    final current = await load();
+    if (current.pendingRouteIds.contains(routeId)) return current;
+    final nextPending = {...current.pendingRouteIds, routeId};
+    final updated = current.copyWith(pendingRouteIds: nextPending);
+    await save(updated);
+    return updated;
+  }
+
   Future<LearningProgressState> applyLessonResult({
     required LessonAttemptResult result,
     required DartRouteContent route,

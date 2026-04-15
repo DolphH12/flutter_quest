@@ -38,6 +38,23 @@ class AppLocalizationsEs extends AppLocalizations {
   String get routeLoadWarningTitle => 'Algunas rutas no cargaron';
 
   @override
+  String get routeContentErrorBadge => 'Error de contenido';
+
+  @override
+  String get routeContentErrorMessage =>
+      'Esta ruta está temporalmente en mantenimiento. Puedes reintentar o marcarla como pendiente para continuar.';
+
+  @override
+  String get routePendingBadge => 'Pendiente';
+
+  @override
+  String get markPendingButton => 'Marcar pendiente';
+
+  @override
+  String get pendingRouteNotice =>
+      'Ruta marcada como pendiente. Ya puedes continuar.';
+
+  @override
   String get completionLabel => 'Completado';
 
   @override
@@ -304,10 +321,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get retryStatus => 'Reintentar';
 
   @override
-  String get devToolsTitle => 'Herramientas de desarrollo';
+  String get devToolsTitle => 'Reiniciar tu progreso';
 
   @override
-  String get devToolsSubtitle => 'Botón temporal para pruebas locales.';
+  String get devToolsSubtitle =>
+      'Borra tu avance local para volver a empezar desde cero.';
 
   @override
   String get resetProgressButton => 'Reiniciar progreso';
