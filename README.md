@@ -40,7 +40,7 @@
 
 ### Content Contract
 - All activity schemas are defined in:
-  - `docs/content/activity_contracts.md`
+  - [`activity_contracts.md`](docs/content/activity_contracts.md)
 - New route JSON must comply with this contract.
 
 ## How To Run / Cómo correr
@@ -64,19 +64,19 @@ flutter analyze
 
 1. Create the JSON file in `assets/content/`.
 2. Follow the schema from:
-   - `docs/content/activity_contracts.md`
-   - `docs/estructura_json_nueva_ruta.md`
+   - [`activity_contracts.md`](docs/content/activity_contracts.md)
+   - [`estructura_json_nueva_ruta.md`](docs/estructura_json_nueva_ruta.md)
 3. Register the route manifest in:
-   - `lib/features/learning/state/app_state_providers.dart`
+   - [`app_state_providers.dart`](`lib/features/learning/state/app_state_providers.dart`)
    - `routeManifestsProvider`
-4. If needed, define unlock dependency (`requiredCompletedRouteId`).
-5. Run the app and verify route rendering and lesson flow.
+5. If needed, define unlock dependency (`requiredCompletedRouteId`).
+6. Run the app and verify route rendering and lesson flow.
 
 ## Open Source Model / Modelo Open Source
 
 This project uses:
-- `AGPL-3.0-only` as public open-source license (`LICENSE`).
-- Commercial licensing options (`LICENSE-COMMERCIAL.md`).
+- `AGPL-3.0-only` as public open-source license [`LICENSE`](LICENSE.md).
+- Commercial licensing options [`LICENSE-COMMERCIAL.md`](LICENSE-COMMERCIAL.md).
 
 Any commercial usage outside AGPL obligations requires a commercial license.
 Any deployment or reuse must preserve creation credit to **Dolph Hincapie**.
@@ -84,16 +84,16 @@ Any deployment or reuse must preserve creation credit to **Dolph Hincapie**.
 ## Contributing / Contribuir
 
 Please read:
-- `CONTRIBUTING.md`
-- `CODE_OF_CONDUCT.md`
-- `SECURITY.md`
+- [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
+- [`SECURITY.md`](SECURITY.md)
 
 Main branch receives PRs directly (`main` workflow).
 
 ## Security / Seguridad
 
 Report vulnerabilities responsibly to:
-- `dolph.hincapie26@gmail.com`
+- [`dolph.hincapie26@gmail.com`](dolph.hincapie26@gmail.com)
 
 ## Maintainer
 
