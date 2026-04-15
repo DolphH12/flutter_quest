@@ -1,12 +1,15 @@
-
-<img src="assets/images/LOGO_FC.png" alt="Flutter Quest Logo" width="150" />
-
-
-Flutter Quest
-
-Flutter Quest is a gamified educational app to learn Dart and Flutter through routes, nodes, and interactive lessons.
-
-Flutter Quest es una app educativa gamificada para aprender Dart y Flutter mediante rutas, nodos y lecciones interactivas.
+<table border="0">
+  <tr>
+    <td>
+      <img src="assets/images/LOGO_FC.png" width="400"> 
+    </td>
+    <td>
+      <h1>Flutter Quest</h1>
+      <p>Flutter Quest is a gamified educational app to learn Dart and Flutter through routes, nodes, and interactive lessons.</p>
+      <p>Flutter Quest es una app educativa gamificada para aprender Dart y Flutter mediante rutas, nodos y lecciones interactivas.</p>
+    </td>
+  </tr>
+</table>
 
 ## Project Vision / Visión
 
