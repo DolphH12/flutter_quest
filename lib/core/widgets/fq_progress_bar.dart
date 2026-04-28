@@ -5,10 +5,18 @@ import '../theme/fq_gradients.dart';
 import '../theme/fq_tokens.dart';
 
 class FQProgressBar extends StatelessWidget {
-  const FQProgressBar({super.key, required this.value, this.height = 12});
+  const FQProgressBar({
+    super.key,
+    required this.value,
+    this.height = 12,
+    this.fillGradient = FQGradients.primaryCta,
+    this.trackColor,
+  });
 
   final double value;
   final double height;
+  final Gradient fillGradient;
+  final Color? trackColor;
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +29,15 @@ class FQProgressBar extends StatelessWidget {
           children: [
             Positioned.fill(
               child: ColoredBox(
-                color: FQColors.surfaceHigh.withValues(alpha: 0.72),
+                color:
+                    trackColor ?? FQColors.surfaceHigh.withValues(alpha: 0.72),
               ),
             ),
             FractionallySizedBox(
               alignment: Alignment.centerLeft,
               widthFactor: clamped,
               child: DecoratedBox(
-                decoration: const BoxDecoration(
-                  gradient: FQGradients.primaryCta,
-                ),
+                decoration: BoxDecoration(gradient: fillGradient),
               ),
             ),
           ],

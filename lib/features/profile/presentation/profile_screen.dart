@@ -575,8 +575,15 @@ class _RouteProgressCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(route.title, style: Theme.of(context).textTheme.titleLarge),
-              const Spacer(),
+              Expanded(
+                child: Text(
+                  route.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              const SizedBox(width: 10),
               Text(
                 '${(routeProgress * 100).toInt()}%',
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(

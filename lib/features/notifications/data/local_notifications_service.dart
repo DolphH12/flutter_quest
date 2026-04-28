@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:timezone/data/latest.dart' as tz_data;
+import 'package:timezone/data/latest_all.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
+
+import 'habit_reminder_message_bank.dart';
 
 class LocalNotificationsService {
   LocalNotificationsService();
@@ -40,7 +42,11 @@ class LocalNotificationsService {
       macOS: iosSettings,
     );
 
-    await _plugin.initialize(settings: initSettings);
+    await _plugin.initialize(
+      settings: initSettings,
+      onDidReceiveNotificationResponse: (_) {},
+      onDidReceiveBackgroundNotificationResponse: _noopBackgroundCallback,
+    );
 
     final androidImplementation = _plugin
         .resolvePlatformSpecificImplementation<
@@ -89,10 +95,11 @@ class LocalNotificationsService {
           sound: true,
         ) ??
         true;
-    final androidGranted =
-        await androidImplementation?.requestNotificationsPermission() ?? true;
+    final androidGranted = await androidImplementation
+        ?.requestNotificationsPermission();
+    await _requestExactAlarmsPermissionIfNeeded();
 
-    return iosGranted && macGranted && androidGranted;
+    return iosGranted && macGranted && (androidGranted ?? true);
   }
 
   Future<bool> _canScheduleExactAlarms() async {
@@ -125,7 +132,6 @@ class LocalNotificationsService {
   }
 
   Future<void> scheduleHabitReminder({
-    required bool studiedToday,
     required int hour,
     required int minute,
     required String languageCode,
@@ -134,18 +140,8 @@ class LocalNotificationsService {
     await initialize();
     await _plugin.cancel(id: habitReminderId);
 
-    final now = tz.TZDateTime.now(tz.local);
-    var firstDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      hour,
-      minute,
-    );
-    if (studiedToday || !firstDate.isAfter(now)) {
-      firstDate = firstDate.add(const Duration(days: 1));
-    }
+    final firstDate = _nextInstanceOfTime(hour, minute);
+    final reminder = HabitReminderMessageBank.pickForLanguage(languageCode);
 
     final notificationDetails = NotificationDetails(
       android: AndroidNotificationDetails(
@@ -154,18 +150,11 @@ class LocalNotificationsService {
         channelDescription: _habitChannelDescription,
         importance: Importance.high,
         priority: Priority.high,
+        icon: '@mipmap/ic_launcher',
       ),
       iOS: const DarwinNotificationDetails(),
       macOS: const DarwinNotificationDetails(),
     );
-
-    final isSpanish = languageCode.toLowerCase().startsWith('es');
-    final title = isSpanish
-        ? 'Tu racha te está esperando 🔥'
-        : 'Your streak is waiting 🔥';
-    final body = isSpanish
-        ? 'Hoy toca un pasito más en Flutter Quest.'
-        : 'Time for one more step in Flutter Quest today.';
 
     var scheduleMode = AndroidScheduleMode.inexactAllowWhileIdle;
     var canExact = await _canScheduleExactAlarms();
@@ -179,8 +168,8 @@ class LocalNotificationsService {
 
     await _plugin.zonedSchedule(
       id: habitReminderId,
-      title: title,
-      body: body,
+      title: reminder.title,
+      body: reminder.body,
       scheduledDate: firstDate,
       notificationDetails: notificationDetails,
       androidScheduleMode: scheduleMode,
@@ -194,4 +183,29 @@ class LocalNotificationsService {
     await initialize();
     await _plugin.cancel(id: habitReminderId);
   }
+
+  Future<List<PendingNotificationRequest>> getPendingReminders() async {
+    if (kIsWeb) return const [];
+    await initialize();
+    return _plugin.pendingNotificationRequests();
+  }
+
+  tz.TZDateTime _nextInstanceOfTime(int hour, int minute) {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
+    if (!scheduled.isAfter(now)) {
+      scheduled = scheduled.add(const Duration(days: 1));
+    }
+    return scheduled;
+  }
 }
+
+@pragma('vm:entry-point')
+void _noopBackgroundCallback(NotificationResponse _) {}

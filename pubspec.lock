@@ -349,6 +349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  lite_code_editor:
+    dependency: "direct main"
+    description:
+      name: lite_code_editor
+      sha256: b1511e19c8c2686652d1c5807ff4337ac47ddaf10945386e3d8c79078fca11b9
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   logging:
     dependency: transitive
     description:
@@ -763,5 +771,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.10.3 <4.0.0"
+  dart: ">=3.11.4 <4.0.0"
   flutter: ">=3.38.4"

@@ -335,7 +335,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get habitReminderSubtitle =>
-      'Recibe un recordatorio a las 10:00 AM si hoy no has estudiado.';
+      'Recibe un recordatorio diario para volver a Flutter Quest.';
 
   @override
   String get notificationPermissionDenied =>

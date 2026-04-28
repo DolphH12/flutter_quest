@@ -120,7 +120,7 @@
   "devToolsSubtitle": "Clear your local progress and start from scratch.",
   "resetProgressButton": "Reset progress",
   "habitReminderTitle": "Daily reminders",
-  "habitReminderSubtitle": "Get a habit ping at 10:00 AM if you have not studied today.",
+  "habitReminderSubtitle": "Get a daily reminder to jump back into Flutter Quest.",
   "notificationPermissionDenied": "We couldn't enable reminders without notification permission.",
   "reminderTimeLabel": "Time: {hour}:{minute}",
   "@reminderTimeLabel": {

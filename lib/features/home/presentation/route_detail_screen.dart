@@ -238,7 +238,6 @@ class RouteDetailScreen extends ConsumerWidget {
       ),
     );
   }
-
 }
 
 class _CurrentPathCard extends StatelessWidget {
@@ -277,12 +276,17 @@ class _CurrentPathCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          FQProgressBar(value: progress),
+          FQProgressBar(
+            value: progress,
+            fillGradient: const LinearGradient(
+              colors: [Color(0xFF46D194), Color(0xFF1D8D4A)],
+            ),
+            trackColor: const Color(0xFFDFF7E8),
+          ),
         ],
       ),
     );
   }
-
 }
 
 String? _nextRoutePath(List<RouteAssetManifest> manifests, String currentId) {
@@ -384,38 +388,42 @@ class _PathBoardState extends State<_PathBoard> {
                     constraints: BoxConstraints(minWidth: constraints.maxWidth),
                     child: Align(
                       alignment: Alignment.center,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(width: 18),
-                          for (int i = 0; i < widget.nodeStates.length; i++)
-                            _PathStepHorizontal(
-                              nodeState: widget.nodeStates[i],
-                              visualOffsetY:
-                                  widget.nodeStates[i].node.xOffset == 0
-                                  ? ((i % 4 == 0)
-                                        ? 6
-                                        : (i % 4 == 1)
-                                        ? 64
-                                        : (i % 4 == 2)
-                                        ? 12
-                                        : 64)
-                                  : (widget.nodeStates[i].node.xOffset * 0.2) +
-                                        18,
-                              isExam:
-                                  widget.nodeStates[i].node.id ==
-                                  widget.examNodeId,
-                              isExamPassed: widget.nodeStates[i].isExamPassed,
-                              isFocused:
-                                  widget.nodeStates[i].node.id ==
-                                  widget.focusedNodeId,
-                              hasConnector: i != widget.nodeStates.length - 1,
-                              onTap: () =>
-                                  widget.onNodeTap(widget.nodeStates[i]),
-                            ),
-                          const SizedBox(width: 22),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(width: 18),
+                            for (int i = 0; i < widget.nodeStates.length; i++)
+                              _PathStepHorizontal(
+                                nodeState: widget.nodeStates[i],
+                                visualOffsetY:
+                                    widget.nodeStates[i].node.xOffset == 0
+                                    ? ((i % 4 == 0)
+                                          ? 6
+                                          : (i % 4 == 1)
+                                          ? 64
+                                          : (i % 4 == 2)
+                                          ? 12
+                                          : 64)
+                                    : (widget.nodeStates[i].node.xOffset *
+                                              0.2) +
+                                          18,
+                                isExam:
+                                    widget.nodeStates[i].node.id ==
+                                    widget.examNodeId,
+                                isExamPassed: widget.nodeStates[i].isExamPassed,
+                                isFocused:
+                                    widget.nodeStates[i].node.id ==
+                                    widget.focusedNodeId,
+                                hasConnector: i != widget.nodeStates.length - 1,
+                                onTap: () =>
+                                    widget.onNodeTap(widget.nodeStates[i]),
+                              ),
+                            const SizedBox(width: 22),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -431,6 +439,7 @@ class _PathBoardState extends State<_PathBoard> {
                 constraints: const BoxConstraints(maxWidth: 270),
                 child: Column(
                   children: [
+                    const SizedBox(height: 18),
                     for (int i = 0; i < widget.nodeStates.length; i++)
                       _PathStep(
                         nodeState: widget.nodeStates[i],
@@ -658,6 +667,7 @@ class _StepLabel extends StatelessWidget {
     if (isLocked) {
       return Text(
         node.title,
+        textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           color: FQColors.onSurface.withValues(alpha: 0.46),
           fontWeight: FontWeight.w600,
@@ -677,6 +687,7 @@ class _StepLabel extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         child: Text(
           isActive ? node.title.toUpperCase() : node.title,
+          textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
             color: (isActive || isExam)
                 ? Colors.white

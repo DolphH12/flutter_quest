@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:ui';
 
 import '../../learning/models/learning_models.dart';
 import '../data/local_notifications_service.dart';
@@ -36,7 +37,7 @@ class HabitNotificationsNotifier
   Future<HabitNotificationSettings> build() async {
     await _notifications.initialize();
     final settings = await _preferences.load();
-    return settings.copyWith(
+    final normalized = settings.copyWith(
       hour: settings.hour <= 0
           ? HabitNotificationSettings.defaults.hour
           : settings.hour,
@@ -44,6 +45,15 @@ class HabitNotificationsNotifier
           ? HabitNotificationSettings.defaults.minute
           : settings.minute,
     );
+    if (normalized.enabled) {
+      final languageCode = PlatformDispatcher.instance.locale.languageCode;
+      await _notifications.scheduleHabitReminder(
+        hour: normalized.hour,
+        minute: normalized.minute,
+        languageCode: languageCode,
+      );
+    }
+    return normalized;
   }
 
   Future<void> bootstrapOnFirstAppOpen({
@@ -64,7 +74,6 @@ class HabitNotificationsNotifier
       state = AsyncData(next);
       if (granted) {
         await _notifications.scheduleHabitReminder(
-          studiedToday: _studiedToday(progress.lastStudyDate),
           hour: next.hour,
           minute: next.minute,
           languageCode: languageCode,
@@ -77,7 +86,6 @@ class HabitNotificationsNotifier
 
     if (current.enabled) {
       await _notifications.scheduleHabitReminder(
-        studiedToday: _studiedToday(progress.lastStudyDate),
         hour: current.hour,
         minute: current.minute,
         languageCode: languageCode,
@@ -111,9 +119,7 @@ class HabitNotificationsNotifier
     }
 
     final next = current.copyWith(enabled: true);
-    final studiedToday = _studiedToday(progress.lastStudyDate);
     await _notifications.scheduleHabitReminder(
-      studiedToday: studiedToday,
       hour: next.hour,
       minute: next.minute,
       languageCode: languageCode,
@@ -135,7 +141,6 @@ class HabitNotificationsNotifier
     state = AsyncData(next);
     if (!next.enabled) return;
     await _notifications.scheduleHabitReminder(
-      studiedToday: _studiedToday(progress.lastStudyDate),
       hour: next.hour,
       minute: next.minute,
       languageCode: languageCode,
@@ -154,7 +159,6 @@ class HabitNotificationsNotifier
       return;
     }
     await _notifications.scheduleHabitReminder(
-      studiedToday: _studiedToday(progress.lastStudyDate),
       hour: settings.hour,
       minute: settings.minute,
       languageCode: languageCode,
@@ -168,7 +172,6 @@ class HabitNotificationsNotifier
     final current = state.valueOrNull;
     if (current == null || !current.enabled) return;
     await _notifications.scheduleHabitReminder(
-      studiedToday: _studiedToday(progress.lastStudyDate),
       hour: current.hour,
       minute: current.minute,
       languageCode: languageCode,
@@ -179,15 +182,5 @@ class HabitNotificationsNotifier
     await _notifications.cancelHabitReminder();
     await _preferences.clear();
     state = const AsyncData(HabitNotificationSettings.defaults);
-  }
-
-  bool _studiedToday(String? isoDate) {
-    if (isoDate == null || isoDate.trim().isEmpty) return false;
-    final parsed = DateTime.tryParse(isoDate);
-    if (parsed == null) return false;
-    final now = DateTime.now();
-    return parsed.year == now.year &&
-        parsed.month == now.month &&
-        parsed.day == now.day;
   }
 }

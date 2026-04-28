@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lite_code_editor/lite_code_editor.dart';
 
 import '../../../core/theme/fq_colors.dart';
 import '../../../core/theme/fq_tokens.dart';
@@ -12,16 +13,14 @@ class ActivityRendererCallbacks {
     required this.onSelectOption,
     required this.onCodeChanged,
     required this.onSelectWrongLine,
-    required this.onMoveBlockUp,
-    required this.onMoveBlockDown,
+    required this.onReorderBlocks,
     required this.onSetConceptMatch,
   });
 
   final ValueChanged<int> onSelectOption;
   final ValueChanged<String> onCodeChanged;
   final ValueChanged<int> onSelectWrongLine;
-  final ValueChanged<int> onMoveBlockUp;
-  final ValueChanged<int> onMoveBlockDown;
+  final void Function(int oldIndex, int newIndex) onReorderBlocks;
   final void Function(String left, String right) onSetConceptMatch;
 }
 
@@ -36,7 +35,7 @@ class LessonActivityRenderer extends StatelessWidget {
 
   final LessonActivity activity;
   final LessonSessionState session;
-  final TextEditingController codeController;
+  final CodeEditorController codeController;
   final ActivityRendererCallbacks callbacks;
 
   @override
@@ -59,8 +58,7 @@ class LessonActivityRenderer extends StatelessWidget {
       ActivityType.orderCodeBlocks => _OrderCodeBlocksActivity(
         activity: activity,
         session: session,
-        onMoveBlockUp: callbacks.onMoveBlockUp,
-        onMoveBlockDown: callbacks.onMoveBlockDown,
+        onReorderBlocks: callbacks.onReorderBlocks,
       ),
       ActivityType.findTheWrongLine => _FindWrongLineActivity(
         activity: activity,
@@ -276,7 +274,7 @@ class _CodeInputActivity extends StatelessWidget {
 
   final LessonActivity activity;
   final LessonSessionState session;
-  final TextEditingController controller;
+  final CodeEditorController controller;
   final ValueChanged<String> onChanged;
   final String fileName;
 
@@ -311,73 +309,161 @@ class _OrderCodeBlocksActivity extends StatelessWidget {
   const _OrderCodeBlocksActivity({
     required this.activity,
     required this.session,
-    required this.onMoveBlockUp,
-    required this.onMoveBlockDown,
+    required this.onReorderBlocks,
   });
 
   final LessonActivity activity;
   final LessonSessionState session;
-  final ValueChanged<int> onMoveBlockUp;
-  final ValueChanged<int> onMoveBlockDown;
+  final void Function(int oldIndex, int newIndex) onReorderBlocks;
 
   @override
   Widget build(BuildContext context) {
     final blocks = activity.blocks ?? const <String>[];
     final order = session.blockOrder;
+    final highlighter = DartHighlighter();
 
     if (blocks.isEmpty) {
       return const Text('Esta actividad no tiene bloques configurados.');
     }
 
-    return Column(
-      children: [
-        for (int position = 0; position < order.length; position++)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: FQSurfaceCard(
-              radius: FQRadius.medium,
-              color: FQColors.surfaceHigh.withValues(alpha: 0.58),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Row(
-                children: [
-                  Text(
-                    '${position + 1}',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: FQColors.primary,
-                      fontWeight: FontWeight.w800,
+    final itemHeight = 62.0;
+    final listHeight = (order.length * itemHeight) + 16;
+    final maxHeight = listHeight > 360 ? 360.0 : listHeight;
+
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      color: const Color(0xFF081629),
+      useHighlightOverlay: false,
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              _ideDot(const Color(0xFFFF6B6B)),
+              const SizedBox(width: 6),
+              _ideDot(const Color(0xFFFDC003)),
+              const SizedBox(width: 6),
+              _ideDot(const Color(0xFF50D5C3)),
+              const SizedBox(width: 10),
+              Text(
+                'ORDER MODE · drag & drop',
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Colors.white.withValues(alpha: 0.86),
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: FQRadius.medium,
+              color: const Color(0xFF0B1C33),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.08),
+                width: 1,
+              ),
+            ),
+            child: SizedBox(
+              height: maxHeight,
+              child: ReorderableListView.builder(
+                buildDefaultDragHandles: false,
+                shrinkWrap: true,
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                physics: const BouncingScrollPhysics(),
+                itemCount: order.length,
+                onReorder: (oldIndex, newIndex) {
+                  if (session.submitted) return;
+                  onReorderBlocks(oldIndex, newIndex);
+                },
+                itemBuilder: (context, position) {
+                  final blockIndex = order[position];
+                  final block = blocks[blockIndex];
+                  final isLocked = session.submitted;
+                  return Container(
+                    key: ValueKey('code_block_$blockIndex'),
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      blocks[order[position]],
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontFamily: 'monospace',
-                        fontSize: 14,
+                    decoration: BoxDecoration(
+                      borderRadius: FQRadius.medium,
+                      color: const Color(0xFF0E2342),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.14),
+                        width: 1,
                       ),
                     ),
-                  ),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: session.submitted
-                            ? null
-                            : () => onMoveBlockUp(position),
-                        icon: const Icon(Icons.keyboard_arrow_up_rounded),
-                      ),
-                      IconButton(
-                        onPressed: session.submitted
-                            ? null
-                            : () => onMoveBlockDown(position),
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                      ),
-                    ],
-                  ),
-                ],
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 26,
+                          child: Text(
+                            '${position + 1}',
+                            textAlign: TextAlign.right,
+                            style: Theme.of(context).textTheme.labelMedium
+                                ?.copyWith(
+                                  color: Colors.white.withValues(alpha: 0.7),
+                                  fontFamily: 'monospace',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: DefaultTextStyle(
+                            style: const TextStyle(
+                              color: Color(0xFFEAF2FF),
+                              fontFamily: 'monospace',
+                              fontSize: 14,
+                              height: 1.35,
+                            ),
+                            child: RichText(
+                              text: highlighter.highlight(block),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Opacity(
+                          opacity: isLocked ? 0.35 : 0.95,
+                          child: ReorderableDragStartListener(
+                            index: position,
+                            enabled: !isLocked,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                borderRadius: FQRadius.small,
+                                color: Colors.white.withValues(alpha: 0.1),
+                              ),
+                              child: Icon(
+                                Icons.drag_indicator_rounded,
+                                color: Colors.white.withValues(alpha: 0.92),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ),
-      ],
+        ],
+      ),
+    );
+  }
+
+  Widget _ideDot(Color color) {
+    return Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
 }
@@ -396,76 +482,13 @@ class _FindWrongLineActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lines = activity.codeLines ?? const <String>[];
-    final correctIndex = activity.wrongLineIndex;
-
-    return FQSurfaceCard(
-      radius: FQRadius.large,
-      color: FQColors.deepNavy,
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-      child: Column(
-        children: [
-          for (int i = 0; i < lines.length; i++)
-            InkWell(
-              onTap: session.submitted ? null : () => onSelectWrongLine(i),
-              borderRadius: FQRadius.small,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: FQRadius.small,
-                  color: _wrongLineBackground(
-                    index: i,
-                    selected: session.selectedWrongLineIndex,
-                    correct: correctIndex,
-                    submitted: session.submitted,
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      '${i + 1}'.padLeft(2, '0'),
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontFamily: 'monospace',
-                        color: Colors.white70,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        lines[i],
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontFamily: 'monospace',
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+    return QuestCodeLineSelector(
+      lines: lines,
+      selectedLineIndex: session.selectedWrongLineIndex,
+      maxHeight: 300,
+      fileName: 'bug_hunt.dart',
+      onLineSelected: session.submitted ? (_) {} : onSelectWrongLine,
     );
-  }
-
-  Color _wrongLineBackground({
-    required int index,
-    required int? selected,
-    required int? correct,
-    required bool submitted,
-  }) {
-    if (!submitted) {
-      return index == selected
-          ? FQColors.primary.withValues(alpha: 0.45)
-          : Colors.white.withValues(alpha: 0.08);
-    }
-    if (index == correct) return const Color(0xFF1D8D4A);
-    if (index == selected) return const Color(0xFFC23737);
-    return Colors.white.withValues(alpha: 0.08);
   }
 }
 
@@ -551,7 +574,7 @@ class _PredictOutputActivity extends StatelessWidget {
 
   final LessonActivity activity;
   final LessonSessionState session;
-  final TextEditingController controller;
+  final CodeEditorController controller;
   final ValueChanged<int> onSelectOption;
   final ValueChanged<String> onChanged;
 
@@ -577,6 +600,7 @@ class _PredictOutputActivity extends StatelessWidget {
             readOnly: session.submitted,
             minLines: 4,
             maxHeight: 180,
+            language: CodeLanguage.plainText,
           ),
       ],
     );
@@ -593,7 +617,7 @@ class _GuidedWritingActivity extends StatelessWidget {
 
   final LessonActivity activity;
   final LessonSessionState session;
-  final TextEditingController controller;
+  final CodeEditorController controller;
   final ValueChanged<String> onChanged;
 
   @override

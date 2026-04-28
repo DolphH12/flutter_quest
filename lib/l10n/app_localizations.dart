@@ -695,7 +695,7 @@ abstract class AppLocalizations {
   /// No description provided for @habitReminderSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Get a habit ping at 10:00 AM if you have not studied today.'**
+  /// **'Get a daily reminder to jump back into Flutter Quest.'**
   String get habitReminderSubtitle;
 
   /// No description provided for @notificationPermissionDenied.

@@ -10,7 +10,7 @@ class FQPageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      bottom: false,
+      bottom: true,
       child: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(

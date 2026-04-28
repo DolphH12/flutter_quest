@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_quest/l10n/app_localizations.dart';
+import 'package:lite_code_editor/lite_code_editor.dart';
 
 import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
@@ -34,7 +35,9 @@ class LessonFlowScreen extends ConsumerStatefulWidget {
 }
 
 class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
-  final TextEditingController _codeController = TextEditingController();
+  final CodeEditorController _codeController = CodeEditorController(
+    language: CodeLanguage.dart,
+  );
   _LessonResultViewData? _resultData;
   bool _savingResult = false;
 
@@ -51,11 +54,8 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
     final activity = session.currentActivity;
 
     if (activity != null && _usesTextController(activity)) {
-      if (_codeController.text != session.codeInput) {
-        _codeController.value = TextEditingValue(
-          text: session.codeInput,
-          selection: TextSelection.collapsed(offset: session.codeInput.length),
-        );
+      if (_codeController.code != session.codeInput) {
+        _codeController.code = session.codeInput;
       }
     }
 
@@ -67,7 +67,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
               data: _resultData!,
               saving: _savingResult,
               onRepeat: () {
-                _codeController.clear();
+                _codeController.code = '';
                 ref.read(lessonSessionProvider(widget.lesson).notifier).reset();
                 setState(() {
                   _resultData = null;
@@ -115,19 +115,12 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                               )
                               .selectWrongLine(value);
                         },
-                        onMoveBlockUp: (value) {
+                        onReorderBlocks: (oldIndex, newIndex) {
                           ref
                               .read(
                                 lessonSessionProvider(widget.lesson).notifier,
                               )
-                              .moveBlockUp(value);
-                        },
-                        onMoveBlockDown: (value) {
-                          ref
-                              .read(
-                                lessonSessionProvider(widget.lesson).notifier,
-                              )
-                              .moveBlockDown(value);
+                              .reorderBlocks(oldIndex, newIndex);
                         },
                         onSetConceptMatch: (left, right) {
                           ref
@@ -357,7 +350,7 @@ class _ActivityStep extends StatelessWidget {
 
   final LessonActivity activity;
   final LessonSessionState session;
-  final TextEditingController codeController;
+  final CodeEditorController codeController;
   final ActivityRendererCallbacks callbacks;
 
   @override

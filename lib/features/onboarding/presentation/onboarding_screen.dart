@@ -49,110 +49,114 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final canSkip = _stepIndex > 0 && !isLast;
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(18, 12, 18, 16),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: LinearProgressIndicator(
-                      value: (_stepIndex + 1) / totalSteps,
-                      borderRadius: FQRadius.pill,
-                      minHeight: 8,
-                      backgroundColor: FQColors.surfaceHigh,
-                      color: FQColors.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    '${_stepIndex + 1}/$totalSteps',
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              if (canSkip)
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: _saving ? null : _finishOnboarding,
-                    child: Text(l10n.onboardingSkipButton),
-                  ),
-                )
-              else
-                const SizedBox(height: 40),
-              Expanded(
-                child: PageView(
-                  controller: _controller,
-                  physics: const NeverScrollableScrollPhysics(),
-                  onPageChanged: (value) {
-                    setState(() {
-                      _stepIndex = value;
-                    });
-                  },
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 12, 18, 16),
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    _WelcomeSetupStep(
-                      nameController: _nameController,
-                      selectedLanguage: _selectedLanguage,
-                      onLanguageChanged: _handleLanguageChanged,
+                    Expanded(
+                      child: LinearProgressIndicator(
+                        value: (_stepIndex + 1) / totalSteps,
+                        borderRadius: FQRadius.pill,
+                        minHeight: 8,
+                        backgroundColor: FQColors.surfaceHigh,
+                        color: FQColors.primary,
+                      ),
                     ),
-                    _ImageInfoStep(
-                      imageAsset: 'assets/images/route.png',
-                      title: l10n.onboardingRoutesTitle,
-                      body: l10n.onboardingRoutesBodyGeneral,
-                    ),
-                    _NodesDemoStep(
-                      title: l10n.onboardingNodesTitle,
-                      body: l10n.onboardingNodesBody,
-                      completedLabel: l10n.onboardingNodeCompletedLabel,
-                      nextLabel: l10n.onboardingNodeNextLabel,
-                    ),
-                    _ImageInfoStep(
-                      imageAsset: 'assets/images/exp.png',
-                      title: l10n.onboardingRewardsTitle,
-                      body: l10n.onboardingRewardsBody,
-                    ),
-                    _ImageInfoStep(
-                      imageAsset: 'assets/images/racha.png',
-                      title: l10n.onboardingStreakTitle,
-                      body: l10n.onboardingStreakBody,
-                    ),
-                    _FinalReadyStep(
-                      imageAsset: 'assets/images/LOGO_FC.png',
-                      title: l10n.onboardingAllSetTitle,
-                      body: l10n.onboardingAllSetBody,
+                    const SizedBox(width: 12),
+                    Text(
+                      '${_stepIndex + 1}/$totalSteps',
+                      style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  if (_stepIndex > 0)
-                    Expanded(
-                      child: FQSecondaryButton(
-                        label: l10n.onboardingBackButton,
-                        onPressed: _saving ? null : _goBack,
-                      ),
-                    )
-                  else
-                    const Spacer(),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: FQPrimaryButton(
-                      label: _saving
-                          ? l10n.saveInProgress
-                          : (isLast ? l10n.startButton : l10n.continueButton),
-                      icon: isLast
-                          ? Icons.rocket_launch_rounded
-                          : Icons.arrow_forward_rounded,
-                      onPressed: _saving ? null : _onPrimaryPressed,
+                const SizedBox(height: 12),
+                if (canSkip)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: _saving ? null : _finishOnboarding,
+                      child: Text(l10n.onboardingSkipButton),
                     ),
+                  )
+                else
+                  const SizedBox(height: 40),
+                Expanded(
+                  child: PageView(
+                    controller: _controller,
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (value) {
+                      setState(() {
+                        _stepIndex = value;
+                      });
+                    },
+                    children: [
+                      _WelcomeSetupStep(
+                        nameController: _nameController,
+                        selectedLanguage: _selectedLanguage,
+                        onLanguageChanged: _handleLanguageChanged,
+                      ),
+                      _ImageInfoStep(
+                        imageAsset: 'assets/images/route.png',
+                        title: l10n.onboardingRoutesTitle,
+                        body: l10n.onboardingRoutesBodyGeneral,
+                      ),
+                      _NodesDemoStep(
+                        title: l10n.onboardingNodesTitle,
+                        body: l10n.onboardingNodesBody,
+                        completedLabel: l10n.onboardingNodeCompletedLabel,
+                        nextLabel: l10n.onboardingNodeNextLabel,
+                      ),
+                      _ImageInfoStep(
+                        imageAsset: 'assets/images/exp.png',
+                        title: l10n.onboardingRewardsTitle,
+                        body: l10n.onboardingRewardsBody,
+                      ),
+                      _ImageInfoStep(
+                        imageAsset: 'assets/images/racha.png',
+                        title: l10n.onboardingStreakTitle,
+                        body: l10n.onboardingStreakBody,
+                      ),
+                      _FinalReadyStep(
+                        imageAsset: 'assets/images/LOGO_FC.png',
+                        title: l10n.onboardingAllSetTitle,
+                        body: l10n.onboardingAllSetBody,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    if (_stepIndex > 0)
+                      Expanded(
+                        child: FQSecondaryButton(
+                          label: l10n.onboardingBackButton,
+                          onPressed: _saving ? null : _goBack,
+                        ),
+                      )
+                    else
+                      const Spacer(),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FQPrimaryButton(
+                        label: _saving
+                            ? l10n.saveInProgress
+                            : (isLast ? l10n.startButton : l10n.continueButton),
+                        icon: isLast
+                            ? Icons.rocket_launch_rounded
+                            : Icons.arrow_forward_rounded,
+                        onPressed: _saving ? null : _onPrimaryPressed,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -160,6 +164,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Future<void> _onPrimaryPressed() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (_stepIndex == 0) {
       await _saveInitialSetupAndContinue();
       return;
@@ -172,6 +177,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _goNext() {
+    FocusManager.instance.primaryFocus?.unfocus();
     _controller.nextPage(
       duration: const Duration(milliseconds: 240),
       curve: Curves.easeOutCubic,
@@ -179,6 +185,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _goBack() {
+    FocusManager.instance.primaryFocus?.unfocus();
     _controller.previousPage(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutCubic,
@@ -270,74 +277,88 @@ class _WelcomeSetupStep extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return _StepFrame(
       gradient: FQGradients.subtlePanel,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Column(
-              children: [
-                const Spacer(),
-                Image.asset('assets/images/hola_FC.png', height: 216),
-                const SizedBox(height: 8),
-                Text(
-                  l10n.welcomeTitle,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    color: FQColors.primary,
-                    fontWeight: FontWeight.w900,
-                    height: 1.04,
-                  ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final insets = MediaQuery.of(context).viewInsets.bottom;
+          return SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            padding: EdgeInsets.only(bottom: insets + 10),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 14),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: _LanguageIconMenu(
+                        selectedLanguage: selectedLanguage,
+                        onChanged: onLanguageChanged,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Image.asset('assets/images/hola_FC.png', height: 216),
+                    const SizedBox(height: 10),
+                    Text(
+                      l10n.welcomeTitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: FQColors.primary,
+                        fontWeight: FontWeight.w900,
+                        height: 1.04,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      l10n.welcomeSubtitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: FQColors.onSurface.withValues(alpha: 0.78),
+                      ),
+                    ),
+                    const SizedBox(height: 26),
+                    TextField(
+                      controller: nameController,
+                      textCapitalization: TextCapitalization.words,
+                      textInputAction: TextInputAction.done,
+                      onTapOutside: (_) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
+                      onSubmitted: (_) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
+                      style: Theme.of(context).textTheme.titleMedium,
+                      decoration: InputDecoration(
+                        labelText: l10n.nameInputLabel,
+                        hintText: l10n.nameInputHint,
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: const Icon(Icons.person_rounded),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(26),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(26),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(26),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 18,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  l10n.welcomeSubtitle,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: FQColors.onSurface.withValues(alpha: 0.78),
-                  ),
-                ),
-                const Spacer(),
-                TextField(
-                  controller: nameController,
-                  textCapitalization: TextCapitalization.words,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  decoration: InputDecoration(
-                    labelText: l10n.nameInputLabel,
-                    hintText: l10n.nameInputHint,
-                    filled: true,
-                    fillColor: Colors.white,
-                    prefixIcon: const Icon(Icons.person_rounded),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(26),
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(26),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(26),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 18,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 22),
-              ],
+              ),
             ),
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: _LanguageIconMenu(
-              selectedLanguage: selectedLanguage,
-              onChanged: onLanguageChanged,
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

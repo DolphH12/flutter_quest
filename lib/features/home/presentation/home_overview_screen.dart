@@ -70,6 +70,7 @@ class HomeOverviewScreen extends ConsumerWidget {
     }
 
     final isDesktop = FQBreakpoints.isDesktop(context);
+    final allRoutesCompleted = _allRoutesCompleted(routes, progress);
     return FQPageContainer(
       child: ListView(
         children: [
@@ -82,6 +83,10 @@ class HomeOverviewScreen extends ConsumerWidget {
             ).textTheme.titleLarge?.copyWith(color: FQColors.deepNavy),
           ),
           const SizedBox(height: 10),
+          if (allRoutesCompleted) ...[
+            _MoreRoutesSoonBanner(isDesktop: isDesktop),
+            const SizedBox(height: 12),
+          ],
           if (isDesktop)
             LayoutBuilder(
               builder: (context, constraints) {
@@ -161,6 +166,17 @@ class HomeOverviewScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  bool _allRoutesCompleted(
+    List<DartRouteContent> routes,
+    LearningProgressState progress,
+  ) {
+    if (routes.isEmpty) return false;
+    for (final route in routes) {
+      if (!progress.completedRouteIds.contains(route.routeId)) return false;
+    }
+    return true;
   }
 
   bool _isUnlocked(
@@ -268,6 +284,73 @@ class HomeOverviewScreen extends ConsumerWidget {
   }
 }
 
+class _MoreRoutesSoonBanner extends StatelessWidget {
+  const _MoreRoutesSoonBanner({required this.isDesktop});
+
+  final bool isDesktop;
+
+  @override
+  Widget build(BuildContext context) {
+    final isSpanish = Localizations.localeOf(context).languageCode
+        .toLowerCase()
+        .startsWith('es');
+    final title = isSpanish ? '¡Más rutas muy pronto!' : 'More routes are coming soon!';
+    final body = isSpanish
+        ? 'Completaste todo por ahora. Estamos preparando nuevas rutas para que sigas subiendo de nivel.'
+        : 'You completed everything for now. New learning routes are being crafted so you can keep leveling up.';
+
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFE8F8EE), Color(0xFFD9F3E4)],
+      ),
+      border: Border.all(color: const Color(0xFF7ED3A8), width: 1.2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: isDesktop ? 52 : 46,
+            height: isDesktop ? 52 : 46,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFF1D8D4A).withValues(alpha: 0.14),
+            ),
+            child: const Icon(
+              Icons.rocket_launch_rounded,
+              color: Color(0xFF1D8D4A),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: const Color(0xFF14503B),
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  body,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFF1D8D4A),
+                    height: 1.35,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _RouteCardTile extends StatelessWidget {
   const _RouteCardTile({
     required this.route,
@@ -288,10 +371,16 @@ class _RouteCardTile extends StatelessWidget {
     final isDesktop = FQBreakpoints.isDesktop(context);
     final progressValue = progress.routeProgress(route.routeId);
     final isPending = progress.pendingRouteIds.contains(route.routeId);
+    final isCompleted =
+        progress.completedRouteIds.contains(route.routeId) || progressValue >= 1;
+    final l10n = AppLocalizations.of(context)!;
     final cardBody = FQSurfaceCard(
       radius: FQRadius.large,
       gradient: isUnlocked ? FQGradients.subtlePanel : null,
       color: isUnlocked ? null : FQColors.surfaceHigh.withValues(alpha: 0.56),
+      padding: isCompleted
+          ? const EdgeInsets.fromLTRB(14, 12, 14, 12)
+          : const EdgeInsets.all(FQSpacing.md),
       border: Border.all(
         color: _routeBorderColor(
           progress: progress,
@@ -308,8 +397,10 @@ class _RouteCardTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: isDesktop ? 44 : 50,
-            height: isDesktop ? 44 : 50,
+            width: isCompleted ? (isDesktop ? 40 : 44) : (isDesktop ? 44 : 50),
+            height: isCompleted
+                ? (isDesktop ? 40 : 44)
+                : (isDesktop ? 44 : 50),
             decoration: BoxDecoration(
               borderRadius: FQRadius.medium,
               gradient: isUnlocked
@@ -334,7 +425,9 @@ class _RouteCardTile extends StatelessWidget {
                       child: Text(
                         route.title,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontSize: isDesktop ? 22 : null,
+                          fontSize: isDesktop
+                              ? (isCompleted ? 20 : 22)
+                              : (isCompleted ? 21 : null),
                           color: isUnlocked
                               ? FQColors.deepNavy
                               : FQColors.onSurface.withValues(alpha: 0.66),
@@ -349,22 +442,50 @@ class _RouteCardTile extends StatelessWidget {
                       )
                     else if (isPending)
                       FQPill(
-                        label: AppLocalizations.of(context)!.routePendingBadge,
+                        label: l10n.routePendingBadge,
                         icon: Icons.schedule_rounded,
                         color: const Color(0xFFFFF4D6),
                         textColor: FQColors.tertiaryDark,
                       ),
                   ],
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  route.description,
-                  maxLines: isDesktop ? 2 : 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: FQColors.onSurface.withValues(alpha: 0.72),
+                if (!isCompleted) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    route.description,
+                    maxLines: isDesktop ? 2 : 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: FQColors.onSurface.withValues(alpha: 0.72),
+                    ),
                   ),
-                ),
+                ] else ...[
+                  const SizedBox(height: 6),
+                  Row(
+                    children: [
+                      FQPill(
+                        label: l10n.routeCompleted,
+                        icon: Icons.check_circle_rounded,
+                        color: const Color(0xFFDFF7E8),
+                        textColor: const Color(0xFF1D8D4A),
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.workspace_premium_rounded,
+                        size: 16,
+                        color: FQColors.tertiaryDark,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '100%',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: FQColors.primary,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
                 if (lockReason != null) ...[
                   const SizedBox(height: 8),
                   Text(
@@ -375,12 +496,12 @@ class _RouteCardTile extends StatelessWidget {
                     ),
                   ),
                 ],
-                if (progressValue > 0) ...[
+                if (!isCompleted && progressValue > 0) ...[
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       Text(
-                        AppLocalizations.of(context)!.progressLabel,
+                        l10n.progressLabel,
                         style: Theme.of(context).textTheme.labelMedium
                             ?.copyWith(
                               color: FQColors.primary,
@@ -398,7 +519,13 @@ class _RouteCardTile extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 6),
-                  FQProgressBar(value: progressValue),
+                  FQProgressBar(
+                    value: progressValue,
+                    fillGradient: const LinearGradient(
+                      colors: [Color(0xFF46D194), Color(0xFF1D8D4A)],
+                    ),
+                    trackColor: const Color(0xFFDFF7E8),
+                  ),
                 ],
               ],
             ),

@@ -209,6 +209,18 @@ class LessonSessionNotifier
     state = state.copyWith(blockOrder: next);
   }
 
+  void reorderBlocks(int oldIndex, int newIndex) {
+    if (state.submitted) return;
+    if (oldIndex < 0 || oldIndex >= state.blockOrder.length) return;
+    if (newIndex < 0 || newIndex > state.blockOrder.length) return;
+    final normalizedNewIndex = newIndex > oldIndex ? newIndex - 1 : newIndex;
+    if (normalizedNewIndex == oldIndex) return;
+    final next = [...state.blockOrder];
+    final moved = next.removeAt(oldIndex);
+    next.insert(normalizedNewIndex, moved);
+    state = state.copyWith(blockOrder: next);
+  }
+
   void setConceptMatch({required String left, required String right}) {
     if (state.submitted) return;
     final matches = {...state.conceptMatches, left: right};

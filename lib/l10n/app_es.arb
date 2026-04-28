@@ -120,7 +120,7 @@
   "devToolsSubtitle": "Borra tu avance local para volver a empezar desde cero.",
   "resetProgressButton": "Reiniciar progreso",
   "habitReminderTitle": "Recordatorios diarios",
-  "habitReminderSubtitle": "Recibe un recordatorio a las 10:00 AM si hoy no has estudiado.",
+  "habitReminderSubtitle": "Recibe un recordatorio diario para volver a Flutter Quest.",
   "notificationPermissionDenied": "No pudimos activar los recordatorios sin permiso de notificaciones.",
   "reminderTimeLabel": "Hora: {hour}:{minute}",
   "@reminderTimeLabel": {
