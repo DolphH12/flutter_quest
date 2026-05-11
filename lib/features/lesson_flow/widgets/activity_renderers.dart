@@ -374,6 +374,42 @@ class _OrderCodeBlocksActivity extends StatelessWidget {
                 shrinkWrap: true,
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                 physics: const BouncingScrollPhysics(),
+                proxyDecorator: (child, index, animation) {
+                  return AnimatedBuilder(
+                    animation: animation,
+                    child: child,
+                    builder: (context, proxyChild) {
+                      final curved = Curves.easeOutCubic.transform(
+                        animation.value,
+                      );
+                      return Transform.scale(
+                        scale: 1 + (curved * 0.02),
+                        child: Material(
+                          type: MaterialType.transparency,
+                          shadowColor: Colors.transparent,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: FQRadius.medium,
+                              color: const Color(0xFF0E2342),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.14),
+                                width: 1,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.24),
+                                  blurRadius: 18,
+                                  offset: const Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: proxyChild,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
                 itemCount: order.length,
                 onReorder: (oldIndex, newIndex) {
                   if (session.submitted) return;

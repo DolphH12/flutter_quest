@@ -201,8 +201,6 @@ class HomeOverviewScreen extends ConsumerWidget {
       context: context,
       manifest: previewManifest,
       route: previewManifest == null ? null : routeById[previewManifest.routeId],
-      lastVisibleRouteId: visibleLiveRouteIds.isEmpty ? null : visibleLiveRouteIds.last,
-      progress: progress,
       l10n: l10n,
     );
     if (previewTile != null) {
@@ -263,8 +261,6 @@ class HomeOverviewScreen extends ConsumerWidget {
       context: context,
       manifest: previewManifest,
       route: previewManifest == null ? null : routeById[previewManifest.routeId],
-      lastVisibleRouteId: visibleLiveRouteIds.isEmpty ? null : visibleLiveRouteIds.last,
-      progress: progress,
       l10n: l10n,
     );
     if (previewTile != null) {
@@ -277,17 +273,12 @@ class HomeOverviewScreen extends ConsumerWidget {
     required BuildContext context,
     required RouteAssetManifest? manifest,
     required DartRouteContent? route,
-    required String? lastVisibleRouteId,
-    required LearningProgressState progress,
     required AppLocalizations l10n,
   }) {
     if (manifest == null) return null;
     return _UpcomingRouteCardTile(
       route: route,
       fallbackTitle: _humanizeRouteId(manifest.routeId),
-      isReadyForRelease:
-          lastVisibleRouteId != null &&
-          progress.completedRouteIds.contains(lastVisibleRouteId),
       l10n: l10n,
     );
   }
@@ -335,14 +326,6 @@ class _MonthlyReleaseBanner extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: const Color(0xFF14503B),
                     fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  l10n.monthlyRouteBannerBody,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: const Color(0xFF1D8D4A),
-                    height: 1.35,
                   ),
                 ),
               ],
@@ -518,13 +501,11 @@ class _UpcomingRouteCardTile extends StatelessWidget {
   const _UpcomingRouteCardTile({
     required this.route,
     required this.fallbackTitle,
-    required this.isReadyForRelease,
     required this.l10n,
   });
 
   final DartRouteContent? route;
   final String fallbackTitle;
-  final bool isReadyForRelease;
   final AppLocalizations l10n;
 
   @override
@@ -575,17 +556,6 @@ class _UpcomingRouteCardTile extends StatelessWidget {
                       textColor: FQColors.primary,
                     ),
                   ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  isReadyForRelease
-                      ? l10n.upcomingRouteReadyBody
-                      : l10n.upcomingRouteLockedBody,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: FQColors.primary,
-                    fontWeight: FontWeight.w700,
-                    height: 1.35,
-                  ),
                 ),
               ],
             ),

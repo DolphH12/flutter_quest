@@ -365,7 +365,7 @@ class _PathBoard extends StatefulWidget {
 
 class _PathBoardState extends State<_PathBoard> {
   final ScrollController _scrollController = ScrollController();
-  double _viewportMainAxis = 0;
+  final GlobalKey _focusedNodeKey = GlobalKey();
 
   @override
   void initState() {
@@ -390,21 +390,12 @@ class _PathBoardState extends State<_PathBoard> {
 
   void _scrollToFocused() {
     if (!_scrollController.hasClients) return;
-    final isDesktop = FQBreakpoints.isDesktop(context);
-    final focusedIndex = widget.nodeStates.indexWhere(
-      (state) => state.node.id == widget.focusedNodeId,
-    );
-    if (focusedIndex < 0) return;
-    final estimatedItemExtent = isDesktop ? 220.0 : 178.0;
-    final estimatedCenter = focusedIndex * estimatedItemExtent;
-    final target = estimatedCenter - (_viewportMainAxis / 2) + 90;
-    final clamped = target.clamp(
-      _scrollController.position.minScrollExtent,
-      _scrollController.position.maxScrollExtent,
-    );
-    _scrollController.animateTo(
-      clamped,
-      duration: const Duration(milliseconds: 360),
+    final targetContext = _focusedNodeKey.currentContext;
+    if (targetContext == null) return;
+    Scrollable.ensureVisible(
+      targetContext,
+      alignment: 0.5,
+      duration: const Duration(milliseconds: 380),
       curve: Curves.easeOutCubic,
     );
   }
@@ -422,9 +413,6 @@ class _PathBoardState extends State<_PathBoard> {
       padding: const EdgeInsets.fromLTRB(8, 50, 8, 50),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          _viewportMainAxis = isDesktop
-              ? constraints.maxWidth
-              : constraints.maxHeight;
           if (isDesktop) {
             final trackHeight = constraints.maxHeight;
             return Center(
@@ -467,6 +455,11 @@ class _PathBoardState extends State<_PathBoard> {
                                 isFocused:
                                     widget.nodeStates[i].node.id ==
                                     widget.focusedNodeId,
+                                targetKey:
+                                    widget.nodeStates[i].node.id ==
+                                        widget.focusedNodeId
+                                    ? _focusedNodeKey
+                                    : null,
                                 hasConnector: i != widget.nodeStates.length - 1,
                                 onTap: () =>
                                     widget.onNodeTap(widget.nodeStates[i]),
@@ -508,6 +501,11 @@ class _PathBoardState extends State<_PathBoard> {
                         isFocused:
                             widget.nodeStates[i].node.id ==
                             widget.focusedNodeId,
+                        targetKey:
+                            widget.nodeStates[i].node.id ==
+                                widget.focusedNodeId
+                            ? _focusedNodeKey
+                            : null,
                         hasConnector: i != widget.nodeStates.length - 1,
                         onTap: () => widget.onNodeTap(widget.nodeStates[i]),
                       ),
@@ -529,6 +527,7 @@ class _PathStepHorizontal extends StatelessWidget {
     required this.isExam,
     required this.isExamPassed,
     required this.isFocused,
+    required this.targetKey,
     required this.hasConnector,
     required this.onTap,
   });
@@ -538,41 +537,46 @@ class _PathStepHorizontal extends StatelessWidget {
   final bool isExam;
   final bool isExamPassed;
   final bool isFocused;
+  final Key? targetKey;
   final bool hasConnector;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Transform.translate(
-      offset: Offset(0, visualOffsetY),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 168,
-            child: _PathStep(
-              nodeState: nodeState,
-              visualOffset: 0,
-              isExam: isExam,
-              isExamPassed: isExamPassed,
-              isFocused: isFocused,
-              hasConnector: false,
-              onTap: onTap,
-            ),
-          ),
-          if (hasConnector)
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Container(
-                width: 58,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: FQColors.primary.withValues(alpha: 0.18),
-                  borderRadius: FQRadius.pill,
-                ),
+    return KeyedSubtree(
+      key: targetKey,
+      child: Transform.translate(
+        offset: Offset(0, visualOffsetY),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 168,
+              child: _PathStep(
+                nodeState: nodeState,
+                visualOffset: 0,
+                isExam: isExam,
+                isExamPassed: isExamPassed,
+                isFocused: isFocused,
+                targetKey: null,
+                hasConnector: false,
+                onTap: onTap,
               ),
             ),
-        ],
+            if (hasConnector)
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Container(
+                  width: 58,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: FQColors.primary.withValues(alpha: 0.18),
+                    borderRadius: FQRadius.pill,
+                  ),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -585,6 +589,7 @@ class _PathStep extends StatelessWidget {
     required this.isExam,
     required this.isExamPassed,
     required this.isFocused,
+    required this.targetKey,
     required this.hasConnector,
     required this.onTap,
   });
@@ -594,6 +599,7 @@ class _PathStep extends StatelessWidget {
   final bool isExam;
   final bool isExamPassed;
   final bool isFocused;
+  final Key? targetKey;
   final bool hasConnector;
   final VoidCallback onTap;
 
@@ -624,74 +630,77 @@ class _PathStep extends StatelessWidget {
       NodeStatus.locked => const Color(0xFFD8DBE1),
     };
 
-    return Transform.translate(
-      offset: Offset(visualOffset, 0),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: isEnabled ? onTap : null,
-            borderRadius: BorderRadius.circular(999),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 220),
-              width: nodeSize,
-              height: nodeSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: outerColor,
-                boxShadow: [
-                  ...FQShadows.soft,
-                  if (isActive)
-                    BoxShadow(
-                      color: FQColors.tertiary.withValues(alpha: 0.55),
-                      blurRadius: 28,
-                      spreadRadius: 2,
+    return KeyedSubtree(
+      key: targetKey,
+      child: Transform.translate(
+        offset: Offset(visualOffset, 0),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: isEnabled ? onTap : null,
+              borderRadius: BorderRadius.circular(999),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                width: nodeSize,
+                height: nodeSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: outerColor,
+                  boxShadow: [
+                    ...FQShadows.soft,
+                    if (isActive)
+                      BoxShadow(
+                        color: FQColors.tertiary.withValues(alpha: 0.55),
+                        blurRadius: 28,
+                        spreadRadius: 2,
+                      ),
+                    if (isFocused && isEnabled)
+                      BoxShadow(
+                        color: FQColors.primaryBright.withValues(alpha: 0.32),
+                        blurRadius: 0,
+                        spreadRadius: 5,
+                      ),
+                  ],
+                ),
+                child: Center(
+                  child: Container(
+                    width: nodeSize - 10,
+                    height: nodeSize - 10,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: innerColor,
+                      border: Border.all(
+                        color: Colors.black.withValues(alpha: 0.12),
+                        width: 1.4,
+                      ),
                     ),
-                  if (isFocused && isEnabled)
-                    BoxShadow(
-                      color: FQColors.primaryBright.withValues(alpha: 0.32),
-                      blurRadius: 0,
-                      spreadRadius: 5,
+                    child: Icon(
+                      iconFromName(node.icon),
+                      size: isExam ? 36 : (isActive ? 38 : 32),
+                      color: isLocked
+                          ? FQColors.outlineVariant
+                          : (isActive ? const Color(0xFF312200) : Colors.white),
                     ),
-                ],
-              ),
-              child: Center(
-                child: Container(
-                  width: nodeSize - 10,
-                  height: nodeSize - 10,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: innerColor,
-                    border: Border.all(
-                      color: Colors.black.withValues(alpha: 0.12),
-                      width: 1.4,
-                    ),
-                  ),
-                  child: Icon(
-                    iconFromName(node.icon),
-                    size: isExam ? 36 : (isActive ? 38 : 32),
-                    color: isLocked
-                        ? FQColors.outlineVariant
-                        : (isActive ? const Color(0xFF312200) : Colors.white),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          _StepLabel(node: node, status: status, isExam: isExam),
-          if (hasConnector) ...[
-            const SizedBox(height: 9),
-            Container(
-              width: 8,
-              height: 54,
-              decoration: BoxDecoration(
-                color: FQColors.primary.withValues(alpha: 0.18),
-                borderRadius: FQRadius.pill,
+            const SizedBox(height: 8),
+            _StepLabel(node: node, status: status, isExam: isExam),
+            if (hasConnector) ...[
+              const SizedBox(height: 9),
+              Container(
+                width: 8,
+                height: 54,
+                decoration: BoxDecoration(
+                  color: FQColors.primary.withValues(alpha: 0.18),
+                  borderRadius: FQRadius.pill,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
+              const SizedBox(height: 10),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
