@@ -90,8 +90,8 @@
             "en": "Navigation is about the user journey: what they see, how they move forward, and where they can go back."
           },
           "incorrectExplanation": {
-            "es": "Un flujo de navegación no es decoración. Es el recorrido lógico del usuario dentro de la app.",
-            "en": "A navigation flow is not decoration. It is the logical path the user follows inside the app."
+            "es": "Un flujo de navegación no es decoración. Es el recorrido lógico del usuario dentro de la app. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A navigation flow is not decoration. It is the logical path the user follows inside the app. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -140,8 +140,8 @@
             "en": "These concepts help you think of navigation as experience, not only code."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál es el punto de entrada, cuál profundiza en información y cuál representa el recorrido completo.",
-            "en": "Review which is the entry point, which one goes deeper into information, and which represents the full journey."
+            "es": "Revisa cuál es el punto de entrada, cuál profundiza en información y cuál representa el recorrido completo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which is the entry point, which one goes deeper into information, and which represents the full journey. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
           "shuffle": true
@@ -180,8 +180,8 @@
             "en": "After login, returning to that screen often means the navigation stack was managed incorrectly."
           },
           "incorrectExplanation": {
-            "es": "Si puedes volver al login después de entrar al home, normalmente faltó reemplazar o limpiar la pila.",
-            "en": "If you can go back to login after reaching home, the stack usually needed replacement or cleanup."
+            "es": "Si puedes volver al login después de entrar al home, normalmente faltó reemplazar o limpiar la pila. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "If you can go back to login after reaching home, the stack usually needed replacement or cleanup. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
           "shuffle": true
@@ -214,14 +214,25 @@
             "en": "Thinking first about screen order helps design more coherent navigation."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe representar un flujo simple y ordenado entre Splash, Login y Home.",
-            "en": "Your answer should represent a simple, ordered flow between Splash, Login, and Home."
+            "es": "Tu respuesta debe representar un flujo simple y ordenado entre Splash, Login y Home. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer should represent a simple, ordered flow between Splash, Login, and Home. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en entrada, validación y destino principal.",
             "en": "Think in entry, validation, and main destination."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Pensar la navegación de una app, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Thinking about app navigation exercise is accepted, even if writing style differs."
+          },
+          "requiredTokens": [
+            "una"
+          ]
         }
       ]
     },
@@ -301,11 +312,14 @@
             "en": "pop removes the current route and returns to the previous one."
           },
           "incorrectExplanation": {
-            "es": "Para volver atrás normalmente se usa Navigator.pop.",
-            "en": "To go back, Navigator.pop is typically used."
+            "es": "Para volver atrás normalmente se usa Navigator.pop. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To go back, Navigator.pop is typically used. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "nav_flow_mindset"
+          ]
         },
         {
           "id": "navigator_complete_1",
@@ -327,14 +341,25 @@
             "en": "pushReplacement replaces the current route with a new one."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es pushReplacement, porque aquí no quieres apilar, sino reemplazar.",
-            "en": "The expected answer is pushReplacement because you do not want to stack here, but replace."
+            "es": "La respuesta esperada es pushReplacement, porque aquí no quieres apilar, sino reemplazar. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is pushReplacement because you do not want to stack here, but replace. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en cambiar una pantalla por otra.",
             "en": "Think about swapping one screen for another."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navigator a profundidad, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigator in depth exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "nav_flow_mindset"
+          ]
         },
         {
           "id": "navigator_bug_1",
@@ -356,14 +381,30 @@
             "en": "If the intention is to go back, pop expresses that behavior better than opening another instance."
           },
           "incorrectExplanation": {
-            "es": "Aquí no quieres abrir otra pantalla, sino regresar a la anterior con pop.",
-            "en": "Here you do not want to open another screen, but return to the previous one with pop."
+            "es": "Aquí no quieres abrir otra pantalla, sino regresar a la anterior con pop. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Here you do not want to open another screen, but return to the previous one with pop. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "No abras otra puerta si solo quieres devolverte.",
             "en": "Do not open another door if you only want to go back."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Navigator",
+            "pop",
+            "context"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navigator a profundidad, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigator in depth exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "nav_flow_mindset"
+          ]
         },
         {
           "id": "navigator_find_1",
@@ -394,10 +435,13 @@
             "en": "If you want to clear the whole stack, the condition should not keep previous routes. Using (_) => false removes all prior routes."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la condición. Con (_) => true no limpias la pila completa.",
-            "en": "The wrong line is the condition. With (_) => true you do not clear the full stack."
+            "es": "La línea incorrecta es la condición. Con (_) => true no limpias la pila completa. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is the condition. With (_) => true you do not clear the full stack. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "nav_flow_mindset"
+          ]
         },
         {
           "id": "navigator_predict_1",
@@ -433,11 +477,14 @@
             "en": "When replacing a route, the previous one leaves the stack and is no longer the back destination."
           },
           "incorrectExplanation": {
-            "es": "pushReplacement reemplaza la ruta actual, así que la pantalla vieja ya no suele quedar disponible al volver.",
-            "en": "pushReplacement replaces the current route, so the old screen usually no longer remains available when going back."
+            "es": "pushReplacement reemplaza la ruta actual, así que la pantalla vieja ya no suele quedar disponible al volver. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "pushReplacement replaces the current route, so the old screen usually no longer remains available when going back. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "nav_flow_mindset"
+          ]
         },
         {
           "id": "navigator_order_1",
@@ -479,11 +526,14 @@
             "en": "The correct push call needs context, route, and closing in the proper order."
           },
           "incorrectExplanation": {
-            "es": "Revisa el orden de la llamada: primero push, luego context, luego la ruta y finalmente el cierre.",
-            "en": "Review the call order: first push, then context, then the route, and finally the close."
+            "es": "Revisa el orden de la llamada: primero push, luego context, luego la ruta y finalmente el cierre. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review the call order: first push, then context, then the route, and finally the close. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "nav_flow_mindset"
+          ]
         }
       ]
     },
@@ -563,11 +613,15 @@
             "en": "A detail screen usually needs real context, such as an id, a title, or a simple model."
           },
           "incorrectExplanation": {
-            "es": "Una pantalla de detalle suele recibir datos del elemento que va a mostrar.",
-            "en": "A detail screen usually receives data from the item it is going to show."
+            "es": "Una pantalla de detalle suele recibir datos del elemento que va a mostrar. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A detail screen usually receives data from the item it is going to show. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "nav_flow_mindset",
+            "navigator_deep_dive"
+          ]
         },
         {
           "id": "pass_data_fill_1",
@@ -589,14 +643,26 @@
             "en": "The title parameter lets you send the data DetailScreen needs."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es title, porque es el dato que se está enviando al constructor.",
-            "en": "The expected answer is title because it is the value being sent to the constructor."
+            "es": "La respuesta esperada es title, porque es el dato que se está enviando al constructor. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is title because it is the value being sent to the constructor. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el nombre del dato visible.",
             "en": "Think of the visible piece of data."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navegar pasando datos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigating while passing data exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "nav_flow_mindset",
+            "navigator_deep_dive"
+          ]
         },
         {
           "id": "pass_data_bug_1",
@@ -618,14 +684,36 @@
             "en": "If the screen depends on title, the constructor must receive and assign it."
           },
           "incorrectExplanation": {
-            "es": "La pantalla declara title pero no lo recibe. Debes agregar required this.title al constructor.",
-            "en": "The screen declares title but does not receive it. You must add required this.title to the constructor."
+            "es": "La pantalla declara title pero no lo recibe. Debes agregar required this.title al constructor. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The screen declares title but does not receive it. You must add required this.title to the constructor. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Declaraste la propiedad, ahora toca inyectarla.",
             "en": "You declared the property, now inject it."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "class",
+            "DetailScreen",
+            "extends",
+            "StatelessWidget",
+            "final",
+            "String",
+            "title",
+            "const"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navegar pasando datos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigating while passing data exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "nav_flow_mindset",
+            "navigator_deep_dive"
+          ]
         },
         {
           "id": "pass_data_guided_1",
@@ -655,14 +743,29 @@
             "en": "The key idea is that navigation includes the data the screen needs to build itself."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir la navegación y un parámetro userId enviado a DetailScreen.",
-            "en": "Your answer must include navigation and a userId parameter sent to DetailScreen."
+            "es": "Tu respuesta debe incluir la navegación y un parámetro userId enviado a DetailScreen. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must include navigation and a userId parameter sent to DetailScreen. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "No solo abras la pantalla: dale contexto.",
             "en": "Do not just open the screen: give it context."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navegar pasando datos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigating while passing data exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "nav_flow_mindset",
+            "navigator_deep_dive"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         },
         {
           "id": "pass_data_predict_1",
@@ -698,11 +801,15 @@
             "en": "By passing data, the next screen can be built with real information from the flow."
           },
           "incorrectExplanation": {
-            "es": "Pasar datos sirve para que la pantalla no sea estática, sino contextual y dinámica.",
-            "en": "Passing data helps the screen become contextual and dynamic instead of static."
+            "es": "Pasar datos sirve para que la pantalla no sea estática, sino contextual y dinámica. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Passing data helps the screen become contextual and dynamic instead of static. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "nav_flow_mindset",
+            "navigator_deep_dive"
+          ]
         }
       ]
     },
@@ -782,11 +889,15 @@
             "en": "If you want to receive the value returned by the next screen, you normally await the navigation."
           },
           "incorrectExplanation": {
-            "es": "La navegación que devuelve datos normalmente se espera con await.",
-            "en": "Navigation that returns data is typically awaited with await."
+            "es": "La navegación que devuelve datos normalmente se espera con await. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Navigation that returns data is typically awaited with await. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "navigator_deep_dive",
+            "passing_data_between_screens"
+          ]
         },
         {
           "id": "return_data_complete_1",
@@ -808,14 +919,26 @@
             "en": "await allows execution to pause until the screen returns a result."
           },
           "incorrectExplanation": {
-            "es": "La respuesta correcta es await, porque aquí quieres recibir el valor al volver.",
-            "en": "The correct answer is await because you want to receive the value when returning."
+            "es": "La respuesta correcta es await, porque aquí quieres recibir el valor al volver. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct answer is await because you want to receive the value when returning. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en esperar un resultado futuro.",
             "en": "Think about waiting for a future result."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Regresar datos desde una pantalla, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Returning data from a screen exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "navigator_deep_dive",
+            "passing_data_between_screens"
+          ]
         },
         {
           "id": "return_data_bug_1",
@@ -837,14 +960,32 @@
             "en": "If you want to return data when closing the screen, you must pass it inside pop."
           },
           "incorrectExplanation": {
-            "es": "No basta con escribir el valor aparte. Debes devolverlo con Navigator.pop(context, valor).",
-            "en": "Writing the value separately is not enough. You must return it with Navigator.pop(context, value)."
+            "es": "No basta con escribir el valor aparte. Debes devolverlo con Navigator.pop(context, valor). Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Writing the value separately is not enough. You must return it with Navigator.pop(context, value). If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Devuelve el dato junto con el cierre.",
             "en": "Return the data together with the close action."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Navigator",
+            "pop",
+            "context",
+            "Medell"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Regresar datos desde una pantalla, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Returning data from a screen exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "navigator_deep_dive",
+            "passing_data_between_screens"
+          ]
         },
         {
           "id": "return_data_match_1",
@@ -890,11 +1031,15 @@
             "en": "These three steps form the core flow of opening, waiting, and receiving a value."
           },
           "incorrectExplanation": {
-            "es": "Revisa quién abre y espera, quién cierra devolviendo un dato y qué variable lo recibe.",
-            "en": "Review who opens and waits, who closes returning data, and which variable receives it."
+            "es": "Revisa quién abre y espera, quién cierra devolviendo un dato y qué variable lo recibe. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review who opens and waits, who closes returning data, and which variable receives it. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "navigator_deep_dive",
+            "passing_data_between_screens"
+          ]
         },
         {
           "id": "return_data_predict_1",
@@ -930,11 +1075,15 @@
             "en": "If the screen closes returning true, that value can arrive in result."
           },
           "incorrectExplanation": {
-            "es": "result recibe el dato enviado desde Navigator.pop, en este caso true.",
-            "en": "result receives the data sent from Navigator.pop, in this case true."
+            "es": "result recibe el dato enviado desde Navigator.pop, en este caso true. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "result receives the data sent from Navigator.pop, in this case true. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "navigator_deep_dive",
+            "passing_data_between_screens"
+          ]
         },
         {
           "id": "return_data_guided_1",
@@ -962,14 +1111,29 @@
             "en": "The key idea is to use pop and attach the value you want to return."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir Navigator.pop y el valor Bogotá como resultado.",
-            "en": "Your answer must include Navigator.pop and the value Bogotá as the result."
+            "es": "Tu respuesta debe incluir Navigator.pop y el valor Bogotá como resultado. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must include Navigator.pop and the value Bogotá as the result. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Cierra la pantalla y manda el dato en la misma llamada.",
             "en": "Close the screen and send the data in the same call."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Regresar datos desde una pantalla, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Returning data from a screen exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "navigator_deep_dive",
+            "passing_data_between_screens"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         }
       ]
     },
@@ -1049,11 +1213,15 @@
             "en": "pushNamed lets you navigate using a registered route name inside the app."
           },
           "incorrectExplanation": {
-            "es": "El método común para rutas nombradas con Navigator es pushNamed.",
-            "en": "The common Navigator method for named routes is pushNamed."
+            "es": "El método común para rutas nombradas con Navigator es pushNamed. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The common Navigator method for named routes is pushNamed. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "passing_data_between_screens",
+            "returning_data_from_screen"
+          ]
         },
         {
           "id": "named_routes_fill_1",
@@ -1075,14 +1243,26 @@
             "en": "pushNamed opens a registered route using its name."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es pushNamed.",
-            "en": "The expected answer is pushNamed."
+            "es": "La respuesta esperada es pushNamed. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is pushNamed. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Empuja la ruta por su nombre.",
             "en": "Push the route by its name."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Rutas nombradas, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Named routes exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "passing_data_between_screens",
+            "returning_data_from_screen"
+          ]
         },
         {
           "id": "named_routes_bug_1",
@@ -1104,14 +1284,32 @@
             "en": "The routes map expects a function that builds the widget."
           },
           "incorrectExplanation": {
-            "es": "La ruta debe mapear a un builder, no al widget puesto directamente.",
-            "en": "The route should map to a builder, not directly to the widget."
+            "es": "La ruta debe mapear a un builder, no al widget puesto directamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The route should map to a builder, not directly to the widget. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Falta el builder.",
             "en": "The builder is missing."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "routes",
+            "profile",
+            "const",
+            "ProfileScreen"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Rutas nombradas, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Named routes exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "passing_data_between_screens",
+            "returning_data_from_screen"
+          ]
         },
         {
           "id": "named_routes_order_1",
@@ -1149,11 +1347,15 @@
             "en": "The base routes map structure uses a name and an associated builder."
           },
           "incorrectExplanation": {
-            "es": "Piensa en abrir el mapa de rutas, asignar el nombre y cerrarlo correctamente.",
-            "en": "Think of opening the routes map, assigning the name, and closing it correctly."
+            "es": "Piensa en abrir el mapa de rutas, asignar el nombre y cerrarlo correctamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think of opening the routes map, assigning the name, and closing it correctly. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "passing_data_between_screens",
+            "returning_data_from_screen"
+          ]
         },
         {
           "id": "named_routes_predict_1",
@@ -1189,11 +1391,15 @@
             "en": "Named routes help better organize repeated navigation and communicate intent."
           },
           "incorrectExplanation": {
-            "es": "La ventaja real está en organización y legibilidad, no en magia extraña.",
-            "en": "The real advantage is organization and readability, not strange magic."
+            "es": "La ventaja real está en organización y legibilidad, no en magia extraña. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The real advantage is organization and readability, not strange magic. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "passing_data_between_screens",
+            "returning_data_from_screen"
+          ]
         }
       ]
     },
@@ -1287,11 +1493,15 @@
             "en": "Access rules help each user see the correct screen according to their state."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué pantalla corresponde según autenticación y onboarding.",
-            "en": "Review which screen fits according to authentication and onboarding."
+            "es": "Revisa qué pantalla corresponde según autenticación y onboarding. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which screen fits according to authentication and onboarding. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "returning_data_from_screen",
+            "named_routes"
+          ]
         },
         {
           "id": "guards_predict_1",
@@ -1327,11 +1537,15 @@
             "en": "If the screen requires authentication, the logical flow is to ask for login first."
           },
           "incorrectExplanation": {
-            "es": "La respuesta coherente suele ser redirigir a login.",
-            "en": "The coherent answer is usually to redirect to login."
+            "es": "La respuesta coherente suele ser redirigir a login. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The coherent answer is usually to redirect to login. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "returning_data_from_screen",
+            "named_routes"
+          ]
         },
         {
           "id": "guards_bug_1",
@@ -1353,14 +1567,34 @@
             "en": "The redirect to login should happen when there is no active session."
           },
           "incorrectExplanation": {
-            "es": "La lógica estaba invertida. Debe enviar a login cuando el usuario NO está autenticado.",
-            "en": "The logic was inverted. It should send to login when the user is NOT authenticated."
+            "es": "La lógica estaba invertida. Debe enviar a login cuando el usuario NO está autenticado. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The logic was inverted. It should send to login when the user is NOT authenticated. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Falta negar la condición.",
             "en": "You need to negate the condition."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "if",
+            "isLoggedIn",
+            "Navigator",
+            "pushNamed",
+            "context",
+            "login"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Pantallas protegidas y guards mentales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Protected screens and mental guards exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "returning_data_from_screen",
+            "named_routes"
+          ]
         },
         {
           "id": "guards_complete_1",
@@ -1382,14 +1616,26 @@
             "en": "The condition clearly expresses whether the initial flow was completed or not."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es Onboarding.",
-            "en": "The expected answer is Onboarding."
+            "es": "La respuesta esperada es Onboarding. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is Onboarding. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el nombre del flujo inicial.",
             "en": "Think of the initial flow name."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Pantallas protegidas y guards mentales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Protected screens and mental guards exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "returning_data_from_screen",
+            "named_routes"
+          ]
         }
       ]
     },
@@ -1475,11 +1721,15 @@
             "en": "The user sees login, tries to enter, and if it succeeds, navigation is replaced by home."
           },
           "incorrectExplanation": {
-            "es": "Piensa en el orden real de la experiencia: primero el login, luego la validación y después el destino final.",
-            "en": "Think about the real order of the experience: first login, then validation, then the final destination."
+            "es": "Piensa en el orden real de la experiencia: primero el login, luego la validación y después el destino final. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think about the real order of the experience: first login, then validation, then the final destination. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "named_routes",
+            "guards_and_protected_routes"
+          ]
         },
         {
           "id": "auth_flow_complete_1",
@@ -1501,14 +1751,26 @@
             "en": "pushReplacement prevents Login from remaining as the immediate previous screen."
           },
           "incorrectExplanation": {
-            "es": "La respuesta correcta es pushReplacement.",
-            "en": "The correct answer is pushReplacement."
+            "es": "La respuesta correcta es pushReplacement. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct answer is pushReplacement. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "No quieres apilar Login debajo del Home.",
             "en": "You do not want Login stacked beneath Home."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Flujo de autenticación y reemplazo, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Auth flow and replacement exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "named_routes",
+            "guards_and_protected_routes"
+          ]
         },
         {
           "id": "auth_flow_predict_1",
@@ -1544,11 +1806,15 @@
             "en": "Logging out redefines access, so it is usually best to clean sensitive history."
           },
           "incorrectExplanation": {
-            "es": "Tras logout, lo deseable suele ser limpiar la pila para impedir volver al Home protegido.",
-            "en": "After logout, it is usually desirable to clear the stack so protected Home cannot be reached again."
+            "es": "Tras logout, lo deseable suele ser limpiar la pila para impedir volver al Home protegido. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "After logout, it is usually desirable to clear the stack so protected Home cannot be reached again. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "named_routes",
+            "guards_and_protected_routes"
+          ]
         },
         {
           "id": "auth_flow_find_1",
@@ -1575,10 +1841,14 @@
             "en": "Using pushNamed may leave Home in the stack. Here it is often better to replace or clear the stack."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática es usar pushNamed si la intención es bloquear el regreso al home.",
-            "en": "The problematic line is using pushNamed when the intention is to block returning to home."
+            "es": "La línea problemática es usar pushNamed si la intención es bloquear el regreso al home. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problematic line is using pushNamed when the intention is to block returning to home. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "prerequisites": [
+            "named_routes",
+            "guards_and_protected_routes"
+          ]
         }
       ]
     },
@@ -1672,11 +1942,15 @@
             "en": "Distinguishing main sections from stacked routes greatly improves flow design."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué se siente como cambio de área y qué se siente como profundidad dentro de una sección.",
-            "en": "Review what feels like a section change and what feels like depth inside a section."
+            "es": "Revisa qué se siente como cambio de área y qué se siente como profundidad dentro de una sección. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what feels like a section change and what feels like depth inside a section. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "guards_and_protected_routes",
+            "auth_flow_replacement"
+          ]
         },
         {
           "id": "bottom_nav_q1",
@@ -1708,11 +1982,15 @@
             "en": "Main sections are usually represented with tabs or bottom navigation."
           },
           "incorrectExplanation": {
-            "es": "Cuando varias áreas están al mismo nivel, BottomNavigationBar o tabs suelen ser una mejor opción.",
-            "en": "When several areas live at the same level, BottomNavigationBar or tabs are usually a better choice."
+            "es": "Cuando varias áreas están al mismo nivel, BottomNavigationBar o tabs suelen ser una mejor opción. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "When several areas live at the same level, BottomNavigationBar or tabs are usually a better choice. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "guards_and_protected_routes",
+            "auth_flow_replacement"
+          ]
         },
         {
           "id": "bottom_nav_predict_1",
@@ -1748,11 +2026,15 @@
             "en": "That gesture usually means going deeper inside the same section, not switching main section."
           },
           "incorrectExplanation": {
-            "es": "Tocar un item dentro de Home suele abrir detalle, no cambiar la sección principal.",
-            "en": "Tapping an item inside Home usually opens detail, not change the main section."
+            "es": "Tocar un item dentro de Home suele abrir detalle, no cambiar la sección principal. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tapping an item inside Home usually opens detail, not change the main section. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "guards_and_protected_routes",
+            "auth_flow_replacement"
+          ]
         }
       ]
     },
@@ -1832,11 +2114,15 @@
             "en": "GoRouter helps describe routes and their overall organization more clearly."
           },
           "incorrectExplanation": {
-            "es": "La ventaja real está en centralizar y declarar mejor la estructura de navegación.",
-            "en": "The real advantage is centralizing and declaring navigation structure more clearly."
+            "es": "La ventaja real está en centralizar y declarar mejor la estructura de navegación. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The real advantage is centralizing and declaring navigation structure more clearly. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "auth_flow_replacement",
+            "bottom_navigation_sections"
+          ]
         },
         {
           "id": "gorouter_match_1",
@@ -1882,11 +2168,15 @@
             "en": "These concepts form the initial mental foundation of GoRouter."
           },
           "incorrectExplanation": {
-            "es": "Revisa quién configura, quién representa una ruta concreta y qué es el path.",
-            "en": "Review who configures, who represents a specific route, and what the path is."
+            "es": "Revisa quién configura, quién representa una ruta concreta y qué es el path. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review who configures, who represents a specific route, and what the path is. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "auth_flow_replacement",
+            "bottom_navigation_sections"
+          ]
         },
         {
           "id": "gorouter_fill_1",
@@ -1908,14 +2198,26 @@
             "en": "GoRoute defines a concrete route inside the GoRouter configuration."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es GoRoute.",
-            "en": "The expected answer is GoRoute."
+            "es": "La respuesta esperada es GoRoute. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is GoRoute. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es el bloque que representa una ruta declarada.",
             "en": "It is the block representing a declared route."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en GoRouter: por qué existe, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this GoRouter: why it exists exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "auth_flow_replacement",
+            "bottom_navigation_sections"
+          ]
         },
         {
           "id": "gorouter_predict_1",
@@ -1951,11 +2253,15 @@
             "en": "That fragment defines which screen corresponds to that path inside the router."
           },
           "incorrectExplanation": {
-            "es": "La configuración está declarando una ruta, no persistencia ni UI decorativa.",
-            "en": "The configuration is declaring a route, not persistence or decorative UI."
+            "es": "La configuración está declarando una ruta, no persistencia ni UI decorativa. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The configuration is declaring a route, not persistence or decorative UI. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "auth_flow_replacement",
+            "bottom_navigation_sections"
+          ]
         }
       ]
     },
@@ -2025,14 +2331,26 @@
             "en": "go is commonly used to change location declaratively."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es go.",
-            "en": "The expected answer is go."
+            "es": "La respuesta esperada es go. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is go. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en ir a otra ubicación.",
             "en": "Think about going to another location."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en GoRouter en práctica, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this GoRouter in practice exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "bottom_navigation_sections",
+            "gorouter_why_and_basics"
+          ]
         },
         {
           "id": "gorouter_practice_bug_1",
@@ -2054,14 +2372,31 @@
             "en": "If you want to go deeper over the current context, push usually expresses that intention better."
           },
           "incorrectExplanation": {
-            "es": "Aquí no quieres cambiar de área principal, sino apilar un detalle con push.",
-            "en": "Here you do not want to switch main area, but to stack a detail with push."
+            "es": "Aquí no quieres cambiar de área principal, sino apilar un detalle con push. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Here you do not want to switch main area, but to stack a detail with push. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Profundizar no siempre es lo mismo que cambiar de ubicación principal.",
             "en": "Going deeper is not always the same as changing the main location."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "context",
+            "push",
+            "detail"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en GoRouter en práctica, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this GoRouter in practice exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "bottom_navigation_sections",
+            "gorouter_why_and_basics"
+          ]
         },
         {
           "id": "gorouter_practice_guided_1",
@@ -2089,14 +2424,29 @@
             "en": "The idea is to practice both navigation intentions with GoRouter."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir una línea con go y otra con push.",
-            "en": "Your answer must include one line with go and another with push."
+            "es": "Tu respuesta debe incluir una línea con go y otra con push. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must include one line with go and another with push. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Una cambia de ubicación principal; la otra profundiza.",
             "en": "One changes the main location; the other goes deeper."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en GoRouter en práctica, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this GoRouter in practice exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "bottom_navigation_sections",
+            "gorouter_why_and_basics"
+          ],
+          "requiredTokens": [
+            "dos"
+          ]
         },
         {
           "id": "gorouter_practice_predict_1",
@@ -2132,11 +2482,15 @@
             "en": "push usually feels like an extra layer inside the current flow."
           },
           "incorrectExplanation": {
-            "es": "context.push suele usarse para apilar una ruta como detalle sobre el contexto actual.",
-            "en": "context.push is usually used to stack a route such as a detail above the current context."
+            "es": "context.push suele usarse para apilar una ruta como detalle sobre el contexto actual. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "context.push is usually used to stack a route such as a detail above the current context. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "bottom_navigation_sections",
+            "gorouter_why_and_basics"
+          ]
         }
       ]
     },
@@ -2206,14 +2560,26 @@
             "en": "In GoRouter, :id represents a dynamic parameter inside the path."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es :id.",
-            "en": "The expected answer is :id."
+            "es": "La respuesta esperada es :id. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is :id. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Usa la convención de parámetro dinámico.",
             "en": "Use the dynamic parameter convention."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Parámetros y rutas dinámicas, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Parameters and dynamic routes exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "gorouter_why_and_basics",
+            "gorouter_in_practice"
+          ]
         },
         {
           "id": "dynamic_q1",
@@ -2245,11 +2611,15 @@
             "en": "That path indicates the route accepts a variable value called id."
           },
           "incorrectExplanation": {
-            "es": "La expresión '/detail/:id' se usa para definir una ruta dinámica con parámetro.",
-            "en": "The expression '/detail/:id' is used to define a dynamic route with a parameter."
+            "es": "La expresión '/detail/:id' se usa para definir una ruta dinámica con parámetro. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expression '/detail/:id' is used to define a dynamic route with a parameter. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "gorouter_why_and_basics",
+            "gorouter_in_practice"
+          ]
         },
         {
           "id": "dynamic_bug_1",
@@ -2271,14 +2641,32 @@
             "en": "GoRouter exposes path parameters inside state.pathParameters."
           },
           "incorrectExplanation": {
-            "es": "Aquí debes leer el id desde state.pathParameters['id'].",
-            "en": "Here you must read the id from state.pathParameters['id']."
+            "es": "Aquí debes leer el id desde state.pathParameters['id']. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Here you must read the id from state.pathParameters['id']. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "El parámetro vive dentro de state.pathParameters.",
             "en": "The parameter lives inside state.pathParameters."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "builder",
+            "state",
+            "DetailScreen",
+            "pathParameters"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Parámetros y rutas dinámicas, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Parameters and dynamic routes exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "gorouter_why_and_basics",
+            "gorouter_in_practice"
+          ]
         },
         {
           "id": "dynamic_predict_1",
@@ -2314,11 +2702,15 @@
             "en": "The real segment replaces the dynamic parameter and arrives as a value read from the route."
           },
           "incorrectExplanation": {
-            "es": "Si la ruta visitada es '/detail/42', el valor dinámico esperado para id es 42.",
-            "en": "If the visited route is '/detail/42', the expected dynamic value for id is 42."
+            "es": "Si la ruta visitada es '/detail/42', el valor dinámico esperado para id es 42. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "If the visited route is '/detail/42', the expected dynamic value for id is 42. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "gorouter_why_and_basics",
+            "gorouter_in_practice"
+          ]
         }
       ]
     },
@@ -2412,11 +2804,15 @@
             "en": "Thinking in shell navigation helps separate structure and content more cleanly."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué permanece fijo, qué cambia y qué controla la navegación principal.",
-            "en": "Review what stays fixed, what changes, and what controls the main navigation."
+            "es": "Revisa qué permanece fijo, qué cambia y qué controla la navegación principal. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what stays fixed, what changes, and what controls the main navigation. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "gorouter_in_practice",
+            "dynamic_routes_and_params"
+          ]
         },
         {
           "id": "shell_order_1",
@@ -2454,11 +2850,15 @@
             "en": "First comes the stable structure; then the active section defines what content changes inside."
           },
           "incorrectExplanation": {
-            "es": "Piensa primero en la estructura fija y luego en el contenido que cambia dentro de ella.",
-            "en": "Think first of the fixed structure and then of the content changing inside it."
+            "es": "Piensa primero en la estructura fija y luego en el contenido que cambia dentro de ella. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think first of the fixed structure and then of the content changing inside it. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "gorouter_in_practice",
+            "dynamic_routes_and_params"
+          ]
         },
         {
           "id": "shell_guided_1",
@@ -2490,14 +2890,29 @@
             "en": "The important thing here is to express the idea of a stable structure with variable inner content."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe mencionar el shell y las tres secciones principales.",
-            "en": "Your answer must mention the shell and the three main sections."
+            "es": "Tu respuesta debe mencionar el shell y las tres secciones principales. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must mention the shell and the three main sections. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en un marco fijo con contenido intercambiable.",
             "en": "Think of a fixed frame with swappable content."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Shell navigation y estructura real, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Shell navigation and real app structure exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "gorouter_in_practice",
+            "dynamic_routes_and_params"
+          ],
+          "requiredTokens": [
+            "una"
+          ]
         },
         {
           "id": "shell_predict_1",
@@ -2533,11 +2948,15 @@
             "en": "The shell helps keep a stable structure and scale multiple main sections more cleanly."
           },
           "incorrectExplanation": {
-            "es": "La ventaja real está en consistencia y escalabilidad de la estructura general.",
-            "en": "The real advantage is consistency and scalability of the overall structure."
+            "es": "La ventaja real está en consistencia y escalabilidad de la estructura general. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The real advantage is consistency and scalability of the overall structure. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "gorouter_in_practice",
+            "dynamic_routes_and_params"
+          ]
         }
       ]
     },
@@ -2601,11 +3020,15 @@
             "en": "pushReplacement helps remove Login from the immediate back path."
           },
           "incorrectExplanation": {
-            "es": "La opción más coherente aquí suele ser pushReplacement.",
-            "en": "The most coherent option here is usually pushReplacement."
+            "es": "La opción más coherente aquí suele ser pushReplacement. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The most coherent option here is usually pushReplacement. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dynamic_routes_and_params",
+            "shell_navigation_app_structure"
+          ]
         },
         {
           "id": "nav_exam_match_1",
@@ -2651,11 +3074,15 @@
             "en": "This checks whether you clearly distinguish navigation intentions."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué sirve para volver, qué cambia ubicación principal y qué apila detalle.",
-            "en": "Review what is used to return, what changes main location, and what stacks detail."
+            "es": "Revisa qué sirve para volver, qué cambia ubicación principal y qué apila detalle. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what is used to return, what changes main location, and what stacks detail. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 18,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dynamic_routes_and_params",
+            "shell_navigation_app_structure"
+          ]
         },
         {
           "id": "nav_exam_bug_1",
@@ -2677,14 +3104,32 @@
             "en": "The value must travel inside Navigator.pop."
           },
           "incorrectExplanation": {
-            "es": "No basta con escribir true aparte. Debe ir dentro del pop.",
-            "en": "Writing true separately is not enough. It must go inside pop."
+            "es": "No basta con escribir true aparte. Debe ir dentro del pop. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Writing true separately is not enough. It must go inside pop. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Cierra y devuelve en la misma llamada.",
             "en": "Close and return in the same call."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Navigator",
+            "pop",
+            "context",
+            "true"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Navegación, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigation Final Exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dynamic_routes_and_params",
+            "shell_navigation_app_structure"
+          ]
         },
         {
           "id": "nav_exam_order_1",
@@ -2722,11 +3167,15 @@
             "en": "First you open and wait, then the screen returns the data, and finally the variable receives it."
           },
           "incorrectExplanation": {
-            "es": "Piensa en el ciclo real: abrir, devolver, recibir.",
-            "en": "Think of the real cycle: open, return, receive."
+            "es": "Piensa en el ciclo real: abrir, devolver, recibir. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think of the real cycle: open, return, receive. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 18,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dynamic_routes_and_params",
+            "shell_navigation_app_structure"
+          ]
         },
         {
           "id": "nav_exam_predict_1",
@@ -2762,11 +3211,15 @@
             "en": "That path indicates the route accepts a variable value called id."
           },
           "incorrectExplanation": {
-            "es": "La expresión indica una ruta dinámica, no un widget ni una acción de cierre.",
-            "en": "The expression indicates a dynamic route, not a widget or a closing action."
+            "es": "La expresión indica una ruta dinámica, no un widget ni una acción de cierre. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expression indicates a dynamic route, not a widget or a closing action. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dynamic_routes_and_params",
+            "shell_navigation_app_structure"
+          ]
         },
         {
           "id": "nav_exam_guided_1",
@@ -2796,14 +3249,29 @@
             "en": "Here you are combining several levels of intent: go, go deeper, and return."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir una línea con go, otra con push y una con pop.",
-            "en": "Your answer must include one line with go, one with push, and one with pop."
+            "es": "Tu respuesta debe incluir una línea con go, otra con push y una con pop. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must include one line with go, one with push, and one with pop. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Primero cambia de área, luego profundiza y finalmente vuelve.",
             "en": "First switch area, then go deeper, and finally return."
           },
-          "xpReward": 24
+          "xpReward": 24,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Navegación, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Navigation Final Exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dynamic_routes_and_params",
+            "shell_navigation_app_structure"
+          ],
+          "requiredTokens": [
+            "mini"
+          ]
         }
       ]
     }

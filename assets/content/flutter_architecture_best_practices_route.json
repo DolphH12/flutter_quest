@@ -90,8 +90,8 @@
             "en": "Useful architecture aims for clarity, maintainability, and healthy project evolution."
           },
           "incorrectExplanation": {
-            "es": "Arquitectura no es maquillaje. Su valor está en cómo facilita cambiar, leer y sostener el proyecto.",
-            "en": "Architecture is not makeup. Its value lies in making the project easier to change, read, and sustain."
+            "es": "Arquitectura no es maquillaje. Su valor está en cómo facilita cambiar, leer y sostener el proyecto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Architecture is not makeup. Its value lies in making the project easier to change, read, and sustain. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -140,8 +140,8 @@
             "en": "These ideas form the mental basis for designing healthier projects."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál concepto organiza, cuál pega demasiado las piezas y cuál facilita evolucionar el código.",
-            "en": "Review which concept organizes, which one sticks pieces too tightly, and which one makes code easier to evolve."
+            "es": "Revisa cuál concepto organiza, cuál pega demasiado las piezas y cuál facilita evolucionar el código. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which concept organizes, which one sticks pieces too tightly, and which one makes code easier to evolve. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
           "shuffle": true
@@ -180,8 +180,8 @@
             "en": "When one piece does too much, the code becomes fragile and hard to evolve."
           },
           "incorrectExplanation": {
-            "es": "La mezcla excesiva de responsabilidades normalmente empeora el mantenimiento.",
-            "en": "Excessive mixing of responsibilities usually hurts maintainability."
+            "es": "La mezcla excesiva de responsabilidades normalmente empeora el mantenimiento. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Excessive mixing of responsibilities usually hurts maintainability. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
           "shuffle": true
@@ -264,11 +264,14 @@
             "en": "A repository usually talks to the data source and exposes a cleaner API to the rest of the app."
           },
           "incorrectExplanation": {
-            "es": "La UI pinta, el tema define estilos y la navegación mueve pantallas. El repositorio se enfoca en datos.",
-            "en": "UI paints, theme styles, and navigation moves screens. The repository focuses on data."
+            "es": "La UI pinta, el tema define estilos y la navegación mueve pantallas. El repositorio se enfoca en datos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "UI paints, theme styles, and navigation moves screens. The repository focuses on data. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_intro_mindset"
+          ]
         },
         {
           "id": "arch_sep_code_1",
@@ -290,14 +293,25 @@
             "en": "The repository is a typical layer for querying data without dirtying the UI."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es repository, porque esa capa suele abstraer el acceso a datos.",
-            "en": "The expected answer is repository, because that layer usually abstracts data access."
+            "es": "La respuesta esperada es repository, porque esa capa suele abstraer el acceso a datos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is repository, because that layer usually abstracts data access. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en la pieza que habla con la fuente de datos, no con la interfaz.",
             "en": "Think about the piece that talks to the data source, not the interface."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Separación de responsabilidades, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Separation of responsibilities exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_intro_mindset"
+          ]
         },
         {
           "id": "arch_sep_bug_1",
@@ -319,14 +333,35 @@
             "en": "The idea is that the screen talks to a cleaner layer, not directly to infrastructure."
           },
           "incorrectExplanation": {
-            "es": "El problema no es solo sintaxis: es de responsabilidad. La pantalla no debería golpear la red directamente.",
-            "en": "The problem is not just syntax: it is responsibility. The screen should not hit the network directly."
+            "es": "El problema no es solo sintaxis: es de responsabilidad. La pantalla no debería golpear la red directamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problem is not just syntax: it is responsibility. The screen should not hit the network directly. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Saca el acceso directo a la red fuera de la pantalla.",
             "en": "Move direct network access out of the screen."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "class",
+            "HomeScreen",
+            "extends",
+            "StatelessWidget",
+            "Future",
+            "void",
+            "load",
+            "async"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Separación de responsabilidades, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Separation of responsibilities exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_intro_mindset"
+          ]
         },
         {
           "id": "arch_sep_find_1",
@@ -359,10 +394,13 @@
             "en": "UI is entering local persistence directly, which is better abstracted behind another layer."
           },
           "incorrectExplanation": {
-            "es": "La línea más problemática es la que mete acceso directo a almacenamiento dentro de la pantalla.",
-            "en": "The most problematic line is the one that puts direct storage access inside the screen."
+            "es": "La línea más problemática es la que mete acceso directo a almacenamiento dentro de la pantalla. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The most problematic line is the one that puts direct storage access inside the screen. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "arch_intro_mindset"
+          ]
         },
         {
           "id": "arch_sep_match_1",
@@ -408,11 +446,14 @@
             "en": "When each layer has a clear role, the project breathes better."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué parte pinta, cuál trae datos y cuál contiene reglas.",
-            "en": "Review which part paints, which brings data, and which contains rules."
+            "es": "Revisa qué parte pinta, cuál trae datos y cuál contiene reglas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which part paints, which brings data, and which contains rules. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_intro_mindset"
+          ]
         }
       ]
     },
@@ -518,11 +559,15 @@
             "en": "Feature-based structure groups related pieces inside the same module."
           },
           "incorrectExplanation": {
-            "es": "Piensa primero en el módulo y luego en sus subcapas.",
-            "en": "Think first about the module and then its sublayers."
+            "es": "Piensa primero en el módulo y luego en sus subcapas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think first about the module and then its sublayers. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_intro_mindset",
+            "arch_separation_responsibilities"
+          ]
         },
         {
           "id": "arch_folder_q1",
@@ -554,11 +599,15 @@
             "en": "Grouping by feature usually improves focus and reduces the feeling of files scattered everywhere."
           },
           "incorrectExplanation": {
-            "es": "La principal ventaja es la cohesión del módulo, no la magia ni la eliminación de problemas.",
-            "en": "The main advantage is module cohesion, not magic or problem elimination."
+            "es": "La principal ventaja es la cohesión del módulo, no la magia ni la eliminación de problemas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The main advantage is module cohesion, not magic or problem elimination. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_intro_mindset",
+            "arch_separation_responsibilities"
+          ]
         },
         {
           "id": "arch_folder_find_1",
@@ -591,10 +640,14 @@
             "en": "That file path sounds like accumulated chaos, not a maintainable structure."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática es la que rompe el criterio de organización y huele a carpeta de pánico.",
-            "en": "The problematic line is the one that breaks organization criteria and smells like a panic folder."
+            "es": "La línea problemática es la que rompe el criterio de organización y huele a carpeta de pánico. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problematic line is the one that breaks organization criteria and smells like a panic folder. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "arch_intro_mindset",
+            "arch_separation_responsibilities"
+          ]
         },
         {
           "id": "arch_folder_guided_1",
@@ -626,14 +679,29 @@
             "en": "That structure gives a clear base for the tasks module."
           },
           "incorrectExplanation": {
-            "es": "Incluye las tres carpetas base dentro del feature tasks.",
-            "en": "Include the three base folders inside the tasks feature."
+            "es": "Incluye las tres carpetas base dentro del feature tasks. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Include the three base folders inside the tasks feature. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en separar datos, reglas y UI.",
             "en": "Think about separating data, rules, and UI."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Estructura de carpetas con sentido, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Meaningful folder structure exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_intro_mindset",
+            "arch_separation_responsibilities"
+          ],
+          "requiredTokens": [
+            "una"
+          ]
         }
       ]
     },
@@ -727,11 +795,15 @@
             "en": "This separation helps reduce unnecessary mixing of responsibilities."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué capa pinta, cuál decide y cuál implementa acceso a datos.",
-            "en": "Review which layer paints, which decides, and which implements data access."
+            "es": "Revisa qué capa pinta, cuál decide y cuál implementa acceso a datos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which layer paints, which decides, and which implements data access. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_separation_responsibilities",
+            "arch_folder_structure"
+          ]
         },
         {
           "id": "arch_layers_predict_1",
@@ -767,11 +839,15 @@
             "en": "Contracts like interfaces often live well in domain because they express intent without tying to implementation."
           },
           "incorrectExplanation": {
-            "es": "UI y detalles técnicos suelen pertenecer a otras capas. Un contrato puro encaja mejor en domain.",
-            "en": "UI and technical details usually belong to other layers. A pure contract fits better in domain."
+            "es": "UI y detalles técnicos suelen pertenecer a otras capas. Un contrato puro encaja mejor en domain. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "UI and technical details usually belong to other layers. A pure contract fits better in domain. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_separation_responsibilities",
+            "arch_folder_structure"
+          ]
         },
         {
           "id": "arch_layers_code_1",
@@ -793,14 +869,26 @@
             "en": "A concrete data access implementation naturally fits in data."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es data, porque allí viven implementaciones concretas.",
-            "en": "The expected answer is data, because concrete implementations live there."
+            "es": "La respuesta esperada es data, porque allí viven implementaciones concretas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is data, because concrete implementations live there. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en la capa que sí conoce detalles técnicos.",
             "en": "Think about the layer that does know technical details."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Capas limpias sin exagerar, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Clean layers without overdoing it exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_separation_responsibilities",
+            "arch_folder_structure"
+          ]
         },
         {
           "id": "arch_layers_bug_1",
@@ -822,14 +910,36 @@
             "en": "A domain contract does not need to carry concrete infrastructure inside itself."
           },
           "incorrectExplanation": {
-            "es": "El problema es que el contrato quedó contaminado con un detalle técnico.",
-            "en": "The problem is that the contract got contaminated with a technical detail."
+            "es": "El problema es que el contrato quedó contaminado con un detalle técnico. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problem is that the contract got contaminated with a technical detail. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Quita el detalle concreto y deja la intención pura.",
             "en": "Remove the concrete detail and leave the pure intention."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "abstract",
+            "class",
+            "SettingsRepository",
+            "Future",
+            "void",
+            "saveTheme",
+            "String",
+            "value"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Capas limpias sin exagerar, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Clean layers without overdoing it exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_separation_responsibilities",
+            "arch_folder_structure"
+          ]
         }
       ]
     },
@@ -909,11 +1019,15 @@
             "en": "When many screens depend on the same data, a shared solution usually makes more sense."
           },
           "incorrectExplanation": {
-            "es": "Los otros ejemplos suelen ser más locales y no justifican una solución global tan fácilmente.",
-            "en": "The other examples tend to be more local and do not justify a global solution as easily."
+            "es": "Los otros ejemplos suelen ser más locales y no justifican una solución global tan fácilmente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The other examples tend to be more local and do not justify a global solution as easily. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_folder_structure",
+            "arch_clean_layers"
+          ]
         },
         {
           "id": "arch_state_match_1",
@@ -959,11 +1073,15 @@
             "en": "Distinguishing these types helps avoid overdesigning the project."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué estado vive aislado, cuál se comparte y cuál realmente puede calcularse.",
-            "en": "Review which state lives isolated, which is shared, and which can actually be calculated."
+            "es": "Revisa qué estado vive aislado, cuál se comparte y cuál realmente puede calcularse. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which state lives isolated, which is shared, and which can actually be calculated. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_folder_structure",
+            "arch_clean_layers"
+          ]
         },
         {
           "id": "arch_state_predict_1",
@@ -999,11 +1117,15 @@
             "en": "When you store separately something that could be derived, you increase the risk of values diverging."
           },
           "incorrectExplanation": {
-            "es": "En muchos casos sería más sano derivar `itemCount` desde `items.length`.",
-            "en": "In many cases it would be healthier to derive `itemCount` from `items.length`."
+            "es": "En muchos casos sería más sano derivar `itemCount` desde `items.length`. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "In many cases it would be healthier to derive `itemCount` from `items.length`. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_folder_structure",
+            "arch_clean_layers"
+          ]
         },
         {
           "id": "arch_state_guided_1",
@@ -1027,14 +1149,29 @@
             "en": "Deriving the count from the list avoids duplicating unnecessary state."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es items.length.",
-            "en": "The expected answer is items.length."
+            "es": "La respuesta esperada es items.length. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is items.length. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "No guardes lo que ya puedes calcular fácilmente.",
             "en": "Do not store what you can already calculate easily."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Elegir manejo de estado con criterio, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Choosing state management with judgement exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_folder_structure",
+            "arch_clean_layers"
+          ],
+          "requiredTokens": [
+            "expresi"
+          ]
         }
       ]
     },
@@ -1114,11 +1251,15 @@
             "en": "toJson usually responds to transport or storage needs, more typical of data."
           },
           "incorrectExplanation": {
-            "es": "Las entidades de dominio buscan expresar intención, no detalles de serialización.",
-            "en": "Domain entities aim to express intention, not serialization details."
+            "es": "Las entidades de dominio buscan expresar intención, no detalles de serialización. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Domain entities aim to express intention, not serialization details. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_clean_layers",
+            "arch_state_management_choice"
+          ]
         },
         {
           "id": "arch_model_code_1",
@@ -1140,14 +1281,26 @@
             "en": "A name like toEntity communicates the conversion toward domain well."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es toEntity.",
-            "en": "The expected answer is toEntity."
+            "es": "La respuesta esperada es toEntity. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is toEntity. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en convertir hacia una entidad de dominio.",
             "en": "Think about converting to a domain entity."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Modelos, entidades y DTOs, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Models, entities, and DTOs exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_clean_layers",
+            "arch_state_management_choice"
+          ]
         },
         {
           "id": "arch_model_bug_1",
@@ -1169,14 +1322,34 @@
             "en": "The entity stays cleaner when it does not carry serialization details."
           },
           "incorrectExplanation": {
-            "es": "El problema es mezclar intención de dominio con detalles técnicos.",
-            "en": "The problem is mixing domain intent with technical details."
+            "es": "El problema es mezclar intención de dominio con detalles técnicos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problem is mixing domain intent with technical details. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Quita el detalle de serialización y deja la entidad enfocada.",
             "en": "Remove the serialization detail and keep the entity focused."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "class",
+            "UserEntity",
+            "final",
+            "String",
+            "name",
+            "this"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Modelos, entidades y DTOs, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Models, entities, and DTOs exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_clean_layers",
+            "arch_state_management_choice"
+          ]
         },
         {
           "id": "arch_model_match_1",
@@ -1222,11 +1395,15 @@
             "en": "This distinction helps a lot when an app starts integrating with multiple data sources."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál vive más cerca del dominio, cuál del transporte y cuál conecta ambos mundos.",
-            "en": "Review which one lives closer to domain, which to transport, and which connects both worlds."
+            "es": "Revisa cuál vive más cerca del dominio, cuál del transporte y cuál conecta ambos mundos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which one lives closer to domain, which to transport, and which connects both worlds. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_clean_layers",
+            "arch_state_management_choice"
+          ]
         }
       ]
     },
@@ -1306,11 +1483,15 @@
             "en": "That name expresses a system intention or rule, not just a technical operation."
           },
           "incorrectExplanation": {
-            "es": "Repositorio suele sonar más a acceso a datos. Caso de uso suena más a acción del negocio.",
-            "en": "Repository tends to sound more like data access. Use case sounds more like a business action."
+            "es": "Repositorio suele sonar más a acceso a datos. Caso de uso suena más a acción del negocio. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Repository tends to sound more like data access. Use case sounds more like a business action. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_state_management_choice",
+            "arch_models_entities_dto"
+          ]
         },
         {
           "id": "arch_repo_code_1",
@@ -1332,14 +1513,26 @@
             "en": "Use cases usually depend on repository contracts to execute their flow."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es Repository.",
-            "en": "The expected answer is Repository."
+            "es": "La respuesta esperada es Repository. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is Repository. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el contrato de acceso a datos que el caso de uso usa.",
             "en": "Think about the data-access contract the use case uses."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Repositorios y casos de uso, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Repositories and use cases exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_state_management_choice",
+            "arch_models_entities_dto"
+          ]
         },
         {
           "id": "arch_repo_order_1",
@@ -1381,11 +1574,15 @@
             "en": "That order represents a typical responsibility chain."
           },
           "incorrectExplanation": {
-            "es": "Piensa en quién pide, quién decide y quién obtiene datos.",
-            "en": "Think about who asks, who decides, and who fetches data."
+            "es": "Piensa en quién pide, quién decide y quién obtiene datos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think about who asks, who decides, and who fetches data. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_state_management_choice",
+            "arch_models_entities_dto"
+          ]
         },
         {
           "id": "arch_repo_predict_1",
@@ -1421,11 +1618,15 @@
             "en": "The repository helps decouple UI from concrete data technology."
           },
           "incorrectExplanation": {
-            "es": "Cuando la UI conoce demasiado la infraestructura, el acoplamiento sube.",
-            "en": "When UI knows too much about infrastructure, coupling goes up."
+            "es": "Cuando la UI conoce demasiado la infraestructura, el acoplamiento sube. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "When UI knows too much about infrastructure, coupling goes up. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_state_management_choice",
+            "arch_models_entities_dto"
+          ]
         }
       ]
     },
@@ -1505,11 +1706,15 @@
             "en": "Passing dependencies from outside is a classic sign of dependency injection."
           },
           "incorrectExplanation": {
-            "es": "La clave es no fabricar todo adentro cuando puedes recibirlo desde fuera.",
-            "en": "The key is not to build everything inside when you can receive it from outside."
+            "es": "La clave es no fabricar todo adentro cuando puedes recibirlo desde fuera. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The key is not to build everything inside when you can receive it from outside. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_models_entities_dto",
+            "arch_repositories_usecases"
+          ]
         },
         {
           "id": "arch_di_bug_1",
@@ -1531,14 +1736,34 @@
             "en": "This way the dependency comes from outside and the class becomes less coupled."
           },
           "incorrectExplanation": {
-            "es": "El problema es crear la dependencia directamente dentro de la clase.",
-            "en": "The problem is creating the dependency directly inside the class."
+            "es": "El problema es crear la dependencia directamente dentro de la clase. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problem is creating the dependency directly inside the class. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Recibe la dependencia, no la fabriques ahí mismo.",
             "en": "Receive the dependency, do not manufacture it right there."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "class",
+            "ProfileController",
+            "final",
+            "ProfileRepository",
+            "repository",
+            "this"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Inyección de dependencias, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Dependency injection exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_models_entities_dto",
+            "arch_repositories_usecases"
+          ]
         },
         {
           "id": "arch_di_match_1",
@@ -1584,11 +1809,15 @@
             "en": "These ideas help make architecture more flexible."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué viene desde afuera, qué pega demasiado y qué facilita reemplazar implementaciones.",
-            "en": "Review what comes from outside, what sticks too much, and what facilitates replacing implementations."
+            "es": "Revisa qué viene desde afuera, qué pega demasiado y qué facilita reemplazar implementaciones. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what comes from outside, what sticks too much, and what facilitates replacing implementations. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_models_entities_dto",
+            "arch_repositories_usecases"
+          ]
         },
         {
           "id": "arch_di_guided_1",
@@ -1612,14 +1841,29 @@
             "en": "That constructor reflects a simple and clear injection."
           },
           "incorrectExplanation": {
-            "es": "La respuesta debe recibir repository desde el constructor.",
-            "en": "The answer must receive repository through the constructor."
+            "es": "La respuesta debe recibir repository desde el constructor. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The answer must receive repository through the constructor. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Usa el campo ya declarado en la clase.",
             "en": "Use the field already declared in the class."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Inyección de dependencias, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Dependency injection exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_models_entities_dto",
+            "arch_repositories_usecases"
+          ],
+          "requiredTokens": [
+            "constructor"
+          ]
         }
       ]
     },
@@ -1699,11 +1943,15 @@
             "en": "That helps the app communicate better and couple UI less to technical details."
           },
           "incorrectExplanation": {
-            "es": "El usuario final no necesita tragarse detalles internos de infraestructura.",
-            "en": "The end user does not need to swallow infrastructure internals."
+            "es": "El usuario final no necesita tragarse detalles internos de infraestructura. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The end user does not need to swallow infrastructure internals. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_repositories_usecases",
+            "arch_dependency_injection"
+          ]
         },
         {
           "id": "arch_error_find_1",
@@ -1732,10 +1980,14 @@
             "en": "That raw technical detail is usually not appropriate to leak directly to UI."
           },
           "incorrectExplanation": {
-            "es": "La línea más problemática es la que expone información técnica sin traducir.",
-            "en": "The most problematic line is the one exposing technical information untranslated."
+            "es": "La línea más problemática es la que expone información técnica sin traducir. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The most problematic line is the one exposing technical information untranslated. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "prerequisites": [
+            "arch_repositories_usecases",
+            "arch_dependency_injection"
+          ]
         },
         {
           "id": "arch_error_match_1",
@@ -1781,11 +2033,15 @@
             "en": "This way each layer handles the error from its natural responsibility."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué capa captura detalles técnicos, cuál estabiliza el fallo y cuál comunica al usuario.",
-            "en": "Review which layer captures technical details, which stabilizes failure, and which communicates to the user."
+            "es": "Revisa qué capa captura detalles técnicos, cuál estabiliza el fallo y cuál comunica al usuario. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which layer captures technical details, which stabilizes failure, and which communicates to the user. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_repositories_usecases",
+            "arch_dependency_injection"
+          ]
         },
         {
           "id": "arch_error_predict_1",
@@ -1821,11 +2077,15 @@
             "en": "The rest of the system can work with a clearer concept less dependent on technical detail."
           },
           "incorrectExplanation": {
-            "es": "Traducir errores reduce el goteo de detalles internos.",
-            "en": "Translating errors reduces leakage of internal details."
+            "es": "Traducir errores reduce el goteo de detalles internos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Translating errors reduces leakage of internal details. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_repositories_usecases",
+            "arch_dependency_injection"
+          ]
         }
       ]
     },
@@ -1905,11 +2165,15 @@
             "en": "When one piece does too much, it is usually a strong sign of technical debt."
           },
           "incorrectExplanation": {
-            "es": "El problema suele aparecer cuando se acumulan responsabilidades, no cuando el código está claro y enfocado.",
-            "en": "The problem usually appears when responsibilities accumulate, not when code is clear and focused."
+            "es": "El problema suele aparecer cuando se acumulan responsabilidades, no cuando el código está claro y enfocado. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problem usually appears when responsibilities accumulate, not when code is clear and focused. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_dependency_injection",
+            "arch_error_handling_boundaries"
+          ]
         },
         {
           "id": "arch_scale_predict_1",
@@ -1945,11 +2209,15 @@
             "en": "Extracting repeated pieces usually improves readability and eases future changes."
           },
           "incorrectExplanation": {
-            "es": "La reutilización bien hecha reduce ruido y repeticiones innecesarias.",
-            "en": "Well-done reuse reduces noise and unnecessary repetition."
+            "es": "La reutilización bien hecha reduce ruido y repeticiones innecesarias. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Well-done reuse reduces noise and unnecessary repetition. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_dependency_injection",
+            "arch_error_handling_boundaries"
+          ]
         },
         {
           "id": "arch_scale_order_1",
@@ -1991,11 +2259,15 @@
             "en": "Refactoring with judgement starts by understanding the problem, not by moving files randomly."
           },
           "incorrectExplanation": {
-            "es": "No empieces reordenando por ansiedad; primero entiende qué duele.",
-            "en": "Do not start rearranging out of anxiety; first understand what hurts."
+            "es": "No empieces reordenando por ansiedad; primero entiende qué duele. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Do not start rearranging out of anxiety; first understand what hurts. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_dependency_injection",
+            "arch_error_handling_boundaries"
+          ]
         },
         {
           "id": "arch_scale_guided_1",
@@ -2019,14 +2291,29 @@
             "en": "That name communicates intention and reuse well."
           },
           "incorrectExplanation": {
-            "es": "La idea es usar un nombre claro y específico para un widget reutilizable.",
-            "en": "The idea is to use a clear, specific name for a reusable widget."
+            "es": "La idea es usar un nombre claro y específico para un widget reutilizable. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The idea is to use a clear, specific name for a reusable widget. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en un nombre semántico, no genérico como Box1.",
             "en": "Think of a semantic name, not a generic one like Box1."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Escalar y refactorizar sin llorar, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Scaling and refactoring without crying exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_dependency_injection",
+            "arch_error_handling_boundaries"
+          ],
+          "requiredTokens": [
+            "una"
+          ]
         }
       ]
     },
@@ -2106,11 +2393,15 @@
             "en": "That name says much more clearly what the piece does."
           },
           "incorrectExplanation": {
-            "es": "Los nombres vagos aumentan el costo de lectura. Un nombre semántico ayuda más.",
-            "en": "Vague names increase reading cost. A semantic name helps more."
+            "es": "Los nombres vagos aumentan el costo de lectura. Un nombre semántico ayuda más. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Vague names increase reading cost. A semantic name helps more. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_error_handling_boundaries",
+            "arch_scaling_refactoring"
+          ]
         },
         {
           "id": "arch_name_match_1",
@@ -2156,11 +2447,15 @@
             "en": "Readability and consistency are also part of architectural health."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué problema nace de nombres vagos, convenciones mezcladas y clases gigantes.",
-            "en": "Review what problem comes from vague names, mixed conventions, and huge classes."
+            "es": "Revisa qué problema nace de nombres vagos, convenciones mezcladas y clases gigantes. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what problem comes from vague names, mixed conventions, and huge classes. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_error_handling_boundaries",
+            "arch_scaling_refactoring"
+          ]
         },
         {
           "id": "arch_name_find_1",
@@ -2193,10 +2488,14 @@
             "en": "That name looks unsemantic, inconsistent, and radiates improvised-file energy."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática es la del archivo con nombre exagerado y poco claro.",
-            "en": "The problematic line is the one with the exaggerated unclear file name."
+            "es": "La línea problemática es la del archivo con nombre exagerado y poco claro. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problematic line is the one with the exaggerated unclear file name. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "arch_error_handling_boundaries",
+            "arch_scaling_refactoring"
+          ]
         },
         {
           "id": "arch_name_guided_1",
@@ -2220,14 +2519,29 @@
             "en": "That name communicates well what the function does."
           },
           "incorrectExplanation": {
-            "es": "La idea es usar un nombre explícito y fácil de entender.",
-            "en": "The idea is to use an explicit, easy-to-understand name."
+            "es": "La idea es usar un nombre explícito y fácil de entender. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The idea is to use an explicit, easy-to-understand name. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en verbo + objetivo.",
             "en": "Think verb + target."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Nombres, consistencia y legibilidad, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Naming, consistency, and readability exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_error_handling_boundaries",
+            "arch_scaling_refactoring"
+          ],
+          "requiredTokens": [
+            "nombre"
+          ]
         }
       ]
     },
@@ -2291,11 +2605,15 @@
             "en": "Presentation focuses on UI and how state is shown to the user."
           },
           "incorrectExplanation": {
-            "es": "Los otros ejemplos huelen más a infraestructura o datos.",
-            "en": "The other examples smell more like infrastructure or data."
+            "es": "Los otros ejemplos huelen más a infraestructura o datos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The other examples smell more like infrastructure or data. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ]
         },
         {
           "id": "arch_exam_match_1",
@@ -2341,11 +2659,15 @@
             "en": "Very good. These concepts are central pieces of a healthier architecture."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué abstrae datos, qué expresa intención y qué desacopla piezas.",
-            "en": "Review what abstracts data, what expresses intent, and what decouples pieces."
+            "es": "Revisa qué abstrae datos, qué expresa intención y qué desacopla piezas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what abstracts data, what expresses intent, and what decouples pieces. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 18,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ]
         },
         {
           "id": "arch_exam_code_1",
@@ -2367,14 +2689,26 @@
             "en": "A concrete datasource implementation fits well in data."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es data.",
-            "en": "The expected answer is data."
+            "es": "La respuesta esperada es data. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected answer is data. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en implementación concreta, no en contrato puro.",
             "en": "Think concrete implementation, not pure contract."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen final de arquitectura, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Architecture final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ]
         },
         {
           "id": "arch_exam_bug_1",
@@ -2396,14 +2730,34 @@
             "en": "That reduces coupling and better reflects dependency injection."
           },
           "incorrectExplanation": {
-            "es": "El error está en construir la dependencia dentro de la clase.",
-            "en": "The error is creating the dependency inside the class."
+            "es": "El error está en construir la dependencia dentro de la clase. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is creating the dependency inside the class. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Recibe la dependencia por constructor.",
             "en": "Receive the dependency through the constructor."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "class",
+            "CartController",
+            "final",
+            "CartRepository",
+            "repository",
+            "this"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen final de arquitectura, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Architecture final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ]
         },
         {
           "id": "arch_exam_find_1",
@@ -2436,10 +2790,14 @@
             "en": "UI hitting the network directly breaks separation of responsibilities more strongly."
           },
           "incorrectExplanation": {
-            "es": "La línea más problemática es la que mete acceso directo a infraestructura en la UI.",
-            "en": "The most problematic line is the one that puts direct infrastructure access into UI."
+            "es": "La línea más problemática es la que mete acceso directo a infraestructura en la UI. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The most problematic line is the one that puts direct infrastructure access into UI. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ]
         },
         {
           "id": "arch_exam_predict_1",
@@ -2475,11 +2833,15 @@
             "en": "Deriving avoids storing two sources of truth for the same thing."
           },
           "incorrectExplanation": {
-            "es": "Guardar ambos valores por separado aumenta la posibilidad de inconsistencias.",
-            "en": "Storing both values separately increases the possibility of inconsistency."
+            "es": "Guardar ambos valores por separado aumenta la posibilidad de inconsistencias. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Storing both values separately increases the possibility of inconsistency. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ]
         },
         {
           "id": "arch_exam_guided_1",
@@ -2503,14 +2865,29 @@
             "en": "That name communicates intent and responsibility very well."
           },
           "incorrectExplanation": {
-            "es": "La idea es nombrar con claridad la acción del sistema.",
-            "en": "The idea is to name the system action clearly."
+            "es": "La idea es nombrar con claridad la acción del sistema. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The idea is to name the system action clearly. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en verbo + objetivo + contexto.",
             "en": "Think verb + target + context."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen final de arquitectura, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Architecture final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "arch_scaling_refactoring",
+            "arch_naming_consistency"
+          ],
+          "requiredTokens": [
+            "nombre"
+          ]
         },
         {
           "id": "arch_exam_summary",

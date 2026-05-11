@@ -101,6 +101,13 @@ class RouteAssetSource {
       'correctOrder',
       'codeLines',
       'expectedFragments',
+      'acceptedAnswers',
+      'requiredTokens',
+      'forbiddenTokens',
+      'acceptanceCriteria',
+      'customKeywords',
+      'suggestedName',
+      'namingPolicy',
       'left',
       'right',
     };

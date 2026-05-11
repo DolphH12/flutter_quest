@@ -289,6 +289,7 @@ class _CodeInputActivity extends StatelessWidget {
           fileName: fileName,
           readOnly: session.submitted,
           hintText: activity.initialCode ?? 'Escribe tu solucion aqui',
+          customKeywords: _editorKeywordsFor(activity),
         ),
         if (activity.hint != null) ...[
           const SizedBox(height: 8),
@@ -601,6 +602,7 @@ class _PredictOutputActivity extends StatelessWidget {
             minLines: 4,
             maxHeight: 180,
             language: CodeLanguage.plainText,
+            customKeywords: _editorKeywordsFor(activity),
           ),
       ],
     );
@@ -644,6 +646,7 @@ class _GuidedWritingActivity extends StatelessWidget {
               activity.starterCode ??
               activity.initialCode ??
               'Escribe tu solucion aqui',
+          customKeywords: _editorKeywordsFor(activity),
         ),
         if (activity.hint != null) ...[
           const SizedBox(height: 8),
@@ -657,5 +660,53 @@ class _GuidedWritingActivity extends StatelessWidget {
         ],
       ],
     );
+  }
+}
+
+List<String> _editorKeywordsFor(LessonActivity activity) {
+  final keywords = <String>{...(activity.customKeywords ?? const <String>[])};
+
+  void addSingle(String? value) {
+    final candidate = (value ?? '').trim();
+    if (candidate.isEmpty) return;
+    if (candidate.contains('\n')) return;
+    if (candidate.length > 48) return;
+    keywords.add(candidate);
+  }
+
+  void addMany(List<String>? values) {
+    for (final value in values ?? const <String>[]) {
+      addSingle(value);
+    }
+  }
+
+  addSingle(activity.expectedAnswer);
+  addSingle(activity.suggestedName);
+  addMany(activity.acceptedAnswers);
+  addMany(activity.requiredTokens);
+  addMany(activity.expectedFragments);
+  _extractCodeSuggestions(activity.expectedAnswer).forEach(addSingle);
+  _extractCodeSuggestions(activity.initialCode).forEach(addSingle);
+  _extractCodeSuggestions(activity.starterCode).forEach(addSingle);
+
+  return keywords.toList()..sort();
+}
+
+Iterable<String> _extractCodeSuggestions(String? source) sync* {
+  final raw = (source ?? '').trim();
+  if (raw.isEmpty) return;
+
+  final regex = RegExp(r'[A-Za-z_][A-Za-z0-9_]*');
+  final emitted = <String>{};
+  for (final match in regex.allMatches(raw)) {
+    final token = match.group(0);
+    if (token == null || token.length < 2) continue;
+    if (emitted.add(token)) yield token;
+
+    final end = match.end;
+    if (end + 1 < raw.length && raw.substring(end, end + 2) == '()') {
+      final callable = '$token()';
+      if (emitted.add(callable)) yield callable;
+    }
   }
 }

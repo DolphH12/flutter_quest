@@ -33,6 +33,8 @@ class RouteDetailScreen extends ConsumerWidget {
     final routeLoadErrors = ref.watch(routeLoadErrorsProvider);
     final manifests = ref.watch(routeManifestsProvider);
     final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
+    final routePlayable = ref.watch(routePlayableProvider(routeId));
+    final routePreviewVisible = ref.watch(routePreviewVisibleProvider(routeId));
     if (progress == null) {
       return FQPageContainer(
         child: Center(
@@ -122,6 +124,54 @@ class RouteDetailScreen extends ConsumerWidget {
         child: Center(
           child: FQErrorState(
             title: l10n.loadRoutesError,
+            message: l10n.routeOpenErrorMessage,
+            primaryActionLabel: l10n.backToHome,
+            onPrimaryAction: () => context.go('/home'),
+          ),
+        ),
+      );
+    }
+
+    if (!routePlayable) {
+      if (routePreviewVisible) {
+        return FQPageContainer(
+          child: Center(
+            child: FQSurfaceCard(
+              radius: FQRadius.large,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l10n.upcomingRouteBadge,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: FQColors.deepNavy,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    l10n.upcomingRouteDetailMessage,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: FQColors.onSurface.withValues(alpha: 0.78),
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FilledButton(
+                    onPressed: () => context.go('/home'),
+                    child: Text(l10n.backToHome),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+      return FQPageContainer(
+        child: Center(
+          child: FQErrorState(
+            title: l10n.lockedRouteTitle,
             message: l10n.routeOpenErrorMessage,
             primaryActionLabel: l10n.backToHome,
             onPrimaryAction: () => context.go('/home'),

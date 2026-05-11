@@ -90,8 +90,8 @@
             "en": "Exactly. That kind of small durable data fits local persistence very well."
           },
           "incorrectExplanation": {
-            "es": "Persistencia local sirve para recordar datos entre sesiones, no para tareas de compilación o render puro.",
-            "en": "Local persistence is for remembering data between sessions, not for compilation tasks or pure rendering."
+            "es": "Persistencia local sirve para recordar datos entre sesiones, no para tareas de compilación o render puro. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Local persistence is for remembering data between sessions, not for compilation tasks or pure rendering. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -140,8 +140,8 @@
             "en": "Good. You now distinguish what lives in memory from what should survive app closure."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué dura solo en pantalla y qué debe mantenerse entre sesiones.",
-            "en": "Review what lasts only on screen and what should persist between sessions."
+            "es": "Revisa qué dura solo en pantalla y qué debe mantenerse entre sesiones. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what lasts only on screen and what should persist between sessions. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
           "shuffle": true
@@ -180,8 +180,8 @@
             "en": "Exactly. That continuity is one of the most valuable reasons to persist data locally."
           },
           "incorrectExplanation": {
-            "es": "La idea de persistir es recuperar el valor guardado después, no perderlo al salir.",
-            "en": "The point of persisting is to recover the saved value later, not lose it when exiting."
+            "es": "La idea de persistir es recuperar el valor guardado después, no perderlo al salir. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The point of persisting is to recover the saved value later, not lose it when exiting. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 12,
           "shuffle": true
@@ -254,14 +254,25 @@
             "en": "Correct. setBool stores boolean values."
           },
           "incorrectExplanation": {
-            "es": "Para guardar true o false debes usar setBool.",
-            "en": "To store true or false you should use setBool."
+            "es": "Para guardar true o false debes usar setBool. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To store true or false you should use setBool. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el tipo del valor: true/false.",
             "en": "Think about the value type: true/false."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en SharedPreferences básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this SharedPreferences basics exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "local_persistence_intro"
+          ]
         },
         {
           "id": "sp_cs_1",
@@ -283,14 +294,25 @@
             "en": "Good. getString retrieves a text saved under that key."
           },
           "incorrectExplanation": {
-            "es": "La pareja de setString suele ser getString.",
-            "en": "The pair for setString is usually getString."
+            "es": "La pareja de setString suele ser getString. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The pair for setString is usually getString. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es el getter del tipo String.",
             "en": "It is the getter for String type."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en SharedPreferences básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this SharedPreferences basics exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "local_persistence_intro"
+          ]
         },
         {
           "id": "sp_bug_1",
@@ -312,14 +334,32 @@
             "en": "Exactly. 'dark' is text, not an integer."
           },
           "incorrectExplanation": {
-            "es": "El error está en el método: el valor es String.",
-            "en": "The error is in the method: the value is a String."
+            "es": "El error está en el método: el valor es String. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is in the method: the value is a String. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Mira el tipo del valor entre comillas.",
             "en": "Look at the value type inside quotes."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "await",
+            "prefs",
+            "setString",
+            "theme",
+            "dark"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en SharedPreferences básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this SharedPreferences basics exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "local_persistence_intro"
+          ]
         },
         {
           "id": "sp_mc_1",
@@ -351,11 +391,14 @@
             "en": "Exactly. SharedPreferences shines for simple settings and values."
           },
           "incorrectExplanation": {
-            "es": "No fue pensado para guardar recursos pesados o estructuras grandes sin una estrategia clara.",
-            "en": "It was not meant to store heavy resources or large structures without a clear strategy."
+            "es": "No fue pensado para guardar recursos pesados o estructuras grandes sin una estrategia clara. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "It was not meant to store heavy resources or large structures without a clear strategy. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "local_persistence_intro"
+          ]
         },
         {
           "id": "sp_find_1",
@@ -382,10 +425,13 @@
             "en": "setBool expects true or false. The value 5 does not match that type."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la que mezcla setBool con un entero.",
-            "en": "The wrong line is the one mixing setBool with an integer."
+            "es": "La línea incorrecta es la que mezcla setBool con un entero. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is the one mixing setBool with an integer. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "local_persistence_intro"
+          ]
         }
       ]
     },
@@ -469,11 +515,15 @@
             "en": "Correct. The ?? operator uses 0 as the fallback value."
           },
           "incorrectExplanation": {
-            "es": "Si getInt devuelve null, entra el fallback 0.",
-            "en": "If getInt returns null, the fallback 0 is used."
+            "es": "Si getInt devuelve null, entra el fallback 0. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "If getInt returns null, the fallback 0 is used. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "local_persistence_intro",
+            "shared_preferences_basics"
+          ]
         },
         {
           "id": "restore_gw_1",
@@ -503,14 +553,29 @@
             "en": "Good. Reading with a fallback prevents broken UI and makes behavior more predictable."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe leer la clave y usar un valor por defecto.",
-            "en": "Your answer must read the key and use a fallback value."
+            "es": "Tu respuesta debe leer la clave y usar un valor por defecto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must read the key and use a fallback value. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en getString + ??.",
             "en": "Think of getString + ??."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Restaurar estado al abrir la app, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Restore state when the app launches exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "local_persistence_intro",
+            "shared_preferences_basics"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         },
         {
           "id": "restore_order_1",
@@ -548,11 +613,15 @@
             "en": "Exactly. First obtain prefs, then read, and finally reflect the value in the UI."
           },
           "incorrectExplanation": {
-            "es": "El orden lógico es obtener la instancia, leer el dato y actualizar la UI.",
-            "en": "The logical order is obtain the instance, read the value, and update the UI."
+            "es": "El orden lógico es obtener la instancia, leer el dato y actualizar la UI. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The logical order is obtain the instance, read the value, and update the UI. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "local_persistence_intro",
+            "shared_preferences_basics"
+          ]
         },
         {
           "id": "restore_match_1",
@@ -598,11 +667,15 @@
             "en": "Very good. You are now seeing persistence as a full flow, not just saving."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué lee, qué define fallback y qué actualiza pantalla.",
-            "en": "Review what reads, what defines fallback, and what updates the screen."
+            "es": "Revisa qué lee, qué define fallback y qué actualiza pantalla. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what reads, what defines fallback, and what updates the screen. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "local_persistence_intro",
+            "shared_preferences_basics"
+          ]
         }
       ]
     },
@@ -666,11 +739,15 @@
             "en": "Exactly. It is a small setting and very natural to persist locally."
           },
           "incorrectExplanation": {
-            "es": "Una preferencia suele ser pequeña, directa y útil entre sesiones.",
-            "en": "A preference is usually small, direct, and useful across sessions."
+            "es": "Una preferencia suele ser pequeña, directa y útil entre sesiones. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A preference is usually small, direct, and useful across sessions. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "shared_preferences_basics",
+            "restore_state_on_launch"
+          ]
         },
         {
           "id": "prefs_fic_1",
@@ -692,14 +769,26 @@
             "en": "Correct. It is a boolean flag."
           },
           "incorrectExplanation": {
-            "es": "Para guardar una bandera true/false usa setBool.",
-            "en": "To save a true/false flag use setBool."
+            "es": "Para guardar una bandera true/false usa setBool. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To save a true/false flag use setBool. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es el setter para booleanos.",
             "en": "It is the setter for booleans."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Preferencias del usuario, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this User preferences exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "shared_preferences_basics",
+            "restore_state_on_launch"
+          ]
         },
         {
           "id": "prefs_bug_1",
@@ -721,14 +810,32 @@
             "en": "Good. A locale is usually represented as text: 'es', 'en', etc."
           },
           "incorrectExplanation": {
-            "es": "El problema está en el getter: locale aquí es un String, no un bool.",
-            "en": "The issue is in the getter: locale here is a String, not a bool."
+            "es": "El problema está en el getter: locale aquí es un String, no un bool. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The issue is in the getter: locale here is a String, not a bool. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en 'es' y 'en'.",
             "en": "Think of 'es' and 'en'."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "final",
+            "locale",
+            "prefs",
+            "getString"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Preferencias del usuario, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this User preferences exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "shared_preferences_basics",
+            "restore_state_on_launch"
+          ]
         },
         {
           "id": "prefs_po_1",
@@ -764,11 +871,15 @@
             "en": "Exactly. That flag lets the app start adapt to the user's history."
           },
           "incorrectExplanation": {
-            "es": "Una preferencia así ayuda a tomar decisiones de flujo, no a compilar ni a guardar archivos pesados.",
-            "en": "A preference like this helps flow decisions, not compilation or heavy file storage."
+            "es": "Una preferencia así ayuda a tomar decisiones de flujo, no a compilar ni a guardar archivos pesados. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A preference like this helps flow decisions, not compilation or heavy file storage. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "shared_preferences_basics",
+            "restore_state_on_launch"
+          ]
         },
         {
           "id": "prefs_gw_1",
@@ -798,14 +909,29 @@
             "en": "Good. That kind of value fits local preferences perfectly."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe usar setString con la clave locale y el valor 'es'.",
-            "en": "Your answer must use setString with key locale and value 'es'."
+            "es": "Tu respuesta debe usar setString con la clave locale y el valor 'es'. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must use setString with key locale and value 'es'. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en texto corto y persistente.",
             "en": "Think of short persistent text."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Preferencias del usuario, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this User preferences exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "shared_preferences_basics",
+            "restore_state_on_launch"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         }
       ]
     },
@@ -875,14 +1001,26 @@
             "en": "Correct. jsonEncode converts serializable structures into JSON text."
           },
           "incorrectExplanation": {
-            "es": "El método esperado para esto es jsonEncode.",
-            "en": "The expected method for this is jsonEncode."
+            "es": "El método esperado para esto es jsonEncode. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected method for this is jsonEncode. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en encode, no decode.",
             "en": "Think encode, not decode."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Serializar modelos simples, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Serialize simple models exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "restore_state_on_launch",
+            "user_preferences_route"
+          ]
         },
         {
           "id": "ser_bug_1",
@@ -904,14 +1042,34 @@
             "en": "Exactly. If raw is already JSON text, you must decode it to get a Map again."
           },
           "incorrectExplanation": {
-            "es": "El error es usar jsonEncode cuando en realidad quieres reconstruir el mapa.",
-            "en": "The error is using jsonEncode when you actually want to reconstruct the map."
+            "es": "El error es usar jsonEncode cuando en realidad quieres reconstruir el mapa. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is using jsonEncode when you actually want to reconstruct the map. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Ya tienes texto. Ahora debes leerlo de vuelta.",
             "en": "You already have text. Now read it back."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "final",
+            "userMap",
+            "jsonDecode",
+            "user",
+            "User",
+            "fromMap"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Serializar modelos simples, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Serialize simple models exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "restore_state_on_launch",
+            "user_preferences_route"
+          ]
         },
         {
           "id": "ser_match_1",
@@ -957,11 +1115,15 @@
             "en": "Good. That mental sequence saves you from many silent bugs."
           },
           "incorrectExplanation": {
-            "es": "Revisa el camino: modelo -> mapa -> string -> mapa -> modelo.",
-            "en": "Review the path: model -> map -> string -> map -> model."
+            "es": "Revisa el camino: modelo -> mapa -> string -> mapa -> modelo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review the path: model -> map -> string -> map -> model. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "restore_state_on_launch",
+            "user_preferences_route"
+          ]
         },
         {
           "id": "ser_po_1",
@@ -997,11 +1159,15 @@
             "en": "Correct. The final result of jsonEncode is JSON text."
           },
           "incorrectExplanation": {
-            "es": "Aunque el modelo empiece como objeto, lo habitual es persistirlo como String JSON.",
-            "en": "Even if the model starts as an object, it is usually persisted as a JSON String."
+            "es": "Aunque el modelo empiece como objeto, lo habitual es persistirlo como String JSON. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Even if the model starts as an object, it is usually persisted as a JSON String. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "restore_state_on_launch",
+            "user_preferences_route"
+          ]
         },
         {
           "id": "ser_gw_1",
@@ -1033,14 +1199,29 @@
             "en": "Excellent. That leaves the model ready to serialize to JSON."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe devolver un mapa con las propiedades clave del modelo.",
-            "en": "Your answer must return a map with the model's key properties."
+            "es": "Tu respuesta debe devolver un mapa con las propiedades clave del modelo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must return a map with the model's key properties. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en un literal Map.",
             "en": "Think of a Map literal."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Serializar modelos simples, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Serialize simple models exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "restore_state_on_launch",
+            "user_preferences_route"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -1104,11 +1285,15 @@
             "en": "Correct. That is the specific method for a list of strings."
           },
           "incorrectExplanation": {
-            "es": "SharedPreferences no expone un setList genérico para cualquier tipo.",
-            "en": "SharedPreferences does not expose a generic setList for any type."
+            "es": "SharedPreferences no expone un setList genérico para cualquier tipo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "SharedPreferences does not expose a generic setList for any type. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "user_preferences_route",
+            "serialize_simple_models"
+          ]
         },
         {
           "id": "list_fic_1",
@@ -1130,14 +1315,26 @@
             "en": "Good. getStringList reads a list of strings."
           },
           "incorrectExplanation": {
-            "es": "La pareja de setStringList es getStringList.",
-            "en": "The pair for setStringList is getStringList."
+            "es": "La pareja de setStringList es getStringList. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The pair for setStringList is getStringList. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es el getter de listas de texto.",
             "en": "It is the getter for text lists."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Persistir listas localmente, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Persist lists locally exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "user_preferences_route",
+            "serialize_simple_models"
+          ]
         },
         {
           "id": "list_bug_1",
@@ -1159,14 +1356,34 @@
             "en": "Exactly. You are storing a collection of strings, not a single string."
           },
           "incorrectExplanation": {
-            "es": "El error es tratar una lista como si fuera un texto único.",
-            "en": "The error is treating a list like a single string."
+            "es": "El error es tratar una lista como si fuera un texto único. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is treating a list like a single string. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Mira el tipo real del valor.",
             "en": "Look at the actual value type."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "await",
+            "prefs",
+            "setStringList",
+            "tags",
+            "flutter",
+            "dart"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Persistir listas localmente, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Persist lists locally exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "user_preferences_route",
+            "serialize_simple_models"
+          ]
         },
         {
           "id": "list_find_1",
@@ -1193,10 +1410,14 @@
             "en": "The expected list is strings. Adding an integer breaks that consistency."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta agrega un tipo que no corresponde a la lista.",
-            "en": "The wrong line adds a type that does not belong in the list."
+            "es": "La línea incorrecta agrega un tipo que no corresponde a la lista. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line adds a type that does not belong in the list. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "user_preferences_route",
+            "serialize_simple_models"
+          ]
         },
         {
           "id": "list_po_1",
@@ -1232,11 +1453,15 @@
             "en": "Correct. At that point another strategy, such as more structured storage, is often better."
           },
           "incorrectExplanation": {
-            "es": "SharedPreferences sirve, pero no para absolutamente todo.",
-            "en": "SharedPreferences works, but not for absolutely everything."
+            "es": "SharedPreferences sirve, pero no para absolutamente todo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "SharedPreferences works, but not for absolutely everything. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "user_preferences_route",
+            "serialize_simple_models"
+          ]
         }
       ]
     },
@@ -1314,11 +1539,15 @@
             "en": "Good. Choosing the tool according to the problem is part of professional judgement."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué casos son livianos y cuáles ya piden algo más serio.",
-            "en": "Review which cases are light and which already need something more serious."
+            "es": "Revisa qué casos son livianos y cuáles ya piden algo más serio. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review which cases are light and which already need something more serious. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "serialize_simple_models",
+            "persist_lists_locally"
+          ]
         },
         {
           "id": "strategy_mc_1",
@@ -1350,11 +1579,15 @@
             "en": "Exactly. There a more structured solution is usually needed."
           },
           "incorrectExplanation": {
-            "es": "Los casos pequeños encajan mejor con preferencias; el caso masivo pide otra herramienta.",
-            "en": "Small cases fit preferences better; the massive case asks for another tool."
+            "es": "Los casos pequeños encajan mejor con preferencias; el caso masivo pide otra herramienta. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Small cases fit preferences better; the massive case asks for another tool. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "serialize_simple_models",
+            "persist_lists_locally"
+          ]
         },
         {
           "id": "strategy_po_1",
@@ -1390,11 +1623,15 @@
             "en": "Correct. It is a simple and sufficient solution for that context."
           },
           "incorrectExplanation": {
-            "es": "La gracia está en no sobrediseñar un problema pequeño.",
-            "en": "The point is not to over-engineer a small problem."
+            "es": "La gracia está en no sobrediseñar un problema pequeño. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The point is not to over-engineer a small problem. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "serialize_simple_models",
+            "persist_lists_locally"
+          ]
         },
         {
           "id": "strategy_gw_1",
@@ -1422,14 +1659,29 @@
             "en": "Good. The goal is not to marry a tool, but to understand its place."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe mostrar un caso pequeño y otro que ya no encaja con preferencias.",
-            "en": "Your answer should show a small case and another that no longer fits preferences."
+            "es": "Tu respuesta debe mostrar un caso pequeño y otro que ya no encaja con preferencias. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer should show a small case and another that no longer fits preferences. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en simple vs pesado.",
             "en": "Think simple vs heavy."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Elegir la estrategia correcta, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Choose the right strategy exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "serialize_simple_models",
+            "persist_lists_locally"
+          ],
+          "requiredTokens": [
+            "dos"
+          ]
         }
       ]
     },
@@ -1499,14 +1751,26 @@
             "en": "Good. The name expresses intent and avoids technical detail in the UI."
           },
           "incorrectExplanation": {
-            "es": "La idea es que la pantalla lea algo semántico, no una implementación.",
-            "en": "The idea is for the screen to read something semantic, not an implementation detail."
+            "es": "La idea es que la pantalla lea algo semántico, no una implementación. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The idea is for the screen to read something semantic, not an implementation detail. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en leer tema.",
             "en": "Think of loading theme."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Persistencia con repositorio, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Persistence with repository exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "persist_lists_locally",
+            "choose_right_strategy"
+          ]
         },
         {
           "id": "repo_bug_1",
@@ -1528,14 +1792,34 @@
             "en": "Exactly. The UI stays cleaner and persistence more centralized."
           },
           "incorrectExplanation": {
-            "es": "La corrección busca separar responsabilidades, no solo cambiar sintaxis.",
-            "en": "The fix aims to separate responsibilities, not just change syntax."
+            "es": "La corrección busca separar responsabilidades, no solo cambiar sintaxis. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The fix aims to separate responsibilities, not just change syntax. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "La pantalla debería pedir una acción de negocio, no orquestar todo el guardado.",
             "en": "The screen should request a business action, not orchestrate all the saving."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "onPressed",
+            "async",
+            "await",
+            "settingsRepository",
+            "saveTheme",
+            "true"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Persistencia con repositorio, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Persistence with repository exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "persist_lists_locally",
+            "choose_right_strategy"
+          ]
         },
         {
           "id": "repo_match_1",
@@ -1581,11 +1865,15 @@
             "en": "Very good. That separation helps you scale without chaos."
           },
           "incorrectExplanation": {
-            "es": "Revisa quién muestra, quién decide persistir y quién almacena realmente.",
-            "en": "Review who shows, who decides persistence, and who actually stores."
+            "es": "Revisa quién muestra, quién decide persistir y quién almacena realmente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review who shows, who decides persistence, and who actually stores. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "persist_lists_locally",
+            "choose_right_strategy"
+          ]
         },
         {
           "id": "repo_order_1",
@@ -1623,11 +1911,15 @@
             "en": "Good. The flow becomes expressive: compute, persist, reflect."
           },
           "incorrectExplanation": {
-            "es": "Primero se calcula el valor, luego se guarda y al final se actualiza la UI.",
-            "en": "First compute the value, then save it, and finally update the UI."
+            "es": "Primero se calcula el valor, luego se guarda y al final se actualiza la UI. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "First compute the value, then save it, and finally update the UI. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "persist_lists_locally",
+            "choose_right_strategy"
+          ]
         }
       ]
     },
@@ -1702,10 +1994,14 @@
             "en": "Forcing ! can break if the key does not exist yet. A fallback is safer."
           },
           "incorrectExplanation": {
-            "es": "La línea frágil es la que asume que el valor jamás será null.",
-            "en": "The fragile line is the one that assumes the value can never be null."
+            "es": "La línea frágil es la que asume que el valor jamás será null. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The fragile line is the one that assumes the value can never be null. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "choose_right_strategy",
+            "persistence_with_repository"
+          ]
         },
         {
           "id": "robust_bug_1",
@@ -1727,14 +2023,32 @@
             "en": "Exactly. The fallback protects when the key does not exist yet."
           },
           "incorrectExplanation": {
-            "es": "La corrección busca evitar null inesperado.",
-            "en": "The fix aims to avoid unexpected null."
+            "es": "La corrección busca evitar null inesperado. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The fix aims to avoid unexpected null. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en un valor inicial razonable.",
             "en": "Think of a sensible initial value."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "final",
+            "streak",
+            "prefs",
+            "getInt"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Defaults, errores y compatibilidad, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Defaults, errors, and compatibility exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "choose_right_strategy",
+            "persistence_with_repository"
+          ]
         },
         {
           "id": "robust_mc_1",
@@ -1766,11 +2080,15 @@
             "en": "Correct. That reduces unexpected nulls and improves continuity."
           },
           "incorrectExplanation": {
-            "es": "La persistencia real exige defensas básicas, no optimismo ciego.",
-            "en": "Real persistence requires basic defenses, not blind optimism."
+            "es": "La persistencia real exige defensas básicas, no optimismo ciego. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Real persistence requires basic defenses, not blind optimism. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "choose_right_strategy",
+            "persistence_with_repository"
+          ]
         },
         {
           "id": "robust_po_1",
@@ -1806,11 +2124,15 @@
             "en": "Exactly. That protects the user experience when the schema evolves."
           },
           "incorrectExplanation": {
-            "es": "Una app madura piensa en compatibilidad hacia atrás.",
-            "en": "A mature app thinks about backward compatibility."
+            "es": "Una app madura piensa en compatibilidad hacia atrás. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A mature app thinks about backward compatibility. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "choose_right_strategy",
+            "persistence_with_repository"
+          ]
         },
         {
           "id": "robust_gw_1",
@@ -1840,14 +2162,29 @@
             "en": "Good. That fallback avoids null and keeps the flow stable."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe usar getString y un valor por defecto vacío o equivalente.",
-            "en": "Your answer should use getString and an empty or equivalent fallback value."
+            "es": "Tu respuesta debe usar getString y un valor por defecto vacío o equivalente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer should use getString and an empty or equivalent fallback value. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en una cadena vacía como plan B.",
             "en": "Think of an empty string as plan B."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Defaults, errores y compatibilidad, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Defaults, errors, and compatibility exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "choose_right_strategy",
+            "persistence_with_repository"
+          ],
+          "requiredTokens": [
+            "una"
+          ]
         }
       ]
     },
@@ -1941,11 +2278,15 @@
             "en": "Very good. Local persistence is also UX."
           },
           "incorrectExplanation": {
-            "es": "Revisa cómo cada dato guardado mejora la continuidad del uso.",
-            "en": "Review how each saved datum improves continuity of use."
+            "es": "Revisa cómo cada dato guardado mejora la continuidad del uso. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review how each saved datum improves continuity of use. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "persistence_with_repository",
+            "defaults_errors_compatibility"
+          ]
         },
         {
           "id": "offline_mc_1",
@@ -1977,11 +2318,15 @@
             "en": "Exactly. Good persistence makes the app feel intentional and consistent."
           },
           "incorrectExplanation": {
-            "es": "No depende de que la app sea gigante; incluso detalles simples pueden cambiar mucho la experiencia.",
-            "en": "It does not depend on the app being huge; even simple details can change the experience a lot."
+            "es": "No depende de que la app sea gigante; incluso detalles simples pueden cambiar mucho la experiencia. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "It does not depend on the app being huge; even simple details can change the experience a lot. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "persistence_with_repository",
+            "defaults_errors_compatibility"
+          ]
         },
         {
           "id": "offline_po_1",
@@ -2017,11 +2362,15 @@
             "en": "Yes. That continuity gives a sense of a polished product."
           },
           "incorrectExplanation": {
-            "es": "Persistencia local justamente ayuda a evitar la sensación de empezar de cero cada vez.",
-            "en": "Local persistence helps avoid the feeling of starting from zero every time."
+            "es": "Persistencia local justamente ayuda a evitar la sensación de empezar de cero cada vez. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Local persistence helps avoid the feeling of starting from zero every time. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "persistence_with_repository",
+            "defaults_errors_compatibility"
+          ]
         },
         {
           "id": "offline_gw_1",
@@ -2049,14 +2398,29 @@
             "en": "Good. They are small but very valuable continuity examples."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe mostrar datos simples y útiles para recordar entre sesiones.",
-            "en": "Your answer should show simple and useful data to remember between sessions."
+            "es": "Tu respuesta debe mostrar datos simples y útiles para recordar entre sesiones. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer should show simple and useful data to remember between sessions. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en personalización y regreso rápido.",
             "en": "Think personalization and quick return."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Mentalidad de continuidad offline, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Offline continuity mindset exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "persistence_with_repository",
+            "defaults_errors_compatibility"
+          ],
+          "requiredTokens": [
+            "dos"
+          ]
         }
       ]
     },
@@ -2120,11 +2484,15 @@
             "en": "Correct. It is the specific method for string lists."
           },
           "incorrectExplanation": {
-            "es": "SharedPreferences ofrece setStringList para ese caso.",
-            "en": "SharedPreferences offers setStringList for that case."
+            "es": "SharedPreferences ofrece setStringList para ese caso. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "SharedPreferences offers setStringList for that case. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_cs_1",
@@ -2146,14 +2514,26 @@
             "en": "Good. A counter usually starts at 0 if it does not exist yet."
           },
           "incorrectExplanation": {
-            "es": "El fallback razonable aquí es 0.",
-            "en": "The sensible fallback here is 0."
+            "es": "El fallback razonable aquí es 0. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The sensible fallback here is 0. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el valor inicial natural de un contador.",
             "en": "Think of the natural initial value of a counter."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Persistencia local, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Local persistence final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_bug_1",
@@ -2175,14 +2555,32 @@
             "en": "Exactly. 'es' is text, so it is saved with setString."
           },
           "incorrectExplanation": {
-            "es": "El error estaba en usar un setter booleano para texto.",
-            "en": "The error was using a boolean setter for text."
+            "es": "El error estaba en usar un setter booleano para texto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error was using a boolean setter for text. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Mira el tipo real del valor.",
             "en": "Look at the actual value type."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "await",
+            "prefs",
+            "setString",
+            "locale"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Persistencia local, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Local persistence final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_find_1",
@@ -2209,10 +2607,14 @@
             "en": "If raw is already a JSON String, encoding again does not rebuild anything useful. You would need decode there if you were reading."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la última: vuelve a encode un texto ya serializado.",
-            "en": "The last line is wrong: it encodes again an already serialized string."
+            "es": "La línea incorrecta es la última: vuelve a encode un texto ya serializado. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The last line is wrong: it encodes again an already serialized string. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_match_1",
@@ -2258,11 +2660,15 @@
             "en": "Very good. That mental map prevents mixing responsibilities."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué almacena simple, qué serializa y qué abstrae la lógica.",
-            "en": "Review what stores simple data, what serializes, and what abstracts logic."
+            "es": "Revisa qué almacena simple, qué serializa y qué abstrae la lógica. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what stores simple data, what serializes, and what abstracts logic. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 18,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_order_1",
@@ -2300,11 +2706,15 @@
             "en": "Correct. You get the instance, read with fallback, and update the UI."
           },
           "incorrectExplanation": {
-            "es": "Ese orden cuida claridad y continuidad.",
-            "en": "That order preserves clarity and continuity."
+            "es": "Ese orden cuida claridad y continuidad. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "That order preserves clarity and continuity. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 18,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_po_1",
@@ -2340,11 +2750,15 @@
             "en": "Exactly. It is sufficient, clear, and stable for that context."
           },
           "incorrectExplanation": {
-            "es": "El criterio está en elegir una solución proporcional al problema.",
-            "en": "The judgement lies in choosing a solution proportional to the problem."
+            "es": "El criterio está en elegir una solución proporcional al problema. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The judgement lies in choosing a solution proportional to the problem. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ]
         },
         {
           "id": "exam_gw_1",
@@ -2372,14 +2786,29 @@
             "en": "Good. The intent is clear and the UI does not couple to the concrete mechanism."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe invocar el método semántico del repositorio con el valor correcto.",
-            "en": "Your answer must call the semantic repository method with the correct value."
+            "es": "Tu respuesta debe invocar el método semántico del repositorio con el valor correcto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your answer must call the semantic repository method with the correct value. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en intención, no en prefs directos.",
             "en": "Think intention, not direct prefs."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Persistencia local, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Local persistence final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "defaults_errors_compatibility",
+            "offline_continuity_mindset"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         },
         {
           "id": "exam_summary",

@@ -1,406 +1,161 @@
-# Estructura JSON Para Una Nueva Ruta (Flutter Quest)
+# Estructura JSON de Nueva Ruta (v2)
 
-Este documento resume la estructura oficial que consume la app actualmente para crear una nueva ruta de aprendizaje.
+Este archivo describe la estructura recomendada para crear rutas nuevas en Flutter Quest con validación pedagógica más robusta.
 
-Referencia base del contrato:
+Contrato oficial:
 - `docs/content/activity_contracts.md`
 
-Referencia de parser/validación real:
+Implementación real:
 - `lib/features/learning/models/learning_models.dart`
 - `lib/features/learning/data/route_content_validator.dart`
-- `lib/features/learning/data/route_asset_source.dart`
+- `lib/features/learning/state/lesson_session_provider.dart`
+
+Publicación editorial:
+- `lib/features/learning/state/app_state_providers.dart`
+- `routeManifestsProvider`
+- `routeReleasePlanProvider`
+
+Importante:
+- Registrar una ruta en `assets/content/` no la vuelve pública automáticamente.
+- Flutter Quest publica contenido por ventanas editoriales:
+  - rutas ya liberadas,
+  - una sola ruta visible como `próximamente`,
+  - rutas restantes ocultas hasta futuras publicaciones.
 
 ---
 
-## 1) Estructura raíz de una ruta
+## 1) Ruta
 
 ```json
 {
   "routeId": "my_new_route",
   "title": { "es": "Mi Ruta", "en": "My Route" },
-  "description": {
-    "es": "Descripción de la ruta.",
-    "en": "Route description."
-  },
+  "description": { "es": "Descripción", "en": "Description" },
   "icon": "route_dart",
   "themeColor": "#005E9E",
-  "version": 1,
+  "version": 2,
   "estimatedMinutes": 120,
   "examNodeId": "my_final_exam",
   "nodes": []
 }
 ```
 
-### Campos
-- `routeId`: id único de ruta.
-- `title`: nombre visible (localizable recomendado).
-- `description`: descripción (localizable recomendado).
-- `icon`: string de icono.
-- `themeColor`: hex de color principal.
-- `version`: versión del contenido.
-- `estimatedMinutes`: tiempo estimado.
-- `examNodeId`: id del nodo final de examen.
-- `nodes`: lista de nodos.
-
 ---
 
-## 2) Estructura de nodo
+## 2) Nodo
 
 ```json
 {
-  "id": "node_1_intro",
+  "id": "node_intro",
   "title": { "es": "Introducción", "en": "Introduction" },
-  "shortDescription": {
-    "es": "Resumen breve.",
-    "en": "Short summary."
-  },
+  "shortDescription": { "es": "Resumen breve", "en": "Short summary" },
   "icon": "rocket_launch",
   "nodeType": "lesson",
-  "xpReward": 30,
-  "xOffset": 0.0,
+  "xpReward": 40,
+  "xOffset": 0,
   "steps": []
 }
 ```
 
-### Campos
-- `id`: id único del nodo.
-- `title`: título visible.
-- `shortDescription`: resumen corto.
-- `icon`: icono del nodo.
-- `nodeType`: `lesson` o `exam`.
-- `xpReward`: XP de referencia del nodo.
-- `xOffset`: opcional para composición del mapa.
-- `steps`: lista de pasos/actividades.
-
-> El nodo con `id == examNodeId` debe existir y tener `nodeType: "exam"`.
-
 ---
 
-## 3) Tipos de actividad soportados
+## 3) Metadatos nuevos para actividades evaluables (v2)
 
-- `intro`
-- `multipleChoice`
-- `fillInTheCode`
-- `completeSnippet`
-- `fixTheBug`
-- `orderCodeBlocks`
-- `findTheWrongLine`
-- `matchConcept`
-- `predictOutput`
-- `guidedWriting`
-
----
-
-## 4) Estructura exacta por tipo
-
-## `intro`
+Usa estos campos para evitar ambigüedad:
 
 ```json
 {
-  "id": "intro_1",
-  "type": "intro",
-  "title": { "es": "Bienvenido", "en": "Welcome" },
-  "body": { "es": "Texto breve...", "en": "Short text..." },
-  "example": { "es": "void main() {}", "en": "void main() {}" }
-}
-```
-
-Reglas:
-- no lleva `xpReward`
-- no se valida como pregunta
-- no shuffle
-
-## `multipleChoice`
-
-```json
-{
-  "id": "mc_1",
-  "type": "multipleChoice",
-  "question": { "es": "Pregunta", "en": "Question" },
-  "options": {
-    "es": ["A", "B", "C"],
-    "en": ["A", "B", "C"]
-  },
-  "correctAnswer": { "es": "B", "en": "B" },
-  "correctExplanation": { "es": "Correcto porque...", "en": "Correct because..." },
-  "incorrectExplanation": { "es": "No, la correcta es...", "en": "No, correct is..." },
-  "xpReward": 10,
-  "shuffle": true
-}
-```
-
-Reglas:
-- `correctAnswer` debe existir en `options`
-- `shuffle` por defecto true
-
-## `fillInTheCode`
-
-```json
-{
-  "id": "fic_1",
-  "type": "fillInTheCode",
-  "prompt": { "es": "Completa...", "en": "Complete..." },
-  "initialCode": { "es": "_____ age = 20;", "en": "_____ age = 20;" },
-  "expectedAnswer": { "es": "int", "en": "int" },
-  "correctExplanation": { "es": "Bien.", "en": "Good." },
-  "incorrectExplanation": { "es": "Debía ser int.", "en": "It should be int." },
-  "hint": { "es": "Es entero", "en": "Think integer" },
-  "xpReward": 12
-}
-```
-
-## `completeSnippet`
-
-```json
-{
-  "id": "cs_1",
-  "type": "completeSnippet",
-  "prompt": { "es": "Completa...", "en": "Complete..." },
-  "initialCode": { "es": "void _____() {}", "en": "void _____() {}" },
-  "expectedAnswer": { "es": "main", "en": "main" },
-  "correctExplanation": { "es": "main es entrada.", "en": "main is entrypoint." },
-  "incorrectExplanation": { "es": "Debe ser main.", "en": "It must be main." },
-  "hint": { "es": "Punto de entrada", "en": "Entry point" },
-  "xpReward": 15
-}
-```
-
-## `fixTheBug`
-
-```json
-{
-  "id": "bug_1",
-  "type": "fixTheBug",
-  "prompt": { "es": "Corrige el bug", "en": "Fix the bug" },
-  "initialCode": { "es": "if (a = b) {}", "en": "if (a = b) {}" },
-  "expectedAnswer": { "es": "if (a == b) {}", "en": "if (a == b) {}" },
-  "correctExplanation": { "es": "== compara.", "en": "== compares." },
-  "incorrectExplanation": { "es": "Usa ==.", "en": "Use ==." },
-  "hint": { "es": "Comparación", "en": "Comparison" },
-  "xpReward": 14
-}
-```
-
-## `orderCodeBlocks`
-
-```json
-{
-  "id": "ocb_1",
-  "type": "orderCodeBlocks",
-  "prompt": { "es": "Ordena el código", "en": "Order the code" },
-  "blocks": {
-    "es": ["void main() {", "print('Hi');", "}"],
-    "en": ["void main() {", "print('Hi');", "}"]
-  },
-  "correctOrder": {
-    "es": ["void main() {", "print('Hi');", "}"],
-    "en": ["void main() {", "print('Hi');", "}"]
-  },
-  "correctExplanation": { "es": "Orden correcto.", "en": "Correct order." },
-  "incorrectExplanation": { "es": "Revisa secuencia.", "en": "Check sequence." },
-  "xpReward": 16,
-  "shuffle": true
-}
-```
-
-Reglas:
-- `blocks` y `correctOrder` deben tener mismo tamaño
-- mismos elementos en ambos arrays
-- `shuffle` por defecto true
-
-## `findTheWrongLine`
-
-```json
-{
-  "id": "fwl_1",
-  "type": "findTheWrongLine",
-  "prompt": { "es": "¿Qué línea está mal?", "en": "Which line is wrong?" },
-  "codeLines": {
-    "es": ["void main() {", "int x = '2';", "}"],
-    "en": ["void main() {", "int x = '2';", "}"]
-  },
-  "wrongLineIndex": 1,
-  "correctExplanation": { "es": "Tipo incorrecto.", "en": "Wrong type." },
-  "incorrectExplanation": { "es": "No era esa línea.", "en": "Not that line." },
-  "xpReward": 12
-}
-```
-
-Reglas:
-- `wrongLineIndex` dentro del rango de `codeLines`
-- no shuffle de líneas
-
-## `matchConcept` (solo `pairs`)
-
-```json
-{
-  "id": "match_1",
-  "type": "matchConcept",
-  "prompt": { "es": "Relaciona", "en": "Match" },
-  "pairs": [
-    {
-      "left": { "es": "int", "en": "int" },
-      "right": { "es": "Entero", "en": "Integer" }
-    },
-    {
-      "left": { "es": "String", "en": "String" },
-      "right": { "es": "Texto", "en": "Text" }
-    }
+  "validationMode": "multiAnswer",
+  "acceptedAnswers": [
+    "for (var i = 0; i < 4; i++)",
+    "for (var i = 0; i <= 3; i++)"
   ],
-  "correctExplanation": { "es": "Buen match.", "en": "Good match." },
-  "incorrectExplanation": { "es": "Revisa pares.", "en": "Review pairs." },
-  "xpReward": 14,
-  "shuffle": true
-}
-```
-
-Reglas:
-- `pairs` obligatorio
-- no usar estructuras legacy (`matchLeft`, `matchRight`, `correctMatches`)
-
-## `predictOutput`
-
-```json
-{
-  "id": "po_1",
-  "type": "predictOutput",
-  "question": { "es": "¿Qué imprime?", "en": "What prints?" },
-  "codeSnippet": { "es": "print(2 + 3);", "en": "print(2 + 3);" },
-  "options": {
-    "es": ["23", "5", "2+3"],
-    "en": ["23", "5", "2+3"]
+  "requiredTokens": ["for", "print", "i++"],
+  "forbiddenTokens": ["while"],
+  "acceptanceCriteria": [
+    "Itera de 0 a 3",
+    "Imprime en cada iteración"
+  ],
+  "customKeywords": ["UserRepository", "loadProducts", "setState"],
+  "namingPolicy": "flexible",
+  "suggestedName": "UserRepository",
+  "errorTolerance": {
+    "allowMissingSemicolon": true,
+    "allowWhitespaceVariance": true,
+    "allowQuoteStyleVariance": true
   },
-  "correctAnswer": { "es": "5", "en": "5" },
-  "correctExplanation": { "es": "Suma numérica.", "en": "Numeric sum." },
-  "incorrectExplanation": { "es": "No concatena.", "en": "No concatenation." },
-  "xpReward": 11,
-  "shuffle": true
+  "prerequisites": ["dart_loops"]
 }
 ```
 
-## `guidedWriting`
+### `validationMode`
+- `exact`
+- `multiAnswer`
+- `containsTokens`
+- `regex`
+
+### `namingPolicy`
+- `fixed`: nombre obligatorio exacto
+- `flexible`: nombre sugerido pero no obligatorio
+
+---
+
+## 4) Ejemplo recomendado de `guidedWriting` claro
 
 ```json
 {
-  "id": "gw_1",
+  "id": "gw_products_1",
   "type": "guidedWriting",
-  "instructions": { "es": "Escribe una función...", "en": "Write a function..." },
-  "starterCode": { "es": "String greet() {\n  \n}", "en": "String greet() {\n  \n}" },
-  "expectedFragments": {
-    "es": ["return", "Hola"],
-    "en": ["return", "Hello"]
+  "instructions": {
+    "es": "Completa el método para cargar productos y manejar loading.",
+    "en": "Complete the method to load products and handle loading state."
   },
-  "correctExplanation": { "es": "Incluiste lo esperado.", "en": "Expected fragments included." },
-  "incorrectExplanation": { "es": "Faltan fragmentos.", "en": "Missing fragments." },
-  "hint": { "es": "Incluye return", "en": "Include return" },
-  "xpReward": 18
+  "starterCode": {
+    "es": "Future<void> loadProducts() async {\n  setState(() {\n    isLoading = true;\n  });\n\n  // TODO\n\n  setState(() {\n    isLoading = false;\n  });\n}",
+    "en": "Future<void> loadProducts() async {\n  setState(() {\n    isLoading = true;\n  });\n\n  // TODO\n\n  setState(() {\n    isLoading = false;\n  });\n}"
+  },
+  "expectedFragments": {
+    "es": ["await", "setState", "isLoading = false"],
+    "en": ["await", "setState", "isLoading = false"]
+  },
+  "validationMode": "containsTokens",
+  "requiredTokens": {
+    "es": ["await", "setState", "isLoading = false"],
+    "en": ["await", "setState", "isLoading = false"]
+  },
+  "acceptanceCriteria": {
+    "es": [
+      "Debe activar loading antes de la llamada async",
+      "Debe esperar la carga con await",
+      "Debe desactivar loading al finalizar"
+    ],
+    "en": [
+      "Turn loading on before async call",
+      "Use await for the loading call",
+      "Turn loading off when finished"
+    ]
+  },
+  "customKeywords": {
+    "es": ["loadProducts", "setState", "isLoading", "repository"],
+    "en": ["loadProducts", "setState", "isLoading", "repository"]
+  },
+  "correctExplanation": {
+    "es": "Excelente: cubres loading y llamada async correctamente.",
+    "en": "Great: loading flow and async call are correctly handled."
+  },
+  "incorrectExplanation": {
+    "es": "Faltan partes clave del flujo de loading o de la llamada async.",
+    "en": "Key loading or async flow parts are missing."
+  },
+  "xpReward": 20
 }
 ```
 
 ---
 
-## 5) Reglas de shuffle
+## 5) Reglas editoriales mínimas
 
-- `multipleChoice`: shuffle default `true`
-- `matchConcept`: shuffle default `true`
-- `orderCodeBlocks`: shuffle default `true` (solo visual, `correctOrder` no cambia)
-- `predictOutput`: shuffle default `true`
-- `findTheWrongLine`: **no shuffle**
-- `intro`, `fillInTheCode`, `completeSnippet`, `fixTheBug`, `guidedWriting`: no shuffle
-
----
-
-## 6) Validaciones que rompen carga
-
-- IDs de nodos duplicados.
-- IDs de steps duplicados (globales en una ruta).
-- `examNodeId` inexistente.
-- `examNodeId` apuntando a nodo que no es `exam`.
-- nodo sin `steps`.
-- `multipleChoice`/`predictOutput`: `correctAnswer` fuera de `options`.
-- `findTheWrongLine`: `wrongLineIndex` fuera de rango.
-- `orderCodeBlocks`: inconsistencia entre `blocks` y `correctOrder`.
-- `matchConcept`: `pairs` ausente o vacío.
-
----
-
-## 7) Localización en JSON
-
-La app soporta campos localizados como:
-
-```json
-"campo": { "es": "texto", "en": "text" }
-```
-
-Y también valores simples:
-
-```json
-"campo": "texto"
-```
-
-Para contenido nuevo se recomienda usar `es/en` en todos los textos de UI.
-
----
-
-## 8) Plantilla mínima de nueva ruta
-
-```json
-{
-  "routeId": "new_route",
-  "title": { "es": "Nueva Ruta", "en": "New Route" },
-  "description": { "es": "Descripción", "en": "Description" },
-  "icon": "route_dart",
-  "themeColor": "#005E9E",
-  "version": 1,
-  "estimatedMinutes": 90,
-  "examNodeId": "new_route_exam",
-  "nodes": [
-    {
-      "id": "new_route_intro",
-      "title": { "es": "Inicio", "en": "Start" },
-      "shortDescription": { "es": "Primer paso", "en": "First step" },
-      "icon": "rocket_launch",
-      "nodeType": "lesson",
-      "xpReward": 30,
-      "steps": [
-        {
-          "id": "intro_1",
-          "type": "intro",
-          "title": { "es": "Bienvenido", "en": "Welcome" },
-          "body": { "es": "Comencemos", "en": "Let's start" }
-        },
-        {
-          "id": "mc_1",
-          "type": "multipleChoice",
-          "question": { "es": "¿2+2?", "en": "2+2?" },
-          "options": { "es": ["3", "4"], "en": ["3", "4"] },
-          "correctAnswer": { "es": "4", "en": "4" },
-          "correctExplanation": { "es": "Exacto", "en": "Correct" },
-          "incorrectExplanation": { "es": "Era 4", "en": "It was 4" },
-          "xpReward": 10
-        }
-      ]
-    },
-    {
-      "id": "new_route_exam",
-      "title": { "es": "Examen Final", "en": "Final Exam" },
-      "shortDescription": { "es": "Validación final", "en": "Final validation" },
-      "icon": "military_tech",
-      "nodeType": "exam",
-      "xpReward": 50,
-      "steps": [
-        {
-          "id": "exam_mc_1",
-          "type": "multipleChoice",
-          "question": { "es": "Pregunta final", "en": "Final question" },
-          "options": { "es": ["A", "B"], "en": ["A", "B"] },
-          "correctAnswer": { "es": "A", "en": "A" },
-          "correctExplanation": { "es": "Bien", "en": "Good" },
-          "incorrectExplanation": { "es": "No", "en": "No" },
-          "xpReward": 20
-        }
-      ]
-    }
-  ]
-}
-```
+1. No introducir conceptos antes de su nodo.
+2. Si un nombre es obligatorio, indicarlo explícitamente en `acceptanceCriteria` y `namingPolicy`.
+3. Si hay más de una solución válida, usar `multiAnswer` o token-based validation.
+4. Evitar ejercicios de “adivinanza” en examenes finales.

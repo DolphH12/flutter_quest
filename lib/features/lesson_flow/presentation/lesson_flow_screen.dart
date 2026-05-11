@@ -404,6 +404,12 @@ class _ActivityStep extends StatelessWidget {
                       maxHeight: 340,
                     ),
                   ],
+                  if (_buildAcceptanceHints(activity).isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    _AcceptanceCriteriaCard(
+                      criteria: _buildAcceptanceHints(activity),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -458,6 +464,10 @@ class _ActivityStep extends StatelessWidget {
               maxHeight: 240,
             ),
           ],
+          if (_buildAcceptanceHints(activity).isNotEmpty) ...[
+            const SizedBox(height: 10),
+            _AcceptanceCriteriaCard(criteria: _buildAcceptanceHints(activity)),
+          ],
           const SizedBox(height: 12),
           LessonActivityRenderer(
             activity: activity,
@@ -503,6 +513,76 @@ class _ActivityStep extends StatelessWidget {
 
   String _normalize(String value) {
     return value.replaceAll(RegExp(r'\s+'), ' ').trim();
+  }
+
+  List<String> _buildAcceptanceHints(LessonActivity activity) {
+    final hints = <String>[
+      ...(activity.acceptanceCriteria ?? const <String>[]),
+    ];
+    final suggested = (activity.suggestedName ?? '').trim();
+    final namingPolicy = (activity.namingPolicy ?? '').trim();
+    if (suggested.isNotEmpty && namingPolicy == 'fixed') {
+      hints.add('Use exact name: $suggested');
+    } else if (suggested.isNotEmpty && namingPolicy == 'flexible') {
+      hints.add('Suggested name: $suggested');
+    }
+    return hints;
+  }
+}
+
+class _AcceptanceCriteriaCard extends StatelessWidget {
+  const _AcceptanceCriteriaCard({required this.criteria});
+
+  final List<String> criteria;
+
+  @override
+  Widget build(BuildContext context) {
+    final isSpanish = Localizations.localeOf(
+      context,
+    ).languageCode.toLowerCase().startsWith('es');
+    return FQSurfaceCard(
+      radius: FQRadius.medium,
+      color: const Color(0xFFEFF5FF),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            isSpanish ? 'Qué se espera' : 'Expected outcome',
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: FQColors.primary,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 8),
+          for (final item in criteria)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 2),
+                    child: Icon(
+                      Icons.check_circle_rounded,
+                      size: 14,
+                      color: Color(0xFF1D8D4A),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      item,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: FQColors.onSurface.withValues(alpha: 0.84),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }
 

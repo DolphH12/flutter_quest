@@ -2,7 +2,7 @@
   "routeId": "dart_route",
   "title": {
     "es": "Dart",
-    "en": "dart"
+    "en": "Dart"
   },
   "description": {
     "es": "Fundamentos del lenguaje Dart con una progresión práctica, clara y gamificada.",
@@ -94,8 +94,8 @@
             "en": "main() is the most common input function in a Dart program."
           },
           "incorrectExplanation": {
-            "es": "En Dart, la ejecución suele comenzar en main(). Las otras opciones no son el punto de entrada estándar.",
-            "en": "In Dart, execution usually begins in main(). The other options are not the standard entry point."
+            "es": "En Dart, la ejecución suele comenzar en main(). Las otras opciones no son el punto de entrada estándar. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "In Dart, execution usually begins in main(). The other options are not the standard entry point. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -138,8 +138,8 @@
             "en": "Inside main() you execute print('Hello Dart'), so that text appears in the console."
           },
           "incorrectExplanation": {
-            "es": "Ese snippet sí ejecuta una instrucción válida: imprime Hola Dart desde main().",
-            "en": "That snippet does execute a valid statement: print Hello Dart from main()."
+            "es": "Ese snippet sí ejecuta una instrucción válida: imprime Hola Dart desde main(). Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "That snippet does execute a valid statement: print Hello Dart from main(). If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -164,14 +164,22 @@
             "en": "The main function is the standard entry point of a Dart program."
           },
           "incorrectExplanation": {
-            "es": "La respuesta esperada es main, porque allí comienza la ejecución del programa.",
-            "en": "The expected response is main, because that is where the execution of the program begins."
+            "es": "La respuesta esperada es main, porque allí comienza la ejecución del programa. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The expected response is main, because that is where the execution of the program begins. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en la función que abre la puerta del programa.",
             "en": "Think about the function that opens the door to the program."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Introducción a Dart, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Introduction to Dart exercise is accepted, even if writing style differs."
+          }
         },
         {
           "id": "intro_bug_1",
@@ -193,14 +201,22 @@
             "en": "The standard input convention in simple Dart programs is to use main()."
           },
           "incorrectExplanation": {
-            "es": "Para este contexto, la función de entrada correcta es main().",
-            "en": "For this context, the correct entry function is main()."
+            "es": "Para este contexto, la función de entrada correcta es main(). Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "For this context, the correct entry function is main(). If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Busca el nombre de la función desde donde inicia el programa.",
             "en": "Find the name of the function from which the program starts."
           },
-          "xpReward": 10
+          "xpReward": 10,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Introducción a Dart, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Introduction to Dart exercise is accepted, even if writing style differs."
+          }
         }
       ]
     },
@@ -284,11 +300,14 @@
             "en": "String represents text, so it is the appropriate type for the 'Dart' value."
           },
           "incorrectExplanation": {
-            "es": "El valor 'Dart' es texto, por lo que debe almacenarse en una variable String.",
-            "en": "The 'Dart' value is text, so it must be stored in a String variable."
+            "es": "El valor 'Dart' es texto, por lo que debe almacenarse en una variable String. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The 'Dart' value is text, so it must be stored in a String variable. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_intro"
+          ]
         },
         {
           "id": "vars_match_1",
@@ -334,11 +353,14 @@
             "en": "Each type represents a different category of data."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué tipo representa texto, enteros y valores lógicos.",
-            "en": "Check which type represents text, integers, and logical values."
+            "es": "Revisa qué tipo representa texto, enteros y valores lógicos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which type represents text, integers, and logical values. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_intro"
+          ]
         },
         {
           "id": "vars_code_1",
@@ -360,14 +382,25 @@
             "en": "int represents whole numbers without decimals."
           },
           "incorrectExplanation": {
-            "es": "Para almacenar 28 como entero, debes usar int.",
-            "en": "To store 28 as an integer, you must use int."
+            "es": "Para almacenar 28 como entero, debes usar int. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To store 28 as an integer, you must use int. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es el tipo numérico para valores como 1, 2 y 3.",
             "en": "It is the numeric type for values ​​like 1, 2, and 3."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Variables y tipos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Variables and types exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_intro"
+          ]
         },
         {
           "id": "vars_bug_1",
@@ -389,14 +422,25 @@
             "en": "The 'dolph' value is text, so it needs a String variable."
           },
           "incorrectExplanation": {
-            "es": "El error está en el tipo. El valor es texto, no un número entero.",
-            "en": "The error is in the type. The value is text, not an integer."
+            "es": "El error está en el tipo. El valor es texto, no un número entero. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is in the type. The value is text, not an integer. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Mira el valor entre comillas.",
             "en": "Look at the value in quotes."
           },
-          "xpReward": 13
+          "xpReward": 13,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Variables y tipos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Variables and types exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_intro"
+          ]
         },
         {
           "id": "vars_predict_1",
@@ -436,11 +480,14 @@
             "en": "Since the initial value is text, Dart infers String."
           },
           "incorrectExplanation": {
-            "es": "Un valor entre comillas representa texto, así que el tipo inferido es String.",
-            "en": "A value in quotes represents text, so the inferred type is String."
+            "es": "Un valor entre comillas representa texto, así que el tipo inferido es String. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A value in quotes represents text, so the inferred type is String. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_intro"
+          ]
         }
       ]
     },
@@ -524,11 +571,15 @@
             "en": "== compares whether two values ​​are equal."
           },
           "incorrectExplanation": {
-            "es": "= asigna un valor; == compara igualdad.",
-            "en": "= assigns a value; == compares equality."
+            "es": "= asigna un valor; == compara igualdad. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "= assigns a value; == compares equality. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_intro",
+            "dart_variables_types"
+          ]
         },
         {
           "id": "ops_match_1",
@@ -574,69 +625,97 @@
             "en": "Each operator has a clear responsibility within an expression."
           },
           "incorrectExplanation": {
-            "es": "Revisa si el operador suma, compara igualdad o evalúa una relación.",
-            "en": "Check if the operator adds, compares equality, or evaluates a relationship."
+            "es": "Revisa si el operador suma, compara igualdad o evalúa una relación. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check if the operator adds, compares equality, or evaluates a relationship. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_intro",
+            "dart_variables_types"
+          ]
         },
         {
           "id": "ops_code_1",
           "type": "completeSnippet",
           "prompt": {
-            "es": "Completa el operador para verificar si score es mayor o igual a 10.",
-            "en": "Complete the operator to verify if score is greater than or equal to 10."
+            "es": "Completa el operador para que la comparación sea verdadera cuando score valga 10 o más.",
+            "en": "Complete the operator so the comparison is true when score is 10 or more."
           },
           "initialCode": {
-            "es": "if (score _____ 10) {\n  print('Ganaste');\n}",
-            "en": "if (score _____ 10) {\n  print('You won');\n}"
+            "es": "bool reachedGoal = score _____ 10;",
+            "en": "bool reachedGoal = score _____ 10;"
           },
           "expectedAnswer": {
             "es": ">=",
             "en": ">="
           },
           "correctExplanation": {
-            "es": ">= comprueba si score es mayor o igual que 10.",
-            "en": ">= checks if score is greater than or equal to 10."
+            "es": ">= evalúa “mayor o igual”, justo lo que pide el enunciado.",
+            "en": ">= evaluates “greater than or equal”, exactly what the prompt asks for."
           },
           "incorrectExplanation": {
-            "es": "La condición pide 'mayor o igual que 10', así que el operador correcto es >=.",
-            "en": "The condition asks for 'greater than or equal to 10', so the correct operator is >=."
+            "es": "La comparación debe incluir el 10, por eso se usa >=. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The comparison must include 10, so use >=. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "No quieres excluir el 10.",
             "en": "You don't want to exclude 10."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Operadores, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Operators exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_intro",
+            "dart_variables_types"
+          ]
         },
         {
           "id": "ops_bug_1",
           "type": "fixTheBug",
           "prompt": {
-            "es": "Corrige la línea para comparar igualdad en vez de asignar.",
-            "en": "Correct the line to compare equality instead of assign."
+            "es": "Corrige la línea para comparar igualdad en una expresión booleana.",
+            "en": "Fix the line to compare equality in a boolean expression."
           },
           "initialCode": {
-            "es": "if (level = 5) {\n  print('Nivel exacto');\n}",
-            "en": "if (level = 5) {\n  print('Exact level');\n}"
+            "es": "bool isLevelFive = level = 5;",
+            "en": "bool isLevelFive = level = 5;"
           },
           "expectedAnswer": {
-            "es": "if (level == 5) {\n  print('Nivel exacto');\n}",
-            "en": "if (level == 5) {\n  print('Exact level');\n}"
+            "es": "bool isLevelFive = level == 5;",
+            "en": "bool isLevelFive = level == 5;"
           },
           "correctExplanation": {
-            "es": "Dentro de la condición necesitas comparar, no asignar.",
-            "en": "Within the condition you need to compare, not assign."
+            "es": "Para comparar igualdad se usa ==, no =.",
+            "en": "To compare equality you use ==, not =."
           },
           "incorrectExplanation": {
-            "es": "Usar = intenta asignar un valor. Para comparar igualdad debes usar ==.",
-            "en": "Use = attempts to assign a value. To compare equality you must use ==."
+            "es": "Aquí necesitas comparar, no asignar. Usa == para igualdad. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Here you need to compare, not assign. Use == for equality. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Uno asigna, el otro compara.",
             "en": "One assigns, the other compares."
           },
-          "xpReward": 13
+          "xpReward": 13,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Operadores, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Operators exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_intro",
+            "dart_variables_types"
+          ]
         },
         {
           "id": "ops_predict_1",
@@ -676,11 +755,15 @@
             "en": "The + operator adds the two integers and produces 10."
           },
           "incorrectExplanation": {
-            "es": "En este contexto + suma números enteros, así que el resultado es 10.",
-            "en": "In this context + adds whole numbers, so the result is 10."
+            "es": "En este contexto + suma números enteros, así que el resultado es 10. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "In this context + adds whole numbers, so the result is 10. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_intro",
+            "dart_variables_types"
+          ]
         }
       ]
     },
@@ -764,11 +847,15 @@
             "en": "switch is ideal when you compare an expression against several defined cases."
           },
           "incorrectExplanation": {
-            "es": "for y while repiten; try maneja errores. switch se usa para varios casos concretos.",
-            "en": "for and while repeat; try handles errors. switch is used for several specific cases."
+            "es": "for y while repiten; try maneja errores. switch se usa para varios casos concretos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "for and while repeat; try handles errors. switch is used for several specific cases. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_variables_types",
+            "dart_operators"
+          ]
         },
         {
           "id": "cond_predict_1",
@@ -808,11 +895,15 @@
             "en": "If the condition is true, the if block is executed."
           },
           "incorrectExplanation": {
-            "es": "Cuando isMember es true, el programa entra al bloque del if y muestra Descuento.",
-            "en": "When isMember is true, the program enters the if block and displays Discount."
+            "es": "Cuando isMember es true, el programa entra al bloque del if y muestra Descuento. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "When isMember is true, the program enters the if block and displays Discount. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_variables_types",
+            "dart_operators"
+          ]
         },
         {
           "id": "cond_code_1",
@@ -834,14 +925,26 @@
             "en": "The condition must compare score with 50 so that the message appears when it exceeds it."
           },
           "incorrectExplanation": {
-            "es": "La condición pedida es 'mayor que 50', por eso el valor faltante es 50.",
-            "en": "The requested condition is 'greater than 50', so the missing value is 50."
+            "es": "La condición pedida es 'mayor que 50', por eso el valor faltante es 50. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The requested condition is 'greater than 50', so the missing value is 50. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "El número está en la instrucción.",
             "en": "The number is in the instruction."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Condicionales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Conditionals exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_variables_types",
+            "dart_operators"
+          ]
         },
         {
           "id": "cond_bug_1",
@@ -863,14 +966,26 @@
             "en": "The correct keyword is else."
           },
           "incorrectExplanation": {
-            "es": "El error es de sintaxis: debe escribirse else.",
-            "en": "The error is syntax: else must be written."
+            "es": "El error es de sintaxis: debe escribirse else. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is syntax: else must be written. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Falta una letra en la palabra clave.",
             "en": "A letter is missing from the keyword."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Condicionales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Conditionals exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_variables_types",
+            "dart_operators"
+          ]
         },
         {
           "id": "cond_find_1",
@@ -907,10 +1022,14 @@
             "en": "elseif is not valid syntax in Dart. The correct way would be else if (...)."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la que intenta usar elseif como una sola palabra.",
-            "en": "The wrong line is the one that tries to use elseif as a single word."
+            "es": "La línea incorrecta es la que intenta usar elseif como una sola palabra. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is the one that tries to use elseif as a single word. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "dart_variables_types",
+            "dart_operators"
+          ]
         }
       ]
     },
@@ -994,11 +1113,15 @@
             "en": "for is ideal when you control the exact number of repetitions."
           },
           "incorrectExplanation": {
-            "es": "Cuando conoces la cantidad de repeticiones, for suele ser la opción más clara.",
-            "en": "When you know the number of repetitions, for is usually the clearest option."
+            "es": "Cuando conoces la cantidad de repeticiones, for suele ser la opción más clara. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "When you know the number of repetitions, for is usually the clearest option. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_operators",
+            "dart_conditionals"
+          ]
         },
         {
           "id": "loops_match_1",
@@ -1044,11 +1167,15 @@
             "en": "Understanding the role of each part of the loop avoids logical errors."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuándo usar for, cuándo while y para qué sirve el incremento.",
-            "en": "Review when to use for, when to use while, and what the increment is for."
+            "es": "Revisa cuándo usar for, cuándo while y para qué sirve el incremento. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review when to use for, when to use while, and what the increment is for. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_operators",
+            "dart_conditionals"
+          ]
         },
         {
           "id": "loops_code_1",
@@ -1070,14 +1197,26 @@
             "en": "With i < 5, the loop prints 0, 1, 2, 3 and 4."
           },
           "incorrectExplanation": {
-            "es": "Para llegar hasta 4 empezando en 0, el límite debe ser 5.",
-            "en": "To get up to 4 starting at 0, the limit must be 5."
+            "es": "Para llegar hasta 4 empezando en 0, el límite debe ser 5. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To get up to 4 starting at 0, the limit must be 5. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el primer número que ya no debe entrar.",
             "en": "Think of the first number that should no longer be entered."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Loops, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Loops exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_operators",
+            "dart_conditionals"
+          ]
         },
         {
           "id": "loops_bug_1",
@@ -1099,14 +1238,26 @@
             "en": "The loop needs to advance with i++ to change on each iteration."
           },
           "incorrectExplanation": {
-            "es": "Sin incremento, i nunca cambia y el loop queda incompleto.",
-            "en": "Without increment, i never changes and the loop remains incomplete."
+            "es": "Sin incremento, i nunca cambia y el loop queda incompleto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Without increment, i never changes and the loop remains incomplete. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Mira la tercera parte del for.",
             "en": "Look at the third part of the for."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Loops, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Loops exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_operators",
+            "dart_conditionals"
+          ]
         },
         {
           "id": "loops_predict_1",
@@ -1146,11 +1297,15 @@
             "en": "The loop starts at 0 and stops before i becomes 3."
           },
           "incorrectExplanation": {
-            "es": "Se imprimen 0, 1 y 2 porque la condición es i < 3.",
-            "en": "0, 1 and 2 are printed because the condition is i < 3."
+            "es": "Se imprimen 0, 1 y 2 porque la condición es i < 3. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "0, 1 and 2 are printed because the condition is i < 3. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_operators",
+            "dart_conditionals"
+          ]
         }
       ]
     },
@@ -1234,11 +1389,15 @@
             "en": "return ends the function and returns a value."
           },
           "incorrectExplanation": {
-            "es": "Para regresar un valor desde una función se usa return.",
-            "en": "To return a value from a function, use return."
+            "es": "Para regresar un valor desde una función se usa return. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To return a value from a function, use return. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_conditionals",
+            "dart_loops"
+          ]
         },
         {
           "id": "fun_predict_1",
@@ -1278,11 +1437,15 @@
             "en": "The name parameter takes the value Lina and is interpolated into the text."
           },
           "incorrectExplanation": {
-            "es": "La función construye el texto usando el valor real del parámetro name.",
-            "en": "The function constructs the text using the actual value of the name parameter."
+            "es": "La función construye el texto usando el valor real del parámetro name. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The function constructs the text using the actual value of the name parameter. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_conditionals",
+            "dart_loops"
+          ]
         },
         {
           "id": "fun_code_1",
@@ -1304,14 +1467,26 @@
             "en": "The function needs to receive the second number as an int parameter b."
           },
           "incorrectExplanation": {
-            "es": "Como se usa b en el return, debes declararlo como parámetro: int b.",
-            "en": "Since b is used in the return, you must declare it as a parameter: int b."
+            "es": "Como se usa b en el return, debes declararlo como parámetro: int b. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Since b is used in the return, you must declare it as a parameter: int b. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Te falta declarar el segundo parámetro.",
             "en": "You need to declare the second parameter."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Funciones, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Functions exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_conditionals",
+            "dart_loops"
+          ]
         },
         {
           "id": "fun_bug_1",
@@ -1333,14 +1508,26 @@
             "en": "If the function promises to return a String, you must use return with a String value."
           },
           "incorrectExplanation": {
-            "es": "La función tiene tipo String, así que no basta con print; debe retornar un texto.",
-            "en": "The function has type String, so print is not enough; must return a text."
+            "es": "La función tiene tipo String, así que no basta con print; debe retornar un texto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The function has type String, so print is not enough; must return a text. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Imprimir no es lo mismo que devolver.",
             "en": "Printing is not the same as returning."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Funciones, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Functions exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_conditionals",
+            "dart_loops"
+          ]
         },
         {
           "id": "fun_order_1",
@@ -1382,11 +1569,15 @@
             "en": "The function signature comes first, then the return, and then the closure."
           },
           "incorrectExplanation": {
-            "es": "Una función necesita su cabecera, luego su cuerpo y finalmente el cierre.",
-            "en": "A function needs its header, then its body, and finally the closure."
+            "es": "Una función necesita su cabecera, luego su cuerpo y finalmente el cierre. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A function needs its header, then its body, and finally the closure. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_conditionals",
+            "dart_loops"
+          ]
         }
       ]
     },
@@ -1470,11 +1661,15 @@
             "en": "Set does not allow duplicate elements."
           },
           "incorrectExplanation": {
-            "es": "List puede repetir valores. Set es la colección que evita duplicados.",
-            "en": "List can repeat values. Set is the collection that avoids duplicates."
+            "es": "List puede repetir valores. Set es la colección que evita duplicados. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "List can repeat values. Set is the collection that avoids duplicates. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_loops",
+            "dart_functions"
+          ]
         },
         {
           "id": "col_match_1",
@@ -1520,11 +1715,15 @@
             "en": "Each collection solves a different type of need."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál mantiene orden, cuál evita duplicados y cuál usa claves.",
-            "en": "Check which one maintains order, which one avoids duplicates, and which one uses keys."
+            "es": "Revisa cuál mantiene orden, cuál evita duplicados y cuál usa claves. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which one maintains order, which one avoids duplicates, and which one uses keys. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_loops",
+            "dart_functions"
+          ]
         },
         {
           "id": "col_code_1",
@@ -1546,14 +1745,26 @@
             "en": "Map saves key-value pairs, ideal for country -> capital."
           },
           "incorrectExplanation": {
-            "es": "Como quieres asociar un país con su capital, necesitas un Map.",
-            "en": "Since you want to associate a country with its capital, you need a Map."
+            "es": "Como quieres asociar un país con su capital, necesitas un Map. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Since you want to associate a country with its capital, you need a Map. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en clave y valor.",
             "en": "Think key and value."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Colecciones, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Collections exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_loops",
+            "dart_functions"
+          ]
         },
         {
           "id": "col_bug_1",
@@ -1575,14 +1786,26 @@
             "en": "Lists use square brackets [ ] in Dart."
           },
           "incorrectExplanation": {
-            "es": "Las llaves { } representan Set o Map; para List debes usar [ ].",
-            "en": "The braces { } represent Set or Map; for List you must use [ ]."
+            "es": "Las llaves { } representan Set o Map; para List debes usar [ ]. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The braces { } represent Set or Map; for List you must use [ ]. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Observa los delimitadores correctos.",
             "en": "Observe the correct delimiters."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Colecciones, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Collections exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_loops",
+            "dart_functions"
+          ]
         },
         {
           "id": "col_predict_1",
@@ -1622,11 +1845,15 @@
             "en": "A Map is ideal when a key must point to an associated value."
           },
           "incorrectExplanation": {
-            "es": "Para asociaciones tipo país -> capital, la estructura correcta es Map.",
-            "en": "For country -> capital type associations, the correct structure is Map."
+            "es": "Para asociaciones tipo país -> capital, la estructura correcta es Map. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "For country -> capital type associations, the correct structure is Map. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_loops",
+            "dart_functions"
+          ]
         }
       ]
     },
@@ -1710,11 +1937,15 @@
             "en": "The sign? indicates that the type is nullable."
           },
           "incorrectExplanation": {
-            "es": "En Dart, los tipos anulables se escriben con ? al final del tipo, por ejemplo String?.",
-            "en": "In Dart, nullable types are written with ? at the end of the type, for example String?."
+            "es": "En Dart, los tipos anulables se escriben con ? al final del tipo, por ejemplo String?. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "In Dart, nullable types are written with ? at the end of the type, for example String?. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_functions",
+            "dart_collections"
+          ]
         },
         {
           "id": "null_match_1",
@@ -1760,11 +1991,15 @@
             "en": "Distinguishing nullable and non-nullable types is key to avoiding errors."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué forma permite null y cuál exige un valor real.",
-            "en": "Check which form allows null and which requires a real value."
+            "es": "Revisa qué forma permite null y cuál exige un valor real. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which form allows null and which requires a real value. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_functions",
+            "dart_collections"
+          ]
         },
         {
           "id": "null_code_1",
@@ -1786,14 +2021,26 @@
             "en": "String? indicates that the variable can contain null."
           },
           "incorrectExplanation": {
-            "es": "Para permitir null debes agregar ? al tipo.",
-            "en": "To allow null you must add ? to the guy."
+            "es": "Para permitir null debes agregar ? al tipo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To allow null you must add ? to the guy. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es un solo símbolo.",
             "en": "It is a single symbol."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Null Safety, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Null Safety exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_functions",
+            "dart_collections"
+          ]
         },
         {
           "id": "null_bug_1",
@@ -1815,14 +2062,26 @@
             "en": "If a variable can contain null, its type must be nullable."
           },
           "incorrectExplanation": {
-            "es": "nickname recibe null, así que el tipo debe declararse como String?.",
-            "en": "nickname receives null, so the type must be declared as String?."
+            "es": "nickname recibe null, así que el tipo debe declararse como String?. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "nickname receives null, so the type must be declared as String?. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "El tipo actual no acepta null.",
             "en": "The current type does not accept null."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Null Safety, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Null Safety exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_functions",
+            "dart_collections"
+          ]
         },
         {
           "id": "null_predict_1",
@@ -1862,11 +2121,15 @@
             "en": "bio was declared with ?, that's why it can contain null."
           },
           "incorrectExplanation": {
-            "es": "La variable anulable en este caso es bio, porque fue declarada como String?.",
-            "en": "The nullable variable in this case is bio, because it was declared as String?."
+            "es": "La variable anulable en este caso es bio, porque fue declarada como String?. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The nullable variable in this case is bio, because it was declared as String?. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_functions",
+            "dart_collections"
+          ]
         }
       ]
     },
@@ -1950,11 +2213,15 @@
             "en": "User('Ana') creates an instance using the constructor."
           },
           "incorrectExplanation": {
-            "es": "Para crear un objeto usas el constructor de la clase, por ejemplo User('Ana').",
-            "en": "To create an object you use the class constructor, for example User('Ana')."
+            "es": "Para crear un objeto usas el constructor de la clase, por ejemplo User('Ana'). Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To create an object you use the class constructor, for example User('Ana'). If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_collections",
+            "dart_null_safety"
+          ]
         },
         {
           "id": "class_match_1",
@@ -2000,11 +2267,15 @@
             "en": "Classes, objects, and properties work together to model information."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué es el molde, qué es la instancia y qué representa un dato interno.",
-            "en": "Review what the mold is, what the instance is and what represents internal data."
+            "es": "Revisa qué es el molde, qué es la instancia y qué representa un dato interno. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what the mold is, what the instance is and what represents internal data. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_collections",
+            "dart_null_safety"
+          ]
         },
         {
           "id": "class_code_1",
@@ -2026,14 +2297,26 @@
             "en": "To create the object you need to call the Product(...) constructor."
           },
           "incorrectExplanation": {
-            "es": "La instancia debe construirse con el nombre de la clase: Product.",
-            "en": "The instance must be built with the class name: Product."
+            "es": "La instancia debe construirse con el nombre de la clase: Product. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The instance must be built with the class name: Product. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es el nombre del molde.",
             "en": "It is the name of the mold."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Clases y objetos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Classes and objects exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_collections",
+            "dart_null_safety"
+          ]
         },
         {
           "id": "class_bug_1",
@@ -2055,14 +2338,26 @@
             "en": "Adding the type improves clarity and keeps the model well defined."
           },
           "incorrectExplanation": {
-            "es": "La propiedad name necesita un tipo explícito para mantener la clase clara y consistente.",
-            "en": "The name property needs an explicit type to keep the class clear and consistent."
+            "es": "La propiedad name necesita un tipo explícito para mantener la clase clara y consistente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The name property needs an explicit type to keep the class clear and consistent. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "name guarda texto.",
             "en": "name saves text."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Clases y objetos, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Classes and objects exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_collections",
+            "dart_null_safety"
+          ]
         },
         {
           "id": "class_predict_1",
@@ -2102,11 +2397,15 @@
             "en": "user saves an object created from the User class."
           },
           "incorrectExplanation": {
-            "es": "La clase es User; user es la instancia concreta creada desde ella.",
-            "en": "The class is User; user is the concrete instance created from it."
+            "es": "La clase es User; user es la instancia concreta creada desde ella. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The class is User; user is the concrete instance created from it. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_collections",
+            "dart_null_safety"
+          ]
         }
       ]
     },
@@ -2190,11 +2489,15 @@
             "en": "await waits for the result of a Future inside an async function."
           },
           "incorrectExplanation": {
-            "es": "Dentro de una función async, la palabra clave para esperar un Future es await.",
-            "en": "Inside an async function, the keyword to wait for a Future is await."
+            "es": "Dentro de una función async, la palabra clave para esperar un Future es await. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Inside an async function, the keyword to wait for a Future is await. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_null_safety",
+            "dart_classes_objects"
+          ]
         },
         {
           "id": "async_match_1",
@@ -2240,11 +2543,15 @@
             "en": "These three concepts work together in basic asynchronous programming."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué representa el valor futuro, qué habilita await y qué hace await exactamente.",
-            "en": "Review what the future value represents, what enables await, and what exactly await does."
+            "es": "Revisa qué representa el valor futuro, qué habilita await y qué hace await exactamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what the future value represents, what enables await, and what exactly await does. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_null_safety",
+            "dart_classes_objects"
+          ]
         },
         {
           "id": "async_code_1",
@@ -2266,14 +2573,26 @@
             "en": "async makes the function asynchronous and allows await to be used inside it."
           },
           "incorrectExplanation": {
-            "es": "Para trabajar con Future usando await, la función debe declararse con async.",
-            "en": "To work with Future using await, the function must be declared with async."
+            "es": "Para trabajar con Future usando await, la función debe declararse con async. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To work with Future using await, the function must be declared with async. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es la palabra clave que habilita await.",
             "en": "It is the keyword that enables await."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Async básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Basic async exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_null_safety",
+            "dart_classes_objects"
+          ]
         },
         {
           "id": "async_bug_1",
@@ -2295,14 +2614,26 @@
             "en": "If fetchUser returns a Future, you must first wait for its result with await."
           },
           "incorrectExplanation": {
-            "es": "El valor aún no está disponible inmediatamente; necesitas await para obtener el resultado real.",
-            "en": "The value is not yet immediately available; you need await to get the actual result."
+            "es": "El valor aún no está disponible inmediatamente; necesitas await para obtener el resultado real. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The value is not yet immediately available; you need await to get the actual result. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "fetchUser no devuelve el String de inmediato.",
             "en": "fetchUser does not return the String immediately."
           },
-          "xpReward": 25
+          "xpReward": 25,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Async básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Basic async exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_null_safety",
+            "dart_classes_objects"
+          ]
         },
         {
           "id": "async_predict_1",
@@ -2342,11 +2673,15 @@
             "en": "Before waiting for the result, fetchUser() returns a Future<String>."
           },
           "incorrectExplanation": {
-            "es": "Sin await, el valor aún no está resuelto: sigue siendo un Future<String>.",
-            "en": "Without await, the value is not yet resolved: it is still a Future<String>."
+            "es": "Sin await, el valor aún no está resuelto: sigue siendo un Future<String>. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Without await, the value is not yet resolved: it is still a Future<String>. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_null_safety",
+            "dart_classes_objects"
+          ]
         }
       ]
     },
@@ -2430,11 +2765,15 @@
             "en": "catch captures the error thrown within the try block."
           },
           "incorrectExplanation": {
-            "es": "try intenta; catch captura el error; finally corre al final.",
-            "en": "try tries; catch catches the error; finally runs to the end."
+            "es": "try intenta; catch captura el error; finally corre al final. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "try tries; catch catches the error; finally runs to the end. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_classes_objects",
+            "dart_async_basics"
+          ]
         },
         {
           "id": "err_match_1",
@@ -2480,11 +2819,15 @@
             "en": "Each block has a different responsibility for error handling."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué bloque intenta, cuál captura y cuál se ejecuta al final.",
-            "en": "Check which block it attempts, which catches, and which is executed last."
+            "es": "Revisa qué bloque intenta, cuál captura y cuál se ejecuta al final. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which block it attempts, which catches, and which is executed last. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_classes_objects",
+            "dart_async_basics"
+          ]
         },
         {
           "id": "err_code_1",
@@ -2506,14 +2849,26 @@
             "en": "catch is the block that receives the error thrown in try."
           },
           "incorrectExplanation": {
-            "es": "Para capturar el error después de try debes usar catch.",
-            "en": "To catch the error after try you must use catch."
+            "es": "Para capturar el error después de try debes usar catch. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To catch the error after try you must use catch. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Va justo después de try.",
             "en": "It goes right after try."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Manejo de errores, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Error handling exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_classes_objects",
+            "dart_async_basics"
+          ]
         },
         {
           "id": "err_bug_1",
@@ -2535,14 +2890,26 @@
             "en": "The correct keyword is finally."
           },
           "incorrectExplanation": {
-            "es": "El bloque final de manejo de errores se escribe finally.",
-            "en": "The final error handling block is written finally."
+            "es": "El bloque final de manejo de errores se escribe finally. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The final error handling block is written finally. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "La palabra está mal escrita.",
             "en": "The word is misspelled."
           },
-          "xpReward": 25
+          "xpReward": 25,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Manejo de errores, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Error handling exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_classes_objects",
+            "dart_async_basics"
+          ]
         },
         {
           "id": "err_predict_1",
@@ -2582,11 +2949,15 @@
             "en": "finally is always executed at the end of the flow."
           },
           "incorrectExplanation": {
-            "es": "La garantía de finally es ejecutarse al final, incluso si no hubo error.",
-            "en": "The guarantee of finally is to execute at the end, even if there was no error."
+            "es": "La garantía de finally es ejecutarse al final, incluso si no hubo error. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The guarantee of finally is to execute at the end, even if there was no error. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_classes_objects",
+            "dart_async_basics"
+          ]
         }
       ]
     },
@@ -2654,11 +3025,15 @@
             "en": "return returns a value from a function to the point where it was called."
           },
           "incorrectExplanation": {
-            "es": "Para que una función entregue un valor debes usar return.",
-            "en": "For a function to return a value you must use return."
+            "es": "Para que una función entregue un valor debes usar return. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "For a function to return a value you must use return. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_q2",
@@ -2694,11 +3069,15 @@
             "en": "The sign? indicates that the type is nullable."
           },
           "incorrectExplanation": {
-            "es": "Solo String? nickname; permite null correctamente.",
-            "en": "Just String? nickname; allows null correctly."
+            "es": "Solo String? nickname; permite null correctamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Just String? nickname; allows null correctly. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_match_1",
@@ -2744,11 +3123,15 @@
             "en": "Excellent connection of key concepts of the route."
           },
           "incorrectExplanation": {
-            "es": "Revisa con calma cada concepto y su responsabilidad.",
-            "en": "Calmly review each concept and its responsibility."
+            "es": "Revisa con calma cada concepto y su responsabilidad. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Calmly review each concept and its responsibility. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 20,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_code_1",
@@ -2770,14 +3153,26 @@
             "en": "With i < 3, the loop prints 0, 1 and 2."
           },
           "incorrectExplanation": {
-            "es": "Para imprimir hasta 2 empezando en 0, el límite debe ser 3.",
-            "en": "To print up to 2 starting at 0, the limit must be 3."
+            "es": "Para imprimir hasta 2 empezando en 0, el límite debe ser 3. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To print up to 2 starting at 0, the limit must be 3. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el primer número que ya no entra.",
             "en": "Think about the first number that no longer fits."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Dart, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Dart Final Exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_bug_1",
@@ -2799,14 +3194,26 @@
             "en": "fetchName returns a Future, so you must first wait for the result with await."
           },
           "incorrectExplanation": {
-            "es": "Sin await, name no es todavía el valor resuelto sino un Future.",
-            "en": "Without await, name is not yet the resolved value but a Future."
+            "es": "Sin await, name no es todavía el valor resuelto sino un Future. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Without await, name is not yet the resolved value but a Future. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "La respuesta real aún no ha llegado.",
             "en": "The real answer has not yet come."
           },
-          "xpReward": 25
+          "xpReward": 25,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Dart, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Dart Final Exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_bug_2",
@@ -2828,14 +3235,26 @@
             "en": "Lists use square brackets [ ] in Dart."
           },
           "incorrectExplanation": {
-            "es": "Las llaves { } no representan una List. Para una lista necesitas [ ].",
-            "en": "The braces { } do not represent a List. For a list you need [ ]."
+            "es": "Las llaves { } no representan una List. Para una lista necesitas [ ]. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The braces { } do not represent a List. For a list you need [ ]. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Observa el delimitador de la colección.",
             "en": "Look at the collection delimiter."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Dart, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Dart Final Exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_predict_1",
@@ -2875,11 +3294,15 @@
             "en": "User('Ana') creates a concrete object; user saves that instance."
           },
           "incorrectExplanation": {
-            "es": "La clase es User; la variable user guarda la instancia creada.",
-            "en": "The class is User; The user variable saves the created instance."
+            "es": "La clase es User; la variable user guarda la instancia creada. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The class is User; The user variable saves the created instance. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "dart_async_basics",
+            "dart_error_handling"
+          ]
         },
         {
           "id": "exam_summary",

@@ -94,8 +94,8 @@
             "en": "Flutter is a UI framework that allows you to build apps for various platforms from the same base."
           },
           "incorrectExplanation": {
-            "es": "Flutter no es un lenguaje ni una base de datos. Es un framework para crear interfaces multiplataforma.",
-            "en": "Flutter is not a language or a database. It is a framework for creating cross-platform interfaces."
+            "es": "Flutter no es un lenguaje ni una base de datos. Es un framework para crear interfaces multiplataforma. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Flutter is not a language or a database. It is a framework for creating cross-platform interfaces. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -144,8 +144,8 @@
             "en": "These three ideas form the mental heart of Flutter."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué es Flutter, qué representa un widget y qué significa declarar una interfaz.",
-            "en": "Review what Flutter is, what a widget represents, and what it means to declare an interface."
+            "es": "Revisa qué es Flutter, qué representa un widget y qué significa declarar una interfaz. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what Flutter is, what a widget represents, and what it means to declare an interface. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -188,8 +188,8 @@
             "en": "Text directly displays the text content you receive."
           },
           "incorrectExplanation": {
-            "es": "Ese snippet renderiza un Text con el contenido Hola Flutter.",
-            "en": "That snippet renders a Text with the content Hello Flutter."
+            "es": "Ese snippet renderiza un Text con el contenido Hola Flutter. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "That snippet renders a Text with the content Hello Flutter. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
           "shuffle": true
@@ -220,14 +220,25 @@
             "en": "For displaying simple text, Text is one of the most basic and straightforward widgets."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir un Text con el contenido 'Hola Flutter'.",
-            "en": "Your response must include a Text with the content 'Hello Flutter'."
+            "es": "Tu respuesta debe incluir un Text con el contenido 'Hola Flutter'. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your response must include a Text with the content 'Hello Flutter'. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Empieza por el widget más básico para texto.",
             "en": "Start with the most basic text widget."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en ¿Qué es Flutter?, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this What is Flutter? exercise is accepted, even if writing style differs."
+          },
+          "requiredTokens": [
+            "fragmento"
+          ]
         }
       ]
     },
@@ -321,11 +332,14 @@
             "en": "Each folder or file has a different purpose and knowing it gives you direction in the project."
           },
           "incorrectExplanation": {
-            "es": "Revisa mejor qué vive en lib, qué se declara en pubspec y dónde van los recursos.",
-            "en": "Take a better look at what lives in lib, what is declared in pubspec, and where the resources go."
+            "es": "Revisa mejor qué vive en lib, qué se declara en pubspec y dónde van los recursos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Take a better look at what lives in lib, what is declared in pubspec, and where the resources go. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_intro"
+          ]
         },
         {
           "id": "fps_q1",
@@ -361,11 +375,14 @@
             "en": "pubspec.yaml is where Flutter records dependencies, assets, and general package configuration."
           },
           "incorrectExplanation": {
-            "es": "El archivo correcto es pubspec.yaml.",
-            "en": "The correct file is pubspec.yaml."
+            "es": "El archivo correcto es pubspec.yaml. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct file is pubspec.yaml. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_intro"
+          ]
         },
         {
           "id": "fps_find_1",
@@ -398,10 +415,13 @@
             "en": "main.yaml is not a typical part of the base structure of a standard Flutter project."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es main.yaml; no es un archivo base típico de Flutter.",
-            "en": "The wrong line is main.yaml; It is not a typical Flutter base file."
+            "es": "La línea incorrecta es main.yaml; no es un archivo base típico de Flutter. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is main.yaml; It is not a typical Flutter base file. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "flutter_intro"
+          ]
         },
         {
           "id": "fps_predict_1",
@@ -441,11 +461,14 @@
             "en": "Static resources like JSON typically live inside assets/."
           },
           "incorrectExplanation": {
-            "es": "Para recursos estáticos consumidos por la app, la carpeta correcta es assets/.",
-            "en": "For static resources consumed by the app, the correct folder is assets/."
+            "es": "Para recursos estáticos consumidos por la app, la carpeta correcta es assets/. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "For static resources consumed by the app, the correct folder is assets/. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_intro"
+          ]
         }
       ]
     },
@@ -529,11 +552,15 @@
             "en": "runApp() receives the root widget and bootstraps the interface."
           },
           "incorrectExplanation": {
-            "es": "La función estándar para montar el widget raíz es runApp().",
-            "en": "The standard function for mounting the root widget is runApp()."
+            "es": "La función estándar para montar el widget raíz es runApp(). Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The standard function for mounting the root widget is runApp(). If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_intro",
+            "flutter_project_structure"
+          ]
         },
         {
           "id": "fmm_code_1",
@@ -555,14 +582,26 @@
             "en": "runApp mounts the root widget and bootstraps the Flutter interface."
           },
           "incorrectExplanation": {
-            "es": "La función que recibe el widget raíz es runApp.",
-            "en": "The function that receives the root widget is runApp."
+            "es": "La función que recibe el widget raíz es runApp. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The function that receives the root widget is runApp. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Es la función que literalmente corre la app.",
             "en": "It is the function that literally runs the app."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en main.dart y MaterialApp, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this main.dart and MaterialApp exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_intro",
+            "flutter_project_structure"
+          ]
         },
         {
           "id": "fmm_bug_1",
@@ -584,14 +623,32 @@
             "en": "MaterialApp is the appropriate root widget for configuring a Material app."
           },
           "incorrectExplanation": {
-            "es": "Material no reemplaza a MaterialApp como raíz de la app.",
-            "en": "Material does not replace MaterialApp as the root of the app."
+            "es": "Material no reemplaza a MaterialApp como raíz de la app. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Material does not replace MaterialApp as the root of the app. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Necesitas el widget raíz de una app Material.",
             "en": "You need the root widget of a Material app."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "return",
+            "MaterialApp",
+            "home",
+            "HomeScreen"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en main.dart y MaterialApp, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this main.dart and MaterialApp exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_intro",
+            "flutter_project_structure"
+          ]
         },
         {
           "id": "fmm_order_1",
@@ -649,11 +706,15 @@
             "en": "You first define the entry point and then the root widget that MaterialApp returns."
           },
           "incorrectExplanation": {
-            "es": "Piensa en el orden natural: entrada del programa y luego el widget principal.",
-            "en": "Think of the natural order: program input and then the main widget."
+            "es": "Piensa en el orden natural: entrada del programa y luego el widget principal. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think of the natural order: program input and then the main widget. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_intro",
+            "flutter_project_structure"
+          ]
         },
         {
           "id": "fmm_match_1",
@@ -699,11 +760,15 @@
             "en": "These three pieces define a clear foundation for starting a Flutter app."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué entra primero, qué monta la UI y qué widget da la base Material.",
-            "en": "Check what comes in first, what mounts the UI and what widget gives the Material base."
+            "es": "Revisa qué entra primero, qué monta la UI y qué widget da la base Material. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check what comes in first, what mounts the UI and what widget gives the Material base. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_intro",
+            "flutter_project_structure"
+          ]
         }
       ]
     },
@@ -787,11 +852,15 @@
             "en": "body is the main place where you put the screen content."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta es body.",
-            "en": "The correct property is body."
+            "es": "La propiedad correcta es body. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct property is body. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_project_structure",
+            "flutter_main_materialapp"
+          ]
         },
         {
           "id": "fs_find_1",
@@ -824,10 +893,14 @@
             "en": "Scaffold does not have a title property. If you want visible title it normally goes inside AppBar."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la que intenta usar title directamente en Scaffold.",
-            "en": "The wrong line is the one trying to use title directly in Scaffold."
+            "es": "La línea incorrecta es la que intenta usar title directamente en Scaffold. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is the one trying to use title directly in Scaffold. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "flutter_project_structure",
+            "flutter_main_materialapp"
+          ]
         },
         {
           "id": "fs_code_1",
@@ -859,14 +932,29 @@
             "en": "A simple AppBar is declared with the appBar property and an AppBar widget with its title."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir la propiedad appBar y un AppBar con el título Inicio.",
-            "en": "Your response should include the appBar property and an AppBar with the title Home."
+            "es": "Tu respuesta debe incluir la propiedad appBar y un AppBar con el título Inicio. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your response should include the appBar property and an AppBar with the title Home. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Empieza por la propiedad appBar.",
             "en": "Start with the appBar property."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Scaffold, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Scaffold exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_project_structure",
+            "flutter_main_materialapp"
+          ],
+          "requiredTokens": [
+            "nea"
+          ]
         },
         {
           "id": "fs_match_1",
@@ -912,11 +1000,15 @@
             "en": "Scaffold organizes several common areas of a Material screen."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué va arriba, qué contiene el contenido principal y qué acción flota sobre la UI.",
-            "en": "Review what goes on top, what contains the main content, and what action floats above the UI."
+            "es": "Revisa qué va arriba, qué contiene el contenido principal y qué acción flota sobre la UI. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what goes on top, what contains the main content, and what action floats above the UI. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_project_structure",
+            "flutter_main_materialapp"
+          ]
         },
         {
           "id": "fs_predict_1",
@@ -956,11 +1048,15 @@
             "en": "The widget is inside body, so it will be displayed in the main content."
           },
           "incorrectExplanation": {
-            "es": "Al estar dentro de body, el texto se verá en la zona principal de la pantalla.",
-            "en": "Being inside body, the text will be seen in the main area of ​​the screen."
+            "es": "Al estar dentro de body, el texto se verá en la zona principal de la pantalla. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Being inside body, the text will be seen in the main area of ​​the screen. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_project_structure",
+            "flutter_main_materialapp"
+          ]
         }
       ]
     },
@@ -1044,11 +1140,15 @@
             "en": "Column distributes widgets one below the other."
           },
           "incorrectExplanation": {
-            "es": "Row organiza horizontalmente. El widget vertical es Column.",
-            "en": "Row organized horizontally. The vertical widget is Column."
+            "es": "Row organiza horizontalmente. El widget vertical es Column. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Row organized horizontally. The vertical widget is Column. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_main_materialapp",
+            "flutter_scaffold"
+          ]
         },
         {
           "id": "ftrc_predict_1",
@@ -1088,11 +1188,15 @@
             "en": "Row places its children in a horizontal direction."
           },
           "incorrectExplanation": {
-            "es": "Row organiza horizontalmente, así que A y B se verán una al lado de la otra.",
-            "en": "Row arranges horizontally, so A and B will look next to each other."
+            "es": "Row organiza horizontalmente, así que A y B se verán una al lado de la otra. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Row arranges horizontally, so A and B will look next to each other. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_main_materialapp",
+            "flutter_scaffold"
+          ]
         },
         {
           "id": "ftrc_order_1",
@@ -1158,11 +1262,15 @@
             "en": "The correct structure starts with Column and then defines its children."
           },
           "incorrectExplanation": {
-            "es": "Piensa en el contenedor primero y luego en su lista de hijos.",
-            "en": "Think about the container first and then its list of children."
+            "es": "Piensa en el contenedor primero y luego en su lista de hijos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think about the container first and then its list of children. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_main_materialapp",
+            "flutter_scaffold"
+          ]
         },
         {
           "id": "ftrc_match_1",
@@ -1208,11 +1316,15 @@
             "en": "These three widgets are part of the base vocabulary of interfaces in Flutter."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál muestra texto, cuál alinea en fila y cuál apila verticalmente.",
-            "en": "Check which one displays text, which one aligns in a row, and which one stacks vertically."
+            "es": "Revisa cuál muestra texto, cuál alinea en fila y cuál apila verticalmente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which one displays text, which one aligns in a row, and which one stacks vertically. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_main_materialapp",
+            "flutter_scaffold"
+          ]
         },
         {
           "id": "ftrc_guided_1",
@@ -1244,14 +1356,29 @@
             "en": "Column uses the children property to receive a list of child widgets."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir children y al menos dos widgets Text dentro de la lista.",
-            "en": "Your response must include children and at least two Text widgets within the list."
+            "es": "Tu respuesta debe incluir children y al menos dos widgets Text dentro de la lista. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your response must include children and at least two Text widgets within the list. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "La clave está en la lista de hijos.",
             "en": "The key is in the list of children."
           },
-          "xpReward": 10
+          "xpReward": 10,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Text, Row y Column, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Text, Row and Column exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_main_materialapp",
+            "flutter_scaffold"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         }
       ]
     },
@@ -1345,11 +1472,15 @@
             "en": "Each widget has a main responsibility and understanding it avoids using one for everything."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué widget agrega espacio y cuál se usa para decoración o tamaño.",
-            "en": "Check which widget adds space and which is used for decoration or size."
+            "es": "Revisa qué widget agrega espacio y cuál se usa para decoración o tamaño. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which widget adds space and which is used for decoration or size. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_scaffold",
+            "flutter_text_row_column"
+          ]
         },
         {
           "id": "fcp_code_1",
@@ -1371,14 +1502,26 @@
             "en": "EdgeInsets.all applies the same padding to all sides."
           },
           "incorrectExplanation": {
-            "es": "Para el mismo padding en todos los lados usas EdgeInsets.all.",
-            "en": "For the same padding on all sides you use EdgeInsets.all."
+            "es": "Para el mismo padding en todos los lados usas EdgeInsets.all. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "For the same padding on all sides you use EdgeInsets.all. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Mismo valor en todos los lados.",
             "en": "Same value on all sides."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Container y Padding, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Container and Padding exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_scaffold",
+            "flutter_text_row_column"
+          ]
         },
         {
           "id": "fcp_bug_1",
@@ -1400,14 +1543,36 @@
             "en": "Padding has no color property. For color and child you can use Container."
           },
           "incorrectExplanation": {
-            "es": "El error está en usar color sobre Padding. Ese tipo de decoración va mejor en Container.",
-            "en": "The error is in using color over Padding. That type of decoration works better in Container."
+            "es": "El error está en usar color sobre Padding. Ese tipo de decoración va mejor en Container. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The error is in using color over Padding. That type of decoration works better in Container. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Padding da espacio, no color.",
             "en": "Padding gives space, not color."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Container",
+            "color",
+            "Colors",
+            "blue",
+            "child",
+            "Text",
+            "Hola",
+            "Hello"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Container y Padding, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Container and Padding exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_scaffold",
+            "flutter_text_row_column"
+          ]
         },
         {
           "id": "fcp_predict_1",
@@ -1447,11 +1612,15 @@
             "en": "Padding adds interior space around the child widget."
           },
           "incorrectExplanation": {
-            "es": "El propósito principal de Padding es agregar espacio alrededor del child.",
-            "en": "The main purpose of Padding is to add space around the child."
+            "es": "El propósito principal de Padding es agregar espacio alrededor del child. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The main purpose of Padding is to add space around the child. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_scaffold",
+            "flutter_text_row_column"
+          ]
         },
         {
           "id": "fcp_guided_1",
@@ -1479,14 +1648,29 @@
             "en": "Container can receive color directly to decorate its background."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir la propiedad color y un valor como Colors.blue.",
-            "en": "Your response must include the color property and a value like Colors.blue."
+            "es": "Tu respuesta debe incluir la propiedad color y un valor como Colors.blue. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your response must include the color property and a value like Colors.blue. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en decoración básica de fondo.",
             "en": "Think basic background decoration."
           },
-          "xpReward": 10
+          "xpReward": 10,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Container y Padding, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Container and Padding exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_scaffold",
+            "flutter_text_row_column"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         }
       ]
     },
@@ -1570,11 +1754,15 @@
             "en": "onPressed defines the action that the button will execute when pressed."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta para acciones en muchos botones es onPressed.",
-            "en": "The correct property for actions on many buttons is onPressed."
+            "es": "La propiedad correcta para acciones en muchos botones es onPressed. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct property for actions on many buttons is onPressed. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_text_row_column",
+            "flutter_container_padding"
+          ]
         },
         {
           "id": "fb_find_1",
@@ -1607,10 +1795,14 @@
             "en": "ElevatedButton uses child, not text, for the internal widget."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la que usa text en lugar de child.",
-            "en": "The wrong line is the one that uses text instead of child."
+            "es": "La línea incorrecta es la que usa text en lugar de child. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is the one that uses text instead of child. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "flutter_text_row_column",
+            "flutter_container_padding"
+          ]
         },
         {
           "id": "fb_guided_1",
@@ -1638,14 +1830,29 @@
             "en": "The visual content of the button is defined with child."
           },
           "incorrectExplanation": {
-            "es": "Necesitas usar child y un Text con el contenido Guardar.",
-            "en": "You need to use child and a Text with the content Save."
+            "es": "Necesitas usar child y un Text con el contenido Guardar. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "You need to use child and a Text with the content Save. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el widget interno del botón.",
             "en": "Think about the internal widget of the button."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Botones e interacción, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Buttons and interaction exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_text_row_column",
+            "flutter_container_padding"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         },
         {
           "id": "fb_match_1",
@@ -1691,11 +1898,15 @@
             "en": "These pieces help you understand what a button does and how it is made up."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué define el comportamiento, qué muestra el contenido y qué widget representa el botón.",
-            "en": "Review what defines the behavior, what displays the content, and what widget represents the button."
+            "es": "Revisa qué define el comportamiento, qué muestra el contenido y qué widget representa el botón. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what defines the behavior, what displays the content, and what widget represents the button. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_text_row_column",
+            "flutter_container_padding"
+          ]
         },
         {
           "id": "fb_predict_1",
@@ -1735,11 +1946,15 @@
             "en": "The onPressed callback executes print('Tap') when the button is tapped."
           },
           "incorrectExplanation": {
-            "es": "El comportamiento definido en onPressed es imprimir Tap.",
-            "en": "The behavior defined in onPressed is to print Tap."
+            "es": "El comportamiento definido en onPressed es imprimir Tap. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The behavior defined in onPressed is to print Tap. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_text_row_column",
+            "flutter_container_padding"
+          ]
         }
       ]
     },
@@ -1823,11 +2038,15 @@
             "en": "ListView is intended to display scrollable lists."
           },
           "incorrectExplanation": {
-            "es": "Column no hace scroll por sí sola. El widget adecuado es ListView.",
-            "en": "Column does not scroll by itself. The proper widget is ListView."
+            "es": "Column no hace scroll por sí sola. El widget adecuado es ListView. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Column does not scroll by itself. The proper widget is ListView. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_container_padding",
+            "flutter_buttons"
+          ]
         },
         {
           "id": "flv_predict_1",
@@ -1867,11 +2086,15 @@
             "en": "If the content exceeds the available space, a Column may overflow."
           },
           "incorrectExplanation": {
-            "es": "Sin scroll, una Column puede generar overflow si el contenido no cabe.",
-            "en": "Without scrolling, a Column can generate overflow if the content does not fit."
+            "es": "Sin scroll, una Column puede generar overflow si el contenido no cabe. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Without scrolling, a Column can generate overflow if the content does not fit. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_container_padding",
+            "flutter_buttons"
+          ]
         },
         {
           "id": "flv_code_1",
@@ -1893,14 +2116,26 @@
             "en": "ListView allows scrolling for a collection of widgets."
           },
           "incorrectExplanation": {
-            "es": "El widget correcto para este caso es ListView.",
-            "en": "The correct widget for this case is ListView."
+            "es": "El widget correcto para este caso es ListView. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct widget for this case is ListView. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en listas con scroll.",
             "en": "Think about scrolling lists."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en ListView, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this ListView exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_container_padding",
+            "flutter_buttons"
+          ]
         },
         {
           "id": "flv_match_1",
@@ -1946,11 +2181,15 @@
             "en": "Understanding these relationships helps you better choose the right widget."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué widget desplaza, cuál organiza y qué representa children.",
-            "en": "Check which widget moves, which organizes, and which represents children."
+            "es": "Revisa qué widget desplaza, cuál organiza y qué representa children. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which widget moves, which organizes, and which represents children. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_container_padding",
+            "flutter_buttons"
+          ]
         },
         {
           "id": "flv_bug_1",
@@ -1972,14 +2211,36 @@
             "en": "If you want list behavior with scrolling, ListView is a better option."
           },
           "incorrectExplanation": {
-            "es": "El problema es que Column no resuelve el caso de lista desplazable.",
-            "en": "The problem is that Column doesn't solve the scrolling list case."
+            "es": "El problema es que Column no resuelve el caso de lista desplazable. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problem is that Column doesn't solve the scrolling list case. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en scroll vertical.",
             "en": "Think vertical scroll."
           },
-          "xpReward": 10
+          "xpReward": 10,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "return",
+            "ListView",
+            "children",
+            "Text",
+            "Uno",
+            "Dos",
+            "One",
+            "Two"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en ListView, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this ListView exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_container_padding",
+            "flutter_buttons"
+          ]
         }
       ]
     },
@@ -2063,11 +2324,15 @@
             "en": "Navigator.push adds a new route to the navigation stack."
           },
           "incorrectExplanation": {
-            "es": "El método común para abrir una pantalla es Navigator.push.",
-            "en": "The common method to open a screen is Navigator.push."
+            "es": "El método común para abrir una pantalla es Navigator.push. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The common method to open a screen is Navigator.push. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_buttons",
+            "flutter_listview"
+          ]
         },
         {
           "id": "fnav_bug_1",
@@ -2089,14 +2354,31 @@
             "en": "Navigator.pop closes the current route and returns to the previous one."
           },
           "incorrectExplanation": {
-            "es": "Para volver atrás debes usar Navigator.pop.",
-            "en": "To go back you must use Navigator.pop."
+            "es": "Para volver atrás debes usar Navigator.pop. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "To go back you must use Navigator.pop. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "No quieres abrir, quieres regresar.",
             "en": "You don't want to open, you want to go back."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Navigator",
+            "pop",
+            "context"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navegación básica, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Basic navigation exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_buttons",
+            "flutter_listview"
+          ]
         },
         {
           "id": "fnav_guided_1",
@@ -2128,14 +2410,29 @@
             "en": "To navigate you normally use Navigator.push with a MaterialPageRoute."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir Navigator.push y una MaterialPageRoute hacia DetailScreen.",
-            "en": "Your response should include Navigator.push and a MaterialPageRoute to DetailScreen."
+            "es": "Tu respuesta debe incluir Navigator.push y una MaterialPageRoute hacia DetailScreen. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Your response should include Navigator.push and a MaterialPageRoute to DetailScreen. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en push + route.",
             "en": "Think push + route."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Navegación básica, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Basic navigation exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_buttons",
+            "flutter_listview"
+          ],
+          "requiredTokens": [
+            "parte"
+          ]
         },
         {
           "id": "fnav_match_1",
@@ -2181,11 +2478,15 @@
             "en": "These pieces are part of the basic navigation flow in Flutter."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué abre, qué cierra y qué representa la ruta basada en widget.",
-            "en": "Review what opens, closes, and represents the widget-based route."
+            "es": "Revisa qué abre, qué cierra y qué representa la ruta basada en widget. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what opens, closes, and represents the widget-based route. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_buttons",
+            "flutter_listview"
+          ]
         },
         {
           "id": "fnav_predict_1",
@@ -2225,11 +2526,15 @@
             "en": "pop closes the current path and returns to the previous one on the stack."
           },
           "incorrectExplanation": {
-            "es": "Navigator.pop se usa para regresar, no para abrir nuevas rutas.",
-            "en": "Navigator.pop is used to return, not to open new routes."
+            "es": "Navigator.pop se usa para regresar, no para abrir nuevas rutas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Navigator.pop is used to return, not to open new routes. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_buttons",
+            "flutter_listview"
+          ]
         }
       ]
     },
@@ -2313,11 +2618,15 @@
             "en": "Expanded tells the layout that that child should take up available space within Flex widgets."
           },
           "incorrectExplanation": {
-            "es": "El widget típico para ocupar espacio restante dentro de Row o Column es Expanded.",
-            "en": "The typical widget to occupy remaining space within Row or Column is Expanded."
+            "es": "El widget típico para ocupar espacio restante dentro de Row o Column es Expanded. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The typical widget to occupy remaining space within Row or Column is Expanded. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_listview",
+            "flutter_navigation_basic"
+          ]
         },
         {
           "id": "flm_find_1",
@@ -2358,10 +2667,14 @@
             "en": "Long text inside a Row without space management can cause overflow."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática es el texto largo sin restricción dentro de la Row.",
-            "en": "The problematic line is the long unrestricted text within the Row."
+            "es": "La línea problemática es el texto largo sin restricción dentro de la Row. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The problematic line is the long unrestricted text within the Row. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "flutter_listview",
+            "flutter_navigation_basic"
+          ]
         },
         {
           "id": "flm_order_1",
@@ -2427,11 +2740,15 @@
             "en": "First the Row container, then children and inside Expanded with the Text."
           },
           "incorrectExplanation": {
-            "es": "Debes pensar en contenedor exterior y luego anidar correctamente.",
-            "en": "You must think about outer container and then nest correctly."
+            "es": "Debes pensar en contenedor exterior y luego anidar correctamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "You must think about outer container and then nest correctly. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_listview",
+            "flutter_navigation_basic"
+          ]
         },
         {
           "id": "flm_match_1",
@@ -2477,11 +2794,15 @@
             "en": "These concepts help you think better about the layout in Flutter."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué representa el espacio disponible, qué significa desbordar y qué hace Expanded.",
-            "en": "Review what free space represents, what overflow means, and what Expanded does."
+            "es": "Revisa qué representa el espacio disponible, qué significa desbordar y qué hace Expanded. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Review what free space represents, what overflow means, and what Expanded does. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_listview",
+            "flutter_navigation_basic"
+          ]
         },
         {
           "id": "flm_predict_1",
@@ -2521,11 +2842,15 @@
             "en": "Expanded helps distribute available space within Row or Column."
           },
           "incorrectExplanation": {
-            "es": "Expanded está relacionado con distribución de espacio, no con navegación ni persistencia.",
-            "en": "Expanded is related to space distribution, not navigation or persistence."
+            "es": "Expanded está relacionado con distribución de espacio, no con navegación ni persistencia. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Expanded is related to space distribution, not navigation or persistence. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_listview",
+            "flutter_navigation_basic"
+          ]
         }
       ]
     },
@@ -2609,11 +2934,15 @@
             "en": "MaterialApp sets up the base of a Material app in Flutter."
           },
           "incorrectExplanation": {
-            "es": "El widget raíz común para una app Material es MaterialApp.",
-            "en": "The common root widget for a Material app is MaterialApp."
+            "es": "El widget raíz común para una app Material es MaterialApp. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The common root widget for a Material app is MaterialApp. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ]
         },
         {
           "id": "ffe_predict_1",
@@ -2653,11 +2982,15 @@
             "en": "Column organizes its children vertically."
           },
           "incorrectExplanation": {
-            "es": "Column coloca los widgets uno debajo del otro.",
-            "en": "Column places the widgets one below the other."
+            "es": "Column coloca los widgets uno debajo del otro. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Column places the widgets one below the other. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ]
         },
         {
           "id": "ffe_bug_1",
@@ -2679,14 +3012,34 @@
             "en": "ElevatedButton uses child to display its internal content."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta es child, no text.",
-            "en": "The correct property is child, not text."
+            "es": "La propiedad correcta es child, no text. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The correct property is child, not text. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el widget hijo del botón.",
             "en": "Think about the child widget of the button."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "ElevatedButton",
+            "onPressed",
+            "child",
+            "Text",
+            "Enviar",
+            "Send"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Flutter Foundations, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Flutter Foundations final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ]
         },
         {
           "id": "ffe_match_1",
@@ -2732,11 +3085,15 @@
             "en": "These pieces are basic to building functional screens in Flutter."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué widget estructura, cuál desplaza contenido y qué hace Navigator.push.",
-            "en": "Check which widget structures, which scrolls content, and what Navigator.push does."
+            "es": "Revisa qué widget estructura, cuál desplaza contenido y qué hace Navigator.push. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Check which widget structures, which scrolls content, and what Navigator.push does. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 20,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ]
         },
         {
           "id": "ffe_guided_1",
@@ -2764,14 +3121,29 @@
             "en": "Padding receives the padding property, and EdgeInsets.all(16) applies equal spacing to all sides."
           },
           "incorrectExplanation": {
-            "es": "Necesitas incluir padding: EdgeInsets.all(16).",
-            "en": "You need to include padding: EdgeInsets.all(16)."
+            "es": "Necesitas incluir padding: EdgeInsets.all(16). Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "You need to include padding: EdgeInsets.all(16). If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "La propiedad se llama igual que el widget.",
             "en": "The property is called the same as the widget."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Flutter Foundations, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Flutter Foundations final exam exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ],
+          "requiredTokens": [
+            "fragmento"
+          ]
         },
         {
           "id": "ffe_find_1",
@@ -2800,10 +3172,14 @@
             "en": "Navigator.hide is not the common method for navigating. Navigator.push is used to open screens."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta es la que intenta usar Navigator.hide.",
-            "en": "The wrong line is the one trying to use Navigator.hide."
+            "es": "La línea incorrecta es la que intenta usar Navigator.hide. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The wrong line is the one trying to use Navigator.hide. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 15
+          "xpReward": 15,
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ]
         },
         {
           "id": "ffe_order_1",
@@ -2845,11 +3221,15 @@
             "en": "First you declare Scaffold, then its properties and finally the closure."
           },
           "incorrectExplanation": {
-            "es": "Piensa en el widget contenedor antes de sus propiedades internas.",
-            "en": "Think of the container widget before its internal properties."
+            "es": "Piensa en el widget contenedor antes de sus propiedades internas. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Think of the container widget before its internal properties. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "flutter_navigation_basic",
+            "flutter_layout_mindset"
+          ]
         },
         {
           "id": "ffe_summary",

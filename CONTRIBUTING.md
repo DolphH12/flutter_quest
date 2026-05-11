@@ -53,7 +53,23 @@ Recommended branch naming:
   - unique activity ids,
   - valid `examNodeId`.
 
-## 6) Commit Style
+## 6) Route Release Policy
+
+- A route existing in `assets/content/` does **not** mean it is publicly visible in the app.
+- Public exposure is staged:
+  - live route(s),
+  - one visible `Coming soon` teaser,
+  - remaining routes hidden until future releases.
+- Route order in `routeManifestsProvider` matters.
+- Public release cadence is controlled in:
+  - `lib/features/learning/state/app_state_providers.dart`
+  - `routeReleasePlanProvider`
+- When contributing a new route:
+  - add the JSON,
+  - register the manifest,
+  - keep it hidden unless the maintainer explicitly decides to publish it.
+
+## 7) Commit Style
 
 Suggested conventional style:
 - `feat: ...`
@@ -61,16 +77,17 @@ Suggested conventional style:
 - `docs: ...`
 - `refactor: ...`
 
-## 7) Pull Request Checklist
+## 8) Pull Request Checklist
 
 Before opening PR:
 - [ ] `flutter analyze` passes.
 - [ ] No unrelated file changes.
 - [ ] UI changes include screenshot/GIF.
 - [ ] JSON changes comply with contract docs.
+- [ ] Route visibility/release policy was preserved.
 - [ ] README/docs updated if behavior changed.
 
-## 8) Review Expectations
+## 9) Review Expectations
 
 PRs may be asked to:
 - reduce scope,
@@ -78,7 +95,7 @@ PRs may be asked to:
 - improve UX copy and states,
 - split into smaller PRs.
 
-## 9) License & Attribution
+## 10) License & Attribution
 
 By contributing, you agree your contribution is distributed under:
 - AGPL-3.0-only (`LICENSE`), and

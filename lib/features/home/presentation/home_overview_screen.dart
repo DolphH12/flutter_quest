@@ -25,9 +25,10 @@ class HomeOverviewScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final routesAsync = ref.watch(allRoutesProvider);
     final progressAsync = ref.watch(appProgressNotifierProvider);
-    final unlockRequirements = ref.watch(routeUnlockRequirementsProvider);
     final routeLoadErrors = ref.watch(routeLoadErrorsProvider);
     final manifests = ref.watch(routeManifestsProvider);
+    final visibleLiveRouteIds = ref.watch(visibleLiveRouteIdsProvider);
+    final previewManifest = ref.watch(upcomingPreviewManifestProvider);
 
     if (routesAsync.isLoading || progressAsync.isLoading) {
       return const FQPageContainer(
@@ -70,7 +71,11 @@ class HomeOverviewScreen extends ConsumerWidget {
     }
 
     final isDesktop = FQBreakpoints.isDesktop(context);
-    final allRoutesCompleted = _allRoutesCompleted(routes, progress);
+    final routeById = {for (final route in routes) route.routeId: route};
+    final visibleLiveManifests = manifests
+        .where((manifest) => visibleLiveRouteIds.contains(manifest.routeId))
+        .toList(growable: false);
+
     return FQPageContainer(
       child: ListView(
         children: [
@@ -83,72 +88,35 @@ class HomeOverviewScreen extends ConsumerWidget {
             ).textTheme.titleLarge?.copyWith(color: FQColors.deepNavy),
           ),
           const SizedBox(height: 10),
-          if (allRoutesCompleted) ...[
-            _MoreRoutesSoonBanner(isDesktop: isDesktop),
-            const SizedBox(height: 12),
-          ],
+          _MonthlyReleaseBanner(isDesktop: isDesktop),
+          const SizedBox(height: 12),
           if (isDesktop)
             LayoutBuilder(
               builder: (context, constraints) {
                 final width = constraints.maxWidth;
                 final crossAxisCount = width >= 1200 ? 3 : 2;
-                final routeById = {
-                  for (final route in routes) route.routeId: route,
-                };
+                final desktopTiles = _buildDesktopTiles(
+                  context: context,
+                  ref: ref,
+                  visibleLiveManifests: visibleLiveManifests,
+                  visibleLiveRouteIds: visibleLiveRouteIds,
+                  routeById: routeById,
+                  progress: progress,
+                  routeLoadErrors: routeLoadErrors,
+                  previewManifest: previewManifest,
+                  l10n: l10n,
+                );
                 return GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: manifests.length,
+                  itemCount: desktopTiles.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount,
                     crossAxisSpacing: 14,
                     mainAxisSpacing: 14,
                     mainAxisExtent: 188,
                   ),
-                  itemBuilder: (context, index) {
-                    final manifest = manifests[index];
-                    final route = routeById[manifest.routeId];
-                    final loadError = routeLoadErrors[manifest.routeId];
-                    if (route != null) {
-                      return _RouteCardTile(
-                        route: route,
-                        progress: progress,
-                        isUnlocked: _isUnlocked(
-                          route.routeId,
-                          progress,
-                          unlockRequirements,
-                        ),
-                        lockReason: _lockReason(
-                          route,
-                          routes,
-                          progress,
-                          unlockRequirements,
-                          l10n,
-                        ),
-                        onTap: () => context.go('/home/route/${route.routeId}'),
-                      );
-                    }
-                    if (loadError != null) {
-                      return _RouteErrorCardTile(
-                        routeId: manifest.routeId,
-                        errorMessage: loadError,
-                        isPending: progress.pendingRouteIds.contains(
-                          manifest.routeId,
-                        ),
-                        onRetry: () => ref.invalidate(allRoutesProvider),
-                        onMarkPending: () async {
-                          await ref
-                              .read(appProgressNotifierProvider.notifier)
-                              .markRoutePending(manifest.routeId);
-                          if (!context.mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(l10n.pendingRouteNotice)),
-                          );
-                        },
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
+                  itemBuilder: (context, index) => desktopTiles[index],
                 );
               },
             )
@@ -156,56 +124,17 @@ class HomeOverviewScreen extends ConsumerWidget {
             ..._buildMobileRouteCards(
               context: context,
               ref: ref,
-              manifests: manifests,
-              routes: routes,
+              visibleLiveManifests: visibleLiveManifests,
+              visibleLiveRouteIds: visibleLiveRouteIds,
+              routeById: routeById,
               progress: progress,
-              unlockRequirements: unlockRequirements,
               routeLoadErrors: routeLoadErrors,
+              previewManifest: previewManifest,
               l10n: l10n,
             ),
         ],
       ),
     );
-  }
-
-  bool _allRoutesCompleted(
-    List<DartRouteContent> routes,
-    LearningProgressState progress,
-  ) {
-    if (routes.isEmpty) return false;
-    for (final route in routes) {
-      if (!progress.completedRouteIds.contains(route.routeId)) return false;
-    }
-    return true;
-  }
-
-  bool _isUnlocked(
-    String routeId,
-    LearningProgressState progress,
-    Map<String, String?> unlockRequirements,
-  ) {
-    final requirement = unlockRequirements[routeId];
-    if (requirement == null) return true;
-    return progress.completedRouteIds.contains(requirement) ||
-        progress.pendingRouteIds.contains(requirement);
-  }
-
-  String? _lockReason(
-    DartRouteContent route,
-    List<DartRouteContent> routes,
-    LearningProgressState progress,
-    Map<String, String?> unlockRequirements,
-    AppLocalizations l10n,
-  ) {
-    final requirement = unlockRequirements[route.routeId];
-    if (requirement == null) return null;
-    if (progress.completedRouteIds.contains(requirement)) return null;
-    for (final item in routes) {
-      if (item.routeId == requirement) {
-        return l10n.completeRouteToUnlock(item.title);
-      }
-    }
-    return l10n.completeRequiredRouteToUnlock;
   }
 
   String _buildLoadErrorMessage(
@@ -222,16 +151,16 @@ class HomeOverviewScreen extends ConsumerWidget {
   List<Widget> _buildMobileRouteCards({
     required BuildContext context,
     required WidgetRef ref,
-    required List<RouteAssetManifest> manifests,
-    required List<DartRouteContent> routes,
+    required List<RouteAssetManifest> visibleLiveManifests,
+    required List<String> visibleLiveRouteIds,
+    required Map<String, DartRouteContent> routeById,
     required LearningProgressState progress,
-    required Map<String, String?> unlockRequirements,
     required Map<String, String> routeLoadErrors,
+    required RouteAssetManifest? previewManifest,
     required AppLocalizations l10n,
   }) {
-    final routeById = {for (final route in routes) route.routeId: route};
     final children = <Widget>[];
-    for (final manifest in manifests) {
+    for (final manifest in visibleLiveManifests) {
       final route = routeById[manifest.routeId];
       final loadError = routeLoadErrors[manifest.routeId];
       if (route != null) {
@@ -241,18 +170,6 @@ class HomeOverviewScreen extends ConsumerWidget {
             child: _RouteCardTile(
               route: route,
               progress: progress,
-              isUnlocked: _isUnlocked(
-                route.routeId,
-                progress,
-                unlockRequirements,
-              ),
-              lockReason: _lockReason(
-                route,
-                routes,
-                progress,
-                unlockRequirements,
-                l10n,
-              ),
               onTap: () => context.go('/home/route/${route.routeId}'),
             ),
           ),
@@ -280,24 +197,110 @@ class HomeOverviewScreen extends ConsumerWidget {
         );
       }
     }
+    final previewTile = _buildPreviewTile(
+      context: context,
+      manifest: previewManifest,
+      route: previewManifest == null ? null : routeById[previewManifest.routeId],
+      lastVisibleRouteId: visibleLiveRouteIds.isEmpty ? null : visibleLiveRouteIds.last,
+      progress: progress,
+      l10n: l10n,
+    );
+    if (previewTile != null) {
+      children.add(
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: previewTile,
+        ),
+      );
+    }
     return children;
+  }
+
+  List<Widget> _buildDesktopTiles({
+    required BuildContext context,
+    required WidgetRef ref,
+    required List<RouteAssetManifest> visibleLiveManifests,
+    required List<String> visibleLiveRouteIds,
+    required Map<String, DartRouteContent> routeById,
+    required LearningProgressState progress,
+    required Map<String, String> routeLoadErrors,
+    required RouteAssetManifest? previewManifest,
+    required AppLocalizations l10n,
+  }) {
+    final children = <Widget>[];
+    for (final manifest in visibleLiveManifests) {
+      final route = routeById[manifest.routeId];
+      final loadError = routeLoadErrors[manifest.routeId];
+      if (route != null) {
+        children.add(
+          _RouteCardTile(
+            route: route,
+            progress: progress,
+            onTap: () => context.go('/home/route/${route.routeId}'),
+          ),
+        );
+      } else if (loadError != null) {
+        children.add(
+          _RouteErrorCardTile(
+            routeId: manifest.routeId,
+            errorMessage: loadError,
+            isPending: progress.pendingRouteIds.contains(manifest.routeId),
+            onRetry: () => ref.invalidate(allRoutesProvider),
+            onMarkPending: () async {
+              await ref
+                  .read(appProgressNotifierProvider.notifier)
+                  .markRoutePending(manifest.routeId);
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(l10n.pendingRouteNotice)));
+            },
+          ),
+        );
+      }
+    }
+    final previewTile = _buildPreviewTile(
+      context: context,
+      manifest: previewManifest,
+      route: previewManifest == null ? null : routeById[previewManifest.routeId],
+      lastVisibleRouteId: visibleLiveRouteIds.isEmpty ? null : visibleLiveRouteIds.last,
+      progress: progress,
+      l10n: l10n,
+    );
+    if (previewTile != null) {
+      children.add(previewTile);
+    }
+    return children;
+  }
+
+  Widget? _buildPreviewTile({
+    required BuildContext context,
+    required RouteAssetManifest? manifest,
+    required DartRouteContent? route,
+    required String? lastVisibleRouteId,
+    required LearningProgressState progress,
+    required AppLocalizations l10n,
+  }) {
+    if (manifest == null) return null;
+    return _UpcomingRouteCardTile(
+      route: route,
+      fallbackTitle: _humanizeRouteId(manifest.routeId),
+      isReadyForRelease:
+          lastVisibleRouteId != null &&
+          progress.completedRouteIds.contains(lastVisibleRouteId),
+      l10n: l10n,
+    );
   }
 }
 
-class _MoreRoutesSoonBanner extends StatelessWidget {
-  const _MoreRoutesSoonBanner({required this.isDesktop});
+class _MonthlyReleaseBanner extends StatelessWidget {
+  const _MonthlyReleaseBanner({required this.isDesktop});
 
   final bool isDesktop;
 
   @override
   Widget build(BuildContext context) {
-    final isSpanish = Localizations.localeOf(context).languageCode
-        .toLowerCase()
-        .startsWith('es');
-    final title = isSpanish ? '¡Más rutas muy pronto!' : 'More routes are coming soon!';
-    final body = isSpanish
-        ? 'Completaste todo por ahora. Estamos preparando nuevas rutas para que sigas subiendo de nivel.'
-        : 'You completed everything for now. New learning routes are being crafted so you can keep leveling up.';
+    final l10n = AppLocalizations.of(context)!;
 
     return FQSurfaceCard(
       radius: FQRadius.large,
@@ -328,7 +331,7 @@ class _MoreRoutesSoonBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  l10n.monthlyRouteBannerTitle,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: const Color(0xFF14503B),
                     fontWeight: FontWeight.w800,
@@ -336,7 +339,7 @@ class _MoreRoutesSoonBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  body,
+                  l10n.monthlyRouteBannerBody,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: const Color(0xFF1D8D4A),
                     height: 1.35,
@@ -355,15 +358,11 @@ class _RouteCardTile extends StatelessWidget {
   const _RouteCardTile({
     required this.route,
     required this.progress,
-    required this.isUnlocked,
-    required this.lockReason,
     required this.onTap,
   });
 
   final DartRouteContent route;
   final LearningProgressState progress;
-  final bool isUnlocked;
-  final String? lockReason;
   final VoidCallback onTap;
 
   @override
@@ -376,8 +375,7 @@ class _RouteCardTile extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final cardBody = FQSurfaceCard(
       radius: FQRadius.large,
-      gradient: isUnlocked ? FQGradients.subtlePanel : null,
-      color: isUnlocked ? null : FQColors.surfaceHigh.withValues(alpha: 0.56),
+      gradient: FQGradients.subtlePanel,
       padding: isCompleted
           ? const EdgeInsets.fromLTRB(14, 12, 14, 12)
           : const EdgeInsets.all(FQSpacing.md),
@@ -385,12 +383,12 @@ class _RouteCardTile extends StatelessWidget {
         color: _routeBorderColor(
           progress: progress,
           routeId: route.routeId,
-          isUnlocked: isUnlocked,
+          isUnlocked: true,
         ),
         width: _routeBorderWidth(
           progress: progress,
           routeId: route.routeId,
-          isUnlocked: isUnlocked,
+          isUnlocked: true,
         ),
       ),
       child: Row(
@@ -403,15 +401,11 @@ class _RouteCardTile extends StatelessWidget {
                 : (isDesktop ? 44 : 50),
             decoration: BoxDecoration(
               borderRadius: FQRadius.medium,
-              gradient: isUnlocked
-                  ? FQGradients.heroBlue
-                  : const LinearGradient(
-                      colors: [Color(0xFFC8D2EB), Color(0xFFB8C5E6)],
-                    ),
+              gradient: FQGradients.heroBlue,
             ),
             child: Icon(
               iconFromName(route.icon),
-              color: isUnlocked ? Colors.white : FQColors.outlineVariant,
+              color: Colors.white,
             ),
           ),
           const SizedBox(width: 12),
@@ -428,19 +422,11 @@ class _RouteCardTile extends StatelessWidget {
                           fontSize: isDesktop
                               ? (isCompleted ? 20 : 22)
                               : (isCompleted ? 21 : null),
-                          color: isUnlocked
-                              ? FQColors.deepNavy
-                              : FQColors.onSurface.withValues(alpha: 0.66),
+                          color: FQColors.deepNavy,
                         ),
                       ),
                     ),
-                    if (!isUnlocked)
-                      const Icon(
-                        Icons.lock_rounded,
-                        size: 18,
-                        color: FQColors.outlineVariant,
-                      )
-                    else if (isPending)
+                    if (isPending)
                       FQPill(
                         label: l10n.routePendingBadge,
                         icon: Icons.schedule_rounded,
@@ -486,16 +472,6 @@ class _RouteCardTile extends StatelessWidget {
                     ],
                   ),
                 ],
-                if (lockReason != null) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    lockReason!,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: FQColors.tertiaryDark,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
                 if (!isCompleted && progressValue > 0) ...[
                   const SizedBox(height: 10),
                   Row(
@@ -534,8 +510,89 @@ class _RouteCardTile extends StatelessWidget {
       ),
     );
 
-    if (!isUnlocked) return cardBody;
     return InkWell(borderRadius: FQRadius.large, onTap: onTap, child: cardBody);
+  }
+}
+
+class _UpcomingRouteCardTile extends StatelessWidget {
+  const _UpcomingRouteCardTile({
+    required this.route,
+    required this.fallbackTitle,
+    required this.isReadyForRelease,
+    required this.l10n,
+  });
+
+  final DartRouteContent? route;
+  final String fallbackTitle;
+  final bool isReadyForRelease;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      color: FQColors.surfaceHigh.withValues(alpha: 0.72),
+      border: Border.all(
+        color: FQColors.primary.withValues(alpha: 0.18),
+        width: 1.1,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: FQRadius.medium,
+              gradient: const LinearGradient(
+                colors: [Color(0xFFD7E0F8), Color(0xFFC7D3F2)],
+              ),
+            ),
+            child: Icon(
+              iconFromName(route?.icon ?? 'rocket_launch'),
+              color: FQColors.primary.withValues(alpha: 0.42),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        route?.title ?? fallbackTitle,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: FQColors.deepNavy.withValues(alpha: 0.8),
+                        ),
+                      ),
+                    ),
+                    FQPill(
+                      label: l10n.upcomingRouteBadge,
+                      icon: Icons.schedule_rounded,
+                      color: const Color(0xFFE4EDFF),
+                      textColor: FQColors.primary,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  isReadyForRelease
+                      ? l10n.upcomingRouteReadyBody
+                      : l10n.upcomingRouteLockedBody,
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: FQColors.primary,
+                    fontWeight: FontWeight.w700,
+                    height: 1.35,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

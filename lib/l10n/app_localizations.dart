@@ -128,6 +128,18 @@ abstract class AppLocalizations {
   /// **'Pick a route and keep moving forward'**
   String get homeSubtitle;
 
+  /// No description provided for @monthlyRouteBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A new route lands every month'**
+  String get monthlyRouteBannerTitle;
+
+  /// No description provided for @monthlyRouteBannerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We release one route at a time so each path ships polished, playable, and worth your streak.'**
+  String get monthlyRouteBannerBody;
+
   /// No description provided for @loadRoutesError.
   ///
   /// In en, this message translates to:
@@ -259,6 +271,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Route completed'**
   String get routeCompleted;
+
+  /// No description provided for @upcomingRouteBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming soon'**
+  String get upcomingRouteBadge;
+
+  /// No description provided for @upcomingRouteLockedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish your current published route and stay tuned. When the next route is released, this is the one you will see here.'**
+  String get upcomingRouteLockedBody;
+
+  /// No description provided for @upcomingRouteReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You are ready for the next path. It will appear here as soon as the next monthly release goes live.'**
+  String get upcomingRouteReadyBody;
+
+  /// No description provided for @upcomingRouteDetailMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This route is part of the upcoming release window. We publish one route at a time, and you will only see the next one after finishing the current published path.'**
+  String get upcomingRouteDetailMessage;
+
+  /// No description provided for @upcomingRouteFallbackDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A new path is already on deck. We are polishing it before opening the next release window.'**
+  String get upcomingRouteFallbackDescription;
 
   /// No description provided for @currentPathFallback.
   ///

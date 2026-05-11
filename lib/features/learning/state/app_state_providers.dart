@@ -18,6 +18,12 @@ import '../models/progress_view_models.dart';
 import '../../notifications/state/habit_notifications_provider.dart';
 import '../../notifications/models/habit_notification_settings.dart';
 
+class RouteReleasePlan {
+  const RouteReleasePlan({required this.publishedRouteCount});
+
+  final int publishedRouteCount;
+}
+
 final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
   return const [
     RouteAssetManifest(
@@ -60,6 +66,68 @@ final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
       requiredCompletedRouteId: 'firebase_essentials_route',
     ),
   ];
+});
+
+final routeReleasePlanProvider = Provider<RouteReleasePlan>((ref) {
+  return const RouteReleasePlan(publishedRouteCount: 1);
+});
+
+final publishedRouteManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
+  final manifests = ref.watch(routeManifestsProvider);
+  final publishedCount = ref.watch(routeReleasePlanProvider).publishedRouteCount;
+  if (manifests.isEmpty) return const [];
+  final safeCount = publishedCount.clamp(1, manifests.length);
+  return manifests.take(safeCount).toList(growable: false);
+});
+
+final visibleLiveRouteIdsProvider = Provider<List<String>>((ref) {
+  final publishedManifests = ref.watch(publishedRouteManifestsProvider);
+  if (publishedManifests.isEmpty) return const [];
+  final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
+  if (progress == null) {
+    return [publishedManifests.first.routeId];
+  }
+
+  var highestCompletedIndex = -1;
+  for (var index = 0; index < publishedManifests.length; index++) {
+    final routeId = publishedManifests[index].routeId;
+    if (progress.completedRouteIds.contains(routeId)) {
+      highestCompletedIndex = index;
+      continue;
+    }
+    break;
+  }
+
+  final visibleCount = (highestCompletedIndex + 2).clamp(
+    1,
+    publishedManifests.length,
+  );
+  return publishedManifests
+      .take(visibleCount)
+      .map((manifest) => manifest.routeId)
+      .toList(growable: false);
+});
+
+final upcomingPreviewManifestProvider = Provider<RouteAssetManifest?>((ref) {
+  final manifests = ref.watch(routeManifestsProvider);
+  final visibleLiveRouteIds = ref.watch(visibleLiveRouteIdsProvider);
+  if (manifests.isEmpty || visibleLiveRouteIds.isEmpty) return null;
+  final lastVisibleRouteId = visibleLiveRouteIds.last;
+  final lastVisibleIndex = manifests.indexWhere(
+    (manifest) => manifest.routeId == lastVisibleRouteId,
+  );
+  if (lastVisibleIndex == -1) return null;
+  final previewIndex = lastVisibleIndex + 1;
+  if (previewIndex >= manifests.length) return null;
+  return manifests[previewIndex];
+});
+
+final routePlayableProvider = Provider.family<bool, String>((ref, routeId) {
+  return ref.watch(visibleLiveRouteIdsProvider).contains(routeId);
+});
+
+final routePreviewVisibleProvider = Provider.family<bool, String>((ref, routeId) {
+  return ref.watch(upcomingPreviewManifestProvider)?.routeId == routeId;
 });
 
 final routeUnlockRequirementsProvider = Provider<Map<String, String?>>((ref) {

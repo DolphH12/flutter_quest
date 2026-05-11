@@ -43,6 +43,19 @@
   - [`activity_contracts.md`](docs/content/activity_contracts.md)
 - New route JSON must comply with this contract.
 
+### Route Release Model
+- Flutter Quest can contain multiple route JSON files in the repository.
+- Public releases do **not** expose every route at once.
+- The app publishes routes progressively:
+  - current live route(s),
+  - one visible `Coming soon` teaser,
+  - the rest remain hidden until a future release window.
+- Release visibility is controlled in:
+  - [`app_state_providers.dart`](lib/features/learning/state/app_state_providers.dart)
+  - `routeReleasePlanProvider`
+
+This keeps the public app focused while content is reviewed route by route.
+
 ## How To Run / Cómo correr
 
 ### Prerequisites
@@ -69,8 +82,14 @@ flutter analyze
 3. Register the route manifest in:
    - [`app_state_providers.dart`](`lib/features/learning/state/app_state_providers.dart`)
    - `routeManifestsProvider`
+4. Place the route in the correct order inside `routeManifestsProvider`.
 5. If needed, define unlock dependency (`requiredCompletedRouteId`).
-6. Run the app and verify route rendering and lesson flow.
+6. Decide whether the route should be:
+   - already public,
+   - the single visible teaser,
+   - or still hidden for a later monthly release.
+7. Update `routeReleasePlanProvider` only when the route is truly ready for public exposure.
+8. Run the app and verify route rendering and lesson flow.
 
 ## Open Source Model / Modelo Open Source
 

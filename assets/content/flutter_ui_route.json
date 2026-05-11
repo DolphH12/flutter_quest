@@ -65,7 +65,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué describe mejor una buena interfaz?",
-            "en": "¿Qué describe mejor una buena interfaz?"
+            "en": "What best describes a good interface?"
           },
           "options": {
             "es": [
@@ -75,23 +75,23 @@
               "Una pantalla bonita solo en tu celular"
             ],
             "en": [
-              "Una pantalla con muchos widgets",
-              "Una pantalla donde todo pesa igual",
-              "Una pantalla con jerarquía visual y propósito",
-              "Una pantalla bonita solo en tu celular"
+              "A screen with many widgets",
+              "A screen where everything has the same visual weight",
+              "A screen with visual hierarchy and purpose",
+              "A screen that only looks nice on your phone"
             ]
           },
           "correctAnswer": {
             "es": "Una pantalla con jerarquía visual y propósito",
-            "en": "Una pantalla con jerarquía visual y propósito"
+            "en": "A screen with visual hierarchy and purpose"
           },
           "correctExplanation": {
             "es": "Eso guía mejor la atención y las acciones.",
-            "en": "Eso guía mejor la atención y las acciones."
+            "en": "That guides attention and actions more clearly."
           },
           "incorrectExplanation": {
-            "es": "La cantidad de widgets no garantiza claridad.",
-            "en": "La cantidad de widgets no garantiza claridad."
+            "es": "La cantidad de widgets no garantiza claridad. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "A good UI is not only pretty. It organizes hierarchy, purpose, and action clarity. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
           "shuffle": true
@@ -101,11 +101,11 @@
           "type": "predictOutput",
           "question": {
             "es": "¿Qué problema suele tener una pantalla donde todo se ve igual de importante?",
-            "en": "¿Qué problema suele tener una pantalla donde todo se ve igual de importante?"
+            "en": "Qué problema suele tener una screen donde todo se ve igual de importante?"
           },
           "codeSnippet": {
             "es": "Título, subtítulo, botón y texto secundario con mismo tamaño y espaciado",
-            "en": "Título, subtítulo, botón y texto secundario con mismo tamaño y espaciado"
+            "en": "Título, subtítulo, button y texto secundario con mismo tamaño y espaciado"
           },
           "options": {
             "es": [
@@ -127,11 +127,11 @@
           },
           "correctExplanation": {
             "es": "Sin jerarquía visual la pantalla se vuelve confusa.",
-            "en": "Sin jerarquía visual la pantalla se vuelve confusa."
+            "en": "Sin jerarquía visual la screen se vuelve confusa."
           },
           "incorrectExplanation": {
-            "es": "Cuando todo grita, nada destaca.",
-            "en": "Cuando todo grita, nada destaca."
+            "es": "Cuando todo grita, nada destaca. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Cuando todo grita, nada destaca. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
           "shuffle": true
@@ -180,8 +180,8 @@
             "en": "Estas ideas son base para una UI clara."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué ordena atención, qué separa y qué invita a actuar.",
-            "en": "Revisa qué ordena atención, qué separa y qué invita a actuar."
+            "es": "Revisa qué ordena atención, qué separa y qué invita a actuar. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa qué ordena atención, qué separa y qué invita a actuar. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
           "shuffle": true
@@ -191,7 +191,7 @@
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe tres piezas que debería tener una pantalla simple y clara.",
-            "en": "Escribe tres piezas que debería tener una pantalla simple y clara."
+            "en": "Escribe tres piezas que debería tener una screen simple y clara."
           },
           "starterCode": {
             "es": "Pantalla:\n- _____\n- _____\n- _____",
@@ -211,17 +211,28 @@
           },
           "correctExplanation": {
             "es": "Una pantalla clara suele tener estructura, contenido y acción.",
-            "en": "Una pantalla clara suele tener estructura, contenido y acción."
+            "en": "Una screen clara suele tener estructura, contenido y acción."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe hablar de bloques visuales, no de caos.",
-            "en": "Tu respuesta debe hablar de bloques visuales, no de caos."
+            "es": "Tu respuesta debe hablar de bloques visuales, no de caos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe hablar de bloques visuales, no de caos. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en inicio, cuerpo y acción.",
             "en": "Piensa en inicio, cuerpo y acción."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en UI con intención, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this UI con intención exercise is accepted, even if writing style differs."
+          },
+          "requiredTokens": [
+            "tres"
+          ]
         }
       ]
     },
@@ -233,7 +244,7 @@
       },
       "shortDescription": {
         "es": "Divide una pantalla en bloques lógicos y reutilizables.",
-        "en": "Divide una pantalla en bloques lógicos y reutilizables."
+        "en": "Divide una screen en bloques lógicos y reutilizables."
       },
       "icon": "dashboard_customize",
       "nodeType": "lesson",
@@ -264,7 +275,7 @@
           },
           "body": {
             "es": "Si varias piezas pertenecen a la misma idea visual, agruparlas mejora código y lectura.",
-            "en": "Si varias piezas pertenecen a la misma idea visual, agruparlas mejora código y lectura."
+            "en": "Si varias piezas pertenecen a la misma idea visual, agruparlas mejora code y lectura."
           },
           "example": {
             "es": "UserCard:\n- avatar\n- nombre\n- rol\n- acción",
@@ -276,7 +287,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "Si una pantalla tiene avatar, nombre, rol y una acción, ¿qué conviene hacer?",
-            "en": "Si una pantalla tiene avatar, nombre, rol y una acción, ¿qué conviene hacer?"
+            "en": "Si una screen tiene avatar, nombre, rol y una acción, qué conviene hacer?"
           },
           "options": {
             "es": [
@@ -301,18 +312,21 @@
             "en": "Agrupar mejora composición y mantenimiento."
           },
           "incorrectExplanation": {
-            "es": "Si todo queda suelto, la UI pierde coherencia.",
-            "en": "Si todo queda suelto, la UI pierde coherencia."
+            "es": "Si todo queda suelto, la UI pierde coherencia. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Si todo queda suelto, la UI pierde coherencia. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_intention_intro"
+          ]
         },
         {
           "id": "ui_hier_order_1",
           "type": "orderCodeBlocks",
           "prompt": {
             "es": "Ordena estos bloques para una pantalla simple.",
-            "en": "Ordena estos bloques para una pantalla simple."
+            "en": "Ordena estos bloques para una screen simple."
           },
           "blocks": {
             "es": [
@@ -347,18 +361,21 @@
             "en": "Primero contexto, luego lo más importante, después detalle y al final acción."
           },
           "incorrectExplanation": {
-            "es": "Piensa en el flujo visual natural.",
-            "en": "Piensa en el flujo visual natural."
+            "es": "Piensa en el flujo visual natural. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Piensa en el flujo visual natural. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_intention_intro"
+          ]
         },
         {
           "id": "ui_hier_wrong_1",
           "type": "findTheWrongLine",
           "prompt": {
-            "es": "¿Qué línea rompe más la composición clara? ",
-            "en": "¿Qué línea rompe más la composición clara? "
+            "es": "¿Qué línea rompe más la composición clara?",
+            "en": "Qué línea rompe más la composición clara?"
           },
           "codeLines": {
             "es": [
@@ -386,17 +403,20 @@
             "en": "Si ya tienes un UserCard, dejar piezas sueltas rompe la composición."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática deja contenido del usuario fuera del bloque.",
-            "en": "La línea problemática deja contenido del usuario fuera del bloque."
+            "es": "La línea problemática deja contenido del usuario fuera del bloque. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La línea problemática deja contenido del usuario fuera del bloque. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "ui_intention_intro"
+          ]
         },
         {
           "id": "ui_hier_cs_1",
           "type": "completeSnippet",
           "prompt": {
             "es": "Completa el nombre del componente para agrupar la información principal del usuario.",
-            "en": "Completa el nombre del componente para agrupar la información principal del usuario."
+            "en": "Complete el nombre del componente para agrupar la información principal del usuario."
           },
           "initialCode": {
             "es": "Column(\n  children: [\n    _____(),\n    SectionTitle(),\n    UserList(),\n  ],\n)",
@@ -411,14 +431,25 @@
             "en": "Crear componentes con intención mejora legibilidad."
           },
           "incorrectExplanation": {
-            "es": "La idea es un bloque semántico, no un widget aleatorio.",
-            "en": "La idea es un bloque semántico, no un widget aleatorio."
+            "es": "La idea es un bloque semántico, no un widget aleatorio. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La idea es un bloque semántico, no un widget aleatorio. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en una card.",
             "en": "Piensa en una card."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Jerarquía visual y composición, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Jerarquía visual y composición exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_intention_intro"
+          ]
         }
       ]
     },
@@ -445,7 +476,7 @@
           },
           "body": {
             "es": "Dos pantallas con los mismos widgets pueden verse muy distintas por cómo reparten el espacio.",
-            "en": "Dos pantallas con los mismos widgets pueden verse muy distintas por cómo reparten el espacio."
+            "en": "Dos screens con los mismos widgets pueden verse muy distintas por cómo reparten el espacio."
           },
           "example": {
             "es": "Row(\n  mainAxisAlignment: MainAxisAlignment.spaceBetween,\n  children: [title, action],\n)",
@@ -473,7 +504,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué widget usarías para empujar un ícono al extremo derecho dentro de una Row?",
-            "en": "¿Qué widget usarías para empujar un ícono al extremo derecho dentro de una Row?"
+            "en": "Qué widget usarías para empujar un ícono al extremo derecho dentro de una Row?"
           },
           "options": {
             "es": [
@@ -498,11 +529,15 @@
             "en": "Spacer ocupa espacio flexible entre widgets."
           },
           "incorrectExplanation": {
-            "es": "Padding no empuja dinámicamente.",
-            "en": "Padding no empuja dinámicamente."
+            "es": "Padding no empuja dinámicamente. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Padding no empuja dinámicamente. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_intention_intro",
+            "ui_visual_hierarchy"
+          ]
         },
         {
           "id": "ui_align_match_1",
@@ -548,18 +583,22 @@
             "en": "Cada una resuelve un problema distinto de distribución."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál ocupa, cuál se adapta y cuál empuja.",
-            "en": "Revisa cuál ocupa, cuál se adapta y cuál empuja."
+            "es": "Revisa cuál ocupa, cuál se adapta y cuál empuja. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa cuál ocupa, cuál se adapta y cuál empuja. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_intention_intro",
+            "ui_visual_hierarchy"
+          ]
         },
         {
           "id": "ui_align_fill_1",
           "type": "fillInTheCode",
           "prompt": {
             "es": "Completa la propiedad para controlar la distribución en el eje principal.",
-            "en": "Completa la propiedad para controlar la distribución en el eje principal."
+            "en": "Complete la propiedad para controlar la distribución en el eje principal."
           },
           "initialCode": {
             "es": "Row(\n  _____: MainAxisAlignment.spaceBetween,\n  children: [Text('Hola'), Icon(Icons.star)],\n)",
@@ -574,21 +613,33 @@
             "en": "mainAxisAlignment controla la distribución en el eje principal."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta maneja el eje horizontal de Row.",
-            "en": "La propiedad correcta maneja el eje horizontal de Row."
+            "es": "La propiedad correcta maneja el eje horizontal de Row. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La propiedad correct maneja el eje horizontal de Row. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el eje principal.",
             "en": "Piensa en el eje principal."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Alineación y distribución del espacio, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Alineación y distribución del espacio exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_intention_intro",
+            "ui_visual_hierarchy"
+          ]
         },
         {
           "id": "ui_align_bug_1",
           "type": "fixTheBug",
           "prompt": {
             "es": "Corrige este snippet para que el texto ocupe el espacio libre antes del ícono.",
-            "en": "Corrige este snippet para que el texto ocupe el espacio libre antes del ícono."
+            "en": "Fix este snippet para que el texto ocupe el espacio libre antes del ícono."
           },
           "initialCode": {
             "es": "Row(\n  children: [\n    Text('Título largo'),\n    Padding(padding: EdgeInsets.all(8)),\n    Icon(Icons.more_horiz),\n  ],\n)",
@@ -603,21 +654,43 @@
             "en": "Expanded es apropiado para ocupar el espacio libre restante."
           },
           "incorrectExplanation": {
-            "es": "Padding no resuelve distribución flexible.",
-            "en": "Padding no resuelve distribución flexible."
+            "es": "Padding no resuelve distribución flexible. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Padding no resuelve distribución flexible. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en ocupar espacio disponible.",
             "en": "Piensa en ocupar espacio disponible."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Row",
+            "children",
+            "Expanded",
+            "child",
+            "Text",
+            "tulo",
+            "largo",
+            "Icon"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Alineación y distribución del espacio, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Alineación y distribución del espacio exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_intention_intro",
+            "ui_visual_hierarchy"
+          ]
         },
         {
           "id": "ui_align_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué efecto visual suele tener MainAxisAlignment.spaceBetween?",
-            "en": "¿Qué efecto visual suele tener MainAxisAlignment.spaceBetween?"
+            "en": "Qué efecto visual suele tener MainAxisAlignment.spaceBetween?"
           },
           "codeSnippet": {
             "es": "Row(\n  mainAxisAlignment: MainAxisAlignment.spaceBetween,\n  children: [Text('A'), Text('B')],\n)",
@@ -646,11 +719,15 @@
             "en": "spaceBetween reparte elementos hacia extremos."
           },
           "incorrectExplanation": {
-            "es": "No cambia el eje; solo distribuye espacio.",
-            "en": "No cambia el eje; solo distribuye espacio."
+            "es": "No cambia el eje; solo distribuye espacio. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No cambia el eje; solo distribuye espacio. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_intention_intro",
+            "ui_visual_hierarchy"
+          ]
         }
       ]
     },
@@ -705,7 +782,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué combinación usarías para poner un indicador online encima de un avatar?",
-            "en": "¿Qué combinación usarías para poner un indicador online encima de un avatar?"
+            "en": "Qué combinación usarías para poner un indicador online encima de un avatar?"
           },
           "options": {
             "es": [
@@ -730,18 +807,22 @@
             "en": "Stack superpone y Positioned ubica."
           },
           "incorrectExplanation": {
-            "es": "Las otras combinaciones no resuelven superposición.",
-            "en": "Las otras combinaciones no resuelven superposición."
+            "es": "Las otras combinaciones no resuelven superposición. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Las otras combinaciones no resuelven superposición. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_visual_hierarchy",
+            "ui_alignment_spacing"
+          ]
         },
         {
           "id": "ui_stack_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué representa mejor este layout?",
-            "en": "¿Qué representa mejor este layout?"
+            "en": "Qué representa mejor este layout?"
           },
           "codeSnippet": {
             "es": "Stack(children:[ImageCard(), Positioned(bottom:8,left:8,child:Text('Oferta'))])",
@@ -770,11 +851,15 @@
             "en": "Stack dibuja hijos por capas."
           },
           "incorrectExplanation": {
-            "es": "La clave es la superposición.",
-            "en": "La clave es la superposición."
+            "es": "La clave es la superposición. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La clave es la superposición. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_visual_hierarchy",
+            "ui_alignment_spacing"
+          ]
         },
         {
           "id": "ui_stack_order_1",
@@ -824,18 +909,22 @@
             "en": "Primero el contenedor de capas y luego sus hijos."
           },
           "incorrectExplanation": {
-            "es": "Piensa en Stack antes de Positioned.",
-            "en": "Piensa en Stack antes de Positioned."
+            "es": "Piensa en Stack antes de Positioned. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Piensa en Stack antes de Positioned. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_visual_hierarchy",
+            "ui_alignment_spacing"
+          ]
         },
         {
           "id": "ui_stack_wrong_1",
           "type": "findTheWrongLine",
           "prompt": {
             "es": "¿Qué línea está mal si quieres usar Positioned correctamente?",
-            "en": "¿Qué línea está mal si quieres usar Positioned correctamente?"
+            "en": "Qué línea está mal si quieres usar Positioned correctmente?"
           },
           "codeLines": {
             "es": [
@@ -859,10 +948,14 @@
             "en": "Positioned está pensado para hijos de Stack."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta usa Positioned donde no corresponde.",
-            "en": "La línea incorrecta usa Positioned donde no corresponde."
+            "es": "La línea incorrecta usa Positioned donde no corresponde. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La línea incorrect usa Positioned donde no corresponde. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "ui_visual_hierarchy",
+            "ui_alignment_spacing"
+          ]
         },
         {
           "id": "ui_stack_gw_1",
@@ -894,14 +987,29 @@
             "en": "Necesitas Stack y un Positioned bien ubicado."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe mostrar ubicación y contenido flotante.",
-            "en": "Tu respuesta debe mostrar ubicación y contenido flotante."
+            "es": "Tu respuesta debe mostrar ubicación y contenido flotante. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe mostrar ubicación y contenido flotante. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en top y right.",
             "en": "Piensa en top y right."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Capas visuales con Stack y Positioned, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Capas visuales con Stack y Positioned exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_visual_hierarchy",
+            "ui_alignment_spacing"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -940,7 +1048,7 @@
           "type": "intro",
           "title": {
             "es": "Las secciones ayudan a escanear una pantalla",
-            "en": "Las secciones ayudan a escanear una pantalla"
+            "en": "Las secciones ayudan a escanear una screen"
           },
           "body": {
             "es": "Un título de sección y un espaciado consistente mejoran la lectura del contenido.",
@@ -956,7 +1064,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Cuál es una buena razón para usar una card?",
-            "en": "¿Cuál es una buena razón para usar una card?"
+            "en": "Cuál es una buena razón para usar una card?"
           },
           "options": {
             "es": [
@@ -981,18 +1089,22 @@
             "en": "Las cards dan contexto visual y separan bloques."
           },
           "incorrectExplanation": {
-            "es": "No reemplazan todos los layouts.",
-            "en": "No reemplazan todos los layouts."
+            "es": "No reemplazan todos los layouts. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No reemplazan todos los layouts. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_alignment_spacing",
+            "ui_stack_layers"
+          ]
         },
         {
           "id": "ui_cards_cs_1",
           "type": "completeSnippet",
           "prompt": {
             "es": "Completa la propiedad que suele dar espacio interno a una card.",
-            "en": "Completa la propiedad que suele dar espacio interno a una card."
+            "en": "Complete la propiedad que suele dar espacio interno a una card."
           },
           "initialCode": {
             "es": "Container(\n  _____: EdgeInsets.all(16),\n  child: Column(children: []),\n)",
@@ -1007,14 +1119,26 @@
             "en": "padding da aire interno al contenido."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta crea espacio dentro, no fuera.",
-            "en": "La propiedad correcta crea espacio dentro, no fuera."
+            "es": "La propiedad correcta crea espacio dentro, no fuera. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La propiedad correct crea espacio dentro, no fuera. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en espacio interno.",
             "en": "Piensa en espacio interno."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Cards y secciones reutilizables, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Cards y secciones reutilizables exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_alignment_spacing",
+            "ui_stack_layers"
+          ]
         },
         {
           "id": "ui_cards_match_1",
@@ -1057,21 +1181,25 @@
           ],
           "correctExplanation": {
             "es": "Estos tres elementos hacen la pantalla más escaneable.",
-            "en": "Estos tres elementos hacen la pantalla más escaneable."
+            "en": "Estos tres elementos hacen la screen más escaneable."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué presenta, qué agrupa y qué separa.",
-            "en": "Revisa qué presenta, qué agrupa y qué separa."
+            "es": "Revisa qué presenta, qué agrupa y qué separa. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa qué presenta, qué agrupa y qué separa. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_alignment_spacing",
+            "ui_stack_layers"
+          ]
         },
         {
           "id": "ui_cards_bug_1",
           "type": "fixTheBug",
           "prompt": {
             "es": "Corrige este bloque para que el título de sección no quede mezclado dentro de la card equivocada.",
-            "en": "Corrige este bloque para que el título de sección no quede mezclado dentro de la card equivocada."
+            "en": "Fix este bloque para que el título de sección no quede mezclado dentro de la card equivocada."
           },
           "initialCode": {
             "es": "Column(children:[Container(child: Column(children:[Text('Próximos eventos'), EventCard(), Text('Recomendados')]))])",
@@ -1086,21 +1214,43 @@
             "en": "Los títulos de sección deben separar bloques, no quedar atrapados sin intención."
           },
           "incorrectExplanation": {
-            "es": "Si todo vive en el mismo bloque visual, la jerarquía se confunde.",
-            "en": "Si todo vive en el mismo bloque visual, la jerarquía se confunde."
+            "es": "Si todo vive en el mismo bloque visual, la jerarquía se confunde. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Si todo vive en el mismo bloque visual, la jerarquía se confunde. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en el rol del título de sección.",
             "en": "Piensa en el rol del título de sección."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Column",
+            "children",
+            "Text",
+            "Pr",
+            "ximos",
+            "eventos",
+            "EventCard",
+            "Recomendados"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Cards y secciones reutilizables, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Cards y secciones reutilizables exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_alignment_spacing",
+            "ui_stack_layers"
+          ]
         },
         {
           "id": "ui_cards_gw_1",
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe los fragmentos mínimos de una card de perfil con nombre, rol y botón.",
-            "en": "Escribe los fragmentos mínimos de una card de perfil con nombre, rol y botón."
+            "en": "Escribe los fragmentos mínimos de una card de perfil con nombre, rol y button."
           },
           "starterCode": {
             "es": "ProfileCard(\n  child: Column(\n    children: [\n      _____\n    ],\n  ),\n)",
@@ -1123,14 +1273,29 @@
             "en": "Una card de perfil combina información y acción contextual."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir datos y acción.",
-            "en": "Tu respuesta debe incluir datos y acción."
+            "es": "Tu respuesta debe incluir datos y acción. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe incluir datos y acción. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en una card útil.",
             "en": "Piensa en una card útil."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Cards y secciones reutilizables, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Cards y secciones reutilizables exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_alignment_spacing",
+            "ui_stack_layers"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -1185,7 +1350,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué patrón visual es común en una lista de chats?",
-            "en": "¿Qué patrón visual es común en una lista de chats?"
+            "en": "Qué patrón visual es común en una lista de chats?"
           },
           "options": {
             "es": [
@@ -1210,18 +1375,22 @@
             "en": "Ese patrón ayuda a escanear rápido cada item."
           },
           "incorrectExplanation": {
-            "es": "Las otras opciones no representan bien una lista de chats.",
-            "en": "Las otras opciones no representan bien una lista de chats."
+            "es": "Las otras opciones no representan bien una lista de chats. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Las otras opciones no representan bien una lista de chats. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_stack_layers",
+            "ui_cards_sections"
+          ]
         },
         {
           "id": "ui_list_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué comunica mejor este item visual?",
-            "en": "¿Qué comunica mejor este item visual?"
+            "en": "Qué comunica mejor este item visual?"
           },
           "codeSnippet": {
             "es": "ListTile(leading: CircleAvatar(), title: Text('Laura'), subtitle: Text('Nos vemos mañana'), trailing: Text('9:41'))",
@@ -1250,11 +1419,15 @@
             "en": "Avatar, textos y trailing son típicos de listas de personas o conversaciones."
           },
           "incorrectExplanation": {
-            "es": "No es una estructura de formulario.",
-            "en": "No es una estructura de formulario."
+            "es": "No es una estructura de formulario. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No es una estructura de formulario. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_stack_layers",
+            "ui_cards_sections"
+          ]
         },
         {
           "id": "ui_list_match_1",
@@ -1300,18 +1473,22 @@
             "en": "Cada parte cumple un rol en la lectura rápida."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué abre visualmente el item, qué destaca y qué complementa.",
-            "en": "Revisa qué abre visualmente el item, qué destaca y qué complementa."
+            "es": "Revisa qué abre visualmente el item, qué destaca y qué complementa. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa qué abre visualmente el item, qué destaca y qué complementa. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_stack_layers",
+            "ui_cards_sections"
+          ]
         },
         {
           "id": "ui_list_wrong_1",
           "type": "findTheWrongLine",
           "prompt": {
             "es": "¿Qué línea se siente más equivocada en un item de lista estándar?",
-            "en": "¿Qué línea se siente más equivocada en un item de lista estándar?"
+            "en": "Qué línea se siente más equivocada en un item de lista estándar?"
           },
           "codeLines": {
             "es": [
@@ -1337,17 +1514,21 @@
             "en": "ListTile usa subtitle, no body, para contenido secundario."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática usa una propiedad que no corresponde.",
-            "en": "La línea problemática usa una propiedad que no corresponde."
+            "es": "La línea problemática usa una propiedad que no corresponde. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La línea problemática usa una propiedad que no corresponde. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "ui_stack_layers",
+            "ui_cards_sections"
+          ]
         },
         {
           "id": "ui_list_fill_1",
           "type": "fillInTheCode",
           "prompt": {
             "es": "Completa la propiedad para mostrar un subtítulo debajo del título.",
-            "en": "Completa la propiedad para mostrar un subtítulo debajo del título."
+            "en": "Complete la propiedad para mostrar un subtítulo debajo del título."
           },
           "initialCode": {
             "es": "ListTile(\n  title: Text('Ana'),\n  _____: Text('Diseñadora Flutter'),\n)",
@@ -1362,14 +1543,26 @@
             "en": "subtitle es la propiedad estándar para el texto secundario."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta va debajo del título.",
-            "en": "La propiedad correcta va debajo del título."
+            "es": "La propiedad correcta va debajo del título. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La propiedad correct va debajo del título. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en texto secundario.",
             "en": "Piensa en texto secundario."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Listas visuales reales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Listas visuales reales exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_stack_layers",
+            "ui_cards_sections"
+          ]
         }
       ]
     },
@@ -1424,7 +1617,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué propiedad suele mostrar una pista breve dentro del campo antes de escribir?",
-            "en": "¿Qué propiedad suele mostrar una pista breve dentro del campo antes de escribir?"
+            "en": "Qué propiedad suele mostrar una pista breve dentro del campo antes de escribir?"
           },
           "options": {
             "es": [
@@ -1446,14 +1639,18 @@
           },
           "correctExplanation": {
             "es": "hintText muestra una pista inicial dentro del campo.",
-            "en": "hintText muestra una pista inicial dentro del campo."
+            "en": "hintText shows una pista inicial dentro del campo."
           },
           "incorrectExplanation": {
-            "es": "errorText se usa para error, no para sugerencia.",
-            "en": "errorText se usa para error, no para sugerencia."
+            "es": "errorText se usa para error, no para sugerencia. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "errorText se usa para error, no para sugerencia. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_cards_sections",
+            "ui_real_lists"
+          ]
         },
         {
           "id": "ui_forms_match_1",
@@ -1499,18 +1696,22 @@
             "en": "Estas propiedades ayudan a que un input sea comprensible."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál nombra, cuál sugiere y cuál corrige.",
-            "en": "Revisa cuál nombra, cuál sugiere y cuál corrige."
+            "es": "Revisa cuál nombra, cuál sugiere y cuál corrige. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa cuál nombra, cuál sugiere y cuál fix. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_cards_sections",
+            "ui_real_lists"
+          ]
         },
         {
           "id": "ui_forms_fill_1",
           "type": "fillInTheCode",
           "prompt": {
             "es": "Completa la propiedad para mostrar el label 'Correo'.",
-            "en": "Completa la propiedad para mostrar el label 'Correo'."
+            "en": "Complete la propiedad para mostrar el label 'Correo'."
           },
           "initialCode": {
             "es": "TextFormField(\n  decoration: InputDecoration(\n    _____: 'Correo',\n  ),\n)",
@@ -1525,21 +1726,33 @@
             "en": "labelText da nombre visible al campo."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta pone el nombre del dato.",
-            "en": "La propiedad correcta pone el nombre del dato."
+            "es": "La propiedad correcta pone el nombre del dato. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La propiedad correct pone el nombre del dato. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en la etiqueta.",
             "en": "Piensa en la etiqueta."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Inputs y formularios visuales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Inputs y formularios visuales exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_cards_sections",
+            "ui_real_lists"
+          ]
         },
         {
           "id": "ui_forms_bug_1",
           "type": "fixTheBug",
           "prompt": {
             "es": "Corrige este snippet para que el ícono viva dentro de InputDecoration.",
-            "en": "Corrige este snippet para que el ícono viva dentro de InputDecoration."
+            "en": "Fix este snippet para que el ícono viva dentro de InputDecoration."
           },
           "initialCode": {
             "es": "TextField(\n  prefixIcon: Icon(Icons.mail),\n)",
@@ -1554,14 +1767,35 @@
             "en": "prefixIcon normalmente se declara dentro de InputDecoration."
           },
           "incorrectExplanation": {
-            "es": "El problema es de ubicación de la propiedad.",
-            "en": "El problema es de ubicación de la propiedad."
+            "es": "El problema es de ubicación de la propiedad. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "El problema es de ubicación de la propiedad. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en decoración del campo.",
             "en": "Piensa en decoración del campo."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "TextField",
+            "decoration",
+            "InputDecoration",
+            "prefixIcon",
+            "Icon",
+            "Icons",
+            "mail"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Inputs y formularios visuales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Inputs y formularios visuales exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_cards_sections",
+            "ui_real_lists"
+          ]
         },
         {
           "id": "ui_forms_gw_1",
@@ -1589,14 +1823,29 @@
             "en": "Un campo claro indica qué dato espera y da una pista útil."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir identificación del campo y ayuda visual.",
-            "en": "Tu respuesta debe incluir identificación del campo y ayuda visual."
+            "es": "Tu respuesta debe incluir identificación del campo y ayuda visual. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe incluir identificación del campo y ayuda visual. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en nombre + pista.",
             "en": "Piensa en nombre + pista."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Inputs y formularios visuales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Inputs y formularios visuales exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_cards_sections",
+            "ui_real_lists"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -1639,7 +1888,7 @@
           },
           "body": {
             "es": "Un botón deshabilitado evita errores, pero también debe ser entendible.",
-            "en": "Un botón deshabilitado evita errores, pero también debe ser entendible."
+            "en": "Un button deshabilitado evita errores, pero también debe ser entendible."
           },
           "example": {
             "es": "Continuar deshabilitado hasta completar campos",
@@ -1651,7 +1900,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Cuál debería tener más protagonismo visual?",
-            "en": "¿Cuál debería tener más protagonismo visual?"
+            "en": "Cuál debería tener más protagonismo visual?"
           },
           "options": {
             "es": [
@@ -1676,18 +1925,22 @@
             "en": "La acción principal debe destacarse para guiar al usuario."
           },
           "incorrectExplanation": {
-            "es": "No todo elemento merece el mismo peso visual.",
-            "en": "No todo elemento merece el mismo peso visual."
+            "es": "No todo elemento merece el mismo peso visual. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No todo elemento merece el mismo peso visual. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_real_lists",
+            "ui_forms_visual"
+          ]
         },
         {
           "id": "ui_btn_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué comunica mejor un botón principal bien diseñado?",
-            "en": "¿Qué comunica mejor un botón principal bien diseñado?"
+            "en": "Qué comunica mejor un button principal bien diseñado?"
           },
           "codeSnippet": {
             "es": "ElevatedButton(onPressed: save, child: Text('Guardar cambios'))",
@@ -1713,14 +1966,18 @@
           },
           "correctExplanation": {
             "es": "Un botón principal visible suele marcar la acción más relevante.",
-            "en": "Un botón principal visible suele marcar la acción más relevante."
+            "en": "Un button principal visible suele marcar la acción más relevante."
           },
           "incorrectExplanation": {
-            "es": "No es decoración.",
-            "en": "No es decoración."
+            "es": "No es decoración. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No es decoración. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_real_lists",
+            "ui_forms_visual"
+          ]
         },
         {
           "id": "ui_btn_match_1",
@@ -1766,18 +2023,22 @@
             "en": "Distinguir intención visual ayuda a diseñar decisiones más claras."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué destaca, qué acompaña y qué aún no puede ejecutarse.",
-            "en": "Revisa qué destaca, qué acompaña y qué aún no puede ejecutarse."
+            "es": "Revisa qué destaca, qué acompaña y qué aún no puede ejecutarse. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa qué destaca, qué acompaña y qué aún no puede ejecutarse. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_real_lists",
+            "ui_forms_visual"
+          ]
         },
         {
           "id": "ui_btn_bug_1",
           "type": "fixTheBug",
           "prompt": {
             "es": "Corrige este caso para reflejar un botón deshabilitado.",
-            "en": "Corrige este caso para reflejar un botón deshabilitado."
+            "en": "Fix este caso para reflejar un button deshabilitado."
           },
           "initialCode": {
             "es": "ElevatedButton(\n  onPressed: () {},\n  child: Text('Continuar'),\n)",
@@ -1792,21 +2053,41 @@
             "en": "En muchos botones Material, onPressed: null refleja estado disabled."
           },
           "incorrectExplanation": {
-            "es": "Si el formulario no está listo, la acción no debe parecer disponible.",
-            "en": "Si el formulario no está listo, la acción no debe parecer disponible."
+            "es": "Si el formulario no está listo, la acción no debe parecer disponible. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Si el formulario no está listo, la acción no debe parecer disponible. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en disponibilidad real.",
             "en": "Piensa en disponibilidad real."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "ElevatedButton",
+            "onPressed",
+            "null",
+            "child",
+            "Text",
+            "Continuar"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Botones, acciones y estados visuales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Botones, acciones y estados visuales exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_real_lists",
+            "ui_forms_visual"
+          ]
         },
         {
           "id": "ui_btn_gw_1",
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe los fragmentos esenciales para una fila con botón principal y texto secundario de cancelar.",
-            "en": "Escribe los fragmentos esenciales para una fila con botón principal y texto secundario de cancelar."
+            "en": "Escribe los fragmentos esenciales para una fila con button principal y texto secundario de cancelar."
           },
           "starterCode": {
             "es": "Row(\n  children: [\n    _____\n  ],\n)",
@@ -1829,14 +2110,29 @@
             "en": "Una UI equilibrada puede mostrar una acción principal y una secundaria."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir dos niveles de acción.",
-            "en": "Tu respuesta debe incluir dos niveles de acción."
+            "es": "Tu respuesta debe incluir dos niveles de acción. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe incluir dos niveles de acción. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en CTA principal + salida secundaria.",
             "en": "Piensa en CTA principal + salida secundaria."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Botones, acciones y estados visuales, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Botones, acciones y estados visuales exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_real_lists",
+            "ui_forms_visual"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -1848,7 +2144,7 @@
       },
       "shortDescription": {
         "es": "Construye patrones reutilizables como cabeceras, perfiles, stats y pantallas informativas.",
-        "en": "Construye patrones reutilizables como cabeceras, perfiles, stats y pantallas informativas."
+        "en": "Construye patrones reutilizables como cabeceras, perfiles, stats y screens informativas."
       },
       "icon": "person",
       "nodeType": "lesson",
@@ -1867,7 +2163,7 @@
           },
           "example": {
             "es": "Header con avatar\nNombre\nStats en fila\nBotón editar",
-            "en": "Header con avatar\nNombre\nStats en fila\nBotón editar"
+            "en": "Header con avatar\nNombre\nStats en fila\nButton editar"
           }
         },
         {
@@ -1891,7 +2187,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Cuál patrón es común en una pantalla de perfil?",
-            "en": "¿Cuál patrón es común en una pantalla de perfil?"
+            "en": "Cuál patrón es común en una screen de perfil?"
           },
           "options": {
             "es": [
@@ -1916,18 +2212,22 @@
             "en": "Ese patrón concentra identidad, contexto y acciones."
           },
           "incorrectExplanation": {
-            "es": "Las otras opciones no representan bien un perfil.",
-            "en": "Las otras opciones no representan bien un perfil."
+            "es": "Las otras opciones no representan bien un perfil. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Las otras opciones no representan bien un perfil. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_forms_visual",
+            "ui_buttons_states"
+          ]
         },
         {
           "id": "ui_pat_order_1",
           "type": "orderCodeBlocks",
           "prompt": {
             "es": "Ordena estos bloques para una pantalla de perfil simple.",
-            "en": "Ordena estos bloques para una pantalla de perfil simple."
+            "en": "Ordena estos bloques para una screen de perfil simple."
           },
           "blocks": {
             "es": [
@@ -1962,18 +2262,22 @@
             "en": "Primero identidad, luego contexto, después datos y al final acción."
           },
           "incorrectExplanation": {
-            "es": "Piensa en cómo se escanea un perfil.",
-            "en": "Piensa en cómo se escanea un perfil."
+            "es": "Piensa en cómo se escanea un perfil. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Piensa en cómo se escanea un perfil. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_forms_visual",
+            "ui_buttons_states"
+          ]
         },
         {
           "id": "ui_pat_wrong_1",
           "type": "findTheWrongLine",
           "prompt": {
             "es": "¿Qué línea rompe más la idea de un header de perfil coherente?",
-            "en": "¿Qué línea rompe más la idea de un header de perfil coherente?"
+            "en": "Qué línea rompe más la idea de un header de perfil coherente?"
           },
           "codeLines": {
             "es": [
@@ -2001,17 +2305,21 @@
             "en": "Un ListView dentro del header rompe la intención del patrón."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta introduce un widget fuera de contexto.",
-            "en": "La línea incorrecta introduce un widget fuera de contexto."
+            "es": "La línea incorrecta introduce un widget fuera de contexto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La línea incorrect introduce un widget fuera de contexto. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "ui_forms_visual",
+            "ui_buttons_states"
+          ]
         },
         {
           "id": "ui_pat_match_1",
           "type": "matchConcept",
           "prompt": {
             "es": "Relaciona cada bloque con su función dentro de un perfil.",
-            "en": "Relaciona cada bloque con su función dentro de un perfil."
+            "en": "Relaciona cada bloque con su function dentro de un perfil."
           },
           "pairs": [
             {
@@ -2050,18 +2358,22 @@
             "en": "Estos bloques hacen que el perfil sea legible y completo."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué representa identidad, qué da contexto y qué resume.",
-            "en": "Revisa qué representa identidad, qué da contexto y qué resume."
+            "es": "Revisa qué representa identidad, qué da contexto y qué resume. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa qué representa identidad, qué da contexto y qué resume. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_forms_visual",
+            "ui_buttons_states"
+          ]
         },
         {
           "id": "ui_pat_gw_1",
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe los fragmentos clave para un header de perfil con avatar, nombre y botón editar.",
-            "en": "Escribe los fragmentos clave para un header de perfil con avatar, nombre y botón editar."
+            "en": "Escribe los fragmentos clave para un header de perfil con avatar, nombre y button editar."
           },
           "starterCode": {
             "es": "ProfileHeader(\n  child: Row(\n    children: [\n      _____\n    ],\n  ),\n)",
@@ -2086,14 +2398,29 @@
             "en": "Un buen header de perfil combina identidad y acción relevante."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir identidad visible y una acción contextual.",
-            "en": "Tu respuesta debe incluir identidad visible y una acción contextual."
+            "es": "Tu respuesta debe incluir identidad visible y una acción contextual. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe incluir identidad visible y una acción contextual. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en avatar + nombre + editar.",
             "en": "Piensa en avatar + nombre + editar."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Headers, perfiles y patrones comunes, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Headers, perfiles y patrones comunes exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_forms_visual",
+            "ui_buttons_states"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -2120,7 +2447,7 @@
           },
           "body": {
             "es": "Una pantalla puede verse perfecta en mobile y romperse en un ancho mayor o menor.",
-            "en": "Una pantalla puede verse perfecta en mobile y romperse en un ancho mayor o menor."
+            "en": "Una screen puede verse perfecta en mobile y romperse en un ancho mayor o menor."
           },
           "example": {
             "es": "Mobile: Column\nWide: Row con dos paneles",
@@ -2148,7 +2475,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Cuál es una señal clara de que una UI necesita adaptación responsive?",
-            "en": "¿Cuál es una señal clara de que una UI necesita adaptación responsive?"
+            "en": "Cuál es una señal clara de que una UI necesita adaptación responsive?"
           },
           "options": {
             "es": [
@@ -2173,18 +2500,22 @@
             "en": "Cuando cambia el ancho y la composición falla, necesitas adaptación responsive."
           },
           "incorrectExplanation": {
-            "es": "Usar widgets básicos no garantiza responsiveness.",
-            "en": "Usar widgets básicos no garantiza responsiveness."
+            "es": "Usar widgets básicos no garantiza responsiveness. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Usar widgets básicos no garantiza responsiveness. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_buttons_states",
+            "ui_common_patterns"
+          ]
         },
         {
           "id": "ui_resp_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué decisión responsive representa mejor este fragmento?",
-            "en": "¿Qué decisión responsive representa mejor este fragmento?"
+            "en": "Qué decisión responsive representa mejor este fragmento?"
           },
           "codeSnippet": {
             "es": "if (constraints.maxWidth > 700) {\n  return Row(children: [panelA, panelB]);\n}\nreturn Column(children: [panelA, panelB]);",
@@ -2213,11 +2544,15 @@
             "en": "El fragmento adapta composición según espacio horizontal."
           },
           "incorrectExplanation": {
-            "es": "La clave aquí es layout, no backend.",
-            "en": "La clave aquí es layout, no backend."
+            "es": "La clave aquí es layout, no backend. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La clave aquí es layout, no backend. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_buttons_states",
+            "ui_common_patterns"
+          ]
         },
         {
           "id": "ui_resp_match_1",
@@ -2234,7 +2569,7 @@
               },
               "right": {
                 "es": "Consultar tamaño general de pantalla",
-                "en": "Consultar tamaño general de pantalla"
+                "en": "Consultar tamaño general de screen"
               }
             },
             {
@@ -2263,18 +2598,22 @@
             "en": "Estas herramientas ayudan a adaptar la interfaz con intención."
           },
           "incorrectExplanation": {
-            "es": "Revisa cuál consulta tamaño global, cuál ve constraints locales y cuál toma decisiones.",
-            "en": "Revisa cuál consulta tamaño global, cuál ve constraints locales y cuál toma decisiones."
+            "es": "Revisa cuál consulta tamaño global, cuál ve constraints locales y cuál toma decisiones. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa cuál consulta tamaño global, cuál ve constraints locales y cuál toma decisiones. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 14,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_buttons_states",
+            "ui_common_patterns"
+          ]
         },
         {
           "id": "ui_resp_bug_1",
           "type": "fixTheBug",
           "prompt": {
             "es": "Corrige esta idea para que no fuerce una Row en pantallas pequeñas.",
-            "en": "Corrige esta idea para que no fuerce una Row en pantallas pequeñas."
+            "en": "Fix esta idea para que no fuerce una Row en screens pequeñas."
           },
           "initialCode": {
             "es": "return Row(\n  children: [leftPanel, rightPanel],\n);",
@@ -2289,21 +2628,43 @@
             "en": "Una composición fija puede romperse; una responsive adapta el layout."
           },
           "incorrectExplanation": {
-            "es": "El problema no es usar Row, sino hacerlo sin considerar el ancho.",
-            "en": "El problema no es usar Row, sino hacerlo sin considerar el ancho."
+            "es": "El problema no es usar Row, sino hacerlo sin considerar el ancho. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "El problema no es usar Row, sino hacerlo sin considerar el ancho. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en adaptación según constraints.",
             "en": "Piensa en adaptación según constraints."
           },
-          "xpReward": 14
+          "xpReward": 14,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "return",
+            "LayoutBuilder",
+            "builder",
+            "context",
+            "constraints",
+            "if",
+            "maxWidth",
+            "Row"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Responsive UI básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Responsive UI básico exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_buttons_states",
+            "ui_common_patterns"
+          ]
         },
         {
           "id": "ui_resp_gw_1",
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe los fragmentos esenciales para mostrar una Column en mobile y una Row en pantallas anchas.",
-            "en": "Escribe los fragmentos esenciales para mostrar una Column en mobile y una Row en pantallas anchas."
+            "en": "Escribe los fragmentos esenciales para mostrar una Column en mobile y una Row en screens anchas."
           },
           "starterCode": {
             "es": "LayoutBuilder(\n  builder: (context, constraints) {\n    _____\n  },\n)",
@@ -2326,14 +2687,29 @@
             "en": "La idea clave es decidir composición según ancho disponible."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe incluir condición y dos layouts alternativos.",
-            "en": "Tu respuesta debe incluir condición y dos layouts alternativos."
+            "es": "Tu respuesta debe incluir condición y dos layouts alternativos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe incluir condición y dos layouts alternativos. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en ancho grande vs pequeño.",
             "en": "Piensa en ancho grande vs pequeño."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Responsive UI básico, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Responsive UI básico exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_buttons_states",
+            "ui_common_patterns"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         }
       ]
     },
@@ -2341,11 +2717,11 @@
       "id": "ui_build_complete_screen",
       "title": {
         "es": "Construcción guiada de una pantalla completa",
-        "en": "Construcción guiada de una pantalla completa"
+        "en": "Construcción guiada de una screen complete"
       },
       "shortDescription": {
         "es": "Integra headers, cards, listas, formularios y acciones en una pantalla coherente.",
-        "en": "Integra headers, cards, listas, formularios y acciones en una pantalla coherente."
+        "en": "Integra headers, cards, listas, formularios y acciones en una screen coherente."
       },
       "icon": "web",
       "nodeType": "lesson",
@@ -2360,7 +2736,7 @@
           },
           "body": {
             "es": "Ahora toca integrar patrones, formularios, listas y acciones en una sola pantalla.",
-            "en": "Ahora toca integrar patrones, formularios, listas y acciones en una sola pantalla."
+            "en": "Ahora toca integrar patrones, formularios, listas y acciones en una sola screen."
           },
           "example": {
             "es": "Scaffold\n└─ Body\n   ├─ Header\n   ├─ SummaryCard\n   ├─ FormSection\n   └─ CTA",
@@ -2372,7 +2748,7 @@
           "type": "intro",
           "title": {
             "es": "Una buena pantalla tiene ritmo visual",
-            "en": "Una buena pantalla tiene ritmo visual"
+            "en": "Una buena screen tiene ritmo visual"
           },
           "body": {
             "es": "Ritmo visual significa orden, respiración y bloques conectados con sentido.",
@@ -2380,7 +2756,7 @@
           },
           "example": {
             "es": "Título\nespacio\ncard\nespacio\nsección\nespacio\nbotón",
-            "en": "Título\nespacio\ncard\nespacio\nsección\nespacio\nbotón"
+            "en": "Título\nespacio\ncard\nespacio\nsección\nespacio\nbutton"
           }
         },
         {
@@ -2388,7 +2764,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué ayuda más a que una pantalla completa se sienta coherente?",
-            "en": "¿Qué ayuda más a que una pantalla completa se sienta coherente?"
+            "en": "Qué ayuda más a que una screen complete se sienta coherente?"
           },
           "options": {
             "es": [
@@ -2413,18 +2789,22 @@
             "en": "La coherencia visual nace de decisiones repetibles y claras."
           },
           "incorrectExplanation": {
-            "es": "No se trata de saturar la pantalla.",
-            "en": "No se trata de saturar la pantalla."
+            "es": "No se trata de saturar la pantalla. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No se trata de saturar la pantalla. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 10,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_common_patterns",
+            "ui_responsive_basic"
+          ]
         },
         {
           "id": "ui_screen_order_1",
           "type": "orderCodeBlocks",
           "prompt": {
             "es": "Ordena los bloques para una pantalla de edición de perfil.",
-            "en": "Ordena los bloques para una pantalla de edición de perfil."
+            "en": "Ordena los bloques para una screen de edición de perfil."
           },
           "blocks": {
             "es": [
@@ -2459,18 +2839,22 @@
             "en": "Primero identidad y contexto, luego edición y al final acción."
           },
           "incorrectExplanation": {
-            "es": "Piensa en lectura natural.",
-            "en": "Piensa en lectura natural."
+            "es": "Piensa en lectura natural. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Piensa en lectura natural. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 16,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_common_patterns",
+            "ui_responsive_basic"
+          ]
         },
         {
           "id": "ui_screen_wrong_1",
           "type": "findTheWrongLine",
           "prompt": {
             "es": "¿Qué línea rompe más la coherencia de una pantalla de edición?",
-            "en": "¿Qué línea rompe más la coherencia de una pantalla de edición?"
+            "en": "Qué línea rompe más la coherencia de una screen de edición?"
           },
           "codeLines": {
             "es": [
@@ -2495,20 +2879,24 @@
           "wrongLineIndex": 3,
           "correctExplanation": {
             "es": "Poner el botón guardar antes del formulario rompe el flujo visual esperado.",
-            "en": "Poner el botón guardar antes del formulario rompe el flujo visual esperado."
+            "en": "Poner el button guardar antes del formulario rompe el flujo visual esperado."
           },
           "incorrectExplanation": {
-            "es": "La línea problemática adelanta una acción antes del contenido que la justifica.",
-            "en": "La línea problemática adelanta una acción antes del contenido que la justifica."
+            "es": "La línea problemática adelanta una acción antes del contenido que la justifica. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La línea problemática adelanta una acción antes del contenido que la justifica. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 12
+          "xpReward": 12,
+          "prerequisites": [
+            "ui_common_patterns",
+            "ui_responsive_basic"
+          ]
         },
         {
           "id": "ui_screen_gw_1",
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe los fragmentos mínimos de una pantalla con header, card resumen, lista y botón principal.",
-            "en": "Escribe los fragmentos mínimos de una pantalla con header, card resumen, lista y botón principal."
+            "en": "Escribe los fragmentos mínimos de una screen con header, card resumen, lista y button principal."
           },
           "starterCode": {
             "es": "Scaffold(\n  body: Column(\n    children: [\n      _____\n    ],\n  ),\n)",
@@ -2530,24 +2918,39 @@
           },
           "correctExplanation": {
             "es": "La pantalla completa debe combinar estructura, resumen, contenido y acción.",
-            "en": "La pantalla completa debe combinar estructura, resumen, contenido y acción."
+            "en": "La screen complete debe combinar estructura, resumen, contenido y acción."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe mostrar variedad de bloques, no solo una lista de textos.",
-            "en": "Tu respuesta debe mostrar variedad de bloques, no solo una lista de textos."
+            "es": "Tu respuesta debe mostrar variedad de bloques, no solo una lista de textos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe mostrar variedad de bloques, no solo una lista de textos. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en una pantalla real.",
-            "en": "Piensa en una pantalla real."
+            "en": "Piensa en una screen real."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Construcción guiada de una pantalla completa, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Construcción guiada de una screen complete exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_common_patterns",
+            "ui_responsive_basic"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         },
         {
           "id": "ui_screen_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué demuestra mejor este nodo final de práctica?",
-            "en": "¿Qué demuestra mejor este nodo final de práctica?"
+            "en": "What best proves the learning goal of this final practice node?"
           },
           "codeSnippet": {
             "es": "Header + Cards + List + Form + CTA",
@@ -2561,26 +2964,30 @@
               "Que ListView sirve para backend"
             ],
             "en": [
-              "Que UI es memorizar widgets",
-              "Que construir pantallas requiere integrar decisiones visuales",
-              "Que Row reemplaza todo",
-              "Que ListView sirve para backend"
+              "That UI is about memorizing widgets",
+              "That building screens requires integrating visual decisions",
+              "That Row replaces everything",
+              "That ListView is for backend logic"
             ]
           },
           "correctAnswer": {
             "es": "Que construir pantallas requiere integrar decisiones visuales",
-            "en": "Que construir pantallas requiere integrar decisiones visuales"
+            "en": "That building screens requires integrating visual decisions"
           },
           "correctExplanation": {
             "es": "La UI real no vive en widgets sueltos sino en cómo los combinas.",
-            "en": "La UI real no vive en widgets sueltos sino en cómo los combinas."
+            "en": "Exactly: strong UI comes from combining hierarchy, spacing, and structure decisions."
           },
           "incorrectExplanation": {
-            "es": "La clave aquí es integración.",
-            "en": "La clave aquí es integración."
+            "es": "La clave aquí es integración. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "The goal is to integrate visual decisions, not memorize one widget. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 11,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_common_patterns",
+            "ui_responsive_basic"
+          ]
         }
       ]
     },
@@ -2592,7 +2999,7 @@
       },
       "shortDescription": {
         "es": "Valida composición visual, jerarquía, formularios, listas, responsive y construcción de pantallas.",
-        "en": "Valida composición visual, jerarquía, formularios, listas, responsive y construcción de pantallas."
+        "en": "Valida composición visual, jerarquía, formularios, listas, responsive y construcción de screens."
       },
       "icon": "workspace_premium",
       "nodeType": "exam",
@@ -2619,7 +3026,7 @@
           "type": "multipleChoice",
           "question": {
             "es": "¿Qué define mejor la jerarquía visual en una pantalla?",
-            "en": "¿Qué define mejor la jerarquía visual en una pantalla?"
+            "en": "Qué define mejor la jerarquía visual en una screen?"
           },
           "options": {
             "es": [
@@ -2644,11 +3051,15 @@
             "en": "La jerarquía visual organiza qué se mira primero, después y por último."
           },
           "incorrectExplanation": {
-            "es": "No depende solo de centrar cosas ni de adornos.",
-            "en": "No depende solo de centrar cosas ni de adornos."
+            "es": "No depende solo de centrar cosas ni de adornos. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No depende solo de centrar cosas ni de adornos. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_match_1",
@@ -2694,18 +3105,22 @@
             "en": "Estas piezas aparecen mucho en UI real."
           },
           "incorrectExplanation": {
-            "es": "Revisa qué superpone, qué lista y qué mejora inputs.",
-            "en": "Revisa qué superpone, qué lista y qué mejora inputs."
+            "es": "Revisa qué superpone, qué lista y qué mejora inputs. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Revisa qué superpone, qué lista y qué mejora inputs. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 18,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_fill_1",
           "type": "fillInTheCode",
           "prompt": {
             "es": "Completa la propiedad para etiquetar un campo con 'Correo'.",
-            "en": "Completa la propiedad para etiquetar un campo con 'Correo'."
+            "en": "Complete la propiedad para etiquetar un campo con 'Correo'."
           },
           "initialCode": {
             "es": "TextFormField(\n  decoration: InputDecoration(\n    _____: 'Correo',\n  ),\n)",
@@ -2720,21 +3135,33 @@
             "en": "labelText identifica visualmente el dato que se solicita."
           },
           "incorrectExplanation": {
-            "es": "La propiedad correcta nombra el campo.",
-            "en": "La propiedad correcta nombra el campo."
+            "es": "La propiedad correcta nombra el campo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La propiedad correct nombra el campo. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en la etiqueta.",
             "en": "Piensa en la etiqueta."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final UI con Flutter, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Examen Final UI con Flutter exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_cs_1",
           "type": "completeSnippet",
           "prompt": {
             "es": "Completa el widget que ayuda a empujar el último elemento al extremo derecho en una Row.",
-            "en": "Completa el widget que ayuda a empujar el último elemento al extremo derecho en una Row."
+            "en": "Complete el widget que ayuda a empujar el último elemento al extremo derecho en una Row."
           },
           "initialCode": {
             "es": "Row(\n  children: [\n    Text('Perfil'),\n    _____(),\n    Icon(Icons.chevron_right),\n  ],\n)",
@@ -2749,21 +3176,33 @@
             "en": "Spacer crea separación flexible y empuja elementos."
           },
           "incorrectExplanation": {
-            "es": "Necesitas espacio flexible, no padding fijo.",
-            "en": "Necesitas espacio flexible, no padding fijo."
+            "es": "Necesitas espacio flexible, no padding fijo. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Necesitas espacio flexible, no padding fijo. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en empujar.",
             "en": "Piensa en empujar."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "exact",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final UI con Flutter, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Examen Final UI con Flutter exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_bug_1",
           "type": "fixTheBug",
           "prompt": {
             "es": "Corrige este snippet para que el badge pueda posicionarse correctamente sobre la card.",
-            "en": "Corrige este snippet para que el badge pueda posicionarse correctamente sobre la card."
+            "en": "Fix este snippet para que el badge pueda posicionarse correctmente sobre la card."
           },
           "initialCode": {
             "es": "Column(\n  children: [\n    ProductCard(),\n    Positioned(top: 8, right: 8, child: SaleBadge()),\n  ],\n)",
@@ -2778,21 +3217,42 @@
             "en": "Positioned necesita vivir dentro de Stack."
           },
           "incorrectExplanation": {
-            "es": "El problema es del contenedor visual, no del badge.",
-            "en": "El problema es del contenedor visual, no del badge."
+            "es": "El problema es del contenedor visual, no del badge. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "El problema es del contenedor visual, no del badge. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en capas.",
             "en": "Piensa en capas."
           },
-          "xpReward": 18
+          "xpReward": 18,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "requiredTokens": [
+            "Stack",
+            "children",
+            "ProductCard",
+            "Positioned",
+            "right",
+            "child",
+            "SaleBadge"
+          ],
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final UI con Flutter, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Examen Final UI con Flutter exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_wrong_1",
           "type": "findTheWrongLine",
           "prompt": {
             "es": "¿Qué línea rompe más un patrón típico de perfil?",
-            "en": "¿Qué línea rompe más un patrón típico de perfil?"
+            "en": "Qué línea rompe más un patrón típico de perfil?"
           },
           "codeLines": {
             "es": [
@@ -2822,17 +3282,21 @@
             "en": "Meter un AppBar dentro del cuerpo de ese bloque rompe la intención visual."
           },
           "incorrectExplanation": {
-            "es": "La línea incorrecta introduce una pieza estructural fuera de contexto.",
-            "en": "La línea incorrecta introduce una pieza estructural fuera de contexto."
+            "es": "La línea incorrecta introduce una pieza estructural fuera de contexto. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "La línea incorrect introduce una pieza estructural fuera de contexto. If it did not click yet, restart this node and try again—each attempt counts."
           },
-          "xpReward": 16
+          "xpReward": 16,
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_po_1",
           "type": "predictOutput",
           "question": {
             "es": "¿Qué decisión responsive representa mejor este snippet?",
-            "en": "¿Qué decisión responsive representa mejor este snippet?"
+            "en": "Qué decisión responsive representa mejor este snippet?"
           },
           "codeSnippet": {
             "es": "if (constraints.maxWidth > 700) {\n  return Row(children: [left, right]);\n}\nreturn Column(children: [left, right]);",
@@ -2861,18 +3325,22 @@
             "en": "El fragmento adapta la composición según el espacio horizontal."
           },
           "incorrectExplanation": {
-            "es": "No se trata de estado ni feedback.",
-            "en": "No se trata de estado ni feedback."
+            "es": "No se trata de estado ni feedback. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "No se trata de estado ni feedback. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "xpReward": 15,
-          "shuffle": true
+          "shuffle": true,
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ]
         },
         {
           "id": "ui_exam_gw_1",
           "type": "guidedWriting",
           "instructions": {
             "es": "Escribe los fragmentos clave de una pantalla simple de dashboard: header, card resumen, lista y botón principal.",
-            "en": "Escribe los fragmentos clave de una pantalla simple de dashboard: header, card resumen, lista y botón principal."
+            "en": "Escribe los fragmentos clave de una screen simple de dashboard: header, card resumen, lista y button principal."
           },
           "starterCode": {
             "es": "Scaffold(\n  body: Column(\n    children: [\n      _____\n    ],\n  ),\n)",
@@ -2897,29 +3365,44 @@
             "en": "Un dashboard visualmente claro combina contexto, resumen, detalle y acción."
           },
           "incorrectExplanation": {
-            "es": "Tu respuesta debe integrar bloques de pantalla, no widgets aislados.",
-            "en": "Tu respuesta debe integrar bloques de pantalla, no widgets aislados."
+            "es": "Tu respuesta debe integrar bloques de pantalla, no widgets aislados. Si no te salió ahora, reinicia este nodo y vuelve a intentarlo: cada intento cuenta.",
+            "en": "Tu answer debe integrar bloques de screen, no widgets aislados. If it did not click yet, restart this node and try again—each attempt counts."
           },
           "hint": {
             "es": "Piensa en estructura completa.",
             "en": "Piensa en estructura completa."
           },
-          "xpReward": 20
+          "xpReward": 20,
+          "allowMissingSemicolon": true,
+          "allowWhitespaceVariance": true,
+          "allowQuoteStyleVariance": true,
+          "validationMode": "containsTokens",
+          "acceptanceCriteria": {
+            "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final UI con Flutter, aunque cambie el estilo de escritura.",
+            "en": "Any valid solution that meets the goal of this Examen Final UI con Flutter exercise is accepted, even if writing style differs."
+          },
+          "prerequisites": [
+            "ui_responsive_basic",
+            "ui_build_complete_screen"
+          ],
+          "requiredTokens": [
+            "los"
+          ]
         },
         {
           "id": "ui_exam_summary",
           "type": "intro",
           "title": {
             "es": "Cierre de ruta",
-            "en": "Cierre de ruta"
+            "en": "Cierre de route"
           },
           "body": {
             "es": "Si llegaste hasta aquí, ya no ves Flutter UI como una bolsa de widgets sueltos. Ya estás desarrollando criterio para construir pantallas más claras, útiles y coherentes.",
-            "en": "Si llegaste hasta aquí, ya no ves Flutter UI como una bolsa de widgets sueltos. Ya estás desarrollando criterio para construir pantallas más claras, útiles y coherentes."
+            "en": "Si llegaste hasta aquí, ya no ves Flutter UI como una bolsa de widgets sueltos. Ya estás desarrollando criterio para construir screens más claras, útiles y coherentes."
           },
           "example": {
             "es": "Siguiente paso natural:\nEstado + navegación + datos.\nPero ahora con mejores pantallas.",
-            "en": "Siguiente paso natural:\nEstado + navegación + datos.\nPero ahora con mejores pantallas."
+            "en": "Siguiente paso natural:\nEstado + navigation + datos.\nPero ahora con mejores screens."
           }
         }
       ]

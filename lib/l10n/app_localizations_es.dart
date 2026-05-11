@@ -24,6 +24,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeSubtitle => 'Elige una ruta y sigue avanzando';
 
   @override
+  String get monthlyRouteBannerTitle => 'Cada mes llega una ruta nueva';
+
+  @override
+  String get monthlyRouteBannerBody =>
+      'Liberamos una ruta a la vez para que cada camino salga pulido, jugable y digno de tu racha.';
+
+  @override
   String get loadRoutesError =>
       'No pudimos cargar el contenido de las rutas. Inténtalo de nuevo.';
 
@@ -98,6 +105,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get routeCompleted => 'Ruta completada';
+
+  @override
+  String get upcomingRouteBadge => 'Próximamente';
+
+  @override
+  String get upcomingRouteLockedBody =>
+      'Termina la ruta publicada actual y mantente atento. Cuando se libere la siguiente, esta será la que verás aquí.';
+
+  @override
+  String get upcomingRouteReadyBody =>
+      'Ya estás listo para el siguiente camino. Aparecerá aquí en cuanto se publique la próxima liberación mensual.';
+
+  @override
+  String get upcomingRouteDetailMessage =>
+      'Esta ruta pertenece a la siguiente ventana de publicación. Liberamos una ruta a la vez y solo verás la siguiente cuando completes la ruta publicada actual.';
+
+  @override
+  String get upcomingRouteFallbackDescription =>
+      'Ya viene un nuevo camino. Lo estamos afinando antes de abrir la siguiente ventana de publicación.';
 
   @override
   String get currentPathFallback => 'Aún no has comenzado';

@@ -491,9 +491,9 @@ class LessonSessionNotifier
     }
 
     final expected = (activity.expectedAnswer ?? '').trim();
-    final initial = activity.initialCode ?? '';
-
-    if (expected.isEmpty) {
+    if (expected.isEmpty &&
+        (activity.acceptedAnswers ?? const <String>[]).isEmpty &&
+        (activity.requiredTokens ?? const <String>[]).isEmpty) {
       final feedback = _feedbackFor(activity: activity, isCorrect: false);
       return _ValidationResult(
         isCorrect: false,
@@ -503,32 +503,7 @@ class LessonSessionNotifier
       );
     }
 
-    final normalizedAnswer = _normalize(answer);
-    final normalizedExpected = _normalize(expected);
-
-    bool isCorrect = false;
-    final placeholder = RegExp(r'_{3,}');
-    if (placeholder.hasMatch(initial)) {
-      final expectedFull = initial.replaceFirst(placeholder, expected);
-      isCorrect =
-          normalizedAnswer == _normalize(expectedFull) ||
-          normalizedAnswer == normalizedExpected;
-    } else {
-      isCorrect = normalizedAnswer == normalizedExpected;
-      if (!isCorrect && initial.trim().isNotEmpty) {
-        final normalizedInitial = _normalize(initial);
-        if (normalizedAnswer == normalizedInitial &&
-            normalizedInitial.contains(normalizedExpected)) {
-          isCorrect = true;
-        }
-      }
-      if (!isCorrect &&
-          normalizedExpected.length <= 20 &&
-          normalizedExpected.split(' ').length <= 3 &&
-          normalizedAnswer.contains(normalizedExpected)) {
-        isCorrect = true;
-      }
-    }
+    final isCorrect = _evaluateFlexibleCodeMatch(activity: activity, answer: answer);
 
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
@@ -712,17 +687,16 @@ class LessonSessionNotifier
     }
 
     final fragments = activity.expectedFragments ?? const <String>[];
-    final expected = (activity.expectedAnswer ?? '').trim();
-
-    final normalizedAnswer = answer.toLowerCase();
-    final fragmentsPass =
-        fragments.isNotEmpty &&
-        fragments.every(
-          (part) => normalizedAnswer.contains(part.toLowerCase().trim()),
-        );
-    final exactPass =
-        expected.isNotEmpty && _normalize(answer) == _normalize(expected);
-    final isCorrect = fragmentsPass || exactPass;
+    final normalizedAnswer = _normalizeLoose(answer, activity).toLowerCase();
+    final fragmentsPass = fragments.isNotEmpty
+        ? fragments.every(
+            (part) => normalizedAnswer.contains(
+              _normalizeLoose(part, activity).toLowerCase(),
+            ),
+          )
+        : false;
+    final flexibleMatch = _evaluateFlexibleCodeMatch(activity: activity, answer: answer);
+    final isCorrect = fragmentsPass || flexibleMatch;
 
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
@@ -742,6 +716,108 @@ class LessonSessionNotifier
       }
     }
     return true;
+  }
+
+  bool _evaluateFlexibleCodeMatch({
+    required LessonActivity activity,
+    required String answer,
+  }) {
+    final mode = activity.validationMode;
+    final normalizedAnswer = _normalizeLoose(answer, activity);
+    final expected = (activity.expectedAnswer ?? '').trim();
+    final acceptedAnswers = [
+      if (expected.isNotEmpty) expected,
+      ...(activity.acceptedAnswers ?? const <String>[]),
+      ..._expandedTemplateAnswers(activity),
+    ];
+
+    if (mode == ValidationMode.regex) {
+      for (final pattern in acceptedAnswers) {
+        try {
+          if (RegExp(pattern, multiLine: true).hasMatch(answer)) return true;
+        } catch (_) {
+          // Ignore malformed regex coming from content; parser validation handles this.
+        }
+      }
+      return false;
+    }
+
+    if (mode == ValidationMode.multiAnswer) {
+      for (final candidate in acceptedAnswers) {
+        if (_normalizeLoose(candidate, activity) == normalizedAnswer) return true;
+      }
+      return _matchesTokenCriteria(activity: activity, normalizedAnswer: normalizedAnswer);
+    }
+
+    if (mode == ValidationMode.containsTokens) {
+      return _matchesTokenCriteria(activity: activity, normalizedAnswer: normalizedAnswer);
+    }
+
+    // exact (default) with tolerance + graceful fallback.
+    for (final candidate in acceptedAnswers) {
+      final normalizedCandidate = _normalizeLoose(candidate, activity);
+      if (normalizedCandidate == normalizedAnswer) return true;
+      if (normalizedCandidate.isNotEmpty &&
+          normalizedCandidate.length <= 24 &&
+          normalizedAnswer.contains(normalizedCandidate)) {
+        return true;
+      }
+    }
+    return _matchesTokenCriteria(activity: activity, normalizedAnswer: normalizedAnswer);
+  }
+
+  List<String> _expandedTemplateAnswers(LessonActivity activity) {
+    final template = (activity.initialCode ?? '').trim();
+    final expected = (activity.expectedAnswer ?? '').trim();
+    if (template.isEmpty || expected.isEmpty) return const <String>[];
+    if (!template.contains('_____')) return const <String>[];
+
+    final candidates = <String>{
+      template.replaceAll('_____', expected),
+    };
+
+    if (!expected.contains('()')) {
+      candidates.add(template.replaceAll('_____', '$expected()'));
+    }
+
+    return candidates.where((value) => value.trim().isNotEmpty).toList();
+  }
+
+  bool _matchesTokenCriteria({
+    required LessonActivity activity,
+    required String normalizedAnswer,
+  }) {
+    final requiredTokens = activity.requiredTokens ?? const <String>[];
+    final forbiddenTokens = activity.forbiddenTokens ?? const <String>[];
+    final lowered = normalizedAnswer.toLowerCase();
+
+    if (requiredTokens.isNotEmpty) {
+      final allRequiredPresent = requiredTokens.every(
+        (token) => lowered.contains(_normalizeLoose(token, activity).toLowerCase()),
+      );
+      if (!allRequiredPresent) return false;
+    }
+    if (forbiddenTokens.isNotEmpty) {
+      final hasForbidden = forbiddenTokens.any(
+        (token) => lowered.contains(_normalizeLoose(token, activity).toLowerCase()),
+      );
+      if (hasForbidden) return false;
+    }
+    return requiredTokens.isNotEmpty || forbiddenTokens.isNotEmpty;
+  }
+
+  String _normalizeLoose(String value, LessonActivity activity) {
+    var output = value.trim();
+    if (activity.allowQuoteStyleVariance) {
+      output = output.replaceAll('"', "'");
+    }
+    if (activity.allowMissingSemicolon) {
+      output = output.replaceAll(';', '');
+    }
+    if (activity.allowWhitespaceVariance) {
+      output = output.replaceAll(RegExp(r'\s+'), ' ');
+    }
+    return output.trim();
   }
 
   List<String> _displayOptions(LessonActivity activity) {

@@ -98,6 +98,41 @@ bool _optionalBool(
   return fallback;
 }
 
+List<String> _optionalStringList(
+  Map<String, dynamic> json,
+  String key,
+) {
+  final value = json[key];
+  if (value is! List) return const <String>[];
+  final result = <String>[];
+  for (final item in value) {
+    final mapped = _asString(item).trim();
+    if (mapped.isNotEmpty) result.add(mapped);
+  }
+  return result;
+}
+
+Map<String, dynamic> _optionalMap(
+  Map<String, dynamic> json,
+  String key,
+) {
+  final value = json[key];
+  if (value is Map<String, dynamic>) return value;
+  return const <String, dynamic>{};
+}
+
+enum ValidationMode { exact, multiAnswer, containsTokens, regex, unknown }
+
+ValidationMode _validationModeFromString(String value) {
+  return switch (value) {
+    'exact' => ValidationMode.exact,
+    'multiAnswer' => ValidationMode.multiAnswer,
+    'containsTokens' => ValidationMode.containsTokens,
+    'regex' => ValidationMode.regex,
+    _ => ValidationMode.unknown,
+  };
+}
+
 class MatchConceptPair {
   const MatchConceptPair({required this.left, required this.right});
 
@@ -301,6 +336,18 @@ class LessonStep {
     this.expectedFragments,
     this.instructions,
     this.starterCode,
+    this.acceptedAnswers,
+    this.requiredTokens,
+    this.forbiddenTokens,
+    this.acceptanceCriteria,
+    this.customKeywords,
+    this.suggestedName,
+    this.namingPolicy,
+    this.validationMode = ValidationMode.exact,
+    this.allowMissingSemicolon = false,
+    this.allowWhitespaceVariance = true,
+    this.allowQuoteStyleVariance = true,
+    this.prerequisites,
   });
 
   final String id;
@@ -330,6 +377,18 @@ class LessonStep {
   final List<String>? expectedFragments;
   final String? instructions;
   final String? starterCode;
+  final List<String>? acceptedAnswers;
+  final List<String>? requiredTokens;
+  final List<String>? forbiddenTokens;
+  final List<String>? acceptanceCriteria;
+  final List<String>? customKeywords;
+  final String? suggestedName;
+  final String? namingPolicy;
+  final ValidationMode validationMode;
+  final bool allowMissingSemicolon;
+  final bool allowWhitespaceVariance;
+  final bool allowQuoteStyleVariance;
+  final List<String>? prerequisites;
 
   final int xpReward;
 
@@ -420,6 +479,18 @@ class LessonStep {
       'expectedFragments': expectedFragments,
       'instructions': instructions,
       'starterCode': starterCode,
+      'acceptedAnswers': acceptedAnswers,
+      'requiredTokens': requiredTokens,
+      'forbiddenTokens': forbiddenTokens,
+      'acceptanceCriteria': acceptanceCriteria,
+      'customKeywords': customKeywords,
+      'suggestedName': suggestedName,
+      'namingPolicy': namingPolicy,
+      'validationMode': validationMode.name,
+      'allowMissingSemicolon': allowMissingSemicolon,
+      'allowWhitespaceVariance': allowWhitespaceVariance,
+      'allowQuoteStyleVariance': allowQuoteStyleVariance,
+      'prerequisites': prerequisites,
     };
   }
 
@@ -443,7 +514,9 @@ class LessonStep {
         'multipleChoice requires options and correctAnswer',
       );
     }
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
@@ -469,6 +542,7 @@ class LessonStep {
         'xpReward',
         'multipleChoice requires xpReward',
       ),
+      ),
     );
   }
 
@@ -478,7 +552,9 @@ class LessonStep {
     required LessonStepType type,
     required String errorPrefix,
   }) {
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: false,
@@ -508,6 +584,7 @@ class LessonStep {
         json,
         'xpReward',
         '$errorPrefix requires xpReward',
+      ),
       ),
     );
   }
@@ -539,7 +616,9 @@ class LessonStep {
         );
       }
     }
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
@@ -565,6 +644,7 @@ class LessonStep {
         'xpReward',
         'orderCodeBlocks requires xpReward',
       ),
+      ),
     );
   }
 
@@ -588,7 +668,9 @@ class LessonStep {
         'findTheWrongLine requires codeLines and wrongLineIndex',
       );
     }
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: false,
@@ -614,6 +696,7 @@ class LessonStep {
         'xpReward',
         'findTheWrongLine requires xpReward',
       ),
+      ),
     );
   }
 
@@ -632,7 +715,9 @@ class LessonStep {
     if (pairs.isEmpty) {
       throw const FormatException('matchConcept requires pairs');
     }
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
@@ -652,6 +737,7 @@ class LessonStep {
         json,
         'xpReward',
         'matchConcept requires xpReward',
+      ),
       ),
     );
   }
@@ -676,7 +762,9 @@ class LessonStep {
         'predictOutput requires options and correctAnswer',
       );
     }
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: _optionalBool(json, 'shuffle', fallback: true),
@@ -707,6 +795,7 @@ class LessonStep {
         'xpReward',
         'predictOutput requires xpReward',
       ),
+      ),
     );
   }
 
@@ -720,7 +809,9 @@ class LessonStep {
       'expectedFragments',
       'guidedWriting requires starterCode and expectedFragments',
     );
-    return LessonStep(
+    return _withValidationMeta(
+      json,
+      LessonStep(
       id: id,
       type: type,
       shuffle: false,
@@ -753,6 +844,67 @@ class LessonStep {
         'xpReward',
         'guidedWriting requires xpReward',
       ),
+      ),
+    );
+  }
+
+  static LessonStep _withValidationMeta(
+    Map<String, dynamic> json,
+    LessonStep base,
+  ) {
+    final validationMap = _optionalMap(json, 'errorTolerance');
+    final rawValidationMode = _asString(json['validationMode']).trim();
+    final parsedMode = rawValidationMode.isEmpty
+        ? ValidationMode.exact
+        : _validationModeFromString(rawValidationMode);
+    if (parsedMode == ValidationMode.unknown) {
+      throw FormatException('unknown validationMode: $rawValidationMode');
+    }
+    return LessonStep(
+      id: base.id,
+      type: base.type,
+      shuffle: base.shuffle,
+      title: base.title,
+      body: base.body,
+      example: base.example,
+      question: base.question,
+      options: base.options,
+      correctAnswer: base.correctAnswer,
+      correctExplanation: base.correctExplanation,
+      incorrectExplanation: base.incorrectExplanation,
+      prompt: base.prompt,
+      initialCode: base.initialCode,
+      expectedAnswer: base.expectedAnswer,
+      hint: base.hint,
+      xpReward: base.xpReward,
+      blocks: base.blocks,
+      correctOrder: base.correctOrder,
+      codeLines: base.codeLines,
+      wrongLineIndex: base.wrongLineIndex,
+      pairs: base.pairs,
+      codeSnippet: base.codeSnippet,
+      expectedFragments: base.expectedFragments,
+      instructions: base.instructions,
+      starterCode: base.starterCode,
+      acceptedAnswers: _optionalStringList(json, 'acceptedAnswers'),
+      requiredTokens: _optionalStringList(json, 'requiredTokens'),
+      forbiddenTokens: _optionalStringList(json, 'forbiddenTokens'),
+      acceptanceCriteria: _optionalStringList(json, 'acceptanceCriteria'),
+      customKeywords: _optionalStringList(json, 'customKeywords'),
+      suggestedName: _asString(json['suggestedName']).trim().isEmpty
+          ? null
+          : _asString(json['suggestedName']).trim(),
+      namingPolicy: _asString(json['namingPolicy']).trim().isEmpty
+          ? null
+          : _asString(json['namingPolicy']).trim(),
+      validationMode: parsedMode,
+      allowMissingSemicolon:
+          validationMap['allowMissingSemicolon'] as bool? ?? false,
+      allowWhitespaceVariance:
+          validationMap['allowWhitespaceVariance'] as bool? ?? true,
+      allowQuoteStyleVariance:
+          validationMap['allowQuoteStyleVariance'] as bool? ?? true,
+      prerequisites: _optionalStringList(json, 'prerequisites'),
     );
   }
 }
