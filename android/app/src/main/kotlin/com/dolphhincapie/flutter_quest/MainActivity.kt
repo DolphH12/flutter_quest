@@ -1,4 +1,4 @@
-package com.example.flutter_quest
+package com.dolphhincapie.flutter_quest
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -274,8 +274,14 @@ class ProfileScreen extends ConsumerWidget {
 
   Future<void> _exportBackup(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
+    final box = context.findRenderObject() as RenderBox?;
+    final shareOrigin = box == null
+        ? null
+        : box.localToGlobal(Offset.zero) & box.size;
     try {
-      await ref.read(appProgressNotifierProvider.notifier).exportBackup();
+      await ref
+          .read(appProgressNotifierProvider.notifier)
+          .exportBackup(sharePositionOrigin: shareOrigin);
       if (!context.mounted) return;
       ScaffoldMessenger.of(
         context,

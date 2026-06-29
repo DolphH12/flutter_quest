@@ -501,10 +501,12 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     );
   }
 
-  Future<void> exportBackup() async {
+  Future<void> exportBackup({Rect? sharePositionOrigin}) async {
     final backup = await buildBackupModel();
     if (backup == null) return;
-    await ref.read(progressBackupServiceProvider).exportBackup(backup);
+    await ref
+        .read(progressBackupServiceProvider)
+        .exportBackup(backup, sharePositionOrigin: sharePositionOrigin);
   }
 
   Future<ProgressBackupModel?> pickBackupPreview() async {

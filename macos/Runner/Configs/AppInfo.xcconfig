@@ -8,7 +8,7 @@
 PRODUCT_NAME = flutter_quest
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.flutterQuest
+PRODUCT_BUNDLE_IDENTIFIER = com.dolphhincapie.flutterQuest
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2026 Dolph Hincapie. All rights reserved.

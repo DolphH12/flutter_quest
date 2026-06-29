@@ -1,7 +1,7 @@
 name: flutter_quest
 description: "Flutter Quest - gamified Dart and Flutter learning app."
 publish_to: 'none'
-version: 1.0.0
+version: 1.0.0+3
 
 environment:
   sdk: ^3.11.4
@@ -18,7 +18,7 @@ dependencies:
   flutter_local_notifications: ^21.0.0
   timezone: ^0.11.0
   flutter_timezone: ^4.1.1
-  file_picker: ^10.1.9
+  file_selector: ^1.0.3
   path_provider: ^2.1.5
   share_plus: ^11.0.0
   lite_code_editor: ^0.1.1

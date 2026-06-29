@@ -97,38 +97,8 @@ class LocalNotificationsService {
         true;
     final androidGranted = await androidImplementation
         ?.requestNotificationsPermission();
-    await _requestExactAlarmsPermissionIfNeeded();
 
     return iosGranted && macGranted && (androidGranted ?? true);
-  }
-
-  Future<bool> _canScheduleExactAlarms() async {
-    final androidImplementation = _plugin
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >();
-    if (androidImplementation == null) return false;
-    try {
-      final dynamic impl = androidImplementation;
-      final bool? allowed = await impl.canScheduleExactNotifications();
-      return allowed ?? false;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  Future<void> _requestExactAlarmsPermissionIfNeeded() async {
-    final androidImplementation = _plugin
-        .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin
-        >();
-    if (androidImplementation == null) return;
-    try {
-      final dynamic impl = androidImplementation;
-      await impl.requestExactAlarmsPermission();
-    } catch (_) {
-      // Unsupported on some Android versions/devices.
-    }
   }
 
   Future<void> scheduleHabitReminder({
@@ -156,23 +126,13 @@ class LocalNotificationsService {
       macOS: const DarwinNotificationDetails(),
     );
 
-    var scheduleMode = AndroidScheduleMode.inexactAllowWhileIdle;
-    var canExact = await _canScheduleExactAlarms();
-    if (!canExact) {
-      await _requestExactAlarmsPermissionIfNeeded();
-      canExact = await _canScheduleExactAlarms();
-    }
-    if (canExact) {
-      scheduleMode = AndroidScheduleMode.exactAllowWhileIdle;
-    }
-
     await _plugin.zonedSchedule(
       id: habitReminderId,
       title: reminder.title,
       body: reminder.body,
       scheduledDate: firstDate,
       notificationDetails: notificationDetails,
-      androidScheduleMode: scheduleMode,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
       payload: _habitPayload,
     );

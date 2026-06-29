@@ -1,14 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../models/progress_backup_model.dart';
 
 class ProgressBackupService {
-  Future<void> exportBackup(ProgressBackupModel backup) async {
+  Future<void> exportBackup(
+    ProgressBackupModel backup, {
+    Rect? sharePositionOrigin,
+  }) async {
     final tempDir = await getTemporaryDirectory();
     final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
     final fileName = 'flutter_quest_backup_$timestamp.json';
@@ -20,25 +24,22 @@ class ProgressBackupService {
         files: [XFile(file.path)],
         text: 'Flutter Quest backup',
         subject: 'Flutter Quest backup',
+        sharePositionOrigin: sharePositionOrigin,
       ),
     );
   }
 
   Future<ProgressBackupModel?> pickAndParseBackup() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: const ['json'],
-      withData: true,
+    const typeGroup = XTypeGroup(
+      label: 'JSON backup',
+      extensions: <String>['json'],
+      mimeTypes: <String>['application/json'],
+      uniformTypeIdentifiers: <String>['public.json'],
     );
-    if (result == null || result.files.isEmpty) return null;
-    final picked = result.files.first;
-    String? raw;
-    if (picked.bytes != null) {
-      raw = utf8.decode(picked.bytes!);
-    } else if (picked.path != null) {
-      raw = await File(picked.path!).readAsString();
-    }
-    if (raw == null || raw.trim().isEmpty) {
+    final picked = await openFile(acceptedTypeGroups: const <XTypeGroup>[typeGroup]);
+    if (picked == null) return null;
+    final raw = await picked.readAsString();
+    if (raw.trim().isEmpty) {
       throw const FormatException('Backup file is empty.');
     }
     final decoded = jsonDecode(raw);
