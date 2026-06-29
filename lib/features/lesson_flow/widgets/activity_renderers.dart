@@ -411,7 +411,7 @@ class _OrderCodeBlocksActivity extends StatelessWidget {
                   );
                 },
                 itemCount: order.length,
-                onReorder: (oldIndex, newIndex) {
+                onReorderItem: (oldIndex, newIndex) {
                   if (session.submitted) return;
                   onReorderBlocks(oldIndex, newIndex);
                 },
