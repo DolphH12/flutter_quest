@@ -796,7 +796,7 @@ class _OverviewHeader extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(6),
                   child: Image.asset(
-                    'assets/images/LOGO_FC.png',
+                    'assets/images/LOGO_WITH_BACK.png',
                     fit: BoxFit.contain,
                   ),
                 ),

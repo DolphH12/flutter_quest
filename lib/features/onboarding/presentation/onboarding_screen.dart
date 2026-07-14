@@ -122,7 +122,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                         body: l10n.onboardingStreakBody,
                       ),
                       _FinalReadyStep(
-                        imageAsset: 'assets/images/LOGO_FC.png',
+                        imageAsset: 'assets/images/LOGO_WITH_BACK.png',
                         title: l10n.onboardingAllSetTitle,
                         body: l10n.onboardingAllSetBody,
                       ),

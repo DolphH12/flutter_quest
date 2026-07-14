@@ -1,7 +1,7 @@
 <table border="0">
   <tr>
     <td>
-      <img src="assets/images/LOGO_FC.png" width="400"> 
+      <img src="assets/images/LOGO_WITH_BACK.png" width="400"> 
     </td>
     <td>
       <h1>Flutter Quest</h1>
