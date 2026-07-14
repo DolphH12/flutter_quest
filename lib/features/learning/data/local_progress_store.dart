@@ -14,14 +14,19 @@ class LocalProgressStore {
 
   // Storage wrapper version for persisted progress payload.
   // Keep this stable and migrate in `_decodeWithMigration`.
-  static const _progressKey = 'learning_progress_v3';
-  static const _schemaVersion = 3;
+  static const _progressKey = 'learning_progress_v5';
+  static const _legacyProgressKey = 'learning_progress_v4';
+  static const _olderLegacyProgressKey = 'learning_progress_v3';
+  static const _schemaVersion = 5;
   static LearningProgressState? _memoryFallback;
 
   Future<LearningProgressState> load() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString(_progressKey);
+      final raw =
+          prefs.getString(_progressKey) ??
+          prefs.getString(_legacyProgressKey) ??
+          prefs.getString(_olderLegacyProgressKey);
       if (raw == null || raw.isEmpty) {
         final fallback = _memoryFallback ?? LearningProgressState.initial();
         final decayed = _applyStreakDecay(fallback);
@@ -75,6 +80,8 @@ class LocalProgressStore {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_progressKey);
+      await prefs.remove(_legacyProgressKey);
+      await prefs.remove(_olderLegacyProgressKey);
     } on MissingPluginException {
       // Continue with in-memory fallback.
     }
@@ -96,6 +103,51 @@ class LocalProgressStore {
     if (current.pendingRouteIds.contains(routeId)) return current;
     final nextPending = {...current.pendingRouteIds, routeId};
     final updated = current.copyWith(pendingRouteIds: nextPending);
+    await save(updated);
+    return updated;
+  }
+
+  Future<LearningProgressState> applyDailyChallengeResult({
+    required String challengeId,
+    required String publishDate,
+    required bool answeredCorrectly,
+    required int xpEarned,
+    required DateTime completedAt,
+  }) async {
+    final current = await load();
+    if (current.dailyChallengeHistoryByDate.containsKey(publishDate)) {
+      return current;
+    }
+
+    final streak = _computeStreak(
+      current: current,
+      completionDate: completedAt,
+    );
+
+    final nextHistory = <String, DailyChallengeAttemptRecord>{
+      ...current.dailyChallengeHistoryByDate,
+      publishDate: DailyChallengeAttemptRecord(
+        challengeId: challengeId,
+        publishDate: publishDate,
+        answeredCorrectly: answeredCorrectly,
+        completedAt: completedAt.toIso8601String(),
+        xpEarned: xpEarned,
+      ),
+    };
+
+    final updated = current.copyWith(
+      totalXp: current.totalXp + xpEarned,
+      lastStudyDate: streak.lastStudyDate,
+      currentStreak: streak.current,
+      bestStreak: streak.best,
+      lastDailyChallengeId: challengeId,
+      lastDailyChallengePublishDate: publishDate,
+      lastDailyChallengeWasCorrect: answeredCorrectly,
+      lastDailyChallengeCompletedAt: completedAt.toIso8601String(),
+      lastDailyChallengeXpEarned: xpEarned,
+      dailyChallengeHistoryByDate: nextHistory,
+    );
+
     await save(updated);
     return updated;
   }

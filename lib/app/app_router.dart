@@ -6,9 +6,13 @@ import '../features/home/presentation/home_overview_screen.dart';
 import '../features/home/presentation/route_completion_screen.dart';
 import '../features/home/presentation/route_detail_screen.dart';
 import '../features/home/presentation/lesson_route_screen.dart';
-import '../features/lesson_flow/presentation/lesson_flow_screen.dart';
+import '../features/daily_challenge/models/daily_challenge_models.dart';
+import '../features/daily_challenge/presentation/daily_challenge_attempt_screen.dart';
+import '../features/daily_challenge/presentation/daily_challenge_screen.dart';
 import '../features/onboarding/presentation/onboarding_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
+import '../features/lesson_flow/presentation/lesson_flow_screen.dart'
+    show RouteCompletionResultData;
 import 'quest_shell.dart';
 import 'startup_screen.dart';
 
@@ -16,6 +20,9 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final homeBranchKey = GlobalKey<NavigatorState>(debugLabel: 'homeBranch');
+  final challengesBranchKey = GlobalKey<NavigatorState>(
+    debugLabel: 'challengesBranch',
+  );
   final profileBranchKey = GlobalKey<NavigatorState>(
     debugLabel: 'profileBranch',
   );
@@ -112,6 +119,39 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                         },
                       ),
                     ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: challengesBranchKey,
+            routes: [
+              GoRoute(
+                path: '/challenges',
+                name: 'challenges',
+                pageBuilder: (context, state) => _noTransitionPage(
+                  state: state,
+                  child: const DailyChallengeScreen(),
+                ),
+                routes: [
+                  GoRoute(
+                    path: 'play',
+                    name: 'daily-challenge-play',
+                    pageBuilder: (context, state) {
+                      final publishDateKey = state.uri.queryParameters['date'];
+                      final initialChallenge =
+                          state.extra is DailyChallengeQuestion
+                          ? state.extra as DailyChallengeQuestion
+                          : null;
+                      return _noTransitionPage(
+                        state: state,
+                        child: DailyChallengeAttemptScreen(
+                          publishDateKey: publishDateKey,
+                          initialChallenge: initialChallenge,
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

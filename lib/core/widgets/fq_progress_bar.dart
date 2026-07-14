@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../theme/fq_colors.dart';
 import '../theme/fq_gradients.dart';
 import '../theme/fq_tokens.dart';
 
@@ -30,7 +29,7 @@ class FQProgressBar extends StatelessWidget {
             Positioned.fill(
               child: ColoredBox(
                 color:
-                    trackColor ?? FQColors.surfaceHigh.withValues(alpha: 0.72),
+                    trackColor ?? const Color(0xFFC8D7F6),
               ),
             ),
             FractionallySizedBox(

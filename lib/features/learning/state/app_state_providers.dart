@@ -69,7 +69,7 @@ final routeManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
 });
 
 final routeReleasePlanProvider = Provider<RouteReleasePlan>((ref) {
-  return const RouteReleasePlan(publishedRouteCount: 1);
+  return const RouteReleasePlan(publishedRouteCount: 2);
 });
 
 final publishedRouteManifestsProvider = Provider<List<RouteAssetManifest>>((ref) {
@@ -82,42 +82,16 @@ final publishedRouteManifestsProvider = Provider<List<RouteAssetManifest>>((ref)
 
 final visibleLiveRouteIdsProvider = Provider<List<String>>((ref) {
   final publishedManifests = ref.watch(publishedRouteManifestsProvider);
-  if (publishedManifests.isEmpty) return const [];
-  final progress = ref.watch(appProgressNotifierProvider).valueOrNull;
-  if (progress == null) {
-    return [publishedManifests.first.routeId];
-  }
-
-  var highestCompletedIndex = -1;
-  for (var index = 0; index < publishedManifests.length; index++) {
-    final routeId = publishedManifests[index].routeId;
-    if (progress.completedRouteIds.contains(routeId)) {
-      highestCompletedIndex = index;
-      continue;
-    }
-    break;
-  }
-
-  final visibleCount = (highestCompletedIndex + 2).clamp(
-    1,
-    publishedManifests.length,
-  );
   return publishedManifests
-      .take(visibleCount)
       .map((manifest) => manifest.routeId)
       .toList(growable: false);
 });
 
 final upcomingPreviewManifestProvider = Provider<RouteAssetManifest?>((ref) {
   final manifests = ref.watch(routeManifestsProvider);
-  final visibleLiveRouteIds = ref.watch(visibleLiveRouteIdsProvider);
-  if (manifests.isEmpty || visibleLiveRouteIds.isEmpty) return null;
-  final lastVisibleRouteId = visibleLiveRouteIds.last;
-  final lastVisibleIndex = manifests.indexWhere(
-    (manifest) => manifest.routeId == lastVisibleRouteId,
-  );
-  if (lastVisibleIndex == -1) return null;
-  final previewIndex = lastVisibleIndex + 1;
+  final publishedManifests = ref.watch(publishedRouteManifestsProvider);
+  if (manifests.isEmpty || publishedManifests.isEmpty) return null;
+  final previewIndex = publishedManifests.length;
   if (previewIndex >= manifests.length) return null;
   return manifests[previewIndex];
 });
@@ -553,6 +527,30 @@ class AppProgressNotifier extends AsyncNotifier<LearningProgressState> {
     state = await AsyncValue.guard(
       () => _progressRepository.markRoutePending(routeId),
     );
+  }
+
+  Future<void> applyDailyChallengeResult({
+    required String challengeId,
+    required String publishDate,
+    required bool answeredCorrectly,
+    required int xpEarned,
+    required DateTime completedAt,
+  }) async {
+    final previous = state.valueOrNull;
+    if (previous == null) return;
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => _progressRepository.applyDailyChallengeResult(
+        challengeId: challengeId,
+        publishDate: publishDate,
+        answeredCorrectly: answeredCorrectly,
+        xpEarned: xpEarned,
+        completedAt: completedAt,
+      ),
+    );
+    final next = state.valueOrNull;
+    if (next == null) return;
+    await _maybeEmitStreakLost(previous: previous, next: next);
   }
 
   Future<void> resetAllProgress() async {

@@ -9,6 +9,7 @@ Thanks for contributing to Flutter Quest.
 - `README.md`
 - `docs/content/activity_contracts.md`
 - `docs/estructura_json_nueva_ruta.md`
+- if touching daily challenges, also review `lib/features/daily_challenge/`
 
 2. Make sure your change has a clear scope:
 - bug fix,
@@ -22,6 +23,12 @@ Thanks for contributing to Flutter Quest.
 flutter pub get
 flutter analyze
 flutter run
+```
+
+Optional local env for daily challenges:
+
+```bash
+cp .env.example .env
 ```
 
 ## 3) Branch & PR Flow
@@ -42,6 +49,7 @@ Recommended branch naming:
 - Respect JSON activity contract.
 - Keep UI consistent with current design system.
 - Prefer small, focused PRs.
+- If changing challenge behavior, keep route progression and challenge progression clearly separated.
 
 ## 5) Content (JSON Routes) Rules
 
@@ -68,6 +76,20 @@ Recommended branch naming:
   - add the JSON,
   - register the manifest,
   - keep it hidden unless the maintainer explicitly decides to publish it.
+
+## 6.1) Daily Challenge Rules
+
+- Daily challenges are loaded from Supabase, not from route JSON.
+- The active day is resolved from the user's **local device date**.
+- The main daily challenge grants XP.
+- The recent backlog shows the last 7 previous days.
+- Previous unresolved challenges can be played for practice only.
+- Previous backlog challenges must not grant XP.
+- Correctly completed backlog challenges must remain visibly completed and non-replayable.
+- Failed backlog challenges must remain visible as `No logrado` / `Not achieved`.
+- Recent challenges should open from already loaded data first; network fetch is fallback only.
+- Retry/error states must avoid infinite loaders.
+- If you change challenge payload assumptions, update the README and architecture docs in the same PR.
 
 ## 7) Commit Style
 

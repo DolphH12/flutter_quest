@@ -924,6 +924,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Almost there'**
   String get incorrectTitle;
+
+  /// No description provided for @challengesTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get challengesTab;
+
+  /// No description provided for @dailyChallengeKicker.
+  ///
+  /// In en, this message translates to:
+  /// **'DAILY CHALLENGE'**
+  String get dailyChallengeKicker;
+
+  /// No description provided for @dailyChallengeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges'**
+  String get dailyChallengeTitle;
+
+  /// No description provided for @dailyChallengeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A short mission, a 30-second timer, and one more way to keep your streak alive.'**
+  String get dailyChallengeSubtitle;
+
+  /// No description provided for @dailyChallengeReadyBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready today'**
+  String get dailyChallengeReadyBadge;
+
+  /// No description provided for @dailyChallengeOpenButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Open challenge'**
+  String get dailyChallengeOpenButton;
+
+  /// No description provided for @dailyChallengeLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get dailyChallengeLevelLabel;
+
+  /// No description provided for @dailyChallengeTimerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Timer'**
+  String get dailyChallengeTimerLabel;
+
+  /// No description provided for @dailyChallengeThirtySeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'30 s'**
+  String get dailyChallengeThirtySeconds;
+
+  /// No description provided for @dailyChallengeInternetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You need internet for this section'**
+  String get dailyChallengeInternetTitle;
+
+  /// No description provided for @dailyChallengeInternetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The daily challenge is loaded online. As soon as you are back on a connection, today\'s mission will be waiting here.'**
+  String get dailyChallengeInternetBody;
+
+  /// No description provided for @dailyChallengeSoonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The daily challenge is coming soon'**
+  String get dailyChallengeSoonTitle;
+
+  /// No description provided for @dailyChallengeSoonBody.
+  ///
+  /// In en, this message translates to:
+  /// **'There is no active question for today yet. Check back later and the next mission will appear here.'**
+  String get dailyChallengeSoonBody;
+
+  /// No description provided for @dailyChallengeLoadErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t load the challenge'**
+  String get dailyChallengeLoadErrorTitle;
+
+  /// No description provided for @dailyChallengeLoadErrorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while loading today\'s challenge. Please try again in a moment.'**
+  String get dailyChallengeLoadErrorBody;
+
+  /// No description provided for @dailyChallengeUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This challenge is no longer available'**
+  String get dailyChallengeUnavailableTitle;
+
+  /// No description provided for @dailyChallengeUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The challenge changed or is no longer active. Go back to Challenges to refresh today\'s mission.'**
+  String get dailyChallengeUnavailableBody;
+
+  /// No description provided for @dailyChallengeVerifyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Check answer'**
+  String get dailyChallengeVerifyButton;
+
+  /// No description provided for @dailyChallengeCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s challenge is done'**
+  String get dailyChallengeCompletedTitle;
+
+  /// No description provided for @dailyChallengeCorrectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct'**
+  String get dailyChallengeCorrectLabel;
+
+  /// No description provided for @dailyChallengeIncorrectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed'**
+  String get dailyChallengeIncorrectLabel;
+
+  /// No description provided for @dailyChallengeCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You already solved the challenge published on {date}. A new question arrives tomorrow.'**
+  String dailyChallengeCompletedBody(String date);
+
+  /// No description provided for @dailyChallengeDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get dailyChallengeDateLabel;
+
+  /// No description provided for @dailyChallengeSeeYouTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Nice work. Today\'s challenge already counts toward your progress. Come back tomorrow and keep that streak warm.'**
+  String get dailyChallengeSeeYouTomorrow;
+
+  /// No description provided for @dailyChallengeRetryTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s result is already recorded. Tomorrow brings a fresh round and another shot to climb back up.'**
+  String get dailyChallengeRetryTomorrow;
+
+  /// No description provided for @dailyChallengeResultCorrectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct answer'**
+  String get dailyChallengeResultCorrectTitle;
+
+  /// No description provided for @dailyChallengeResultIncorrectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'That was not it'**
+  String get dailyChallengeResultIncorrectTitle;
+
+  /// No description provided for @dailyChallengeResultTimeoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time ran out'**
+  String get dailyChallengeResultTimeoutTitle;
+
+  /// No description provided for @backToChallenges.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Challenges'**
+  String get backToChallenges;
+
+  /// No description provided for @dailyChallengeSavingButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving result...'**
+  String get dailyChallengeSavingButton;
 }
 
 class _AppLocalizationsDelegate

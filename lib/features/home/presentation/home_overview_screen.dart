@@ -164,13 +164,22 @@ class HomeOverviewScreen extends ConsumerWidget {
       final route = routeById[manifest.routeId];
       final loadError = routeLoadErrors[manifest.routeId];
       if (route != null) {
+        final requirement = manifest.requiredCompletedRouteId;
+        final isUnlocked =
+            requirement == null ||
+            progress.completedRouteIds.contains(requirement) ||
+            progress.pendingRouteIds.contains(requirement);
         children.add(
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: _RouteCardTile(
               route: route,
               progress: progress,
-              onTap: () => context.go('/home/route/${route.routeId}'),
+              isUnlocked: isUnlocked,
+              lockedRequirementRouteId: requirement,
+              onTap: isUnlocked
+                  ? () => context.go('/home/route/${route.routeId}')
+                  : null,
             ),
           ),
         );
@@ -230,11 +239,20 @@ class HomeOverviewScreen extends ConsumerWidget {
       final route = routeById[manifest.routeId];
       final loadError = routeLoadErrors[manifest.routeId];
       if (route != null) {
+        final requirement = manifest.requiredCompletedRouteId;
+        final isUnlocked =
+            requirement == null ||
+            progress.completedRouteIds.contains(requirement) ||
+            progress.pendingRouteIds.contains(requirement);
         children.add(
           _RouteCardTile(
             route: route,
             progress: progress,
-            onTap: () => context.go('/home/route/${route.routeId}'),
+            isUnlocked: isUnlocked,
+            lockedRequirementRouteId: requirement,
+            onTap: isUnlocked
+                ? () => context.go('/home/route/${route.routeId}')
+                : null,
           ),
         );
       } else if (loadError != null) {
@@ -341,12 +359,16 @@ class _RouteCardTile extends StatelessWidget {
   const _RouteCardTile({
     required this.route,
     required this.progress,
+    required this.isUnlocked,
+    required this.lockedRequirementRouteId,
     required this.onTap,
   });
 
   final DartRouteContent route;
   final LearningProgressState progress;
-  final VoidCallback onTap;
+  final bool isUnlocked;
+  final String? lockedRequirementRouteId;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -366,12 +388,12 @@ class _RouteCardTile extends StatelessWidget {
         color: _routeBorderColor(
           progress: progress,
           routeId: route.routeId,
-          isUnlocked: true,
+          isUnlocked: isUnlocked,
         ),
         width: _routeBorderWidth(
           progress: progress,
           routeId: route.routeId,
-          isUnlocked: true,
+          isUnlocked: isUnlocked,
         ),
       ),
       child: Row(
@@ -384,11 +406,17 @@ class _RouteCardTile extends StatelessWidget {
                 : (isDesktop ? 44 : 50),
             decoration: BoxDecoration(
               borderRadius: FQRadius.medium,
-              gradient: FQGradients.heroBlue,
+              gradient: isUnlocked
+                  ? FQGradients.heroBlue
+                  : const LinearGradient(
+                      colors: [Color(0xFFC9D4F3), Color(0xFFB9C7EA)],
+                    ),
             ),
             child: Icon(
               iconFromName(route.icon),
-              color: Colors.white,
+              color: isUnlocked
+                  ? Colors.white
+                  : FQColors.primary.withValues(alpha: 0.55),
             ),
           ),
           const SizedBox(width: 12),
@@ -405,11 +433,31 @@ class _RouteCardTile extends StatelessWidget {
                           fontSize: isDesktop
                               ? (isCompleted ? 20 : 22)
                               : (isCompleted ? 21 : null),
-                          color: FQColors.deepNavy,
+                          color: isUnlocked
+                              ? FQColors.deepNavy
+                              : FQColors.deepNavy.withValues(alpha: 0.7),
                         ),
                       ),
                     ),
-                    if (isPending)
+                    if (!isUnlocked)
+                      Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE4EDFF),
+                          borderRadius: FQRadius.pill,
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.24),
+                            width: 1,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.lock_rounded,
+                          size: 18,
+                          color: FQColors.primary,
+                        ),
+                      )
+                    else if (isPending)
                       FQPill(
                         label: l10n.routePendingBadge,
                         icon: Icons.schedule_rounded,
@@ -425,9 +473,26 @@ class _RouteCardTile extends StatelessWidget {
                     maxLines: isDesktop ? 2 : 4,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: FQColors.onSurface.withValues(alpha: 0.72),
+                      color: FQColors.onSurface.withValues(
+                        alpha: isUnlocked ? 0.72 : 0.58,
+                      ),
                     ),
                   ),
+                  if (!isUnlocked && lockedRequirementRouteId != null) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.completeRouteIdToUnlock(
+                        _humanizeRouteId(lockedRequirementRouteId!),
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: FQColors.primary.withValues(alpha: 0.82),
+                        fontWeight: FontWeight.w700,
+                        height: 1.25,
+                      ),
+                    ),
+                  ],
                 ] else ...[
                   const SizedBox(height: 6),
                   Row(
@@ -481,9 +546,9 @@ class _RouteCardTile extends StatelessWidget {
                   FQProgressBar(
                     value: progressValue,
                     fillGradient: const LinearGradient(
-                      colors: [Color(0xFF46D194), Color(0xFF1D8D4A)],
+                      colors: [Color(0xFF39C97D), Color(0xFF0F6E38)],
                     ),
-                    trackColor: const Color(0xFFDFF7E8),
+                    trackColor: const Color(0xFFB8E8C8),
                   ),
                 ],
               ],

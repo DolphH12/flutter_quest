@@ -75,6 +75,21 @@ Map<String, String> _asStringMap(dynamic value) {
   return map;
 }
 
+Map<String, DailyChallengeAttemptRecord> _asDailyChallengeHistoryMap(
+  dynamic value,
+) {
+  if (value is! Map) return <String, DailyChallengeAttemptRecord>{};
+  final map = <String, DailyChallengeAttemptRecord>{};
+  for (final entry in value.entries) {
+    final rawRecord = entry.value;
+    if (rawRecord is! Map<String, dynamic>) continue;
+    final key = _asString(entry.key).trim();
+    if (key.isEmpty) continue;
+    map[key] = DailyChallengeAttemptRecord.fromJson(rawRecord);
+  }
+  return map;
+}
+
 String _requiredString(Map<String, dynamic> json, String key, String error) {
   final raw = json[key];
   final value = _asString(raw).trim();
@@ -1029,6 +1044,12 @@ class LearningProgressState {
     required this.unlockedBadgeIds,
     required this.badgeUnlockedAt,
     required this.userName,
+    required this.lastDailyChallengePublishDate,
+    required this.lastDailyChallengeId,
+    required this.lastDailyChallengeWasCorrect,
+    required this.lastDailyChallengeCompletedAt,
+    required this.lastDailyChallengeXpEarned,
+    required this.dailyChallengeHistoryByDate,
     this.lastLessonResult,
   });
 
@@ -1046,6 +1067,12 @@ class LearningProgressState {
   final Set<String> unlockedBadgeIds;
   final Map<String, String> badgeUnlockedAt;
   final String? userName;
+  final String? lastDailyChallengePublishDate;
+  final String? lastDailyChallengeId;
+  final bool? lastDailyChallengeWasCorrect;
+  final String? lastDailyChallengeCompletedAt;
+  final int lastDailyChallengeXpEarned;
+  final Map<String, DailyChallengeAttemptRecord> dailyChallengeHistoryByDate;
   final LessonAttemptResult? lastLessonResult;
 
   double routeProgress(String routeId) =>
@@ -1071,6 +1098,12 @@ class LearningProgressState {
       unlockedBadgeIds: {},
       badgeUnlockedAt: {},
       userName: null,
+      lastDailyChallengePublishDate: null,
+      lastDailyChallengeId: null,
+      lastDailyChallengeWasCorrect: null,
+      lastDailyChallengeCompletedAt: null,
+      lastDailyChallengeXpEarned: 0,
+      dailyChallengeHistoryByDate: {},
       lastLessonResult: null,
     );
   }
@@ -1093,6 +1126,16 @@ class LearningProgressState {
     Map<String, String>? badgeUnlockedAt,
     String? userName,
     bool clearUserName = false,
+    String? lastDailyChallengePublishDate,
+    bool clearLastDailyChallengePublishDate = false,
+    String? lastDailyChallengeId,
+    bool clearLastDailyChallengeId = false,
+    bool? lastDailyChallengeWasCorrect,
+    bool clearLastDailyChallengeWasCorrect = false,
+    String? lastDailyChallengeCompletedAt,
+    bool clearLastDailyChallengeCompletedAt = false,
+    int? lastDailyChallengeXpEarned,
+    Map<String, DailyChallengeAttemptRecord>? dailyChallengeHistoryByDate,
     LessonAttemptResult? lastLessonResult,
     bool clearLastLessonResult = false,
   }) {
@@ -1117,6 +1160,22 @@ class LearningProgressState {
       unlockedBadgeIds: unlockedBadgeIds ?? this.unlockedBadgeIds,
       badgeUnlockedAt: badgeUnlockedAt ?? this.badgeUnlockedAt,
       userName: clearUserName ? null : (userName ?? this.userName),
+      lastDailyChallengePublishDate: clearLastDailyChallengePublishDate
+          ? null
+          : (lastDailyChallengePublishDate ?? this.lastDailyChallengePublishDate),
+      lastDailyChallengeId: clearLastDailyChallengeId
+          ? null
+          : (lastDailyChallengeId ?? this.lastDailyChallengeId),
+      lastDailyChallengeWasCorrect: clearLastDailyChallengeWasCorrect
+          ? null
+          : (lastDailyChallengeWasCorrect ?? this.lastDailyChallengeWasCorrect),
+      lastDailyChallengeCompletedAt: clearLastDailyChallengeCompletedAt
+          ? null
+          : (lastDailyChallengeCompletedAt ?? this.lastDailyChallengeCompletedAt),
+      lastDailyChallengeXpEarned:
+          lastDailyChallengeXpEarned ?? this.lastDailyChallengeXpEarned,
+      dailyChallengeHistoryByDate:
+          dailyChallengeHistoryByDate ?? this.dailyChallengeHistoryByDate,
       lastLessonResult: clearLastLessonResult
           ? null
           : (lastLessonResult ?? this.lastLessonResult),
@@ -1148,6 +1207,31 @@ class LearningProgressState {
       completedRoutes.add('dart_route');
     }
 
+    final challengeHistory = _asDailyChallengeHistoryMap(
+      json['dailyChallengeHistoryByDate'],
+    );
+    final legacyPublishDate = json['lastDailyChallengePublishDate'] == null
+        ? null
+        : _asString(json['lastDailyChallengePublishDate']);
+    final legacyChallengeId = json['lastDailyChallengeId'] == null
+        ? null
+        : _asString(json['lastDailyChallengeId']);
+    final legacyCompletedAt = json['lastDailyChallengeCompletedAt'] == null
+        ? null
+        : _asString(json['lastDailyChallengeCompletedAt']);
+    if (challengeHistory.isEmpty &&
+        legacyPublishDate != null &&
+        legacyChallengeId != null &&
+        legacyCompletedAt != null) {
+      challengeHistory[legacyPublishDate] = DailyChallengeAttemptRecord(
+        challengeId: legacyChallengeId,
+        publishDate: legacyPublishDate,
+        answeredCorrectly: json['lastDailyChallengeWasCorrect'] as bool? ?? false,
+        completedAt: legacyCompletedAt,
+        xpEarned: _asInt(json['lastDailyChallengeXpEarned']),
+      );
+    }
+
     return LearningProgressState(
       completedNodeIds: completedNodeIds,
       activeNodeId: json['activeNodeId'] == null
@@ -1167,6 +1251,20 @@ class LearningProgressState {
       unlockedBadgeIds: _asStringSet(json['unlockedBadgeIds']),
       badgeUnlockedAt: _asStringMap(json['badgeUnlockedAt']),
       userName: json['userName'] == null ? null : _asString(json['userName']),
+      lastDailyChallengePublishDate:
+          json['lastDailyChallengePublishDate'] == null
+          ? null
+          : _asString(json['lastDailyChallengePublishDate']),
+      lastDailyChallengeId: json['lastDailyChallengeId'] == null
+          ? null
+          : _asString(json['lastDailyChallengeId']),
+      lastDailyChallengeWasCorrect: json['lastDailyChallengeWasCorrect'] as bool?,
+      lastDailyChallengeCompletedAt:
+          json['lastDailyChallengeCompletedAt'] == null
+          ? null
+          : _asString(json['lastDailyChallengeCompletedAt']),
+      lastDailyChallengeXpEarned: _asInt(json['lastDailyChallengeXpEarned']),
+      dailyChallengeHistoryByDate: challengeHistory,
       lastLessonResult: json['lastLessonResult'] == null
           ? null
           : LessonAttemptResult.fromJson(
@@ -1191,6 +1289,15 @@ class LearningProgressState {
       'unlockedBadgeIds': unlockedBadgeIds.toList(),
       'badgeUnlockedAt': badgeUnlockedAt,
       'userName': userName,
+      'lastDailyChallengePublishDate': lastDailyChallengePublishDate,
+      'lastDailyChallengeId': lastDailyChallengeId,
+      'lastDailyChallengeWasCorrect': lastDailyChallengeWasCorrect,
+      'lastDailyChallengeCompletedAt': lastDailyChallengeCompletedAt,
+      'lastDailyChallengeXpEarned': lastDailyChallengeXpEarned,
+      'dailyChallengeHistoryByDate': {
+        for (final entry in dailyChallengeHistoryByDate.entries)
+          entry.key: entry.value.toJson(),
+      },
       'lastLessonResult': lastLessonResult?.toJson(),
     };
   }
@@ -1201,5 +1308,41 @@ class LearningProgressState {
     return LearningProgressState.fromJson(
       jsonDecode(raw) as Map<String, dynamic>,
     );
+  }
+}
+
+class DailyChallengeAttemptRecord {
+  const DailyChallengeAttemptRecord({
+    required this.challengeId,
+    required this.publishDate,
+    required this.answeredCorrectly,
+    required this.completedAt,
+    required this.xpEarned,
+  });
+
+  final String challengeId;
+  final String publishDate;
+  final bool answeredCorrectly;
+  final String completedAt;
+  final int xpEarned;
+
+  factory DailyChallengeAttemptRecord.fromJson(Map<String, dynamic> json) {
+    return DailyChallengeAttemptRecord(
+      challengeId: _asString(json['challengeId']),
+      publishDate: _asString(json['publishDate']),
+      answeredCorrectly: json['answeredCorrectly'] as bool? ?? false,
+      completedAt: _asString(json['completedAt']),
+      xpEarned: _asInt(json['xpEarned']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'challengeId': challengeId,
+      'publishDate': publishDate,
+      'answeredCorrectly': answeredCorrectly,
+      'completedAt': completedAt,
+      'xpEarned': xpEarned,
+    };
   }
 }

@@ -25,7 +25,9 @@ class QuestShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isDesktop = FQBreakpoints.isDesktop(context);
-    final hideBottomNavigation = location.startsWith('/home/route/');
+    final hideBottomNavigation =
+        location.startsWith('/home/route/') ||
+        location.startsWith('/challenges/play');
 
     if (isDesktop) {
       return Scaffold(
@@ -36,7 +38,7 @@ class QuestShell extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 16, 10, 16),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints.tightFor(width: 122),
+                    constraints: const BoxConstraints.tightFor(width: 132),
                     child: FQSurfaceCard(
                       radius: FQRadius.large,
                       gradient: FQGradients.deepQuest,
@@ -82,6 +84,11 @@ class QuestShell extends StatelessWidget {
                             icon: const Icon(Icons.explore_outlined),
                             selectedIcon: const Icon(Icons.explore),
                             label: Text(l10n.homeTab),
+                          ),
+                          NavigationRailDestination(
+                            icon: const Icon(Icons.bolt_outlined),
+                            selectedIcon: const Icon(Icons.bolt_rounded),
+                            label: Text(l10n.challengesTab),
                           ),
                           NavigationRailDestination(
                             icon: const Icon(Icons.workspace_premium_outlined),
@@ -133,7 +140,7 @@ class QuestShell extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(10, 8, 10, 9),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          const itemCount = 2;
+                          const itemCount = 3;
                           final itemWidth = constraints.maxWidth / itemCount;
                           return Stack(
                             children: [
@@ -180,12 +187,27 @@ class QuestShell extends StatelessWidget {
                                         horizontal: 3,
                                       ),
                                       child: _BottomNavItem(
+                                        label: l10n.challengesTab,
+                                        icon: Icons.bolt_outlined,
+                                        selectedIcon: Icons.bolt_rounded,
+                                        isSelected:
+                                            navigationShell.currentIndex == 1,
+                                        onTap: () => _onTabSelected(1),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 3,
+                                      ),
+                                      child: _BottomNavItem(
                                         label: l10n.profileTab,
                                         icon: Icons.workspace_premium_outlined,
                                         selectedIcon: Icons.workspace_premium,
                                         isSelected:
-                                            navigationShell.currentIndex == 1,
-                                        onTap: () => _onTabSelected(1),
+                                            navigationShell.currentIndex == 2,
+                                        onTap: () => _onTabSelected(2),
                                       ),
                                     ),
                                   ),

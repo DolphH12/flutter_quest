@@ -5,8 +5,8 @@
     </td>
     <td>
       <h1>Flutter Quest</h1>
-      <p>Flutter Quest is a gamified educational app to learn Dart and Flutter through routes, nodes, and interactive lessons.</p>
-      <p>Flutter Quest es una app educativa gamificada para aprender Dart y Flutter mediante rutas, nodos y lecciones interactivas.</p>
+      <p>Flutter Quest is a gamified educational app to learn Dart and Flutter through routes, nodes, interactive lessons, and daily challenges.</p>
+      <p>Flutter Quest es una app educativa gamificada para aprender Dart y Flutter mediante rutas, nodos, lecciones interactivas y retos diarios.</p>
     </td>
   </tr>
 </table>
@@ -17,11 +17,13 @@
 - Build a premium learning experience focused on practical progression.
 - Teach by short theory + practice + feedback.
 - Keep progress meaningful through XP, badges, streak, and route completion.
+- Add a lightweight daily ritual through a timed challenge and recent challenge history.
 
 **ES**
 - Construir una experiencia de aprendizaje premium con progresión práctica.
 - Enseñar con teoría corta + práctica + feedback.
 - Hacer que el progreso importe con XP, insignias, racha y cierre de rutas.
+- Añadir un hábito diario liviano mediante un reto contrarreloj y un historial reciente de retos.
 
 ## Architecture / Arquitectura
 
@@ -31,12 +33,15 @@
 - GoRouter (declarative navigation)
 - Local JSON content (routes, nodes, activities)
 - SharedPreferences (local progress persistence)
+- Supabase (daily challenges feed)
 - flutter_local_notifications (habit reminders)
+- flutter_dotenv (`.env` based local configuration)
 
 ### State Boundaries
 - **Content State**: routes and lessons loaded from JSON assets.
 - **Progress State**: XP, completed nodes/routes, streak, badges, user preferences.
 - **Lesson Session State**: temporary lesson runtime state (current step, answers, validation).
+- **Daily Challenge State**: current timed challenge, recent 7-day backlog, and completion history.
 
 ### Content Contract
 - All activity schemas are defined in:
@@ -56,6 +61,20 @@
 
 This keeps the public app focused while content is reviewed route by route.
 
+### Daily Challenge Model / Modelo de retos diarios
+- The `Challenges` tab loads the current daily challenge from Supabase.
+- The challenge is always multiple choice, timed to 30 seconds, and supports an optional code snippet.
+- The “day” is resolved using the **device local date**, not UTC.
+- Below the main card, the app shows the last 7 previous challenges:
+  - unresolved past challenges can still be solved,
+  - correctly solved past challenges stay marked as completed,
+  - failed past challenges stay marked as `Not achieved` / `No logrado`,
+  - past challenges do **not** grant XP,
+  - only the current day challenge grants XP.
+- Recent challenges are opened using the already loaded payload first, with Supabase fetch as fallback.
+- Challenge fetches use timeout + retry states to avoid infinite loading.
+- Daily challenge completion is persisted locally by publish date so the same challenge cannot be replayed for rewards.
+
 ## How To Run / Cómo correr
 
 ### Prerequisites
@@ -73,6 +92,24 @@ Optional checks:
 flutter analyze
 ```
 
+### Daily Challenge Environment / Entorno del reto diario
+
+Daily challenges are optional in local development. If `.env` is missing, the rest of the app still works and the `Challenges` tab falls back gracefully.
+
+Create a local `.env` from the example:
+
+```bash
+cp .env.example .env
+```
+
+Available keys:
+
+```env
+SUPABASE_URL=
+SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_DAILY_CHALLENGE_TABLE=daily_questions
+```
+
 ## Add a New Route / Cómo agregar una nueva ruta
 
 1. Create the JSON file in `assets/content/`.
@@ -80,7 +117,7 @@ flutter analyze
    - [`activity_contracts.md`](docs/content/activity_contracts.md)
    - [`estructura_json_nueva_ruta.md`](docs/estructura_json_nueva_ruta.md)
 3. Register the route manifest in:
-   - [`app_state_providers.dart`](`lib/features/learning/state/app_state_providers.dart`)
+   - [`app_state_providers.dart`](lib/features/learning/state/app_state_providers.dart)
    - `routeManifestsProvider`
 4. Place the route in the correct order inside `routeManifestsProvider`.
 5. If needed, define unlock dependency (`requiredCompletedRouteId`).
@@ -90,6 +127,32 @@ flutter analyze
    - or still hidden for a later monthly release.
 7. Update `routeReleasePlanProvider` only when the route is truly ready for public exposure.
 8. Run the app and verify route rendering and lesson flow.
+
+## Daily Challenges / Retos diarios
+
+The daily challenge feed is **not** authored through route JSON.
+
+- Source: Supabase table defined by `SUPABASE_DAILY_CHALLENGE_TABLE`
+- Current contract:
+  - localized `topic`
+  - localized `question`
+  - optional `code_snippet`
+  - localized `options` with exactly 4 entries
+  - `correct_index`
+  - localized `explanation`
+  - `publish_date`
+  - `is_active`
+- UI behavior:
+  - today challenge appears first,
+  - recent 7-day backlog appears below,
+  - old unresolved challenges are playable without XP,
+  - correctly completed challenges are visibly locked from re-entry,
+  - failed past challenges remain visible as `No logrado` / `Not achieved`,
+  - daily visibility is based on the user's local device date.
+
+When changing challenge behavior, update both:
+- product docs,
+- persistence assumptions in `LearningProgressState`.
 
 ## Open Source Model / Modelo Open Source
 

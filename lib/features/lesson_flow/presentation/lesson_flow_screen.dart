@@ -40,6 +40,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
   );
   _LessonResultViewData? _resultData;
   bool _savingResult = false;
+  String? _inlineNotice;
 
   @override
   void dispose() {
@@ -95,6 +96,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                       codeController: _codeController,
                       callbacks: ActivityRendererCallbacks(
                         onSelectOption: (value) {
+                          _clearInlineNotice();
                           ref
                               .read(
                                 lessonSessionProvider(widget.lesson).notifier,
@@ -102,6 +104,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                               .selectOption(value);
                         },
                         onCodeChanged: (value) {
+                          _clearInlineNotice();
                           ref
                               .read(
                                 lessonSessionProvider(widget.lesson).notifier,
@@ -109,6 +112,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                               .updateCodeInput(value);
                         },
                         onSelectWrongLine: (value) {
+                          _clearInlineNotice();
                           ref
                               .read(
                                 lessonSessionProvider(widget.lesson).notifier,
@@ -116,6 +120,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                               .selectWrongLine(value);
                         },
                         onReorderBlocks: (oldIndex, newIndex) {
+                          _clearInlineNotice();
                           ref
                               .read(
                                 lessonSessionProvider(widget.lesson).notifier,
@@ -123,6 +128,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                               .reorderBlocks(oldIndex, newIndex);
                         },
                         onSetConceptMatch: (left, right) {
+                          _clearInlineNotice();
                           ref
                               .read(
                                 lessonSessionProvider(widget.lesson).notifier,
@@ -133,6 +139,10 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
                     ),
             ),
           ),
+          if (_inlineNotice != null) ...[
+            const SizedBox(height: 8),
+            _InlineLessonNotice(message: _inlineNotice!),
+          ],
           const SizedBox(height: 8),
           SizedBox(
             width: double.infinity,
@@ -164,9 +174,10 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
         .read(lessonSessionProvider(widget.lesson).notifier)
         .onPrimaryPressed();
     if (action.message != null) {
-      _showMessage(action.message!);
+      _showInlineNotice(action.message!);
       return;
     }
+    _clearInlineNotice();
     if (action.openResult) {
       _openResultScreen();
     }
@@ -184,6 +195,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
         : (rate >= 0.6 ? _ResultMood.good : _ResultMood.reinforce);
     setState(() {
       _resultData = _LessonResultViewData(mood: mood, result: result);
+      _inlineNotice = null;
     });
   }
 
@@ -228,7 +240,7 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
     widget.onBack();
   }
 
-  void _showMessage(String message) {
+  void _showInlineNotice(String message) {
     final l10n = AppLocalizations.of(context)!;
     final mappedMessage = switch (message) {
       'Selecciona una opción para verificar.' => l10n.quizSelectOptionError,
@@ -238,9 +250,17 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
       'Escribe una respuesta antes de verificar.' => l10n.quizFixInputError,
       _ => message,
     };
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(mappedMessage)));
+    if (!mounted) return;
+    setState(() {
+      _inlineNotice = mappedMessage;
+    });
+  }
+
+  void _clearInlineNotice() {
+    if (!mounted || _inlineNotice == null) return;
+    setState(() {
+      _inlineNotice = null;
+    });
   }
 
   String _primaryLabelFor(LessonSessionState session, AppLocalizations l10n) {
@@ -257,6 +277,44 @@ class _LessonFlowScreenState extends ConsumerState<LessonFlowScreen> {
       return l10n.finishButton;
     }
     return l10n.nextActivityButton;
+  }
+}
+
+class _InlineLessonNotice extends StatelessWidget {
+  const _InlineLessonNotice({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return FQSurfaceCard(
+      radius: FQRadius.large,
+      color: const Color(0xFFFFF0EE),
+      border: Border.all(color: const Color(0xFFFFC9C2), width: 1.2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 2),
+            child: Icon(
+              Icons.info_outline_rounded,
+              color: Color(0xFFC23737),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: const Color(0xFF8F2B1D),
+                height: 1.4,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -334,7 +392,19 @@ class _LessonTopBar extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        FQProgressBar(value: progress),
+        FQProgressBar(
+          value: progress,
+          fillGradient: isExam
+              ? const LinearGradient(
+                  colors: [Color(0xFFFDCB2E), Color(0xFFB8860B)],
+                )
+              : const LinearGradient(
+                  colors: [Color(0xFF39C97D), Color(0xFF0F6E38)],
+                ),
+          trackColor: isExam
+              ? const Color(0xFFF7E7A8)
+              : const Color(0xFFB8E8C8),
+        ),
       ],
     );
   }

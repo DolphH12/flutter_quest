@@ -469,4 +469,105 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get incorrectTitle => 'Casi, sigue intentando';
+
+  @override
+  String get challengesTab => 'Retos';
+
+  @override
+  String get dailyChallengeKicker => 'RETO DIARIO';
+
+  @override
+  String get dailyChallengeTitle => 'Retos';
+
+  @override
+  String get dailyChallengeSubtitle =>
+      'Una misión corta, con tiempo límite y una oportunidad más para sostener tu racha.';
+
+  @override
+  String get dailyChallengeReadyBadge => 'Listo para hoy';
+
+  @override
+  String get dailyChallengeOpenButton => 'Abrir reto';
+
+  @override
+  String get dailyChallengeLevelLabel => 'Nivel';
+
+  @override
+  String get dailyChallengeTimerLabel => 'Tiempo';
+
+  @override
+  String get dailyChallengeThirtySeconds => '30 s';
+
+  @override
+  String get dailyChallengeInternetTitle =>
+      'Requieres internet para esta sección';
+
+  @override
+  String get dailyChallengeInternetBody =>
+      'El reto diario se consulta en línea. Cuando vuelvas a tener conexión, aquí te estará esperando.';
+
+  @override
+  String get dailyChallengeSoonTitle => 'Espera el reto diario muy pronto';
+
+  @override
+  String get dailyChallengeSoonBody =>
+      'Aún no hay una pregunta activa para hoy. Vuelve más tarde y la misión aparecerá aquí.';
+
+  @override
+  String get dailyChallengeLoadErrorTitle => 'No pudimos cargar el reto';
+
+  @override
+  String get dailyChallengeLoadErrorBody =>
+      'Hubo un problema al leer el reto diario. Inténtalo de nuevo en un momento.';
+
+  @override
+  String get dailyChallengeUnavailableTitle =>
+      'Este reto ya no está disponible';
+
+  @override
+  String get dailyChallengeUnavailableBody =>
+      'El reto cambió o ya no está activo. Vuelve a la sección de retos para refrescar la misión de hoy.';
+
+  @override
+  String get dailyChallengeVerifyButton => 'Verificar respuesta';
+
+  @override
+  String get dailyChallengeCompletedTitle => 'Reto de hoy completado';
+
+  @override
+  String get dailyChallengeCorrectLabel => 'Correcto';
+
+  @override
+  String get dailyChallengeIncorrectLabel => 'Falló';
+
+  @override
+  String dailyChallengeCompletedBody(String date) {
+    return 'Ya resolviste el reto publicado el $date. Mañana te espera una nueva pregunta.';
+  }
+
+  @override
+  String get dailyChallengeDateLabel => 'Día';
+
+  @override
+  String get dailyChallengeSeeYouTomorrow =>
+      'Buen cierre. El reto de hoy ya cuenta para tu progreso. Vuelve mañana y vemos si mantienes la llama encendida.';
+
+  @override
+  String get dailyChallengeRetryTomorrow =>
+      'Hoy ya quedó registrado. Mañana llega otra ronda para recuperar terreno con una pregunta nueva.';
+
+  @override
+  String get dailyChallengeResultCorrectTitle => 'Respuesta correcta';
+
+  @override
+  String get dailyChallengeResultIncorrectTitle => 'No era esa';
+
+  @override
+  String get dailyChallengeResultTimeoutTitle => 'Se acabó el tiempo';
+
+  @override
+  String get backToChallenges => 'Volver a retos';
+
+  @override
+  String get dailyChallengeSavingButton => 'Guardando resultado...';
 }

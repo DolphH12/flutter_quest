@@ -197,5 +197,42 @@
   "quizSelectOutputError": "Elige la salida que esperas del código.",
   "quizFixInputError": "Escribe una respuesta antes de verificar.",
   "correctTitle": "Bien jugado",
-  "incorrectTitle": "Casi, sigue intentando"
+  "incorrectTitle": "Casi, sigue intentando",
+  "challengesTab": "Retos",
+  "dailyChallengeKicker": "RETO DIARIO",
+  "dailyChallengeTitle": "Retos",
+  "dailyChallengeSubtitle": "Una misión corta, con tiempo límite y una oportunidad más para sostener tu racha.",
+  "dailyChallengeReadyBadge": "Listo para hoy",
+  "dailyChallengeOpenButton": "Abrir reto",
+  "dailyChallengeLevelLabel": "Nivel",
+  "dailyChallengeTimerLabel": "Tiempo",
+  "dailyChallengeThirtySeconds": "30 s",
+  "dailyChallengeInternetTitle": "Requieres internet para esta sección",
+  "dailyChallengeInternetBody": "El reto diario se consulta en línea. Cuando vuelvas a tener conexión, aquí te estará esperando.",
+  "dailyChallengeSoonTitle": "Espera el reto diario muy pronto",
+  "dailyChallengeSoonBody": "Aún no hay una pregunta activa para hoy. Vuelve más tarde y la misión aparecerá aquí.",
+  "dailyChallengeLoadErrorTitle": "No pudimos cargar el reto",
+  "dailyChallengeLoadErrorBody": "Hubo un problema al leer el reto diario. Inténtalo de nuevo en un momento.",
+  "dailyChallengeUnavailableTitle": "Este reto ya no está disponible",
+  "dailyChallengeUnavailableBody": "El reto cambió o ya no está activo. Vuelve a la sección de retos para refrescar la misión de hoy.",
+  "dailyChallengeVerifyButton": "Verificar respuesta",
+  "dailyChallengeCompletedTitle": "Reto de hoy completado",
+  "dailyChallengeCorrectLabel": "Correcto",
+  "dailyChallengeIncorrectLabel": "Falló",
+  "dailyChallengeCompletedBody": "Ya resolviste el reto publicado el {date}. Mañana te espera una nueva pregunta.",
+  "@dailyChallengeCompletedBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyChallengeDateLabel": "Día",
+  "dailyChallengeSeeYouTomorrow": "Buen cierre. El reto de hoy ya cuenta para tu progreso. Vuelve mañana y vemos si mantienes la llama encendida.",
+  "dailyChallengeRetryTomorrow": "Hoy ya quedó registrado. Mañana llega otra ronda para recuperar terreno con una pregunta nueva.",
+  "dailyChallengeResultCorrectTitle": "Respuesta correcta",
+  "dailyChallengeResultIncorrectTitle": "No era esa",
+  "dailyChallengeResultTimeoutTitle": "Se acabó el tiempo",
+  "backToChallenges": "Volver a retos",
+  "dailyChallengeSavingButton": "Guardando resultado..."
 }

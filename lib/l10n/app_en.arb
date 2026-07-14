@@ -197,5 +197,42 @@
   "quizSelectOutputError": "Choose the output you expect from the code.",
   "quizFixInputError": "Write a solution before checking.",
   "correctTitle": "Well played",
-  "incorrectTitle": "Almost there"
+  "incorrectTitle": "Almost there",
+  "challengesTab": "Challenges",
+  "dailyChallengeKicker": "DAILY CHALLENGE",
+  "dailyChallengeTitle": "Challenges",
+  "dailyChallengeSubtitle": "A short mission, a 30-second timer, and one more way to keep your streak alive.",
+  "dailyChallengeReadyBadge": "Ready today",
+  "dailyChallengeOpenButton": "Open challenge",
+  "dailyChallengeLevelLabel": "Level",
+  "dailyChallengeTimerLabel": "Timer",
+  "dailyChallengeThirtySeconds": "30 s",
+  "dailyChallengeInternetTitle": "You need internet for this section",
+  "dailyChallengeInternetBody": "The daily challenge is loaded online. As soon as you are back on a connection, today's mission will be waiting here.",
+  "dailyChallengeSoonTitle": "The daily challenge is coming soon",
+  "dailyChallengeSoonBody": "There is no active question for today yet. Check back later and the next mission will appear here.",
+  "dailyChallengeLoadErrorTitle": "We couldn't load the challenge",
+  "dailyChallengeLoadErrorBody": "Something went wrong while loading today's challenge. Please try again in a moment.",
+  "dailyChallengeUnavailableTitle": "This challenge is no longer available",
+  "dailyChallengeUnavailableBody": "The challenge changed or is no longer active. Go back to Challenges to refresh today's mission.",
+  "dailyChallengeVerifyButton": "Check answer",
+  "dailyChallengeCompletedTitle": "Today's challenge is done",
+  "dailyChallengeCorrectLabel": "Correct",
+  "dailyChallengeIncorrectLabel": "Missed",
+  "dailyChallengeCompletedBody": "You already solved the challenge published on {date}. A new question arrives tomorrow.",
+  "@dailyChallengeCompletedBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyChallengeDateLabel": "Day",
+  "dailyChallengeSeeYouTomorrow": "Nice work. Today's challenge already counts toward your progress. Come back tomorrow and keep that streak warm.",
+  "dailyChallengeRetryTomorrow": "Today's result is already recorded. Tomorrow brings a fresh round and another shot to climb back up.",
+  "dailyChallengeResultCorrectTitle": "Correct answer",
+  "dailyChallengeResultIncorrectTitle": "That was not it",
+  "dailyChallengeResultTimeoutTitle": "Time ran out",
+  "backToChallenges": "Back to Challenges",
+  "dailyChallengeSavingButton": "Saving result..."
 }

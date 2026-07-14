@@ -329,9 +329,9 @@ class _CurrentPathCard extends StatelessWidget {
           FQProgressBar(
             value: progress,
             fillGradient: const LinearGradient(
-              colors: [Color(0xFF46D194), Color(0xFF1D8D4A)],
+              colors: [Color(0xFF39C97D), Color(0xFF0F6E38)],
             ),
-            trackColor: const Color(0xFFDFF7E8),
+            trackColor: const Color(0xFFB8E8C8),
           ),
         ],
       ),

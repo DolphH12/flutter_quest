@@ -212,7 +212,7 @@
             },
             {
               "es": "'Hola Flutter'",
-              "en": "'Hola Flutter'"
+              "en": "'Hello Flutter'"
             }
           ],
           "correctExplanation": {
@@ -236,9 +236,16 @@
             "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en ¿Qué es Flutter?, aunque cambie el estilo de escritura.",
             "en": "Any valid solution that meets the goal of this What is Flutter? exercise is accepted, even if writing style differs."
           },
-          "requiredTokens": [
-            "fragmento"
-          ]
+          "requiredTokens": {
+            "es": [
+              "Text",
+              "Hola Flutter"
+            ],
+            "en": [
+              "Text",
+              "Hello Flutter"
+            ]
+          }
         }
       ]
     },
@@ -1330,8 +1337,8 @@
           "id": "ftrc_guided_1",
           "type": "guidedWriting",
           "instructions": {
-            "es": "Escribe el fragmento clave para agregar dos Text dentro de una Column usando children.",
-            "en": "Write the key snippet to add two Text inside a Column using children."
+            "es": "Escribe el fragmento clave para agregar dos Text dentro de una Column usando children. Un texto con 'Hola' y otro texto con 'Flutter'",
+            "en": "Write the key snippet to add two Text inside a Column using children. A text with 'Hello' and other with 'Flutter'"
           },
           "starterCode": {
             "es": "Column(\n  _____\n)",
@@ -1344,7 +1351,7 @@
             },
             {
               "es": "Text('Hola')",
-              "en": "Text('Hola')"
+              "en": "Text('Hello')"
             },
             {
               "es": "Text('Flutter')",
@@ -1376,9 +1383,18 @@
             "flutter_main_materialapp",
             "flutter_scaffold"
           ],
-          "requiredTokens": [
-            "fragmento"
-          ]
+          "requiredTokens": {
+            "es": [
+              "children",
+              "Hola",
+              "Flutter"
+            ],
+            "en": [
+              "children",
+              "Hello",
+              "Flutter"
+            ]
+          }
         }
       ]
     },
@@ -1532,7 +1548,7 @@
           },
           "initialCode": {
             "es": "Padding(\n  color: Colors.blue,\n  child: Text('Hola'),\n)",
-            "en": "Padding\n  color: Colors.blue,\n  child: Text('Hello'),\n)"
+            "en": "Padding(\n  color: Colors.blue,\n  child: Text('Hello'),\n)"
           },
           "expectedAnswer": {
             "es": "Container(\n  color: Colors.blue,\n  child: Text('Hola'),\n)",
@@ -1555,16 +1571,26 @@
           "allowWhitespaceVariance": true,
           "allowQuoteStyleVariance": true,
           "validationMode": "containsTokens",
-          "requiredTokens": [
-            "Container",
-            "color",
-            "Colors",
-            "blue",
-            "child",
-            "Text",
-            "Hola",
-            "Hello"
-          ],
+          "requiredTokens": {
+            "es": [
+              "Container",
+              "color",
+              "Colors",
+              "blue",
+              "child",
+              "Text",
+              "Hola"
+            ],
+            "en": [
+              "Container",
+              "color",
+              "Colors",
+              "blue",
+              "child",
+              "Text",
+              "Hello"
+            ]
+          },
           "acceptanceCriteria": {
             "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Container y Padding, aunque cambie el estilo de escritura.",
             "en": "Any valid solution that meets the goal of this Container and Padding exercise is accepted, even if writing style differs."
@@ -1669,7 +1695,8 @@
             "flutter_text_row_column"
           ],
           "requiredTokens": [
-            "fragmento"
+            "color",
+            "Colors.blue"
           ]
         }
       ]
@@ -1822,7 +1849,7 @@
             },
             {
               "es": "Text('Guardar')",
-              "en": "Text('Guardar')"
+              "en": "Text('Save')"
             }
           ],
           "correctExplanation": {
@@ -1850,9 +1877,18 @@
             "flutter_text_row_column",
             "flutter_container_padding"
           ],
-          "requiredTokens": [
-            "fragmento"
-          ]
+          "requiredTokens": {
+            "es": [
+              "child",
+              "Text",
+              "Guardar"
+            ],
+            "en": [
+              "child",
+              "Text",
+              "Save"
+            ]
+          }
         },
         {
           "id": "fb_match_1",
@@ -2223,16 +2259,24 @@
           "allowWhitespaceVariance": true,
           "allowQuoteStyleVariance": true,
           "validationMode": "containsTokens",
-          "requiredTokens": [
-            "return",
-            "ListView",
-            "children",
-            "Text",
-            "Uno",
-            "Dos",
-            "One",
-            "Two"
-          ],
+          "requiredTokens": {
+            "es": [
+              "return",
+              "ListView",
+              "children",
+              "Text",
+              "Uno",
+              "Dos"
+            ],
+            "en": [
+              "return",
+              "ListView",
+              "children",
+              "Text",
+              "One",
+              "Two"
+            ]
+          },
           "acceptanceCriteria": {
             "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en ListView, aunque cambie el estilo de escritura.",
             "en": "Any valid solution that meets the goal of this ListView exercise is accepted, even if writing style differs."
@@ -2431,7 +2475,9 @@
             "flutter_listview"
           ],
           "requiredTokens": [
-            "parte"
+            "Navigator.push",
+            "MaterialPageRoute",
+            "DetailScreen"
           ]
         },
         {
@@ -3024,14 +3070,22 @@
           "allowWhitespaceVariance": true,
           "allowQuoteStyleVariance": true,
           "validationMode": "containsTokens",
-          "requiredTokens": [
-            "ElevatedButton",
-            "onPressed",
-            "child",
-            "Text",
-            "Enviar",
-            "Send"
-          ],
+          "requiredTokens": {
+            "es": [
+              "ElevatedButton",
+              "onPressed",
+              "child",
+              "Text",
+              "Enviar"
+            ],
+            "en": [
+              "ElevatedButton",
+              "onPressed",
+              "child",
+              "Text",
+              "Send"
+            ]
+          },
           "acceptanceCriteria": {
             "es": "Se acepta cualquier solución válida que cumpla el objetivo del ejercicio en Examen Final Flutter Foundations, aunque cambie el estilo de escritura.",
             "en": "Any valid solution that meets the goal of this Flutter Foundations final exam exercise is accepted, even if writing style differs."
@@ -3142,7 +3196,8 @@
             "flutter_layout_mindset"
           ],
           "requiredTokens": [
-            "fragmento"
+            "padding",
+            "EdgeInsets.all(16)"
           ]
         },
         {

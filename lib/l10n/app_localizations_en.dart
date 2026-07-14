@@ -469,4 +469,105 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get incorrectTitle => 'Almost there';
+
+  @override
+  String get challengesTab => 'Challenges';
+
+  @override
+  String get dailyChallengeKicker => 'DAILY CHALLENGE';
+
+  @override
+  String get dailyChallengeTitle => 'Challenges';
+
+  @override
+  String get dailyChallengeSubtitle =>
+      'A short mission, a 30-second timer, and one more way to keep your streak alive.';
+
+  @override
+  String get dailyChallengeReadyBadge => 'Ready today';
+
+  @override
+  String get dailyChallengeOpenButton => 'Open challenge';
+
+  @override
+  String get dailyChallengeLevelLabel => 'Level';
+
+  @override
+  String get dailyChallengeTimerLabel => 'Timer';
+
+  @override
+  String get dailyChallengeThirtySeconds => '30 s';
+
+  @override
+  String get dailyChallengeInternetTitle =>
+      'You need internet for this section';
+
+  @override
+  String get dailyChallengeInternetBody =>
+      'The daily challenge is loaded online. As soon as you are back on a connection, today\'s mission will be waiting here.';
+
+  @override
+  String get dailyChallengeSoonTitle => 'The daily challenge is coming soon';
+
+  @override
+  String get dailyChallengeSoonBody =>
+      'There is no active question for today yet. Check back later and the next mission will appear here.';
+
+  @override
+  String get dailyChallengeLoadErrorTitle => 'We couldn\'t load the challenge';
+
+  @override
+  String get dailyChallengeLoadErrorBody =>
+      'Something went wrong while loading today\'s challenge. Please try again in a moment.';
+
+  @override
+  String get dailyChallengeUnavailableTitle =>
+      'This challenge is no longer available';
+
+  @override
+  String get dailyChallengeUnavailableBody =>
+      'The challenge changed or is no longer active. Go back to Challenges to refresh today\'s mission.';
+
+  @override
+  String get dailyChallengeVerifyButton => 'Check answer';
+
+  @override
+  String get dailyChallengeCompletedTitle => 'Today\'s challenge is done';
+
+  @override
+  String get dailyChallengeCorrectLabel => 'Correct';
+
+  @override
+  String get dailyChallengeIncorrectLabel => 'Missed';
+
+  @override
+  String dailyChallengeCompletedBody(String date) {
+    return 'You already solved the challenge published on $date. A new question arrives tomorrow.';
+  }
+
+  @override
+  String get dailyChallengeDateLabel => 'Day';
+
+  @override
+  String get dailyChallengeSeeYouTomorrow =>
+      'Nice work. Today\'s challenge already counts toward your progress. Come back tomorrow and keep that streak warm.';
+
+  @override
+  String get dailyChallengeRetryTomorrow =>
+      'Today\'s result is already recorded. Tomorrow brings a fresh round and another shot to climb back up.';
+
+  @override
+  String get dailyChallengeResultCorrectTitle => 'Correct answer';
+
+  @override
+  String get dailyChallengeResultIncorrectTitle => 'That was not it';
+
+  @override
+  String get dailyChallengeResultTimeoutTitle => 'Time ran out';
+
+  @override
+  String get backToChallenges => 'Back to Challenges';
+
+  @override
+  String get dailyChallengeSavingButton => 'Saving result...';
 }

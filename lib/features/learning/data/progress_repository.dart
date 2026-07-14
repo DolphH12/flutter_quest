@@ -46,4 +46,20 @@ class ProgressRepository {
   Future<LearningProgressState> markRoutePending(String routeId) {
     return _store.markRoutePending(routeId);
   }
+
+  Future<LearningProgressState> applyDailyChallengeResult({
+    required String challengeId,
+    required String publishDate,
+    required bool answeredCorrectly,
+    required int xpEarned,
+    required DateTime completedAt,
+  }) {
+    return _store.applyDailyChallengeResult(
+      challengeId: challengeId,
+      publishDate: publishDate,
+      answeredCorrectly: answeredCorrectly,
+      xpEarned: xpEarned,
+      completedAt: completedAt,
+    );
+  }
 }

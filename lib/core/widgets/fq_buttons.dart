@@ -18,14 +18,22 @@ class FQPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final enabled = onPressed != null;
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: FQRadius.pill,
-        gradient: FQGradients.primaryCta,
-        boxShadow: FQShadows.glow,
+        gradient: enabled
+            ? FQGradients.primaryCta
+            : LinearGradient(
+                colors: [
+                  FQColors.primary.withValues(alpha: 0.38),
+                  FQColors.primaryBright.withValues(alpha: 0.34),
+                ],
+              ),
+        boxShadow: enabled ? FQShadows.glow : const [],
       ),
       child: FilledButton(
-        onPressed: onPressed ?? () {},
+        onPressed: onPressed,
         style: FilledButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
@@ -60,26 +68,37 @@ class FQSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final enabled = onPressed != null;
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: FQGradients.subtlePanel,
         borderRadius: FQRadius.pill,
         border: Border.all(
-          color: FQColors.primary.withValues(alpha: 0.16),
+          color: enabled
+              ? FQColors.primary.withValues(alpha: 0.16)
+              : FQColors.primary.withValues(alpha: 0.08),
           width: 1.2,
         ),
       ),
       child: OutlinedButton(
-        onPressed: onPressed ?? () {},
+        onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.transparent,
-          foregroundColor: FQColors.primary,
+          foregroundColor: enabled
+              ? FQColors.primary
+              : FQColors.primary.withValues(alpha: 0.48),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 18, color: FQColors.primary),
+              Icon(
+                icon,
+                size: 18,
+                color: enabled
+                    ? FQColors.primary
+                    : FQColors.primary.withValues(alpha: 0.48),
+              ),
               const SizedBox(width: 8),
             ],
             Text(label),

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_quest/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/responsive/breakpoints.dart';
 import '../../../core/theme/fq_colors.dart';
@@ -256,11 +258,19 @@ class ProfileScreen extends ConsumerWidget {
     LearningProgressState progress,
     HabitNotificationSettings currentSettings,
   ) async {
-    final initial = TimeOfDay(
-      hour: currentSettings.hour,
-      minute: currentSettings.minute,
+    final initialDate = DateTime(
+      2026,
+      1,
+      1,
+      currentSettings.hour,
+      currentSettings.minute,
     );
-    final picked = await showTimePicker(context: context, initialTime: initial);
+    final picked = await showModalBottomSheet<DateTime>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => _ReminderTimeSheet(initialDate: initialDate),
+    );
     if (picked == null) return;
     await ref
         .read(habitNotificationsProvider.notifier)
@@ -319,6 +329,10 @@ class ProfileScreen extends ConsumerWidget {
               child: Text(l10n.cancelButton),
             ),
             FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: FQColors.primary,
+                foregroundColor: Colors.white,
+              ),
               onPressed: () => Navigator.of(dialogContext).pop(true),
               child: Text(l10n.backupImportButton),
             ),
@@ -600,7 +614,13 @@ class _RouteProgressCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          FQProgressBar(value: routeProgress),
+          FQProgressBar(
+            value: routeProgress,
+            fillGradient: const LinearGradient(
+              colors: [Color(0xFF39C97D), Color(0xFF0F6E38)],
+            ),
+            trackColor: const Color(0xFFB8E8C8),
+          ),
           const SizedBox(height: 10),
           FQPill(
             label: examPassed
@@ -810,6 +830,11 @@ class _NotificationsHabitSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final formattedTime = _formatReminderTime(context, hour, minute);
+    final localeCode = Localizations.localeOf(context).languageCode.toLowerCase();
+    final titleText = localeCode == 'es'
+        ? 'Hora del recordatorio'
+        : 'Reminder time';
     return FQSurfaceCard(
       radius: FQRadius.large,
       gradient: FQGradients.subtlePanel,
@@ -830,11 +855,77 @@ class _NotificationsHabitSection extends StatelessWidget {
                     color: FQColors.onSurface.withValues(alpha: 0.72),
                   ),
                 ),
-                const SizedBox(height: 8),
-                OutlinedButton.icon(
-                  onPressed: (!enabled || loading) ? null : onPickTime,
-                  icon: const Icon(Icons.schedule_rounded),
-                  label: Text(l10n.reminderTimeLabel(hour, minute)),
+                const SizedBox(height: 12),
+                InkWell(
+                  borderRadius: FQRadius.large,
+                  onTap: (!enabled || loading) ? null : onPickTime,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 180),
+                    opacity: (!enabled || loading) ? 0.55 : 1,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 12,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFF8FAFF), Color(0xFFEAF0FF)],
+                        ),
+                        borderRadius: FQRadius.large,
+                        border: Border.all(
+                          color: FQColors.primary.withValues(alpha: 0.14),
+                          width: 1.2,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 34,
+                            height: 34,
+                            decoration: BoxDecoration(
+                              color: FQColors.primary.withValues(alpha: 0.12),
+                              borderRadius: FQRadius.medium,
+                            ),
+                            child: const Icon(
+                              Icons.schedule_rounded,
+                              color: FQColors.primary,
+                              size: 18,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                titleText,
+                                style: Theme.of(context).textTheme.labelMedium
+                                    ?.copyWith(
+                                      color: FQColors.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                formattedTime,
+                                style: Theme.of(context).textTheme.titleMedium
+                                    ?.copyWith(
+                                      color: FQColors.deepNavy,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: FQColors.primary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -899,6 +990,160 @@ class _BackupSection extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+String _formatReminderTime(BuildContext context, int hour, int minute) {
+  final locale = Localizations.localeOf(context).toLanguageTag();
+  final date = DateTime(2026, 1, 1, hour, minute);
+  return DateFormat('h:mm a', locale).format(date).toUpperCase();
+}
+
+class _ReminderTimeSheet extends StatefulWidget {
+  const _ReminderTimeSheet({required this.initialDate});
+
+  final DateTime initialDate;
+
+  @override
+  State<_ReminderTimeSheet> createState() => _ReminderTimeSheetState();
+}
+
+class _ReminderTimeSheetState extends State<_ReminderTimeSheet> {
+  late DateTime _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    _selected = widget.initialDate;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localeCode = Localizations.localeOf(context).languageCode.toLowerCase();
+    final titleText = localeCode == 'es'
+        ? 'Elige la hora del recordatorio'
+        : 'Choose your reminder time';
+    final subtitleText = localeCode == 'es'
+        ? 'Usaremos este horario para enviarte el recordatorio diario.'
+        : 'We will use this time for your daily reminder.';
+    final cancelText = localeCode == 'es' ? 'Cancelar' : 'Cancel';
+    final saveText = localeCode == 'es' ? 'Guardar' : 'Save';
+    final previewText = _formatReminderTime(
+      context,
+      _selected.hour,
+      _selected.minute,
+    );
+
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: FQRadius.xLarge,
+            boxShadow: FQShadows.floating,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 44,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: FQColors.outlineVariant.withValues(alpha: 0.5),
+                    borderRadius: FQRadius.pill,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  titleText,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: FQColors.deepNavy,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  subtitleText,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: FQColors.onSurface.withValues(alpha: 0.72),
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFF8FAFF), Color(0xFFEAF0FF)],
+                    ),
+                    borderRadius: FQRadius.large,
+                    border: Border.all(
+                      color: FQColors.primary.withValues(alpha: 0.12),
+                    ),
+                  ),
+                  child: Text(
+                    previewText,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: FQColors.primary,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  height: 220,
+                  child: CupertinoTheme(
+                    data: const CupertinoThemeData(
+                      brightness: Brightness.light,
+                    ),
+                    child: CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.time,
+                      use24hFormat: false,
+                      initialDateTime: _selected,
+                      minuteInterval: 5,
+                      onDateTimeChanged: (value) {
+                        setState(() {
+                          _selected = value;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FQSecondaryButton(
+                        label: cancelText,
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: FQPrimaryButton(
+                        label: saveText,
+                        onPressed: () => Navigator.of(context).pop(_selected),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

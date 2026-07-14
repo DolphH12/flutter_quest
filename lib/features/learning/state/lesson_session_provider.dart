@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/learning_models.dart';
@@ -468,6 +469,12 @@ class LessonSessionNotifier
 
     final selected = displayOptions[state.selectedOptionIndex!];
     final correct = (activity.correctAnswer ?? '').trim();
+    _logValidationComparison(
+      activity: activity,
+      answer: selected,
+      expected: correct,
+      contextLabel: 'multipleChoice',
+    );
     final isCorrect =
         _normalize(selected).toLowerCase() == _normalize(correct).toLowerCase();
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
@@ -491,9 +498,19 @@ class LessonSessionNotifier
     }
 
     final expected = (activity.expectedAnswer ?? '').trim();
+    final acceptedAnswers = activity.acceptedAnswers ?? const <String>[];
+    final requiredTokens = activity.requiredTokens ?? const <String>[];
+    _logValidationComparison(
+      activity: activity,
+      answer: answer,
+      expected: expected,
+      acceptedAnswers: acceptedAnswers,
+      requiredTokens: requiredTokens,
+      contextLabel: 'codeInput',
+    );
     if (expected.isEmpty &&
-        (activity.acceptedAnswers ?? const <String>[]).isEmpty &&
-        (activity.requiredTokens ?? const <String>[]).isEmpty) {
+        acceptedAnswers.isEmpty &&
+        requiredTokens.isEmpty) {
       final feedback = _feedbackFor(activity: activity, isCorrect: false);
       return _ValidationResult(
         isCorrect: false,
@@ -543,6 +560,12 @@ class LessonSessionNotifier
       );
     }
     final userOrder = state.blockOrder.map((index) => blocks[index]).toList();
+    _logValidationComparison(
+      activity: activity,
+      answer: userOrder.join('\n'),
+      expected: expected.join('\n'),
+      contextLabel: 'orderCodeBlocks',
+    );
     final isCorrect = _normalizedListEquals(userOrder, expected);
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
@@ -563,6 +586,12 @@ class LessonSessionNotifier
       );
     }
     final expected = activity.wrongLineIndex;
+    _logValidationComparison(
+      activity: activity,
+      answer: '${state.selectedWrongLineIndex}',
+      expected: '$expected',
+      contextLabel: 'findTheWrongLine',
+    );
     final isCorrect =
         expected != null && expected == state.selectedWrongLineIndex;
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
@@ -603,6 +632,14 @@ class LessonSessionNotifier
       final expectedValue = _normalize(pair.right).toLowerCase();
       return selected == expectedValue;
     });
+    _logValidationComparison(
+      activity: activity,
+      answer: state.conceptMatches.entries
+          .map((entry) => '${entry.key} => ${entry.value}')
+          .join(' | '),
+      expected: pairs.map((pair) => '${pair.left} => ${pair.right}').join(' | '),
+      contextLabel: 'matchConcept',
+    );
     final feedback = _feedbackFor(activity: activity, isCorrect: isCorrect);
     return _ValidationResult(
       isCorrect: isCorrect,
@@ -638,6 +675,12 @@ class LessonSessionNotifier
         displayOptions[state.selectedOptionIndex!],
       ).toLowerCase();
       final answerFromJson = (activity.correctAnswer ?? '').trim();
+      _logValidationComparison(
+        activity: activity,
+        answer: displayOptions[state.selectedOptionIndex!],
+        expected: answerFromJson,
+        contextLabel: 'predictOutputOption',
+      );
       if (answerFromJson.isNotEmpty) {
         isCorrect = selected == _normalize(answerFromJson).toLowerCase();
       }
@@ -661,6 +704,12 @@ class LessonSessionNotifier
           feedbackMessage: null,
         );
       }
+      _logValidationComparison(
+        activity: activity,
+        answer: answer,
+        expected: expected,
+        contextLabel: 'predictOutputText',
+      );
       isCorrect =
           _normalize(answer).toLowerCase() ==
           _normalize(expected).toLowerCase();
@@ -695,6 +744,15 @@ class LessonSessionNotifier
             ),
           )
         : false;
+    _logValidationComparison(
+      activity: activity,
+      answer: answer,
+      expected: (activity.expectedAnswer ?? '').trim(),
+      expectedFragments: fragments,
+      acceptedAnswers: activity.acceptedAnswers ?? const <String>[],
+      requiredTokens: activity.requiredTokens ?? const <String>[],
+      contextLabel: 'guidedWriting',
+    );
     final flexibleMatch = _evaluateFlexibleCodeMatch(activity: activity, answer: answer);
     final isCorrect = fragmentsPass || flexibleMatch;
 
@@ -930,6 +988,38 @@ class LessonSessionNotifier
 
   String _normalize(String value) {
     return value.replaceAll(RegExp(r'\s+'), ' ').trim();
+  }
+
+  void _logValidationComparison({
+    required LessonActivity activity,
+    required String answer,
+    required String expected,
+    required String contextLabel,
+    List<String> acceptedAnswers = const <String>[],
+    List<String> requiredTokens = const <String>[],
+    List<String> expectedFragments = const <String>[],
+  }) {
+    debugPrint(
+      '[FQ_VALIDATE][$contextLabel][${activity.id}] answer="$answer"',
+    );
+    debugPrint(
+      '[FQ_VALIDATE][$contextLabel][${activity.id}] expected="$expected"',
+    );
+    if (acceptedAnswers.isNotEmpty) {
+      debugPrint(
+        '[FQ_VALIDATE][$contextLabel][${activity.id}] accepted=${acceptedAnswers.join(' || ')}',
+      );
+    }
+    if (requiredTokens.isNotEmpty) {
+      debugPrint(
+        '[FQ_VALIDATE][$contextLabel][${activity.id}] requiredTokens=${requiredTokens.join(' | ')}',
+      );
+    }
+    if (expectedFragments.isNotEmpty) {
+      debugPrint(
+        '[FQ_VALIDATE][$contextLabel][${activity.id}] expectedFragments=${expectedFragments.join(' | ')}',
+      );
+    }
   }
 }
 

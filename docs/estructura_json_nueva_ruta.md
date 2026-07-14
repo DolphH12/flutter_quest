@@ -21,6 +21,8 @@ Importante:
   - rutas ya liberadas,
   - una sola ruta visible como `próximamente`,
   - rutas restantes ocultas hasta futuras publicaciones.
+- El sistema de `Retos` no usa este JSON.
+- Los retos diarios se cargan desde Supabase y siguen un contrato separado del contenido de rutas.
 
 ---
 
